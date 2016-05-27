@@ -1,0 +1,5 @@
+#Projeto-SAM
+#Excluindo arquivos desnecessários
+
+dist/
+node_modules/
