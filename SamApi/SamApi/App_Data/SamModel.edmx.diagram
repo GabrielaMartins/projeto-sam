@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="94a0528d50eb490a97f54c3dde1d0c87" Name="Diagram1" DisplayType="true" >
+        <EntityTypeShape EntityType="SamModel.Categorias" Width="1.5" PointX="4.625" PointY="0.5" />
+        <EntityTypeShape EntityType="SamModel.Cargo" Width="1.5" PointX="1.875" PointY="0.5" />
+        <EntityTypeShape EntityType="SamModel.Itens" Width="1.5" PointX="8.25" PointY="2.5" />
+        <EntityTypeShape EntityType="SamModel.Usuarios" Width="1.5" PointX="1.875" PointY="5.375" />
+        <EntityTypeShape EntityType="SamModel.Tags" Width="1.5" PointX="8.25" PointY="0.5" />
+        <EntityTypeShape EntityType="SamModel.Eventos" Width="1.5" PointX="8.25" PointY="5.875" />
+        <EntityTypeShape EntityType="SamModel.Votacoes" Width="1.5" PointX="6.125" PointY="9.5" />
+        <EntityTypeShape EntityType="SamModel.Pendencia" Width="1.5" PointX="5.25" PointY="6.625" />
+        <AssociationConnector Association="SamModel.CategoriaItem" />
+        <AssociationConnector Association="SamModel.CargoCargo" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="SamModel.ItensEventos" />
+        <AssociationConnector Association="SamModel.CargoUsuarios" />
+        <AssociationConnector Association="SamModel.PendenciaEventos" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="SamModel.EventosVotacao" ></AssociationConnector>
+        <AssociationConnector Association="SamModel.UsuariosEventos" />
+        <EntityTypeShape EntityType="SamModel.UsuarioVotacoes" Width="1.5" PointX="3.625" PointY="9.5" />
+        <AssociationConnector Association="SamModel.UsuariosUsuarioVotacoes" />
+        <AssociationConnector Association="SamModel.VotacoesUsuarioVotacoes" />
+        <AssociationConnector Association="SamModel.ItensTags" />
+        <AssociationConnector Association="SamModel.PendenciaUsuarios" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

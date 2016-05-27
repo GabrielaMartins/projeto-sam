@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SamModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="SamModelContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CategoriasSet" EntityType="SamModel.Categorias" />
+    <EntitySet Name="CargoSet" EntityType="SamModel.Cargo" />
+    <EntitySet Name="ItensSet" EntityType="SamModel.Itens" />
+    <EntitySet Name="UsuariosSet" EntityType="SamModel.Usuarios" />
+    <EntitySet Name="TagsSet" EntityType="SamModel.Tags" />
+    <EntitySet Name="EventosSet" EntityType="SamModel.Eventos" />
+    <EntitySet Name="VotacoesSet" EntityType="SamModel.Votacoes" />
+    <EntitySet Name="PendenciaSet" EntityType="SamModel.Pendencia" />
+    <AssociationSet Name="CategoriaItem" Association="SamModel.CategoriaItem">
+      <End Role="Categoria" EntitySet="CategoriasSet" />
+      <End Role="Item" EntitySet="ItensSet" />
+    </AssociationSet>
+    <AssociationSet Name="CargoCargo" Association="SamModel.CargoCargo">
+      <End Role="Cargo" EntitySet="CargoSet" />
+      <End Role="Cargo1" EntitySet="CargoSet" />
+    </AssociationSet>
+    <AssociationSet Name="ItensEventos" Association="SamModel.ItensEventos">
+      <End Role="Itens" EntitySet="ItensSet" />
+      <End Role="Eventos" EntitySet="EventosSet" />
+    </AssociationSet>
+    <AssociationSet Name="CargoUsuarios" Association="SamModel.CargoUsuarios">
+      <End Role="Cargo" EntitySet="CargoSet" />
+      <End Role="Usuarios" EntitySet="UsuariosSet" />
+    </AssociationSet>
+    <AssociationSet Name="PendenciaEventos" Association="SamModel.PendenciaEventos">
+      <End Role="Pendencia" EntitySet="PendenciaSet" />
+      <End Role="Eventos" EntitySet="EventosSet" />
+    </AssociationSet>
+    <AssociationSet Name="EventosVotacao" Association="SamModel.EventosVotacao">
+      <End Role="Eventos" EntitySet="EventosSet" />
+      <End Role="Votacao" EntitySet="VotacoesSet" />
+    </AssociationSet>
+    <AssociationSet Name="UsuariosEventos" Association="SamModel.UsuariosEventos">
+      <End Role="Usuarios" EntitySet="UsuariosSet" />
+      <End Role="Eventos" EntitySet="EventosSet" />
+    </AssociationSet>
+    <EntitySet Name="UsuarioVotacoesSet" EntityType="SamModel.UsuarioVotacoes" />
+    <AssociationSet Name="UsuariosUsuarioVotacoes" Association="SamModel.UsuariosUsuarioVotacoes">
+      <End Role="Usuarios" EntitySet="UsuariosSet" />
+      <End Role="UsuarioVotacoes" EntitySet="UsuarioVotacoesSet" />
+    </AssociationSet>
+    <AssociationSet Name="VotacoesUsuarioVotacoes" Association="SamModel.VotacoesUsuarioVotacoes">
+      <End Role="Votacoes" EntitySet="VotacoesSet" />
+      <End Role="UsuarioVotacoes" EntitySet="UsuarioVotacoesSet" />
+    </AssociationSet>
+    <AssociationSet Name="ItensTags" Association="SamModel.ItensTags">
+      <End Role="Itens" EntitySet="ItensSet" />
+      <End Role="Tags" EntitySet="TagsSet" />
+    </AssociationSet>
+    <AssociationSet Name="PendenciaUsuarios" Association="SamModel.PendenciaUsuarios">
+      <End Role="Pendencia" EntitySet="PendenciaSet" />
+      <End Role="Usuarios" EntitySet="UsuariosSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Categorias">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+    <Property Name="nome" Type="String" Nullable="false" />
+    <Property Name="peso" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="Itens" Relationship="SamModel.CategoriaItem" FromRole="Categoria" ToRole="Item" />
+  </EntityType>
+  <EntityType Name="Cargo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" Nullable="false" />
+    <Property Name="pontos" Type="String" Nullable="false" />
+    <NavigationProperty Name="CargoAnterior" Relationship="SamModel.CargoCargo" FromRole="Cargo" ToRole="Cargo1" />
+    <NavigationProperty Name="Usuarios" Relationship="SamModel.CargoUsuarios" FromRole="Cargo" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="Itens">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+    <Property Name="nome" Type="String" Nullable="false" />
+    <Property Name="descricao" Type="String" Nullable="false" />
+    <Property Name="dificuldade" Type="Int16" Nullable="false" />
+    <Property Name="multiplicador" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="Categoria" Relationship="SamModel.CategoriaItem" FromRole="Item" ToRole="Categoria" />
+    <NavigationProperty Name="Eventos" Relationship="SamModel.ItensEventos" FromRole="Itens" ToRole="Eventos" />
+    <NavigationProperty Name="Tags" Relationship="SamModel.ItensTags" FromRole="Itens" ToRole="Tags" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+    <Property Name="nome" Type="String" Nullable="false" />
+    <Property Name="pontos" Type="Int32" Nullable="false" />
+    <Property Name="foto" Type="Binary" Nullable="false" />
+    <Property Name="data_ingresso" Type="Time" Nullable="false" />
+    <Property Name="descricao" Type="String" Nullable="true" />
+    <Property Name="redes_sociais" Type="String" Nullable="true" />
+    <NavigationProperty Name="Cargo" Relationship="SamModel.CargoUsuarios" FromRole="Usuarios" ToRole="Cargo" />
+    <NavigationProperty Name="Eventos" Relationship="SamModel.UsuariosEventos" FromRole="Usuarios" ToRole="Eventos" />
+    <NavigationProperty Name="UsuarioVotacoes" Relationship="SamModel.UsuariosUsuarioVotacoes" FromRole="Usuarios" ToRole="UsuarioVotacoes" />
+    <NavigationProperty Name="Pendencia" Relationship="SamModel.PendenciaUsuarios" FromRole="Usuarios" ToRole="Pendencia" />
+  </EntityType>
+  <EntityType Name="Tags">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Itens" Relationship="SamModel.ItensTags" FromRole="Tags" ToRole="Itens" />
+  </EntityType>
+  <EntityType Name="Eventos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Private" />
+    <Property Name="tipo" Type="Int16" Nullable="false" />
+    <Property Name="data" Type="Time" Nullable="false" />
+    <Property Name="status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Item" Relationship="SamModel.ItensEventos" FromRole="Eventos" ToRole="Itens" />
+    <NavigationProperty Name="Pendencias" Relationship="SamModel.PendenciaEventos" FromRole="Eventos" ToRole="Pendencia" />
+    <NavigationProperty Name="Votacao" Relationship="SamModel.EventosVotacao" FromRole="Eventos" ToRole="Votacao" />
+    <NavigationProperty Name="Usuario" Relationship="SamModel.UsuariosEventos" FromRole="Eventos" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="Votacoes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Evento" Relationship="SamModel.EventosVotacao" FromRole="Votacao" ToRole="Eventos" />
+    <NavigationProperty Name="UsuarioVotacoes" Relationship="SamModel.VotacoesUsuarioVotacoes" FromRole="Votacoes" ToRole="UsuarioVotacoes" />
+  </EntityType>
+  <EntityType Name="Pendencia">
+    <Key>
+      <PropertyRef Name="evento" />
+      <PropertyRef Name="usuario" />
+    </Key>
+    <Property Name="evento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="usuario" Type="String" Nullable="false" />
+    <NavigationProperty Name="Evento" Relationship="SamModel.PendenciaEventos" FromRole="Pendencia" ToRole="Eventos" />
+    <NavigationProperty Name="Usuarios" Relationship="SamModel.PendenciaUsuarios" FromRole="Pendencia" ToRole="Usuarios" />
+  </EntityType>
+  <Association Name="CategoriaItem">
+    <End Type="SamModel.Categorias" Role="Categoria" Multiplicity="1" />
+    <End Type="SamModel.Itens" Role="Item" Multiplicity="*" />
+  </Association>
+  <Association Name="CargoCargo">
+    <End Type="SamModel.Cargo" Role="Cargo" Multiplicity="1" />
+    <End Type="SamModel.Cargo" Role="Cargo1" Multiplicity="1" />
+  </Association>
+  <Association Name="ItensEventos">
+    <End Type="SamModel.Itens" Role="Itens" Multiplicity="1" />
+    <End Type="SamModel.Eventos" Role="Eventos" Multiplicity="*" />
+  </Association>
+  <Association Name="CargoUsuarios">
+    <End Type="SamModel.Cargo" Role="Cargo" Multiplicity="1" />
+    <End Type="SamModel.Usuarios" Role="Usuarios" Multiplicity="*" />
+  </Association>
+  <Association Name="PendenciaEventos">
+    <End Type="SamModel.Pendencia" Role="Pendencia" Multiplicity="*" />
+    <End Type="SamModel.Eventos" Role="Eventos" Multiplicity="1" />
+  </Association>
+  <Association Name="EventosVotacao">
+    <End Type="SamModel.Eventos" Role="Eventos" Multiplicity="1" />
+    <End Type="SamModel.Votacoes" Role="Votacao" Multiplicity="*" />
+  </Association>
+  <Association Name="UsuariosEventos">
+    <End Type="SamModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+    <End Type="SamModel.Eventos" Role="Eventos" Multiplicity="*" />
+  </Association>
+  <EntityType Name="UsuarioVotacoes">
+    <Key>
+      <PropertyRef Name="usuario" />
+      <PropertyRef Name="votacao" />
+    </Key>
+    <NavigationProperty Name="Usuarios" Relationship="SamModel.UsuariosUsuarioVotacoes" FromRole="UsuarioVotacoes" ToRole="Usuarios" />
+    <Property Name="usuario" Type="Int32" Nullable="false" />
+    <Property Name="votacao" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Votacoes" Relationship="SamModel.VotacoesUsuarioVotacoes" FromRole="UsuarioVotacoes" ToRole="Votacoes" />
+    <Property Name="dificuldade" Type="Int16" Nullable="false" />
+    <Property Name="multiplicador" Type="Int16" Nullable="false" />
+  </EntityType>
+  <Association Name="UsuariosUsuarioVotacoes">
+    <End Type="SamModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+    <End Type="SamModel.UsuarioVotacoes" Role="UsuarioVotacoes" Multiplicity="*" />
+  </Association>
+  <Association Name="VotacoesUsuarioVotacoes">
+    <End Type="SamModel.Votacoes" Role="Votacoes" Multiplicity="1" />
+    <End Type="SamModel.UsuarioVotacoes" Role="UsuarioVotacoes" Multiplicity="*" />
+  </Association>
+  <Association Name="ItensTags">
+    <End Type="SamModel.Itens" Role="Itens" Multiplicity="*" />
+    <End Type="SamModel.Tags" Role="Tags" Multiplicity="*" />
+  </Association>
+  <Association Name="PendenciaUsuarios">
+    <End Type="SamModel.Pendencia" Role="Pendencia" Multiplicity="*" />
+    <End Type="SamModel.Usuarios" Role="Usuarios" Multiplicity="*" />
+  </Association>
+</Schema>
