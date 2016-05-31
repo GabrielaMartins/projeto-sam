@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SamApi.Models;
+using SamApi.Helpers;
 
 namespace Opus.Helpers.Security
 {
@@ -72,17 +73,16 @@ namespace Opus.Helpers.Security
         public static IDictionary<string, object> DecodeToken(string token)
         {
 
-            IDictionary<string, object> payload = null;
             try
             {
-                payload = JWT.JsonWebToken.DecodeToObject(token, plainTextSecurityKey) as IDictionary<string, object>;
+                var res = JWT.JsonWebToken.DecodeToObject(token, plainTextSecurityKey) as IDictionary<string, object>;
+                return res;
             }
-            catch (JWT.SignatureVerificationException)
+            catch (Exception e)
             {
-                Console.WriteLine("Invalid token!");
+                throw e;
             }
-
-            return payload;
+            
         }
 
     }

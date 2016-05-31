@@ -5,7 +5,7 @@ using Opus.Helpers.ActiveDirectoryService;
 namespace SamApiService.Controllers
 {
 
-    [RoutePrefix("api/ad")]
+    [RoutePrefix("api/sam/ad")]
     public class AdController : ApiController
     {
 

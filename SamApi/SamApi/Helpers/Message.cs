@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 
-namespace SamApi.Models
+namespace SamApi.Helpers
 {
     public class Message
     {
@@ -14,6 +13,12 @@ namespace SamApi.Models
         public string Title { get; set; }
 
         public string Description { get; set; }
+
+        public static readonly Message TokenMissing = new Message(HttpStatusCode.BadRequest, "Invalid header", "The server cannot find the token in http header");
+
+        public static readonly Message InvalidToken = new Message(HttpStatusCode.BadRequest, "Invalid token", "The server cannot validate the token");
+
+        public static readonly Message Unauthorized = new Message(HttpStatusCode.Unauthorized, "Unauthorized", "You have no permission");
 
         public Message(HttpStatusCode code, string title, string description)
         {
