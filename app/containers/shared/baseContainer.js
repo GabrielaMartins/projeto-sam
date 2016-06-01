@@ -32,12 +32,12 @@ var BaseContainer = React.createClass({
             itens: [
               {
                 nome: "Listar",
-                url: "#",
+                url: "/item/listagem",
                 id: 1
               },
               {
                 nome: "Cadastrar",
-                url: "#",
+                url: "/item/cadastro",
                 id: 2
               }
             ]
