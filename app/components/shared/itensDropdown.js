@@ -6,6 +6,7 @@ var Link = ReactRouter.Link;
 var ItensDrop = React.createClass({
   render : function(){
     var itensDrop = [];
+    var classes = "";
 
     this.props.itensDrop.forEach(function(item){
       itensDrop.push(<li key={item.id}><Link to={item.url}>{item.nome}</Link></li>);
@@ -13,7 +14,7 @@ var ItensDrop = React.createClass({
 
     return(
       <div>
-        <ul id={this.props.itemMenu} className="dropdown-content">
+        <ul id={this.props.itemMenu} className={this.props.isMobile ? null : "dropdown-content"}>
           {itensDrop}
         </ul>
       </div>

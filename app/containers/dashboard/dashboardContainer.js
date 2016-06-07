@@ -13,7 +13,11 @@ var DashboardContainer = React.createClass({
 			}
     };
   },
+  componentDidMount: function(){
+
+  },
   componentWillMount: function(){
+    this.forceUpdate();
     //fazer fetch aqui
     this.setState({
       cardsDashboard:[
@@ -202,7 +206,7 @@ var DashboardContainer = React.createClass({
       ],
       options : {
         title: "Certificações mais procuradas por ano",
-        bar: {groupWidth: "95%"},
+        bar: {groupWidth: "100%"},
         legend: { position: 'right', maxLines: 3 },
         isStacked: true
       },

@@ -12,6 +12,7 @@ const Radio = React.createClass({
           type = "radio"
           value = {this.state.value}
           onChange = {this.props.onChange}/>
+
         <label
           for = {this.props.id}
           onClick = {this.handleLabelClick}>

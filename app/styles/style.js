@@ -24,6 +24,9 @@ export default StyleSheet.create({
     "colorText-default": {
         "color": "#550000"
     },
+    "colorText-finalizada": {
+        "color": "#0A4800"
+    },
     "color-links": {
         "color": "#D46A6A"
     },
@@ -67,10 +70,10 @@ export default StyleSheet.create({
     },
     "main": {
         "display": "flex !important",
-        "minHeight": "calc(100vh - 154px) !important",
+        "minHeight": "calc(100vh - 134px) !important",
         "flexDirection": "column !important",
         "flex": "1 0 auto !important",
-        "backgroundColor": "#FFAAAA"
+        "backgroundColor": "#EEE"
     },
     "dropdown-content": {
         "backgroundColor": "#FFFFFF",
@@ -94,15 +97,20 @@ export default StyleSheet.create({
         "color": "#550000 !important"
     },
     "nav ul a:hover": {
-        "backgroundColor": "rgba(0,0,0,0.3) !important"
+        "backgroundColor": "rgba(0,0,0,0.1) !important"
     },
     "eventsCard > card-panel:hover": {
-        "backgroundColor": "rgba(0,0,0,0.3) !important",
+        "backgroundColor": "rgba(0,0,0,0.1)",
         "cursor": "pointer"
     },
-    "pendencias:hover": {
-        "backgroundColor": "rgba(0,0,0,0.3) !important",
+    "pendencia:hover": {
         "cursor": "pointer"
+    },
+    "finalizada:hover": {
+        "backgroundColor": "#e57373 !important"
+    },
+    "aberta:hover": {
+        "backgroundColor": "#81c784 !important"
     },
     "footerpage-footer": {
         "marginTop": "0px !important",
@@ -113,27 +121,27 @@ export default StyleSheet.create({
     },
     "pendencia": {
         "overflowY": "scroll",
-        "maxHeight": 300
+        "maxHeight": 255
     },
     "ranking": {
         "overflowY": "scroll",
-        "maxHeight": 300
+        "maxHeight": 255
     },
     "eventos": {
         "overflowY": "scroll",
-        "maxHeight": 425
+        "maxHeight": 423
     },
     "promocoes": {
         "overflowY": "scroll",
-        "maxHeight": 425
+        "maxHeight": 423
     },
     "votacao": {
         "overflowY": "scroll",
         "overflowX": "hidden",
-        "maxHeight": 521
+        "maxHeight": 540
     },
     "progress": {
-        "backgroundColor": "#FFAAAA"
+        "backgroundColor": "#888"
     },
     "progress determinate": {
         "backgroundColor": "#550000"
@@ -143,5 +151,61 @@ export default StyleSheet.create({
         "marginRight": 10,
         "marginBottom": 10,
         "marginLeft": 10
+    },
+    "inputsearch": {
+        "display": "block",
+        "fontSize": 16,
+        "fontWeight": 300,
+        "width": "100%",
+        "height": 45,
+        "marginTop": 0,
+        "marginRight": 0,
+        "marginBottom": 0,
+        "marginLeft": 0,
+        "paddingTop": 0,
+        "paddingRight": 45,
+        "paddingBottom": 0,
+        "paddingLeft": 15,
+        "border": 0
+    },
+    "inputsearch: focus": {
+        "outline": "none"
+    },
+    "inputsearch:not([type]):focus:not([readonly])": {
+        "boxShadow": "0 0 0 0"
+    },
+    "scrollbar::-webkit-scrollbar-corner": {
+        "backgroundColor": "#FFFFFF"
+    },
+    "scrollbar::-webkit-scrollbar-track": {
+        "backgroundColor": "none"
+    },
+    "scrollbar::-webkit-scrollbar": {
+        "WebkitAppearance": "none",
+        "width": 11
+    },
+    "scrollbar::-webkit-scrollbar-thumb": {
+        "borderRadius": 12,
+        "border": "4px solid rgba(255,255,255,0)",
+        "backgroundClip": "content-box",
+        "backgroundColor": "#550000"
+    },
+    "[type=\"radio\"]:checked+label:after": {
+        "backgroundColor": "#550000 !important",
+        "border": "2px solid #550000 !important"
+    },
+    "[type=\"radio\"]with-gap:checked+label:after": {
+        "backgroundColor": "#550000 !important",
+        "border": "2px solid #550000 !important"
+    },
+    "[type=\"radio\"]with-gap:checked+label:before": {
+        "border": "2px solid #550000 !important"
+    },
+    "textarea:focus:not([readonly])": {
+        "borderBottom": "1px solid #550000 !important",
+        "boxShadow": "0 1px 0 0 #550000 !important"
+    },
+    "textarea:focus:not([readonly])+label": {
+        "color": "#550000 !important"
     }
 });

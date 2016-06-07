@@ -6,17 +6,17 @@ var Link = ReactRouter.Link;
 
 
 var Base = function(props){
-    //console.log(props.children);
     var dropdowns = [];
     var itensMenu = [];
-    var menuUsuario = null;
+
     props.dropdowns.forEach(function(dropdown){
       dropdowns.push(<Dropdown key = {dropdown.id} itensDrop = {dropdown.itens} itemMenu = {dropdown.itemMenu}/>);
       //se for diferente do nome da pessoa, cria menu (como exemplo estou usando o meu nome) se não cria menu do usuário
       if(dropdown.itemMenu != "Gabriela"){
         itensMenu.push(dropdown.itemMenu);
       }else{
-         menuUsuario = dropdown.itemMenu;
+         this.menuUsuario = dropdown.itemMenu;
+         this.imagemUsuario = dropdown.imagem;
       }
     });
 
@@ -24,15 +24,18 @@ var Base = function(props){
       <div>
         <header>
           {dropdowns}
-          <nav className="nav-wrapper color-default z-depth-2">
-            <div className="col s12">
-              <Link to="/Dashboard" className="brand-logo"><img src="./app/imagens/logo-sam.png" style={{height:60}} /></Link>
+          <div className="navbar-fixed">
+            <nav className="nav-wrapper color-default z-depth-2 row">
+              <div className="col s10 offset-s1">
+                <Link to="/Dashboard" className="brand-logo"><img src="./app/imagens/logo-sam.png" style={{height:60}} /></Link>
+                <a data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
                 <ul className="right hide-on-med-and-down"><li><a className="dropdown-button" data-beloworigin="true"
-                 href="#!" data-activates={menuUsuario}>Olá, {menuUsuario}<i className="material-icons right">arrow_drop_down</i></a></li></ul>
-              <img className="responsive-img right circle hide-on-med-and-down" src="./app/imagens/fulano.jpg" style={{height:40, marginTop:12, marginLeft:100}}/>
-            <ItensMenu itensMenu = {itensMenu}/>
-            </div>
-          </nav>
+                  href="#!" data-activates={this.menuUsuario}>Olá, {this.menuUsuario}<i className="material-icons right">arrow_drop_down</i></a></li></ul>
+                <img className="responsive-img right circle hide-on-med-and-down" src={this.imagemUsuario} style={{height:40, marginTop:12, marginLeft:100}}/>
+              <ItensMenu itensMenu = {itensMenu} usuario={this.menuUsuario} imagemUsuario={this.imagemUsuario} dropdowns={props.dropdowns}/>
+              </div>
+            </nav>
+          </div>
         </header>
         <main>
           {/*renderiza o conteúdo das rotas dentro da base*/}

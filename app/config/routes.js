@@ -10,14 +10,19 @@ var Base = require('../containers/shared/baseContainer');
 var Dashboard = require('../containers/dashboard/dashboardContainer');
 var Votacao = require('../containers/votacao/votacaoContainer');
 var CadastroItem = require('../containers/cadastro_itens/cadastroItemContainer');
+var ListaUsuarios = require('../containers/usuario/listaUsuariosContainer');
+var ListaItens = require('../containers/item/listaItensContainer');
+
 
 var Routes = (
   <Router history={HashHistory}>
     <Route path='/' component={Login}/>
       <Route component={Base}>
         <Route path='/Dashboard' component={Dashboard}/>
-        <Route path="/Votacao/:id" component={Votacao}/>
         <Route path="/Item/Cadastro" component={CadastroItem}/>
+        <Route path='/Votacao/:id' component={Votacao}/>
+        <Route path='/Funcionarios' component={ListaUsuarios}/>
+        <Route path='/Itens' component={ListaItens}/>
       </Route>
   </Router>
 )

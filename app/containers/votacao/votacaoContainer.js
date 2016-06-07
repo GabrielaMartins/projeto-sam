@@ -67,7 +67,7 @@ var VotacaoContainer = React.createClass({
 },
 
   render : function(){
-      return(<Votacao votos = {this.state.votos} evento = {this.state.evento}/>)
+      return(<Votacao votos = {this.state.votos} evento = {this.state.evento} perfil = "rh"/>)
   }
 });
 

@@ -7,9 +7,9 @@ var Link = ReactRouter.Link;
 var CadastroItem = function(props){
 
   return(
-      <main className="main">
+      <div>
         <form>
-          <div className="row wrapper">
+          <div className="row valign-wrapper" style={{paddingTop: '5%' }}>
             <div className="col l6 m6 s12 center-block">
               <div className="card-panel z-depth-6 transparent-white">
                 <div className="row">
@@ -70,23 +70,28 @@ var CadastroItem = function(props){
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col l6 m6 s6">
-                      <Radio
-                        id = "radio1"
-                        name = "rdGroup"
-                        label = {props.rotulosRadio[0]}
-                        value = {props.rotulosRadio[0]}
-                        onChange = {props.handleModifierChanges}
-                      />
+                    <div className="col s6">
+                      <div className="right">
+                        <Radio
+                          className="right"
+                          id = "radio1"
+                          name = "rdGroup"
+                          label = {props.rotulosRadio[0]}
+                          value = {props.rotulosRadio[0]}
+                          onChange = {props.handleModifierChanges}
+                        />
+                      </div>
                     </div>
-                    <div className="col l6 m6 s6">
-                      <Radio
-                        name = "rdGroup"
-                        id = "radio2"
-                        label = {props.rotulosRadio[1]}
-                        value = {props.rotulosRadio[1]}
-                        onChange = {props.handleModifierChanges}
-                      />
+                    <div className="col s6">
+                      <div className="left">
+                        <Radio
+                          name = "rdGroup"
+                          id = "radio2"
+                          label = {props.rotulosRadio[1]}
+                          value = {props.rotulosRadio[1]}
+                          onChange = {props.handleModifierChanges}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -95,17 +100,17 @@ var CadastroItem = function(props){
                 <div className="row wrapper">
                   <div className="col l12 m12 s12">
                     <div className="row">
-                      <div className="col l6 m6 s6">
+                      <div className="col s6">
                         <a
-                          className="waves-effect waves-light btn"
+                          className="color-default waves-effect waves-light btn right"
                           onClick = {props.handleClear}
                           name="btn_limpar">Limpar
                           <i className="material-icons right">send</i>
                         </a>
                       </div>
-                      <div className="col l6 m6 s6">
+                      <div className="col s6">
                         <button
-                          className="btn waves-effect waves-light"
+                          className="color-default btn waves-effect waves-light left"
                           type="submit"
                           name="btn_enviar"
                           onClick = {props.handleSubmit}>Enviar
@@ -119,7 +124,7 @@ var CadastroItem = function(props){
             </div>
           </div>
         </form>
-      </main>
+      </div>
     );
 
 }

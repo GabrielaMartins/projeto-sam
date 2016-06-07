@@ -9,9 +9,9 @@ var Pendencias = React.createClass({
 
     this.props.pendencias.forEach(function(conteudoCard){
         if(conteudoCard.tipo == "Votação"){
-          cards.push(<div className="col l4 m12 s6"><Link to={{ pathname: '/Votacao/1'}}  className="colorText-default"><CardPendencia conteudo = {conteudoCard}/></Link></div>);
+          cards.push(<div className="col l4 m12 s12"><Link to={{ pathname: '/Votacao/1'}}><CardPendencia conteudo = {conteudoCard}/></Link></div>);
         }else{
-          cards.push(<div className="col l4 m12 s6"><CardPendencia conteudo = {conteudoCard}/></div>);
+          cards.push(<div className="col l4 m12 s12"><CardPendencia conteudo = {conteudoCard}/></div>);
         }
     });
 

@@ -7,16 +7,33 @@ var BaseContainer = React.createClass({
       dropdowns: null
     };
   },
+  componentDidMount: function(){
+    (function($) {
+      $(function() {
+        $(document).ready(function() {
+          $(".button-collapse").sideNav({
+            closeOnClick: true
+          });
+          $('.collapsible').collapsible();
+        });
+      }); // End Document Ready
+    })(jQuery);
+
+    window.sr = ScrollReveal();
+    sr.reveal('.scrollreveal');
+
+    this.forceUpdate();
+  },
   componentWillMount: function(){
     this.setState({
       dropdowns : [
           {
-            itemMenu : "Funcionários",
-            id: 1,
+            itemMenu : "Funcionarios",
+            id: 2,
             itens: [
               {
                 nome: "Listar",
-                url: "#",
+                url: "/Funcionarios",
                 id: 3
               },
               {
@@ -28,33 +45,34 @@ var BaseContainer = React.createClass({
           },
           {
             itemMenu : "Itens",
-            id: 2,
+            id: 5,
             itens: [
               {
                 nome: "Listar",
                 url: "/item/listagem",
-                id: 1
+                id: 6
               },
               {
                 nome: "Cadastrar",
                 url: "/item/cadastro",
-                id: 2
+                id: 7
               }
             ]
           },
           {
             itemMenu : "Gabriela",
-            id: 5,
+            imagem:"./app/imagens/fulano.jpg",
+            id: 8,
             itens: [
               {
                 nome: "Perfil",
                 url: "#",
-                id: 1
+                id: 9
               },
               {
                 nome: "Configuração",
                 url: "#",
-                id: 2
+                id: 10
               }
             ]
           }
