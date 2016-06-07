@@ -40,8 +40,8 @@ namespace SamApiService.Controllers
                 if (user == null)
                 {
 
-                    // or maybe we can return a http error
-                    var result1 = new Message(HttpStatusCode.NotFound, "User Not Found", "We could not found the user " + login.User + " in our database");
+                    // return a http error
+                    var result1 = new Message(HttpStatusCode.NotFound, "User Not Found", "We could not found the user '" + login.User + "' in our database");
                    
                     response = Request.CreateResponse(HttpStatusCode.NotFound, result1);
                     response.Headers.CacheControl = new CacheControlHeaderValue()
@@ -54,9 +54,10 @@ namespace SamApiService.Controllers
                 else
                 {
 
-                    // **** REMOVER ISSO DEPOIS ******
+                    // *************** REMOVER ISSO DEPOIS ******************
                     var userAd = adConsumer.GetUser(login.User);
                     user = new User(userAd.Key, userAd.Name, userAd.Email);
+                    // ****************************************************** //
 
                     // generate token based on User
                     token = JwtManagement.GenerateToken(user);

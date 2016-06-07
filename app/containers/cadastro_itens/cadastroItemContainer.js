@@ -8,7 +8,7 @@ const CadastroItemContainer = React.createClass({
   render: function(){
     return(
       <CadastroItem
-        categorias = {this.state.categorias}
+        categorias = {this.categorias.map(c => c.nome)}
         rotulosRadio = {this.state.rotulosRadio}
         item = {this.state.item}
         descricao = {this.state.descricao}
@@ -27,13 +27,12 @@ const CadastroItemContainer = React.createClass({
 
   getInitialState: function(){
       return {
-        categorias: [],
         rotulosRadio: ["Raso", "Profundo"],
         dificuldade: "Selecione a dificuldade",
         categoria: "Selecione a categoria",
         item: "",
         descricao: "",
-        modificador: 0
+        checked: false
       }
   },
 
@@ -47,8 +46,6 @@ const CadastroItemContainer = React.createClass({
     $("#select_categoria").on('change', self.handleCategoryChanges);
     $("#select_dificuldade").on('change', self.handleDificultyChanges);
 
-
-  //  this.forceUpdate();
   },
 
   componentWillMount: function(){
@@ -61,18 +58,23 @@ const CadastroItemContainer = React.createClass({
       var self = this;
       axios.get(url).then(
         function(response){
-
-          var nomeCategorias = response.data.map(c => c.nome);
-          self.setState({categorias: nomeCategorias});
+          //debugger;
+          //var categorias = response.data;
+          //self.categorias = categorias;
         },
         function(reason){
 
         }
       );
+
+      // teste: remover depois
+      debugger;
+      var categorias = [{nome:"Categoria 1"},{nome:"Categoria 2"}];
+      self.categorias = categorias;
   },
 
   handleCategoryChanges: function(event){
-
+    debugger;
     var categoria = event.target.value;
 
     // troca o rotulo dos radio
@@ -91,19 +93,25 @@ const CadastroItemContainer = React.createClass({
   },
 
   handleDificultyChanges: function(event){
-
+    debugger;
     var dificuldade = event.target.value;
     this.setState({dificuldade: dificuldade});
   },
 
   handleModifierChanges: function(event){
+    debugger;
     var modificador = event.target.value;
-    var val = 0;
-    if(modificador === "X"){
-      val = 1;
+    if(modificador === "Raso"){
+      this.modificador = 2;
+    }else if(modificador === "Profundo"){
+      this.modificador = 3;
+    }else if(modificador === "Alinhado"){
+      this.modificador = 1;
+    }else if(modificador === "Não Alinhado"){
+      this.modificador = 3;
     }
 
-    this.setState({modificador: val});
+    //this.setState({modificador: val});
   },
 
   handleDescriptionChanges: function(event){
@@ -116,19 +124,38 @@ const CadastroItemContainer = React.createClass({
     this.setState({item: item});
   },
 
-  handleSubmit: function(){
+  handleSubmit: function(event){
+    event.preventDefault();
 
+    var item = this.state.item;
+    var descricao = this.state.descricao;
+    var categoria = this.categoria;
+    var dificuldade = this.dificuldade;
+    var modificador = this.modificador;
 
+    var itemObject = {
+      item: item,
+      categoria: categoria,
+      dificuldade: dificuldade,
+      modificador: modificador,
+      descricao: descricao
+    };
+
+    // fazer post do objeto para o server
+
+    // salvar no banco o item
+    console.log("item: " + itemObject);
   },
 
   handleClear: function(){
-      
-      this.setState({
-        categoria: "Selecione a categoria",
-        dificuldade: "Selecione a dificuldade",
-        item: "",
-        descricao: ""
-      });
+
+      $("input:radio").prop("checked", false);
+
+      debugger;
+      var cmbCategoria = $('#select_categoria');
+      cmbCategoria.val('Selecione a categoria');
+      this.setState(this.getInitialState());
+
   }
 
 });

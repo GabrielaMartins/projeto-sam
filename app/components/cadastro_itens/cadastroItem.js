@@ -1,18 +1,10 @@
 'use strict'
 var React =  require('react');
 var ReactRouter = require('react-router');
+var Radio = require('../../ui_elements/radio');
 var Link = ReactRouter.Link;
 
 var CadastroItem = function(props){
-  console.log(props.categorias);
-  var options = [];
-
-  props.categorias.forEach(function(categoria){
-    debugger;
-    options.push(<option value = {categoria} key = {categoria}>{categoria}</option>);
-  });
-
-  //var categorias = props.categorias.map( (opt, index) => <option value = {opt} key = {index}>{opt}</option>);
 
   return(
       <main className="main">
@@ -39,11 +31,11 @@ var CadastroItem = function(props){
                       value = {props.categoria}
                       onChange = {props.handleCategoryChanges}>
                       <option
-                        value = {props.categoria}
-                        key = {props.categoria}
-                        disabled>{props.categoria}
+                        value = {0}
+                        key = {0}
+                        /*disabled*/>Selecione a categoria
                       </option>
-                      {options}
+                      {props.categorias.map( (opt, index) => <option value = {opt} key = {index + 1}>{opt}</option>)}
                    </select>
                     <label>Categoria</label>
                   </div>
@@ -53,11 +45,13 @@ var CadastroItem = function(props){
                       value = {props.dificuldade}
                       onChange = {props.handleDificultyChanges}>
                         <option
-                          value = {props.dificuldade}
-                          key = {props.dificuldade}
-                          disabled>{props.dificuldade}
+                          value = {0}
+                          key = {0}
+                          /*disabled*/>Selecione a dificuldade
                         </option>
-                        {["Fácil", "Médio", "Difícil"].map(opt => <option value = {opt} key = {opt}>{opt}</option>)}
+                        <option value = "1" key = "1">Fácil</option>
+                        <option value = "3" key = "2">Médio</option>
+                        <option value = "8" key = "3">Difícil</option>
                    </select>
                     <label>Dificuldade</label>
                   </div>
@@ -77,22 +71,22 @@ var CadastroItem = function(props){
                   </div>
                   <div className="row">
                     <div className="col l6 m6 s6">
-                      <input
-                        id="modificador1"
-                        name="rdgroup"
-                        type="radio"
-                        onClick = {props.handleModifierChanges}
+                      <Radio
+                        id = "radio1"
+                        name = "rdGroup"
+                        label = {props.rotulosRadio[0]}
+                        value = {props.rotulosRadio[0]}
+                        onChange = {props.handleModifierChanges}
                       />
-                      <label for="modificador1">{props.rotulosRadio[0]}</label>
                     </div>
                     <div className="col l6 m6 s6">
-                      <input
-                        id = "modificador2"
-                        name = "rdgroup"
-                        type = "radio"
-                        onClick = {props.handleModifierChanges}
-                        />
-                      <label for="modificador2">{props.rotulosRadio[1]}</label>
+                      <Radio
+                        name = "rdGroup"
+                        id = "radio2"
+                        label = {props.rotulosRadio[1]}
+                        value = {props.rotulosRadio[1]}
+                        onChange = {props.handleModifierChanges}
+                      />
                     </div>
                   </div>
                 </div>
@@ -133,6 +127,7 @@ var CadastroItem = function(props){
 CadastroItem.propTypes = {
    categorias: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
    rotulosRadio: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+   //checked: React.PropTypes.bool.isRequired,
    item: React.PropTypes.string.isRequired,
    descricao: React.PropTypes.string.isRequired,
    categoria: React.PropTypes.string.isRequired,

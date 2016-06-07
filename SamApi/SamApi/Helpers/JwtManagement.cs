@@ -9,7 +9,7 @@ namespace Opus.Helpers.Security
     public class JwtManagement
     {
 
-        private static readonly string plainTextSecurityKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk";
+        private static readonly string plainTextSecurityKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk45Xdlgsyfc";
 
         public JwtManagement()
         {
@@ -51,10 +51,10 @@ namespace Opus.Helpers.Security
                 // informa o cliente quem emitiu o token
                 { "iss", "http://opus.sam.com" },
 
-                // informa a dasta e hora que o token foi emitido
+                // informa a data e hora que o token foi emitido
                 { "iat", currentTime},
 
-                /// esse é o tempo de vida do token (da erro)
+                /// esse é o tempo de vida do token (da erro quando decodifica, nao sei pq)
                 //{ "exp", currentTime.AddHours(expTime)},
 
                 // assunto do token

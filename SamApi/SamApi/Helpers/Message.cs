@@ -14,7 +14,7 @@ namespace SamApi.Helpers
 
         public string Description { get; set; }
 
-        public static readonly Message TokenMissing = new Message(HttpStatusCode.BadRequest, "Invalid header", "The server cannot find the token in http header");
+        public static readonly Message TokenMissing = new Message(HttpStatusCode.BadRequest, "Invalid header", "The server cannot find a key named 'token' in http header");
 
         public static readonly Message InvalidToken = new Message(HttpStatusCode.BadRequest, "Invalid token", "The server cannot validate the token");
 

@@ -1,10 +1,11 @@
 'use strict'
 var React = require('react');
-var Login = require('../components/login');
+var Login = require('../../components/login/login');
 var ReactRouter = require('react-router');
-var helpers = require('../helpers/requestService');
+var axios = require("axios");
 
 var LoginContainer = React.createClass({
+
   getInitialState: function(){
     return{
       usuario:"",
@@ -26,20 +27,23 @@ var LoginContainer = React.createClass({
 
   handleSubmit: function(e){
     debugger;
-    e.preventDefault();
-    var promise = helpers.autenticacao("http://localhost:65120/api/ad/user/authenticate", this.state.usuario, this.state.senha);
     var self = this;
-    promise.then(function(response){
-      if(response.data == true){
-        self.context.router.push('/Dashboard');
-      }else{
-        alert("Não logou");
-      }
-    });
+    e.preventDefault();
 
-    promise.catch(function(response){
-      console.log("Erro de conexão.");
-    });
+    axios.post("localhost:65120/api/sam/login",
+    {
+        user: self.state.usuario,
+        password: self.state.senha
+    }).then(
+      // sucesso
+      function(response){
+        debugger;
+        self.context.router.push('/Dashboard');
+      },
+      // falha
+      function(jqXHR, textStatus, errorThrown){
+        debugger;
+      });
   },
 
   render: function(){

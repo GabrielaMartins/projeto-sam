@@ -137,5 +137,11 @@ export default StyleSheet.create({
     },
     "progress determinate": {
         "backgroundColor": "#550000"
+    },
+    "intern": {
+        "marginTop": 10,
+        "marginRight": 10,
+        "marginBottom": 10,
+        "marginLeft": 10
     }
 });
