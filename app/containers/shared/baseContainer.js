@@ -33,7 +33,7 @@ var BaseContainer = React.createClass({
             itens: [
               {
                 nome: "Listar",
-                url: "/Funcionarios",
+                url: "/Funcionario/Listagem",
                 id: 3
               },
               {
@@ -49,12 +49,12 @@ var BaseContainer = React.createClass({
             itens: [
               {
                 nome: "Listar",
-                url: "/item/listagem",
+                url: "/Item/Listagem",
                 id: 6
               },
               {
                 nome: "Cadastrar",
-                url: "/item/cadastro",
+                url: "/Item/Cadastro",
                 id: 7
               }
             ]

@@ -21,8 +21,8 @@ var Routes = (
         <Route path='/Dashboard' component={Dashboard}/>
         <Route path="/Item/Cadastro" component={CadastroItem}/>
         <Route path='/Votacao/:id' component={Votacao}/>
-        <Route path='/Funcionarios' component={ListaUsuarios}/>
-        <Route path='/Itens' component={ListaItens}/>
+        <Route path='/Funcionario/Listagem' component={ListaUsuarios}/>
+        <Route path='/Item/Listagem' component={ListaItens}/>
       </Route>
   </Router>
 )
