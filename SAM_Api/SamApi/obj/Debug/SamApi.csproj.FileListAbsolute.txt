@@ -1,0 +1,121 @@
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\obj\Debug\SamApi.csprojResolveAssemblyReference.cache
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\ApplicationInsights.config
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\roslyn\csc.exe
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\roslyn\Microsoft.CodeAnalysis.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\roslyn\Microsoft.CSharp.Core.targets
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\roslyn\Microsoft.VisualBasic.Core.targets
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\roslyn\System.Collections.Immutable.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\roslyn\System.Reflection.Metadata.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\roslyn\vbc.exe
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\roslyn\VBCSCompiler.exe
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\roslyn\VBCSCompiler.exe.config
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\SamApi.dll.config
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\SamApi.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\SamApi.pdb
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.AI.Agent.Intercept.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.AI.DependencyCollector.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.AI.PerfCounterCollector.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.AI.ServerTelemetryChannel.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.AI.Web.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.AI.WindowsServer.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.ApplicationInsights.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.Web.Infrastructure.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Newtonsoft.Json.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Net.Http.Formatting.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Helpers.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Http.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Http.WebHost.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Mvc.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Razor.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Webpages.Deployment.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Webpages.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Webpages.Razor.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.AI.DependencyCollector.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.AI.ServerTelemetryChannel.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.AI.Web.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.AI.WindowsServer.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.ApplicationInsights.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Razor.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Webpages.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Webpages.Deployment.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Webpages.Razor.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Helpers.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Mvc.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\Newtonsoft.Json.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Net.Http.Formatting.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Http.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\bin\System.Web.Http.WebHost.xml
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\obj\Debug\SamApi.dll
+c:\users\jesley.opus\documents\visual studio 2015\Projects\SamApi\SamApi\obj\Debug\SamApi.pdb
+C:\Users\jesley.OPUS\Documents\Visual Studio 2015\Projects\SamApi\SamApi\bin\JWT.dll
+C:\Users\jesley.OPUS\Documents\Visual Studio 2015\Projects\SamApi\SamApi\bin\EntityFramework.dll
+C:\Users\jesley.OPUS\Documents\Visual Studio 2015\Projects\SamApi\SamApi\bin\EntityFramework.SqlServer.dll
+C:\Users\jesley.OPUS\Documents\Visual Studio 2015\Projects\SamApi\SamApi\bin\EntityFramework.xml
+C:\Users\jesley.OPUS\Documents\Visual Studio 2015\Projects\SamApi\SamApi\bin\EntityFramework.SqlServer.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\ApplicationInsights.config
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\roslyn\csc.exe
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\roslyn\vbc.exe
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\roslyn\VBCSCompiler.exe
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\SamApi.dll.config
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\SamApi.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\SamApi.pdb
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\EntityFramework.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\EntityFramework.SqlServer.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\JWT.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.AI.Web.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.ApplicationInsights.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Newtonsoft.Json.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Net.Http.Formatting.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Helpers.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Http.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Http.WebHost.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Mvc.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Razor.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Webpages.Deployment.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Webpages.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Webpages.Razor.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\EntityFramework.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\EntityFramework.SqlServer.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.AI.Web.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.ApplicationInsights.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Razor.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Webpages.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Webpages.Deployment.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Webpages.Razor.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Helpers.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Mvc.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\Newtonsoft.Json.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Net.Http.Formatting.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Http.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Http.WebHost.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\obj\Debug\SamApi.csprojResolveAssemblyReference.cache
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\obj\Debug\SamApi.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\obj\Debug\SamApi.pdb
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Cors.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Http.Cors.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SamApi\SamApi\bin\System.Web.Http.Cors.xml

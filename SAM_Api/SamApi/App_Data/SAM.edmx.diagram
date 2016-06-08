@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="825da927a17d4db8906a31bcc91a090b" Name="Diagram1">
+        <EntityTypeShape EntityType="sam.database.CARGO" Width="1.5" PointX="1.5" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sam.database.CATEGORIA" Width="1.5" PointX="1.5" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="sam.database.EVENTO" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="sam.database.ITEN" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="sam.database.PENDENCIA" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sam.database.RESULTADOS_VOTACOES" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sam.database.TAGGED_ITENS" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="sam.database.TAG" Width="1.5" PointX="0.75" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="sam.database.USUARIO" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="sam.database.FK__CARGOS__anterior__117F9D94" ManuallyRouted="false" />
+        <AssociationConnector Association="sam.database.FK__USUARIOS__cargo__15502E78" ManuallyRouted="false" />
+        <AssociationConnector Association="sam.database.FK__ITENS__categoria__21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="sam.database.FK__EVENTOS__item__286302EC" ManuallyRouted="false" />
+        <AssociationConnector Association="sam.database.FK__EVENTOS__usuario__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="sam.database.FK__PENDENCIA__event__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="sam.database.FK__RESULTADO__event__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="sam.database.FK__TAGGED_ITE__item__24927208" ManuallyRouted="false" />
+        <AssociationConnector Association="sam.database.FK__PENDENCIA__usuar__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="sam.database.FK__RESULTADO__usuar__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="sam.database.FK__TAGGED_ITEN__tag__25869641" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,723 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="sam.database.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CARGOS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="anterior" Type="int" />
+        </EntityType>
+        <EntityType Name="CATEGORIAS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="peso" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EVENTOS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="item" Type="int" />
+          <Property Name="usuario" Type="int" />
+          <Property Name="data" Type="date" Nullable="false" />
+          <Property Name="estado" Type="bit" Nullable="false" />
+          <Property Name="tipo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ITENS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="200" />
+          <Property Name="dificuldade" Type="int" Nullable="false" />
+          <Property Name="modificador" Type="int" Nullable="false" />
+          <Property Name="categoria" Type="int" />
+        </EntityType>
+        <EntityType Name="PENDENCIAS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario" Type="int" />
+          <Property Name="evento" Type="int" />
+          <Property Name="estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RESULTADOS_VOTACOES">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="evento" Type="int" />
+          <Property Name="usuario" Type="int" />
+          <Property Name="dificuldade" Type="int" Nullable="false" />
+          <Property Name="modificador" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TAGGED_ITENS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="item" Type="int" />
+          <Property Name="tag" Type="int" />
+        </EntityType>
+        <EntityType Name="TAGS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USUARIOS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cargo" Type="int" />
+          <Property Name="pontos" Type="int" Nullable="false" />
+          <Property Name="samaccount" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="200" />
+          <Property Name="redes" Type="varchar" MaxLength="200" />
+          <Property Name="dataInicio" Type="date" Nullable="false" />
+          <Property Name="foto" Type="binary" MaxLength="1" />
+          <Property Name="ativo" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__CARGOS__anterior__117F9D94">
+          <End Role="CARGOS" Type="Self.CARGOS" Multiplicity="0..1" />
+          <End Role="CARGOS1" Type="Self.CARGOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARGOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CARGOS1">
+              <PropertyRef Name="anterior" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EVENTOS__item__286302EC">
+          <End Role="ITENS" Type="Self.ITENS" Multiplicity="0..1" />
+          <End Role="EVENTOS" Type="Self.EVENTOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITENS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EVENTOS">
+              <PropertyRef Name="item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EVENTOS__usuario__29572725">
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="0..1" />
+          <End Role="EVENTOS" Type="Self.EVENTOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EVENTOS">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ITENS__categoria__21B6055D">
+          <End Role="CATEGORIAS" Type="Self.CATEGORIAS" Multiplicity="0..1" />
+          <End Role="ITENS" Type="Self.ITENS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIAS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ITENS">
+              <PropertyRef Name="categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PENDENCIA__event__2F10007B">
+          <End Role="EVENTOS" Type="Self.EVENTOS" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PENDENCIAS" Type="Self.PENDENCIAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EVENTOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PENDENCIAS">
+              <PropertyRef Name="evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PENDENCIA__usuar__2E1BDC42">
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PENDENCIAS" Type="Self.PENDENCIAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PENDENCIAS">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RESULTADO__event__32E0915F">
+          <End Role="EVENTOS" Type="Self.EVENTOS" Multiplicity="0..1" />
+          <End Role="RESULTADOS_VOTACOES" Type="Self.RESULTADOS_VOTACOES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EVENTOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RESULTADOS_VOTACOES">
+              <PropertyRef Name="evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RESULTADO__usuar__33D4B598">
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="0..1" />
+          <End Role="RESULTADOS_VOTACOES" Type="Self.RESULTADOS_VOTACOES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RESULTADOS_VOTACOES">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TAGGED_ITE__item__24927208">
+          <End Role="ITENS" Type="Self.ITENS" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TAGGED_ITENS" Type="Self.TAGGED_ITENS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITENS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TAGGED_ITENS">
+              <PropertyRef Name="item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TAGGED_ITEN__tag__25869641">
+          <End Role="TAGS" Type="Self.TAGS" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TAGGED_ITENS" Type="Self.TAGGED_ITENS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAGS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TAGGED_ITENS">
+              <PropertyRef Name="tag" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIOS__cargo__15502E78">
+          <End Role="CARGOS" Type="Self.CARGOS" Multiplicity="0..1" />
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARGOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIOS">
+              <PropertyRef Name="cargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="samdatabaseStoreContainer">
+          <EntitySet Name="CARGOS" EntityType="Self.CARGOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORIAS" EntityType="Self.CATEGORIAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EVENTOS" EntityType="Self.EVENTOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ITENS" EntityType="Self.ITENS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PENDENCIAS" EntityType="Self.PENDENCIAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RESULTADOS_VOTACOES" EntityType="Self.RESULTADOS_VOTACOES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAGGED_ITENS" EntityType="Self.TAGGED_ITENS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAGS" EntityType="Self.TAGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CARGOS__anterior__117F9D94" Association="Self.FK__CARGOS__anterior__117F9D94">
+            <End Role="CARGOS" EntitySet="CARGOS" />
+            <End Role="CARGOS1" EntitySet="CARGOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EVENTOS__item__286302EC" Association="Self.FK__EVENTOS__item__286302EC">
+            <End Role="ITENS" EntitySet="ITENS" />
+            <End Role="EVENTOS" EntitySet="EVENTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EVENTOS__usuario__29572725" Association="Self.FK__EVENTOS__usuario__29572725">
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+            <End Role="EVENTOS" EntitySet="EVENTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ITENS__categoria__21B6055D" Association="Self.FK__ITENS__categoria__21B6055D">
+            <End Role="CATEGORIAS" EntitySet="CATEGORIAS" />
+            <End Role="ITENS" EntitySet="ITENS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PENDENCIA__event__2F10007B" Association="Self.FK__PENDENCIA__event__2F10007B">
+            <End Role="EVENTOS" EntitySet="EVENTOS" />
+            <End Role="PENDENCIAS" EntitySet="PENDENCIAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PENDENCIA__usuar__2E1BDC42" Association="Self.FK__PENDENCIA__usuar__2E1BDC42">
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+            <End Role="PENDENCIAS" EntitySet="PENDENCIAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RESULTADO__event__32E0915F" Association="Self.FK__RESULTADO__event__32E0915F">
+            <End Role="EVENTOS" EntitySet="EVENTOS" />
+            <End Role="RESULTADOS_VOTACOES" EntitySet="RESULTADOS_VOTACOES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RESULTADO__usuar__33D4B598" Association="Self.FK__RESULTADO__usuar__33D4B598">
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+            <End Role="RESULTADOS_VOTACOES" EntitySet="RESULTADOS_VOTACOES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TAGGED_ITE__item__24927208" Association="Self.FK__TAGGED_ITE__item__24927208">
+            <End Role="ITENS" EntitySet="ITENS" />
+            <End Role="TAGGED_ITENS" EntitySet="TAGGED_ITENS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TAGGED_ITEN__tag__25869641" Association="Self.FK__TAGGED_ITEN__tag__25869641">
+            <End Role="TAGS" EntitySet="TAGS" />
+            <End Role="TAGGED_ITENS" EntitySet="TAGGED_ITENS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIOS__cargo__15502E78" Association="Self.FK__USUARIOS__cargo__15502E78">
+            <End Role="CARGOS" EntitySet="CARGOS" />
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="sam.database" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CARGO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="anterior" Type="Int32" />
+          <NavigationProperty Name="ANTERIOR" Relationship="Self.FK__CARGOS__anterior__117F9D94" FromRole="CARGOS1" ToRole="CARGOS" />
+          <NavigationProperty Name="USUARIOS" Relationship="Self.FK__USUARIOS__cargo__15502E78" FromRole="CARGOS" ToRole="USUARIOS" />
+        </EntityType>
+        <EntityType Name="CATEGORIA">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="peso" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ITENS" Relationship="Self.FK__ITENS__categoria__21B6055D" FromRole="CATEGORIAS" ToRole="ITENS" />
+        </EntityType>
+        <EntityType Name="EVENTO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="item" Type="Int32" />
+          <Property Name="usuario" Type="Int32" />
+          <Property Name="data" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="estado" Type="Boolean" Nullable="false" />
+          <Property Name="tipo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ITEN" Relationship="Self.FK__EVENTOS__item__286302EC" FromRole="EVENTOS" ToRole="ITENS" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__EVENTOS__usuario__29572725" FromRole="EVENTOS" ToRole="USUARIOS" />
+          <NavigationProperty Name="PENDENCIAS" Relationship="Self.FK__PENDENCIA__event__2F10007B" FromRole="EVENTOS" ToRole="PENDENCIAS" />
+          <NavigationProperty Name="RESULTADOS_VOTACOES" Relationship="Self.FK__RESULTADO__event__32E0915F" FromRole="EVENTOS" ToRole="RESULTADOS_VOTACOES" />
+        </EntityType>
+        <EntityType Name="ITEN">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descricao" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="dificuldade" Type="Int32" Nullable="false" />
+          <Property Name="modificador" Type="Int32" Nullable="false" />
+          <Property Name="categoria" Type="Int32" />
+          <NavigationProperty Name="CATEGORIA" Relationship="Self.FK__ITENS__categoria__21B6055D" FromRole="ITENS" ToRole="CATEGORIAS" />
+          <NavigationProperty Name="EVENTOS" Relationship="Self.FK__EVENTOS__item__286302EC" FromRole="ITENS" ToRole="EVENTOS" />
+          <NavigationProperty Name="TAGGED_ITENS" Relationship="Self.FK__TAGGED_ITE__item__24927208" FromRole="ITENS" ToRole="TAGGED_ITENS" />
+        </EntityType>
+        <EntityType Name="PENDENCIA">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario" Type="Int32" />
+          <Property Name="evento" Type="Int32" />
+          <Property Name="estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EVENTO" Relationship="Self.FK__PENDENCIA__event__2F10007B" FromRole="PENDENCIAS" ToRole="EVENTOS" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__PENDENCIA__usuar__2E1BDC42" FromRole="PENDENCIAS" ToRole="USUARIOS" />
+        </EntityType>
+        <EntityType Name="RESULTADOS_VOTACOES">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="evento" Type="Int32" />
+          <Property Name="usuario" Type="Int32" />
+          <Property Name="dificuldade" Type="Int32" Nullable="false" />
+          <Property Name="modificador" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EVENTO" Relationship="Self.FK__RESULTADO__event__32E0915F" FromRole="RESULTADOS_VOTACOES" ToRole="EVENTOS" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__RESULTADO__usuar__33D4B598" FromRole="RESULTADOS_VOTACOES" ToRole="USUARIOS" />
+        </EntityType>
+        <EntityType Name="TAGGED_ITENS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="item" Type="Int32" />
+          <Property Name="tag" Type="Int32" />
+          <NavigationProperty Name="ITEN" Relationship="Self.FK__TAGGED_ITE__item__24927208" FromRole="TAGGED_ITENS" ToRole="ITENS" />
+          <NavigationProperty Name="TAG" Relationship="Self.FK__TAGGED_ITEN__tag__25869641" FromRole="TAGGED_ITENS" ToRole="TAGS" />
+        </EntityType>
+        <EntityType Name="TAG">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descricao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TAGGED_ITENS" Relationship="Self.FK__TAGGED_ITEN__tag__25869641" FromRole="TAGS" ToRole="TAGGED_ITENS" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cargo" Type="Int32" />
+          <Property Name="pontos" Type="Int32" Nullable="false" />
+          <Property Name="samaccount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descricao" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="redes" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="dataInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="foto" Type="Binary" MaxLength="1" FixedLength="true" />
+          <Property Name="ativo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CARGO" Relationship="Self.FK__USUARIOS__cargo__15502E78" FromRole="USUARIOS" ToRole="CARGOS" />
+          <NavigationProperty Name="EVENTOS" Relationship="Self.FK__EVENTOS__usuario__29572725" FromRole="USUARIOS" ToRole="EVENTOS" />
+          <NavigationProperty Name="PENDENCIAS" Relationship="Self.FK__PENDENCIA__usuar__2E1BDC42" FromRole="USUARIOS" ToRole="PENDENCIAS" />
+          <NavigationProperty Name="RESULTADOS_VOTACOES" Relationship="Self.FK__RESULTADO__usuar__33D4B598" FromRole="USUARIOS" ToRole="RESULTADOS_VOTACOES" />
+        </EntityType>
+        <Association Name="FK__CARGOS__anterior__117F9D94">
+          <End Role="CARGOS" Type="Self.CARGO" Multiplicity="0..1" />
+          <End Role="CARGOS1" Type="Self.CARGO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARGOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CARGOS1">
+              <PropertyRef Name="anterior" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIOS__cargo__15502E78">
+          <End Role="CARGOS" Type="Self.CARGO" Multiplicity="0..1" />
+          <End Role="USUARIOS" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARGOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIOS">
+              <PropertyRef Name="cargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ITENS__categoria__21B6055D">
+          <End Role="CATEGORIAS" Type="Self.CATEGORIA" Multiplicity="0..1" />
+          <End Role="ITENS" Type="Self.ITEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIAS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ITENS">
+              <PropertyRef Name="categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EVENTOS__item__286302EC">
+          <End Role="ITENS" Type="Self.ITEN" Multiplicity="0..1" />
+          <End Role="EVENTOS" Type="Self.EVENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITENS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EVENTOS">
+              <PropertyRef Name="item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EVENTOS__usuario__29572725">
+          <End Role="USUARIOS" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="EVENTOS" Type="Self.EVENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EVENTOS">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PENDENCIA__event__2F10007B">
+          <End Role="EVENTOS" Type="Self.EVENTO" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PENDENCIAS" Type="Self.PENDENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EVENTOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PENDENCIAS">
+              <PropertyRef Name="evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RESULTADO__event__32E0915F">
+          <End Role="EVENTOS" Type="Self.EVENTO" Multiplicity="0..1" />
+          <End Role="RESULTADOS_VOTACOES" Type="Self.RESULTADOS_VOTACOES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EVENTOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RESULTADOS_VOTACOES">
+              <PropertyRef Name="evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TAGGED_ITE__item__24927208">
+          <End Role="ITENS" Type="Self.ITEN" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TAGGED_ITENS" Type="Self.TAGGED_ITENS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITENS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TAGGED_ITENS">
+              <PropertyRef Name="item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PENDENCIA__usuar__2E1BDC42">
+          <End Role="USUARIOS" Type="Self.USUARIO" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PENDENCIAS" Type="Self.PENDENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PENDENCIAS">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RESULTADO__usuar__33D4B598">
+          <End Role="USUARIOS" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="RESULTADOS_VOTACOES" Type="Self.RESULTADOS_VOTACOES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RESULTADOS_VOTACOES">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TAGGED_ITEN__tag__25869641">
+          <End Role="TAGS" Type="Self.TAG" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TAGGED_ITENS" Type="Self.TAGGED_ITENS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAGS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TAGGED_ITENS">
+              <PropertyRef Name="tag" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SAMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CARGOS" EntityType="Self.CARGO" />
+          <EntitySet Name="CATEGORIAS" EntityType="Self.CATEGORIA" />
+          <EntitySet Name="EVENTOS" EntityType="Self.EVENTO" />
+          <EntitySet Name="ITENS" EntityType="Self.ITEN" />
+          <EntitySet Name="PENDENCIAS" EntityType="Self.PENDENCIA" />
+          <EntitySet Name="RESULTADOS_VOTACOES" EntityType="Self.RESULTADOS_VOTACOES" />
+          <EntitySet Name="TAGGED_ITENS" EntityType="Self.TAGGED_ITENS" />
+          <EntitySet Name="TAGS" EntityType="Self.TAG" />
+          <EntitySet Name="USUARIOS" EntityType="Self.USUARIO" />
+          <AssociationSet Name="FK__CARGOS__anterior__117F9D94" Association="Self.FK__CARGOS__anterior__117F9D94">
+            <End Role="CARGOS" EntitySet="CARGOS" />
+            <End Role="CARGOS1" EntitySet="CARGOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIOS__cargo__15502E78" Association="Self.FK__USUARIOS__cargo__15502E78">
+            <End Role="CARGOS" EntitySet="CARGOS" />
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ITENS__categoria__21B6055D" Association="Self.FK__ITENS__categoria__21B6055D">
+            <End Role="CATEGORIAS" EntitySet="CATEGORIAS" />
+            <End Role="ITENS" EntitySet="ITENS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EVENTOS__item__286302EC" Association="Self.FK__EVENTOS__item__286302EC">
+            <End Role="ITENS" EntitySet="ITENS" />
+            <End Role="EVENTOS" EntitySet="EVENTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EVENTOS__usuario__29572725" Association="Self.FK__EVENTOS__usuario__29572725">
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+            <End Role="EVENTOS" EntitySet="EVENTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PENDENCIA__event__2F10007B" Association="Self.FK__PENDENCIA__event__2F10007B">
+            <End Role="EVENTOS" EntitySet="EVENTOS" />
+            <End Role="PENDENCIAS" EntitySet="PENDENCIAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RESULTADO__event__32E0915F" Association="Self.FK__RESULTADO__event__32E0915F">
+            <End Role="EVENTOS" EntitySet="EVENTOS" />
+            <End Role="RESULTADOS_VOTACOES" EntitySet="RESULTADOS_VOTACOES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TAGGED_ITE__item__24927208" Association="Self.FK__TAGGED_ITE__item__24927208">
+            <End Role="ITENS" EntitySet="ITENS" />
+            <End Role="TAGGED_ITENS" EntitySet="TAGGED_ITENS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PENDENCIA__usuar__2E1BDC42" Association="Self.FK__PENDENCIA__usuar__2E1BDC42">
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+            <End Role="PENDENCIAS" EntitySet="PENDENCIAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RESULTADO__usuar__33D4B598" Association="Self.FK__RESULTADO__usuar__33D4B598">
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+            <End Role="RESULTADOS_VOTACOES" EntitySet="RESULTADOS_VOTACOES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TAGGED_ITEN__tag__25869641" Association="Self.FK__TAGGED_ITEN__tag__25869641">
+            <End Role="TAGS" EntitySet="TAGS" />
+            <End Role="TAGGED_ITENS" EntitySet="TAGGED_ITENS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="samdatabaseStoreContainer" CdmEntityContainer="SAMEntities">
+          <EntitySetMapping Name="CARGOS">
+            <EntityTypeMapping TypeName="sam.database.CARGO">
+              <MappingFragment StoreEntitySet="CARGOS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="anterior" ColumnName="anterior" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORIAS">
+            <EntityTypeMapping TypeName="sam.database.CATEGORIA">
+              <MappingFragment StoreEntitySet="CATEGORIAS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="peso" ColumnName="peso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EVENTOS">
+            <EntityTypeMapping TypeName="sam.database.EVENTO">
+              <MappingFragment StoreEntitySet="EVENTOS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="item" ColumnName="item" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ITENS">
+            <EntityTypeMapping TypeName="sam.database.ITEN">
+              <MappingFragment StoreEntitySet="ITENS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="dificuldade" ColumnName="dificuldade" />
+                <ScalarProperty Name="modificador" ColumnName="modificador" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PENDENCIAS">
+            <EntityTypeMapping TypeName="sam.database.PENDENCIA">
+              <MappingFragment StoreEntitySet="PENDENCIAS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="evento" ColumnName="evento" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESULTADOS_VOTACOES">
+            <EntityTypeMapping TypeName="sam.database.RESULTADOS_VOTACOES">
+              <MappingFragment StoreEntitySet="RESULTADOS_VOTACOES">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="evento" ColumnName="evento" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="dificuldade" ColumnName="dificuldade" />
+                <ScalarProperty Name="modificador" ColumnName="modificador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAGGED_ITENS">
+            <EntityTypeMapping TypeName="sam.database.TAGGED_ITENS">
+              <MappingFragment StoreEntitySet="TAGGED_ITENS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="item" ColumnName="item" />
+                <ScalarProperty Name="tag" ColumnName="tag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAGS">
+            <EntityTypeMapping TypeName="sam.database.TAG">
+              <MappingFragment StoreEntitySet="TAGS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIOS">
+            <EntityTypeMapping TypeName="sam.database.USUARIO">
+              <MappingFragment StoreEntitySet="USUARIOS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cargo" ColumnName="cargo" />
+                <ScalarProperty Name="pontos" ColumnName="pontos" />
+                <ScalarProperty Name="samaccount" ColumnName="samaccount" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="redes" ColumnName="redes" />
+                <ScalarProperty Name="dataInicio" ColumnName="dataInicio" />
+                <ScalarProperty Name="foto" ColumnName="foto" />
+                <ScalarProperty Name="ativo" ColumnName="ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
