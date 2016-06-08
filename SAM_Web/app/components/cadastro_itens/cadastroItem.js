@@ -25,7 +25,7 @@ var CadastroItem = function(props){
                   </div>
                 </div>
                 <div className="row">
-                  <div className="input-field col l6 m6 s12">
+                  <div className=" col l6 m6 s12">
                     <select
                       id ="select_categoria"
                       value = {props.categoria}

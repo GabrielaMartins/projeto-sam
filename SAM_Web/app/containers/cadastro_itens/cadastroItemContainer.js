@@ -59,8 +59,8 @@ const CadastroItemContainer = React.createClass({
       axios.get(url).then(
         function(response){
           //debugger;
-          //var categorias = response.data;
-          //self.categorias = categorias;
+          var categorias = response.data;
+          self.categorias = categorias;
         },
         function(reason){
 
@@ -68,13 +68,12 @@ const CadastroItemContainer = React.createClass({
       );
 
       // teste: remover depois
-      debugger;
-      var categorias = [{nome:"Categoria 1"},{nome:"Categoria 2"}];
-      self.categorias = categorias;
+    //  debugger;
+      //var categorias = [{nome:"Categoria 1"},{nome:"Categoria 2"}];
+      //self.categorias = categorias;
   },
 
   handleCategoryChanges: function(event){
-    debugger;
     var categoria = event.target.value;
 
     // troca o rotulo dos radio
@@ -93,7 +92,7 @@ const CadastroItemContainer = React.createClass({
   },
 
   handleDificultyChanges: function(event){
-    debugger;
+    //debugger;
     var dificuldade = event.target.value;
     this.setState({dificuldade: dificuldade});
   },
