@@ -8,7 +8,7 @@ const CadastroItemContainer = React.createClass({
   render: function(){
     return(
       <CadastroItem
-        categorias = {this.categorias.map(c => c.nome)}
+        categorias = {this.state.categorias.map(c => c.nome)}
         rotulosRadio = {this.state.rotulosRadio}
         item = {this.state.item}
         descricao = {this.state.descricao}
@@ -27,6 +27,7 @@ const CadastroItemContainer = React.createClass({
 
   getInitialState: function(){
       return {
+		categorias: [],
         rotulosRadio: ["Raso", "Profundo"],
         dificuldade: "Selecione a dificuldade",
         categoria: "Selecione a categoria",
@@ -47,7 +48,7 @@ const CadastroItemContainer = React.createClass({
     $("#select_dificuldade").on('change', self.handleDificultyChanges);
 
   },
-
+  
   componentWillMount: function(){
     this.getCategory('http://localhost:65120/api/sam/categoria/all');
   },
@@ -60,7 +61,7 @@ const CadastroItemContainer = React.createClass({
         function(response){
           //debugger;
           var categorias = response.data;
-          self.categorias = categorias;
+          self.setState({categorias: categorias});
         },
         function(reason){
 
