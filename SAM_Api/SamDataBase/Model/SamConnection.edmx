@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="sam.model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="sam.model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cargos">
           <Key>
             <PropertyRef Name="id" />
@@ -92,6 +92,7 @@
           <Property Name="dataInicio" Type="date" Nullable="false" />
           <Property Name="foto" Type="varchar" MaxLength="150" />
           <Property Name="ativo" Type="bit" Nullable="false" />
+          <Property Name="perfil" Type="varchar" MaxLength="20" />
         </EntityType>
         <Association Name="FK__Cargos__anterior__117F9D94">
           <End Role="Cargos" Type="Self.Cargos" Multiplicity="0..1" />
@@ -288,8 +289,7 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="sam.model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -402,6 +402,7 @@
           <NavigationProperty Name="Eventos" Relationship="Self.FK__Eventos__usuario__29572725" FromRole="Usuarios" ToRole="Eventos" />
           <NavigationProperty Name="Pendencias" Relationship="Self.FK__Pendencia__usuar__2E1BDC42" FromRole="Usuarios" ToRole="Pendencias" />
           <NavigationProperty Name="ResultadoVotacoes" Relationship="Self.FK__Resultado__usuar__33D4B598" FromRole="Usuarios" ToRole="ResultadoVotacoes" />
+          <Property Name="perfil" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__Cargos__anterior__117F9D94">
           <End Role="Cargos" Type="Self.Cargo" Multiplicity="0..1" />
@@ -688,6 +689,7 @@
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="sam.model.Usuario">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="perfil" ColumnName="perfil" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="cargo" ColumnName="cargo" />
                 <ScalarProperty Name="pontos" ColumnName="pontos" />
