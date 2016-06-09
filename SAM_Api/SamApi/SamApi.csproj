@@ -43,14 +43,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="JWT, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\JWT.1.3.4\lib\3.5\JWT.dll</HintPath>
       <Private>True</Private>
@@ -160,27 +152,11 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="App_Data\SAM.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SAM.edmx</DependentUpon>
-      <LastGenOutput>SAM.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_Data\SAM.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SAM.edmx</DependentUpon>
-      <LastGenOutput>SAM.cs</LastGenOutput>
-    </Content>
     <Content Include="scripts\ai.0.15.0-build58334.js" />
     <Content Include="scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
-    <EntityDeploy Include="App_Data\SAM.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SAM.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="App_Data\SAM.edmx.diagram">
-      <DependentUpon>SAM.edmx</DependentUpon>
-    </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -190,21 +166,12 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="App_Data\CARGO.cs">
-      <DependentUpon>SAM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="App_Data\CATEGORIA.cs">
-      <DependentUpon>SAM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AdController.cs" />
     <Compile Include="Controllers\SamCategoriaController.cs" />
     <Compile Include="Controllers\SamLoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SamItemController.cs" />
     <Compile Include="Controllers\SamUserController.cs" />
-    <Compile Include="App_Data\EVENTO.cs">
-      <DependentUpon>SAM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -214,54 +181,9 @@
     <Compile Include="Helpers\EncodingForBase64.cs" />
     <Compile Include="Helpers\HeaderHelper.cs" />
     <Compile Include="Helpers\JwtManagement.cs" />
-    <Compile Include="App_Data\ITEN.cs">
-      <DependentUpon>SAM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Login.cs" />
     <Compile Include="Helpers\Message.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="App_Data\PENDENCIA.cs">
-      <DependentUpon>SAM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="App_Data\RESULTADOS_VOTACOES.cs">
-      <DependentUpon>SAM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="App_Data\SAM.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SAM.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="App_Data\SAM.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SAM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="App_Data\SAM.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SAM.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="App_Data\TAG.cs">
-      <DependentUpon>SAM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="App_Data\TAGGED_ITENS.cs">
-      <DependentUpon>SAM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="App_Data\USUARIO.cs">
-      <DependentUpon>SAM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\CARGORepository.cs" />
-    <Compile Include="Repository\CATEGORIARepository.cs" />
-    <Compile Include="Repository\DataAccess.cs" />
-    <Compile Include="Repository\EVENTORepository.cs" />
-    <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Repository\ITENRepository.cs" />
-    <Compile Include="Repository\PENDENCIARepository.cs" />
-    <Compile Include="Repository\Repository.cs" />
-    <Compile Include="Repository\RESULTADOS_VOTACOESRepository.cs" />
-    <Compile Include="Repository\TAGRepository.cs" />
-    <Compile Include="Repository\USUARIORepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -284,10 +206,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Views\SamUser\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SamDataBase\SamDataBase.csproj">
+      <Project>{f725223a-3f2f-4120-9816-b9de104d6715}</Project>
+      <Name>SamDataBase</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

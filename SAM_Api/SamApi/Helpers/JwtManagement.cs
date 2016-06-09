@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SamApi.Models;
 using SamApi.Helpers;
+using SamDataBase.Model;
 
 namespace Opus.Helpers.Security
 {
@@ -16,7 +17,7 @@ namespace Opus.Helpers.Security
 
         }
 
-        public static string GenerateToken(User user)
+        public static string GenerateToken(Usuario user)
         {
 
             if (user == null)
@@ -32,9 +33,9 @@ namespace Opus.Helpers.Security
 
             userInfo = new Dictionary<string, object>()
             {
-                {"key", user.Key},
-                {"name", user.Name},
-                {"email", user.Email}
+                {"id", user.id},
+                {"nome", user.nome },
+                {"samaccount", user.samaccount}
 
                 // we can put more information here
             };
@@ -58,7 +59,7 @@ namespace Opus.Helpers.Security
                 //{ "exp", currentTime.AddHours(expTime)},
 
                 // assunto do token
-                { "sub", user.Name},
+                { "sub", user.nome},
 
                 // contém informações que queremos colocar no token, como usuário por exemplo
                 { "context", context }

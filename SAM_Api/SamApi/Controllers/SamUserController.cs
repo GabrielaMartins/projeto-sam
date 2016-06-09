@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System;
 using SamApi.Helpers;
+using SamDataBase.Model;
 
 namespace SamApi.Controllers
 {
@@ -74,7 +75,7 @@ namespace SamApi.Controllers
 
         // POST: api/sam/user/save
         [Route("save")]
-        public HttpResponseMessage Post([FromBody]User user)
+        public HttpResponseMessage Post([FromBody]Usuario user)
         {
 
             CommonOperations commonOperations = new CommonOperations(Request);
@@ -101,7 +102,7 @@ namespace SamApi.Controllers
 
         // PUT: api/sam/user/update/{id}
         [Route("update/{id}")]
-        public HttpResponseMessage Put(int id, [FromBody]User user)
+        public HttpResponseMessage Put(int id, [FromBody]Usuario user)
         {
 
             CommonOperations commonOperations = new CommonOperations(Request);

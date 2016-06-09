@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using SamApi.Models;
 using Opus.Helpers.ActiveDirectoryService;
 using Opus.Helpers.Security;
@@ -6,9 +7,11 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
-using System;
 using System.Web.Http.Cors;
 using SamApi.Helpers;
+using Opus.DataBaseEnvironment;
+using SamDataBase.Model;
+using System.Linq;
 
 namespace SamApiService.Controllers
 {
@@ -26,7 +29,7 @@ namespace SamApiService.Controllers
 
             ActiveDirectoryConsumer adConsumer = new ActiveDirectoryConsumer("opus.local");
             HttpResponseMessage response = null;
-            User user = null;
+            Usuario user = null;
             string token = string.Empty;
 
             // ask to Active Directory if the User's credentials is valid
@@ -34,8 +37,9 @@ namespace SamApiService.Controllers
             {
 
                 // if yes, get User's information from database
-                // var User = getOnDataBase();
-
+                var userRepository = DataAccess.Instance.UsuarioRepository();
+                user = userRepository.Find(u => u.samaccount.Equals(login.User)).SingleOrDefault();
+                
                 // check if our user not exists in our database
                 if (user == null)
                 {
@@ -53,11 +57,6 @@ namespace SamApiService.Controllers
                 }
                 else
                 {
-
-                    // *************** REMOVER ISSO DEPOIS ******************
-                    var userAd = adConsumer.GetUser(login.User);
-                    user = new User(userAd.Key, userAd.Name, userAd.Email);
-                    // ****************************************************** //
 
                     // generate token based on User
                     token = JwtManagement.GenerateToken(user);
