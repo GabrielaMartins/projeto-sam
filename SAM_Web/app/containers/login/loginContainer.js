@@ -30,21 +30,17 @@ var LoginContainer = React.createClass({
     var self = this;
     e.preventDefault();
 
-  /*  var config = {headers: {
+    var config = {headers: {
      'Content-Type': 'application/x-www-form-urlencoded',
      'Accept': 'application/json, text/plain,  *'
-   }};*/
-
-/*var param = $.param({
-    User: self.state.usuario,
-    Password: self.state.senha
-});debugger;*/
+   }};
 
     axios.post("http://10.10.15.113:65122/api/sam/login",
-    {
-        User: self.state.usuario,
-        Password: self.state.senha
-    }).then(
+      $.param({
+         User: self.state.usuario,
+         Password: self.state.senha
+     })
+    , config).then(
       // sucesso
       function(response){
         debugger;
