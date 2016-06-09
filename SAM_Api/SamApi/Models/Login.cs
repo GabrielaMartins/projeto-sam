@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace SamApi.Models
+﻿namespace SamApi.Models
 {
     public class Login
     {
@@ -12,10 +7,15 @@ namespace SamApi.Models
 
         public string Password { get; set; }
 
+        public Login()
+        {
+
+        }
+
         public Login(string user, string password)
         {
-            this.User = user;
-            this.Password = password;
+            User = user;
+            Password = password;
         }
     }
 }

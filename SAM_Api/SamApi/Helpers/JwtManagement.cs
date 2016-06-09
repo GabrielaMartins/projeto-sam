@@ -34,16 +34,16 @@ namespace Opus.Helpers.Security
             userInfo = new Dictionary<string, object>()
             {
                 {"id", user.id},
-                {"nome", user.nome },
                 {"samaccount", user.samaccount}
 
                 // we can put more information here
             };
 
+            var perfil = "RH";
             context = new Dictionary<string, object>()
             {
-                {"user", userInfo}
-
+                {"user", userInfo},
+                {"perfil", perfil }
                 // we can put more information here
             };
 

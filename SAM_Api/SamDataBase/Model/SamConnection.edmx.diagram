@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="sam.model.Iten" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="sam.model.ItensTagged" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
         <EntityTypeShape EntityType="sam.model.Pendencia" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="sam.model.ResultadoVotaco" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sam.model.ResultadoVotacoes" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="sam.model.Tag" Width="1.5" PointX="0.75" PointY="20.125" IsExpanded="true" />
         <EntityTypeShape EntityType="sam.model.Usuario" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
         <AssociationConnector Association="sam.model.FK__Cargos__anterior__117F9D94" ManuallyRouted="false" />

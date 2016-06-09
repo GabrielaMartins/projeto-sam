@@ -4,9 +4,9 @@ using System.Data.Entity;
 
 namespace Opus.DataBaseEnvironment
 {
-	public class ResultadoVotacoRepository : Repository<ResultadoVotaco>
+	public class ResultadoVotacoesRepository : Repository<ResultadoVotacoes>
 	{
-		public ResultadoVotacoRepository(DbContext context) : base (context)
+		public ResultadoVotacoesRepository(DbContext context) : base (context)
 		{
 		}
 		//Preencher aqui

@@ -7,17 +7,16 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
-using System.Web.Http.Cors;
 using SamApi.Helpers;
 using Opus.DataBaseEnvironment;
 using SamDataBase.Model;
 using System.Linq;
+using System.Web.Http.Cors;
 
 namespace SamApiService.Controllers
 {
 
     [RoutePrefix("api/sam")]
-    [EnableCors(origins: "http://localhost:8080", headers: "*", methods: "*")]
     public class SamLoginController : ApiController
     {
 
@@ -45,9 +44,9 @@ namespace SamApiService.Controllers
                 {
 
                     // return a http error
-                    var result1 = new Message(HttpStatusCode.NotFound, "User Not Found", "We could not found the user '" + login.User + "' in our database");
+                    var error1 = new Message(HttpStatusCode.NotFound, "User Not Found", "We could not found the user '" + login.User + "' in our database");
                    
-                    response = Request.CreateResponse(HttpStatusCode.NotFound, result1);
+                    response = Request.CreateResponse(HttpStatusCode.NotFound, error1);
                     response.Headers.CacheControl = new CacheControlHeaderValue()
                     {
                         MaxAge = TimeSpan.FromMinutes(20)
@@ -72,8 +71,8 @@ namespace SamApiService.Controllers
             }
 
             // if credential is invalid
-            var result = new Message(HttpStatusCode.Unauthorized, "User Not Authorized", "User login has failed");
-            response = Request.CreateResponse(HttpStatusCode.Unauthorized, result);
+            var error2 = new Message(HttpStatusCode.Unauthorized, "User Not Authorized", "User login has failed");
+            response = Request.CreateResponse(HttpStatusCode.Unauthorized, error2);
             response.Headers.CacheControl = new CacheControlHeaderValue()
             {
                 MaxAge = TimeSpan.FromMinutes(20)
