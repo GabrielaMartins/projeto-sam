@@ -30,14 +30,32 @@ var LoginContainer = React.createClass({
     var self = this;
     e.preventDefault();
 
-    axios.post("localhost:65120/api/sam/login",
+  /*  var config = {headers: {
+     'Content-Type': 'application/x-www-form-urlencoded',
+     'Accept': 'application/json, text/plain,  *'
+   }};*/
+
+/*var param = $.param({
+    User: self.state.usuario,
+    Password: self.state.senha
+});debugger;*/
+
+    axios.post("http://10.10.15.113:65122/api/sam/login",
     {
-        user: self.state.usuario,
-        password: self.state.senha
+        User: self.state.usuario,
+        Password: self.state.senha
     }).then(
       // sucesso
       function(response){
         debugger;
+        var token = response.data;
+
+        if (typeof(Storage) !== "undefined") {
+          localStorage.setItem("token", token);
+        } else {
+          // Sorry! No Web Storage support..
+        }
+
         self.context.router.push('/Dashboard');
       },
       // falha
