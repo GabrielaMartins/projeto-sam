@@ -33,9 +33,9 @@ var CadastroItem = function(props){
                       <option
                         value = {0}
                         key = {0}
-                        /*disabled*/>Selecione a categoria
+                        >Selecione a categoria
                       </option>
-                      {props.categorias.map( (opt, index) => <option value = {opt} key = {index + 1}>{opt}</option>)}
+                      {props.categorias.map( function(opt, index){ return <option value = {opt} key = {index + 1}>{opt}</option>})}
                    </select>
                     <label>Categoria</label>
                   </div>
@@ -47,7 +47,7 @@ var CadastroItem = function(props){
                         <option
                           value = {0}
                           key = {0}
-                          /*disabled*/>Selecione a dificuldade
+                          >Selecione a dificuldade
                         </option>
                         <option value = "1" key = "1">Fácil</option>
                         <option value = "3" key = "2">Médio</option>
