@@ -19,9 +19,6 @@ var BaseContainer = React.createClass({
       }); // End Document Ready
     })(jQuery);
 
-    window.sr = ScrollReveal();
-    sr.reveal('.scrollreveal');
-
     this.forceUpdate();
   },
   componentWillMount: function(){

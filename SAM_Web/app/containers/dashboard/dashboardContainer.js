@@ -13,11 +13,19 @@ var DashboardContainer = React.createClass({
 			}
     };
   },
-  componentDidMount: function(){
 
+  handleResize: function(e) {
+    this.forceUpdate();
+  },
+
+  componentDidMount: function(){
+    window.sr = ScrollReveal();
+    sr.reveal('.scrollreveal');
+
+    window.addEventListener('resize', this.handleResize);
   },
   componentWillMount: function(){
-    this.forceUpdate();
+    window.removeEventListener('resize', this.handleResize);
     //fazer fetch aqui
     this.setState({
       cardsDashboard:[

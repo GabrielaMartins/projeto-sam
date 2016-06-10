@@ -8,6 +8,10 @@ var ListaItensContainer = React.createClass({
       itens: null,
     };
   },
+  componentDidMount: function(){
+    window.sr = ScrollReveal();
+    sr.reveal('.scrollreveal');
+  },
   componentWillMount: function(){
     //fazer fetch aqui
     this.setState({

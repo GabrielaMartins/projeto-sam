@@ -8,6 +8,10 @@ var ListaUsuariosContainer = React.createClass({
       usuarios: null,
     };
   },
+  componentDidMount: function(){
+    window.sr = ScrollReveal();
+    sr.reveal('.scrollreveal');
+  },
   componentWillMount: function(){
     //fazer fetch aqui
     this.setState({
