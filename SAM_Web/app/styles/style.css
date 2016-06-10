@@ -1,0 +1,260 @@
+.background-start{
+  overflow: hidden;
+  background: url('../imagens/background.jpg') no-repeat fixed;
+  background-size:cover;
+  background-position-y:center;
+}
+
+.transparent-dark {
+  background:rgba(0,0,0,0.75);
+}
+
+.transparent-white {
+  background:rgba(255,255,255,0.75);
+}
+
+.color-default{
+  background-color: #550000;
+}
+
+.colorText-default{
+  color: #550000;
+}
+
+.colorText-finalizada{
+  color: #0A4800;
+}
+
+.color-links{
+  color: #D46A6A;
+}
+
+.button-color:hover{
+  background-color: #550000;
+}
+
+.input-field label {
+    color: #000;
+  }
+
+  .input-field input[type=text] + label{
+    color: #000;
+  }
+
+   /* label focus color */
+   .input-field input[type=text]:focus + label {
+     color: #550000;
+   }
+
+   .input-field input[type=password]:focus + label {
+     color: #550000;
+   }
+
+   /* label underline focus color */
+   .input-field input[type=text]:focus {
+     border-bottom: 1px solid #550000;
+     box-shadow: 0 1px 0 0 #550000;
+   }
+
+   .input-field input[type=password]:focus {
+     border-bottom: 1px solid #550000;
+     box-shadow: 0 1px 0 0 #550000;
+   }
+
+   /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: #550000;
+   }
+
+
+.full-screen{
+  height: 100vh;
+}
+
+.wrapper {
+  height: 100%;
+  min-height: 100%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+  main {
+    display: flex !important;
+    min-height: calc(100vh - 134px) !important;
+    flex-direction: column !important;
+    flex: 1 0 auto !important;
+    background-color: #EEE;
+  }
+
+  .dropdown-content {
+  background-color: #FFFFFF;
+  margin: 0;
+  display: none;
+  max-height: auto;
+	margin-left: -1px; /* Add this to keep dropdown in line with edge of navbar */
+  overflow: hidden; /* Changed this from overflow-y:auto; to overflow:hidden; */
+  opacity: 0;
+  position: absolute;
+  white-space: nowrap;
+  z-index: 4;
+  will-change: height;
+}
+
+.dropdown-content li>a, .dropdown-content li>span{
+  color:#550000 !important;
+}
+
+  nav ul a:hover {
+      background-color: rgba(0,0,0,0.1) !important;
+  }
+.eventsCard > .card-panel:hover{
+  background-color: rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+#pendencia:hover{
+  cursor: pointer;
+}
+
+.finalizada:hover{
+  background-color: #e57373 !important;
+}
+
+.aberta:hover{
+  background-color: #81c784 !important;
+}
+
+footer.page-footer {
+  margin-top: 0px !important;
+  background-color: #550000 !important;
+}
+
+.btn:hover{
+  background-color: #801515;
+}
+.pendencia, .ranking{
+  overflow-y: scroll;
+  max-height: 255px;
+}
+
+.eventos, .promocoes{
+  overflow-y: scroll;
+  max-height: 423px;
+}
+
+.votacao{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 540px;
+}
+
+.progress{
+  background-color:#888;
+}
+
+.progress .determinate{
+  background-color:#550000;
+}
+
+.intern{
+  margin: 10px;
+}
+
+input#search {
+    display: block;
+    font-size: 16px;
+    font-weight: 300;
+    width: 100%;
+    height: 45px;
+    margin: 0;
+    padding: 0 45px 0 15px;
+    border: 0;
+}
+
+input#search: focus {
+  outline:none;
+}
+
+input#search:not([type]):focus:not([readonly]){
+  box-shadow: 0 0 0 0;
+}
+
+@media screen and (min-width: 992px){
+  .extraGrande{
+    font-size: 3.5vh;
+  }
+  .grande{
+    font-size: 2.5vh;
+  }
+  .media{
+    font-size: 2.0vh;
+  }
+  .pequena{
+    font-size: 1.5vh;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .extraGrande{
+    font-size: 3.5vmax;
+  }
+  .grande{
+    font-size: 2.5vmax;
+  }
+  .media{
+    font-size: 2.0vmax;
+  }
+  .pequena{
+    font-size: 1.5vmax;
+  }
+}
+
+.scrollbar::-webkit-scrollbar-corner {
+    background-color: #FFFFFF;
+}
+
+.scrollbar::-webkit-scrollbar-track
+{
+  background-color: none;
+}
+
+.scrollbar::-webkit-scrollbar
+{
+  -webkit-appearance: none;
+  width: 11px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb
+{
+  border-radius: 12px;
+  border: 4px solid rgba(255,255,255,0);
+  background-clip: content-box;
+  background-color: #550000;
+}
+
+@media screen and (max-width: 640px) {
+  nav {
+    line-height: 0px;
+  }
+}
+
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:after{
+  background-color: #550000 !important;
+}
+
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:before, [type="radio"].with-gap:checked+label:after {
+  border: 2px solid #550000 !important;
+}
+
+textarea:focus:not([readonly]){
+  border-bottom: 1px solid #550000 !important;
+  box-shadow: 0 1px 0 0 #550000 !important;
+}
+
+textarea:focus:not([readonly])+label {
+  color: #550000 !important;
+}
