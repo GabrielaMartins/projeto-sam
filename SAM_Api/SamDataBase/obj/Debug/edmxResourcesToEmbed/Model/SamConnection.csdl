@@ -71,7 +71,7 @@
     <NavigationProperty Name="Evento" Relationship="Self.FK__Pendencia__event__2F10007B" FromRole="Pendencias" ToRole="Eventos" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK__Pendencia__usuar__2E1BDC42" FromRole="Pendencias" ToRole="Usuarios" />
   </EntityType>
-  <EntityType Name="ResultadoVotaco">
+  <EntityType Name="ResultadoVotacoes">
     <Key>
       <PropertyRef Name="id" />
     </Key>
@@ -186,7 +186,7 @@
   </Association>
   <Association Name="FK__Resultado__event__32E0915F">
     <End Role="Eventos" Type="Self.Evento" Multiplicity="0..1" />
-    <End Role="ResultadoVotacoes" Type="Self.ResultadoVotaco" Multiplicity="*" />
+    <End Role="ResultadoVotacoes" Type="sam.model.ResultadoVotacoes" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Eventos">
         <PropertyRef Name="id" />
@@ -240,7 +240,7 @@
   </Association>
   <Association Name="FK__Resultado__usuar__33D4B598">
     <End Role="Usuarios" Type="Self.Usuario" Multiplicity="0..1" />
-    <End Role="ResultadoVotacoes" Type="Self.ResultadoVotaco" Multiplicity="*" />
+    <End Role="ResultadoVotacoes" Type="sam.model.ResultadoVotacoes" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Usuarios">
         <PropertyRef Name="id" />
@@ -257,7 +257,7 @@
     <EntitySet Name="Itens" EntityType="Self.Iten" />
     <EntitySet Name="ItensTaggeds" EntityType="Self.ItensTagged" />
     <EntitySet Name="Pendencias" EntityType="Self.Pendencia" />
-    <EntitySet Name="ResultadoVotacoes" EntityType="Self.ResultadoVotaco" />
+    <EntitySet Name="ResultadoVotacoes" EntityType="sam.model.ResultadoVotacoes" />
     <EntitySet Name="Tags" EntityType="Self.Tag" />
     <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
     <AssociationSet Name="FK__Cargos__anterior__117F9D94" Association="Self.FK__Cargos__anterior__117F9D94">

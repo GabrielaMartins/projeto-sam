@@ -18,6 +18,7 @@ CREATE TABLE Usuarios
 	nome VARCHAR(50) NOT NULL,
 	descricao VARCHAR(200),
 	redes VARCHAR(200),
+	perfil VARCHAR(20) NOT NULL DEFAULT 'Funcionário',
 	dataInicio DATE NOT NULL,
 	foto VARCHAR(150),
 	ativo BIT NOT NULL DEFAULT 1

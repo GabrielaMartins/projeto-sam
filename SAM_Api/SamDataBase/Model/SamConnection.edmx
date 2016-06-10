@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="sam.model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="sam.model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cargos">
           <Key>
             <PropertyRef Name="id" />
@@ -92,6 +92,7 @@
           <Property Name="dataInicio" Type="date" Nullable="false" />
           <Property Name="foto" Type="varchar" MaxLength="150" />
           <Property Name="ativo" Type="bit" Nullable="false" />
+          <Property Name="perfil" Type="varchar" MaxLength="20" />
         </EntityType>
         <Association Name="FK__Cargos__anterior__117F9D94">
           <End Role="Cargos" Type="Self.Cargos" Multiplicity="0..1" />
@@ -288,8 +289,7 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="sam.model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -364,7 +364,7 @@
           <NavigationProperty Name="Evento" Relationship="Self.FK__Pendencia__event__2F10007B" FromRole="Pendencias" ToRole="Eventos" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK__Pendencia__usuar__2E1BDC42" FromRole="Pendencias" ToRole="Usuarios" />
         </EntityType>
-        <EntityType Name="ResultadoVotaco">
+        <EntityType Name="ResultadoVotacoes">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -402,6 +402,7 @@
           <NavigationProperty Name="Eventos" Relationship="Self.FK__Eventos__usuario__29572725" FromRole="Usuarios" ToRole="Eventos" />
           <NavigationProperty Name="Pendencias" Relationship="Self.FK__Pendencia__usuar__2E1BDC42" FromRole="Usuarios" ToRole="Pendencias" />
           <NavigationProperty Name="ResultadoVotacoes" Relationship="Self.FK__Resultado__usuar__33D4B598" FromRole="Usuarios" ToRole="ResultadoVotacoes" />
+          <Property Name="perfil" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__Cargos__anterior__117F9D94">
           <End Role="Cargos" Type="Self.Cargo" Multiplicity="0..1" />
@@ -479,7 +480,7 @@
         </Association>
         <Association Name="FK__Resultado__event__32E0915F">
           <End Role="Eventos" Type="Self.Evento" Multiplicity="0..1" />
-          <End Role="ResultadoVotacoes" Type="Self.ResultadoVotaco" Multiplicity="*" />
+          <End Role="ResultadoVotacoes" Type="sam.model.ResultadoVotacoes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Eventos">
               <PropertyRef Name="id" />
@@ -533,7 +534,7 @@
         </Association>
         <Association Name="FK__Resultado__usuar__33D4B598">
           <End Role="Usuarios" Type="Self.Usuario" Multiplicity="0..1" />
-          <End Role="ResultadoVotacoes" Type="Self.ResultadoVotaco" Multiplicity="*" />
+          <End Role="ResultadoVotacoes" Type="sam.model.ResultadoVotacoes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuarios">
               <PropertyRef Name="id" />
@@ -550,7 +551,7 @@
           <EntitySet Name="Itens" EntityType="Self.Iten" />
           <EntitySet Name="ItensTaggeds" EntityType="Self.ItensTagged" />
           <EntitySet Name="Pendencias" EntityType="Self.Pendencia" />
-          <EntitySet Name="ResultadoVotacoes" EntityType="Self.ResultadoVotaco" />
+          <EntitySet Name="ResultadoVotacoes" EntityType="sam.model.ResultadoVotacoes" />
           <EntitySet Name="Tags" EntityType="Self.Tag" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
           <AssociationSet Name="FK__Cargos__anterior__117F9D94" Association="Self.FK__Cargos__anterior__117F9D94">
@@ -667,7 +668,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ResultadoVotacoes">
-            <EntityTypeMapping TypeName="sam.model.ResultadoVotaco">
+            <EntityTypeMapping TypeName="sam.model.ResultadoVotacoes">
               <MappingFragment StoreEntitySet="ResultadoVotacoes">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="evento" ColumnName="evento" />
@@ -688,6 +689,7 @@
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="sam.model.Usuario">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="perfil" ColumnName="perfil" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="cargo" ColumnName="cargo" />
                 <ScalarProperty Name="pontos" ColumnName="pontos" />
