@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SamApi.Models;
-using SamApi.Helpers;
 using SamDataBase.Model;
 
 namespace Opus.Helpers.Security
@@ -21,7 +19,7 @@ namespace Opus.Helpers.Security
         {
 
             if (user == null)
-                return String.Empty;
+                return string.Empty;
 
 
             // variables to configure our token
@@ -39,11 +37,10 @@ namespace Opus.Helpers.Security
                 // we can put more information here
             };
 
-            var perfil = "RH";
             context = new Dictionary<string, object>()
             {
                 {"user", userInfo},
-                {"perfil", perfil }
+                {"perfil", user.perfil }
                 // we can put more information here
             };
 

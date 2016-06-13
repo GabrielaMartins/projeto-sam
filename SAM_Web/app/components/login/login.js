@@ -30,7 +30,7 @@ var Login = function(props){
                     </div>
                   </div>
                   <div className="row">
-
+                    <label>{props.msg}</label>
                   </div>
                   <div className="row wrapper">
                     <button className="col s6 color-default center-block waves-effect waves-light btn" onClick={props.entrar}>Entrar</button>
@@ -41,6 +41,13 @@ var Login = function(props){
         </div>
       </main>
     );
+}
+
+Login.propTypes = {
+   msg: React.PropTypes.string.isRequired,
+   updateUsuario: React.PropTypes.func.isRequired,
+   updateSenha: React.PropTypes.func.isRequired,
+   entrar: React.PropTypes.func.isRequired
 }
 
 module.exports = Login;

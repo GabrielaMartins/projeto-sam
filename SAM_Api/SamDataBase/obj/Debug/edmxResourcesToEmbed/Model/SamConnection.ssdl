@@ -87,6 +87,7 @@
     <Property Name="dataInicio" Type="date" Nullable="false" />
     <Property Name="foto" Type="varchar" MaxLength="150" />
     <Property Name="ativo" Type="bit" Nullable="false" />
+    <Property Name="perfil" Type="varchar" MaxLength="20" />
   </EntityType>
   <Association Name="FK__Cargos__anterior__117F9D94">
     <End Role="Cargos" Type="Self.Cargos" Multiplicity="0..1" />

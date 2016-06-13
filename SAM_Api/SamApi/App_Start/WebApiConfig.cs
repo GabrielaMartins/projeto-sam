@@ -16,19 +16,9 @@ namespace SamApi
             
             // Web API configuration and services
             var formatters = config.Formatters;
-            var jsonFormatter = formatters.JsonFormatter;
-            var serializerSettings = jsonFormatter.SerializerSettings;
-
+           
             // Remove XML formatting 
             formatters.Remove(config.Formatters.XmlFormatter);
-
-            jsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
-            
-            // Configure our JSON output
-            serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            serializerSettings.Formatting = Formatting.Indented;
-            serializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            serializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.None;
 
             // Web API routes
             config.MapHttpAttributeRoutes();

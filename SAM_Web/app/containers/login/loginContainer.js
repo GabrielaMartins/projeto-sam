@@ -9,7 +9,8 @@ var LoginContainer = React.createClass({
   getInitialState: function(){
     return{
       usuario:"",
-      senha: ""
+      senha: "",
+      msg: ""
     }
   },
 
@@ -26,25 +27,19 @@ var LoginContainer = React.createClass({
   },
 
   handleSubmit: function(e){
-    debugger;
+
     var self = this;
     e.preventDefault();
 
-    var config = {headers: {
-     'Content-Type': 'application/x-www-form-urlencoded',
-     'Accept': 'application/json, text/plain,  *'
-   }};
+    self.setState({msg: ""});
+    
+    var data = {User: self.state.usuario, Password: self.state.senha};
+    axios.post("http://10.10.15.113:65122/api/sam/login", data).then(
 
-    axios.post("http://10.10.15.113:65122/api/sam/login",
-      $.param({
-         User: self.state.usuario,
-         Password: self.state.senha
-     })
-    , config).then(
-      // sucesso
+	    // sucesso
       function(response){
         debugger;
-        var token = response.data;
+        var token = response.data.token;
 
         if (typeof(Storage) !== "undefined") {
           localStorage.setItem("token", token);
@@ -54,15 +49,28 @@ var LoginContainer = React.createClass({
 
         self.context.router.push('/Dashboard');
       },
+
       // falha
-      function(jqXHR, textStatus, errorThrown){
+      function(jqXHR){
         debugger;
+
+		var status = jqXHR.status;
+
+		// usuário não autenticado
+		if(status === 401){
+			console.log("Avisar que errou a senha ou usuario");
+      self.setState({msg: "Invalid username or password"});
+		// usuário não encontrado no banco de dados
+		}else if(status === 404){
+			console.log("Avisar que não está cadastrado");
+		}
       });
   },
 
   render: function(){
     return(
       <Login
+        msg = {this.state.msg}
         updateUsuario = {this.handleUpdateUsuario}
         updateSenha = {this.handleUpdateSenha}
         entrar = {this.handleSubmit}
