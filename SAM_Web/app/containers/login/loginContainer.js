@@ -10,7 +10,8 @@ var LoginContainer = React.createClass({
     return{
       usuario:"",
       senha: "",
-      msg: ""
+      msg: "",
+
     }
   },
 
@@ -32,39 +33,48 @@ var LoginContainer = React.createClass({
     e.preventDefault();
 
     self.setState({msg: ""});
-    
-    var data = {User: self.state.usuario, Password: self.state.senha};
-    axios.post("http://10.10.15.113:65122/api/sam/login", data).then(
 
-	    // sucesso
-      function(response){
-        debugger;
-        var token = response.data.token;
+    if(self.state.usuario === "" || self.state.senha === ""){
+      if(self.state.usuario === ""){
+        self.setState({msg: "Preencha o campo usuário"});
+      }else{
+        self.setState({msg: "Preencha o campo senha"});
+      }
 
-        if (typeof(Storage) !== "undefined") {
-          localStorage.setItem("token", token);
-        } else {
-          // Sorry! No Web Storage support..
-        }
+    }else{
+      var data = {User: self.state.usuario, Password: self.state.senha};
+      axios.post("http://10.10.15.113:65122/api/sam/login", data).then(
 
-        self.context.router.push('/Dashboard');
-      },
+  	    // sucesso
+        function(response){
+          debugger;
+          var token = response.data.token;
 
-      // falha
-      function(jqXHR){
-        debugger;
+          if (typeof(Storage) !== "undefined") {
+            localStorage.setItem("token", token);
+          } else {
+            // Sorry! No Web Storage support..
+          }
 
-		var status = jqXHR.status;
+          self.context.router.push('/Dashboard');
+        },
 
-		// usuário não autenticado
-		if(status === 401){
-			console.log("Avisar que errou a senha ou usuario");
-      self.setState({msg: "Invalid username or password"});
-		// usuário não encontrado no banco de dados
-		}else if(status === 404){
-			console.log("Avisar que não está cadastrado");
-		}
-      });
+        // falha
+        function(jqXHR){
+          debugger;
+
+  		var status = jqXHR.status;
+
+  		// usuário não autenticado
+  		if(status === 401){
+  			console.log("Avisar que errou a senha ou usuario");
+        self.setState({msg: "Senha ou usuário inválido"});
+  		// usuário não encontrado no banco de dados
+  		}else if(status === 404){
+  			console.log("Avisar que não está cadastrado");
+  		}
+        });
+    }
   },
 
   render: function(){

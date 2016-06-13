@@ -1,0 +1,11 @@
+INSERT INTO Categorias VALUES ('Certificação', 20);
+INSERT INTO Categorias VALUES ('Cursos', 20);
+INSERT INTO Categorias VALUES ('Coursera', 20);
+INSERT INTO Categorias VALUES ('Blog Técnico: Vídeos', 5);
+INSERT INTO Categorias VALUES ('Blog Técnico: Posts', 5);
+INSERT INTO Categorias VALUES ('Comunidade de Software', 1);
+INSERT INTO Categorias VALUES ('Workshop', 6);
+INSERT INTO Categorias VALUES ('Palestras', 6);
+INSERT INTO Categorias VALUES ('Hands-on', 6);
+INSERT INTO Categorias VALUES ('Repositório de Código: Post Wiki', 3);
+INSERT INTO Categorias VALUES ('Repositório de Código: Código', 3);

@@ -207,5 +207,8 @@ export default StyleSheet.create({
     },
     "textarea:focus:not([readonly])+label": {
         "color": "#550000 !important"
+    },
+    "btn": {
+        "backgroundColor": "#550000 !important"
     }
 });

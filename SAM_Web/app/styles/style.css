@@ -258,3 +258,8 @@ textarea:focus:not([readonly]){
 textarea:focus:not([readonly])+label {
   color: #550000 !important;
 }
+
+/*button-color*/
+.btn{
+  background-color: #550000 !important;
+}
