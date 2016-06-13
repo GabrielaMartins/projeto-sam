@@ -66,7 +66,7 @@ CREATE TABLE Eventos
 
 	data DATE NOT NULL,
 	estado BIT NOT NULL DEFAULT 0,
-	tipo INT NOT NULL CHECK(tipo IN ('votacao','atribuicao','promocao','agendamento')),
+	tipo VARCHAR(12) NOT NULL CHECK(tipo IN ('votacao','atribuicao','promocao','agendamento')),
 );
 
 CREATE TABLE Pendencias
