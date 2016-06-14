@@ -17,7 +17,6 @@ namespace SamDataBase.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cargo()
         {
-            this.Cargos = new HashSet<Cargo>();
             this.Usuarios = new HashSet<Usuario>();
         }
     
@@ -26,8 +25,6 @@ namespace SamDataBase.Model
         public Nullable<int> anterior { get; set; }
         public int pontuacao { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cargo> Cargos { get; set; }
         public virtual Cargo CargoAnterior { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuarios { get; set; }

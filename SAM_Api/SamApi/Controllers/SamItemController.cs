@@ -1,12 +1,11 @@
 ﻿using System.Web.Http;
-using Opus.Helpers.Http;
 using System.Collections.Generic;
-using Opus.Helpers.Security;
 using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
 using System;
 using SamApi.Helpers;
+using SamApiModels;
 
 namespace SamApi.Controllers
 {
@@ -37,7 +36,7 @@ namespace SamApi.Controllers
             var token = commonOperations.DecodedToken;
 
             // erase here
-            response = Request.CreateResponse(HttpStatusCode.OK, new Message(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
+            response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
             response.Headers.CacheControl = new CacheControlHeaderValue()
             {
                 MaxAge = TimeSpan.FromMinutes(20)
@@ -63,7 +62,7 @@ namespace SamApi.Controllers
             var token = commonOperations.DecodedToken;
 
             // erase here
-            response = Request.CreateResponse(HttpStatusCode.OK, new Message(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
+            response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
             response.Headers.CacheControl = new CacheControlHeaderValue()
             {
                 MaxAge = TimeSpan.FromMinutes(20)
@@ -89,7 +88,7 @@ namespace SamApi.Controllers
             var token = commonOperations.DecodedToken;
 
             // erase here
-            response = Request.CreateResponse(HttpStatusCode.OK, new Message(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
+            response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
             response.Headers.CacheControl = new CacheControlHeaderValue()
             {
                 MaxAge = TimeSpan.FromMinutes(20)
@@ -116,7 +115,7 @@ namespace SamApi.Controllers
             var token = commonOperations.DecodedToken;
 
             // erase here
-            response = Request.CreateResponse(HttpStatusCode.OK, new Message(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
+            response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
             response.Headers.CacheControl = new CacheControlHeaderValue()
             {
                 MaxAge = TimeSpan.FromMinutes(20)

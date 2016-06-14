@@ -1,13 +1,13 @@
 ﻿using Opus.Helpers.Http;
 using Opus.Helpers.Security;
-using SamApi.Models;
+using SamApiModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Web;
+using System.Linq;
+
 
 namespace SamApi.Helpers
 {
@@ -35,7 +35,7 @@ namespace SamApi.Helpers
             if (token == null)
             {
                 // error
-                ResponseError = request.CreateResponse(HttpStatusCode.BadRequest, Message.TokenMissing);
+                ResponseError = request.CreateResponse(HttpStatusCode.BadRequest, MessageViewModel.TokenMissing);
                 ResponseError.Headers.CacheControl = new CacheControlHeaderValue()
                 {
                     MaxAge = TimeSpan.FromMinutes(20)
@@ -53,7 +53,7 @@ namespace SamApi.Helpers
             }
             catch
             {
-                ResponseError = request.CreateResponse(HttpStatusCode.Unauthorized, Message.InvalidToken);
+                ResponseError = request.CreateResponse(HttpStatusCode.Unauthorized, MessageViewModel.InvalidToken);
                 ResponseError.Headers.CacheControl = new CacheControlHeaderValue()
                 {
                     MaxAge = TimeSpan.FromMinutes(20)

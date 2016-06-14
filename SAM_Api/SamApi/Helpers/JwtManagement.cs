@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SamDataBase.Model;
+using SamApiModels;
 
 namespace Opus.Helpers.Security
 {
@@ -15,7 +15,7 @@ namespace Opus.Helpers.Security
 
         }
 
-        public static string GenerateToken(Usuario user)
+        public static string GenerateToken(UsuarioViewModel user)
         {
 
             if (user == null)

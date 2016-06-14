@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamApi", "SamApi\SamApi.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamDataBase", "SamDataBase\SamDataBase.csproj", "{F725223A-3F2F-4120-9816-B9DE104D6715}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamApiModels", "SamApiModels\SamApiModels.csproj", "{776689B3-741D-4E4D-A8B4-873DB0925D80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F725223A-3F2F-4120-9816-B9DE104D6715}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F725223A-3F2F-4120-9816-B9DE104D6715}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F725223A-3F2F-4120-9816-B9DE104D6715}.Release|Any CPU.Build.0 = Release|Any CPU
+		{776689B3-741D-4E4D-A8B4-873DB0925D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{776689B3-741D-4E4D-A8B4-873DB0925D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{776689B3-741D-4E4D-A8B4-873DB0925D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{776689B3-741D-4E4D-A8B4-873DB0925D80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using System.Collections.Generic;
 using Opus.Helpers.ActiveDirectoryService;
+using SamApiModels;
 
 namespace SamApiService.Controllers
 {

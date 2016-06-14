@@ -301,7 +301,6 @@
           <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="anterior" Type="Int32" />
           <Property Name="pontuacao" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cargos" Relationship="Self.FK__Cargos__anterior__117F9D94" FromRole="Cargos" ToRole="Cargos1" />
           <NavigationProperty Name="CargoAnterior" Relationship="Self.FK__Cargos__anterior__117F9D94" FromRole="Cargos1" ToRole="Cargos" />
           <NavigationProperty Name="Usuarios" Relationship="Self.FK__Usuarios__cargo__15502E78" FromRole="Cargos" ToRole="Usuarios" />
         </EntityType>

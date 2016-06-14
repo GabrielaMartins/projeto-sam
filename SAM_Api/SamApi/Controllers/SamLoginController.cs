@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Web.Http;
-using SamApi.Models;
 using Opus.Helpers.ActiveDirectoryService;
 using Opus.Helpers.Security;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
-using SamApi.Helpers;
 using Opus.DataBaseEnvironment;
-using SamDataBase.Model;
 using System.Linq;
-using System.Web.Http.Cors;
+using SamApiModels;
+using AutoMapper;
+using SamDataBase.Model;
 
 namespace SamApiService.Controllers
 {
@@ -23,28 +22,27 @@ namespace SamApiService.Controllers
         // GET api/sam/login
         [Route("login")]
         [HttpPost]
-        public HttpResponseMessage Login(Login login)
+        public HttpResponseMessage Login(LoginViewModel login)
         {
 
             ActiveDirectoryConsumer adConsumer = new ActiveDirectoryConsumer("opus.local");
             HttpResponseMessage response = null;
-            Usuario user = null;
             string token = string.Empty;
 
-            // ask to Active Directory if the User's credentials is valid
+            // ask Active Directory if the User's credentials is valid
             if (adConsumer.IsValidUser(login.User, login.Password))
             {
 
                 // if yes, get User's information from database
                 var userRepository = DataAccess.Instance.UsuarioRepository();
-                user = userRepository.Find(u => u.samaccount.Equals(login.User)).SingleOrDefault();
+                var usr = userRepository.Find(u => u.samaccount.Equals(login.User)).SingleOrDefault();
                 
                 // check if our user not exists in our database
-                if (user == null)
+                if (usr == null)
                 {
 
                     // return a http error
-                    var error1 = new Message(HttpStatusCode.NotFound, "User Not Found", "We could not found the user '" + login.User + "' in our database");
+                    var error1 = new MessageViewModel(HttpStatusCode.NotFound, "User Not Found", "We could not found the user '" + login.User + "' in our database");
                    
                     response = Request.CreateResponse(HttpStatusCode.NotFound, error1);
                     response.Headers.CacheControl = new CacheControlHeaderValue()
@@ -56,9 +54,11 @@ namespace SamApiService.Controllers
                 }
                 else
                 {
+                    // Transform our Usuario model to UsuarioViewModel (erro)
+                    var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usr);
 
                     // generate token based on User
-                    token = JwtManagement.GenerateToken(user);
+                    token = JwtManagement.GenerateToken(usuarioViewModel);
                     var result2 = new Dictionary<string, object>() { { "token", token } };
                     response = Request.CreateResponse(HttpStatusCode.OK, result2);
                     response.Headers.CacheControl = new CacheControlHeaderValue()
@@ -71,7 +71,7 @@ namespace SamApiService.Controllers
             }
 
             // if credential is invalid
-            var error2 = new Message(HttpStatusCode.Unauthorized, "User Not Authorized", "User login has failed");
+            var error2 = new MessageViewModel(HttpStatusCode.Unauthorized, "User Not Authorized", "User login has failed");
             response = Request.CreateResponse(HttpStatusCode.Unauthorized, error2);
             response.Headers.CacheControl = new CacheControlHeaderValue()
             {
