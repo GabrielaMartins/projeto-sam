@@ -10,6 +10,10 @@ namespace SamApi
     {
         public static void Register(HttpConfiguration config)
         {
+
+            // Enable CORS
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
+
             // Web API configuration and services
             var formatters = config.Formatters;
            
@@ -25,8 +29,6 @@ namespace SamApi
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            // Enable CORS
-            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
         }
     }
 }

@@ -5,19 +5,13 @@ var Avatar = require('../../components/usuario/avatar');
 const AvatarContainer = React.createClass({
 
   render: function(){
-    return (
-      <Avatar
-        url = {this.props.url}
-        nome = {this.props.nome}
-      />
-    );
+    return (<Avatar usuario = {this.props.user} />);
   }
 
 });
 
 Avatar.propTypes = {
-  url: React.PropTypes.string.isRequired,
-  nome: React.PropTypes.string.isRequired
+  usuario: React.PropTypes.object.isRequired
 }
 
 module.exports = Avatar;

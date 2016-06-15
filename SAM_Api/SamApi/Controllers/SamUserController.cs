@@ -75,7 +75,6 @@ namespace SamApi.Controllers
 
         // GET: api/sam/user/{samaccount}
         [Route("{samaccount}")]
-        [System.Web.Http.Cors.EnableCors("*", "*", "*")]
         public HttpResponseMessage GetBySamaccount(string samaccount)
         {
 
