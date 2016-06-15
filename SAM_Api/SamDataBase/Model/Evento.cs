@@ -26,7 +26,7 @@ namespace SamDataBase.Model
         public Nullable<int> usuario { get; set; }
         public System.DateTime data { get; set; }
         public bool estado { get; set; }
-        public int tipo { get; set; }
+        public string tipo { get; set; }
     
         public virtual Iten Item { get; set; }
         public virtual Usuario Usuario { get; set; }

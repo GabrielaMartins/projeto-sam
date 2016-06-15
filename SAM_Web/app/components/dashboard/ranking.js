@@ -7,6 +7,9 @@ var Ranking = React.createClass({
   render : function(){
     var ranking = [];
     this.props.ranking.forEach(function(rankingCard){
+      if(rankingCard.imagem == null){
+        rankingCard.imagem = "./app/imagens/fulano.jpg";
+      }
       ranking.push(<CardEventos conteudo={rankingCard}></CardEventos>)
     });
     return(

@@ -138,18 +138,18 @@ footer.page-footer {
 }
 .pendencia, .ranking{
   overflow-y: scroll;
-  max-height: 255px;
+  height: 255px;
 }
 
 .eventos, .promocoes{
   overflow-y: scroll;
-  max-height: 423px;
+  height: 423px;
 }
 
 .votacao{
   overflow-y: scroll;
   overflow-x: hidden;
-  max-height: 540px;
+  height: 540px;
 }
 
 .progress{

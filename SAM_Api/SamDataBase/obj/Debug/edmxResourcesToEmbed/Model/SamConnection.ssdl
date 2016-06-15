@@ -26,7 +26,7 @@
     <Property Name="usuario" Type="int" />
     <Property Name="data" Type="date" Nullable="false" />
     <Property Name="estado" Type="bit" Nullable="false" />
-    <Property Name="tipo" Type="int" Nullable="false" />
+    <Property Name="tipo" Type="varchar" MaxLength="12" Nullable="false" />
   </EntityType>
   <EntityType Name="Itens">
     <Key>
@@ -84,10 +84,10 @@
     <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="descricao" Type="varchar" MaxLength="200" />
     <Property Name="redes" Type="varchar" MaxLength="200" />
+    <Property Name="perfil" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="dataInicio" Type="date" Nullable="false" />
     <Property Name="foto" Type="varchar" MaxLength="150" />
     <Property Name="ativo" Type="bit" Nullable="false" />
-    <Property Name="perfil" Type="varchar" MaxLength="20" />
   </EntityType>
   <Association Name="FK__Cargos__anterior__117F9D94">
     <End Role="Cargos" Type="Self.Cargos" Multiplicity="0..1" />
@@ -101,7 +101,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Eventos__item__286302EC">
+  <Association Name="FK__Eventos__item__29572725">
     <End Role="Itens" Type="Self.Itens" Multiplicity="0..1" />
     <End Role="Eventos" Type="Self.Eventos" Multiplicity="*" />
     <ReferentialConstraint>
@@ -113,7 +113,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Eventos__usuario__29572725">
+  <Association Name="FK__Eventos__usuario__2A4B4B5E">
     <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
     <End Role="Eventos" Type="Self.Eventos" Multiplicity="*" />
     <ReferentialConstraint>
@@ -125,7 +125,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Itens__categoria__21B6055D">
+  <Association Name="FK__Itens__categoria__22AA2996">
     <End Role="Categorias" Type="Self.Categorias" Multiplicity="0..1" />
     <End Role="Itens" Type="Self.Itens" Multiplicity="*" />
     <ReferentialConstraint>
@@ -137,7 +137,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ItensTagge__item__24927208">
+  <Association Name="FK__ItensTagge__item__25869641">
     <End Role="Itens" Type="Self.Itens" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
@@ -151,7 +151,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ItensTagged__tag__25869641">
+  <Association Name="FK__ItensTagged__tag__267ABA7A">
     <End Role="Tags" Type="Self.Tags" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
@@ -165,7 +165,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Pendencia__event__2F10007B">
+  <Association Name="FK__Pendencia__event__300424B4">
     <End Role="Eventos" Type="Self.Eventos" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
@@ -179,7 +179,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Pendencia__usuar__2E1BDC42">
+  <Association Name="FK__Pendencia__usuar__2F10007B">
     <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
@@ -193,7 +193,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Resultado__event__32E0915F">
+  <Association Name="FK__Resultado__event__33D4B598">
     <End Role="Eventos" Type="Self.Eventos" Multiplicity="0..1" />
     <End Role="ResultadoVotacoes" Type="Self.ResultadoVotacoes" Multiplicity="*" />
     <ReferentialConstraint>
@@ -205,7 +205,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Resultado__usuar__33D4B598">
+  <Association Name="FK__Resultado__usuar__34C8D9D1">
     <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
     <End Role="ResultadoVotacoes" Type="Self.ResultadoVotacoes" Multiplicity="*" />
     <ReferentialConstraint>
@@ -243,39 +243,39 @@
       <End Role="Cargos" EntitySet="Cargos" />
       <End Role="Cargos1" EntitySet="Cargos" />
     </AssociationSet>
-    <AssociationSet Name="FK__Eventos__item__286302EC" Association="Self.FK__Eventos__item__286302EC">
+    <AssociationSet Name="FK__Eventos__item__29572725" Association="Self.FK__Eventos__item__29572725">
       <End Role="Itens" EntitySet="Itens" />
       <End Role="Eventos" EntitySet="Eventos" />
     </AssociationSet>
-    <AssociationSet Name="FK__Eventos__usuario__29572725" Association="Self.FK__Eventos__usuario__29572725">
+    <AssociationSet Name="FK__Eventos__usuario__2A4B4B5E" Association="Self.FK__Eventos__usuario__2A4B4B5E">
       <End Role="Usuarios" EntitySet="Usuarios" />
       <End Role="Eventos" EntitySet="Eventos" />
     </AssociationSet>
-    <AssociationSet Name="FK__Itens__categoria__21B6055D" Association="Self.FK__Itens__categoria__21B6055D">
+    <AssociationSet Name="FK__Itens__categoria__22AA2996" Association="Self.FK__Itens__categoria__22AA2996">
       <End Role="Categorias" EntitySet="Categorias" />
       <End Role="Itens" EntitySet="Itens" />
     </AssociationSet>
-    <AssociationSet Name="FK__ItensTagge__item__24927208" Association="Self.FK__ItensTagge__item__24927208">
+    <AssociationSet Name="FK__ItensTagge__item__25869641" Association="Self.FK__ItensTagge__item__25869641">
       <End Role="Itens" EntitySet="Itens" />
       <End Role="ItensTagged" EntitySet="ItensTagged" />
     </AssociationSet>
-    <AssociationSet Name="FK__ItensTagged__tag__25869641" Association="Self.FK__ItensTagged__tag__25869641">
+    <AssociationSet Name="FK__ItensTagged__tag__267ABA7A" Association="Self.FK__ItensTagged__tag__267ABA7A">
       <End Role="Tags" EntitySet="Tags" />
       <End Role="ItensTagged" EntitySet="ItensTagged" />
     </AssociationSet>
-    <AssociationSet Name="FK__Pendencia__event__2F10007B" Association="Self.FK__Pendencia__event__2F10007B">
+    <AssociationSet Name="FK__Pendencia__event__300424B4" Association="Self.FK__Pendencia__event__300424B4">
       <End Role="Eventos" EntitySet="Eventos" />
       <End Role="Pendencias" EntitySet="Pendencias" />
     </AssociationSet>
-    <AssociationSet Name="FK__Pendencia__usuar__2E1BDC42" Association="Self.FK__Pendencia__usuar__2E1BDC42">
+    <AssociationSet Name="FK__Pendencia__usuar__2F10007B" Association="Self.FK__Pendencia__usuar__2F10007B">
       <End Role="Usuarios" EntitySet="Usuarios" />
       <End Role="Pendencias" EntitySet="Pendencias" />
     </AssociationSet>
-    <AssociationSet Name="FK__Resultado__event__32E0915F" Association="Self.FK__Resultado__event__32E0915F">
+    <AssociationSet Name="FK__Resultado__event__33D4B598" Association="Self.FK__Resultado__event__33D4B598">
       <End Role="Eventos" EntitySet="Eventos" />
       <End Role="ResultadoVotacoes" EntitySet="ResultadoVotacoes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Resultado__usuar__33D4B598" Association="Self.FK__Resultado__usuar__33D4B598">
+    <AssociationSet Name="FK__Resultado__usuar__34C8D9D1" Association="Self.FK__Resultado__usuar__34C8D9D1">
       <End Role="Usuarios" EntitySet="Usuarios" />
       <End Role="ResultadoVotacoes" EntitySet="ResultadoVotacoes" />
     </AssociationSet>

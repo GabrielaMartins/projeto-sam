@@ -121,24 +121,24 @@ export default StyleSheet.create({
     },
     "pendencia": {
         "overflowY": "scroll",
-        "maxHeight": 255
+        "height": 255
     },
     "ranking": {
         "overflowY": "scroll",
-        "maxHeight": 255
+        "height": 255
     },
     "eventos": {
         "overflowY": "scroll",
-        "maxHeight": 423
+        "height": 423
     },
     "promocoes": {
         "overflowY": "scroll",
-        "maxHeight": 423
+        "height": 423
     },
     "votacao": {
         "overflowY": "scroll",
         "overflowX": "hidden",
-        "maxHeight": 540
+        "height": 540
     },
     "progress": {
         "backgroundColor": "#888"

@@ -29,7 +29,7 @@
     <Property Name="usuario" Type="Int32" />
     <Property Name="data" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="estado" Type="Boolean" Nullable="false" />
-    <Property Name="tipo" Type="Int32" Nullable="false" />
+    <Property Name="tipo" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Item" Relationship="Self.FK__Eventos__item__286302EC" FromRole="Eventos" ToRole="Itens" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK__Eventos__usuario__29572725" FromRole="Eventos" ToRole="Usuarios" />
     <NavigationProperty Name="Pendencias" Relationship="Self.FK__Pendencia__event__2F10007B" FromRole="Eventos" ToRole="Pendencias" />
@@ -108,7 +108,7 @@
     <NavigationProperty Name="Eventos" Relationship="Self.FK__Eventos__usuario__29572725" FromRole="Usuarios" ToRole="Eventos" />
     <NavigationProperty Name="Pendencias" Relationship="Self.FK__Pendencia__usuar__2E1BDC42" FromRole="Usuarios" ToRole="Pendencias" />
     <NavigationProperty Name="ResultadoVotacoes" Relationship="Self.FK__Resultado__usuar__33D4B598" FromRole="Usuarios" ToRole="ResultadoVotacoes" />
-    <Property Name="perfil" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="perfil" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
   </EntityType>
   <Association Name="FK__Cargos__anterior__117F9D94">
     <End Role="Cargos" Type="Self.Cargo" Multiplicity="0..1" />

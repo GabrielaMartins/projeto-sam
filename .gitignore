@@ -1,5 +1,11 @@
 #Projeto-SAM
-#Excluindo arquivos desnecessários
+#Excluindo arquivos desnecessï¿½rios
 
 dist/
 node_modules/
+
+SAM_Api/SamDataBase/bin/
+SAM_Api/.vs/
+SAM_Api/obj/
+SAM_Api/packages/
+SAM_Api/SamApiModels/bin

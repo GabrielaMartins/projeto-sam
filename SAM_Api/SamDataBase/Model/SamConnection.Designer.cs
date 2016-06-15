@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\jesley.OPUS\Documents\Jesley\Projetos\git\projeto-sam\SAM_Api\SamDataBase\Model\SamConnection.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\gabriela.OPUS\projeto-sam\SAM_Api\SamDataBase\Model\SamConnection.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
