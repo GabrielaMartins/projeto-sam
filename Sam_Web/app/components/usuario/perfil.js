@@ -4,20 +4,12 @@ var AvatarContainer = require('../../containers/usuario/avatarContainer');
 
 var Perfil = function(props){
 
-  return(
-      <div>
-          <AvatarContainer
-            nome = {props.nome}
-            url = {props.url}
-          />
-      </div>
-    );
+  return (<AvatarContainer usuario = {props.usuario} />);
 
 }
 
 Perfil.propTypes = {
-  nome: React.PropTypes.string.isRequired,
-  url: React.PropTypes.string.isRequired
+  usuario: React.PropTypes.object.isRequired
 }
 
 module.exports = Perfil;
