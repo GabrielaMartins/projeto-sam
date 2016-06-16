@@ -24,7 +24,7 @@ namespace SamApiModels
 
         public string descricao { get; set; }
 
-        public string redes { get; set; }
+        public string[] redes { get; set; }
 
         public DateTime dataInicio { get; set; }
 

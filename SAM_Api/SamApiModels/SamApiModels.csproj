@@ -43,6 +43,7 @@
     <Compile Include="Models\ActiveDirectoryUser.cs" />
     <Compile Include="Models\CargoViewModel.cs" />
     <Compile Include="Models\CategoriaViewModel.cs" />
+    <Compile Include="Models\PerfilViewModel.cs" />
     <Compile Include="Models\UltimosEventos.cs" />
     <Compile Include="Models\EventoViewModel.cs" />
     <Compile Include="Models\ItemViewModel.cs" />
@@ -54,6 +55,12 @@
     <Compile Include="Models\TagViewModel.cs" />
     <Compile Include="Models\UsuarioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SamDataBase\SamDataBase.csproj">
+      <Project>{F725223A-3F2F-4120-9816-B9DE104D6715}</Project>
+      <Name>SamDataBase</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

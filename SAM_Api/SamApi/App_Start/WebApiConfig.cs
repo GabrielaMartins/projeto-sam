@@ -14,11 +14,12 @@ namespace SamApi
             // Enable CORS
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
-            // Web API configuration and services
-            var formatters = config.Formatters;
-           
+            // isso deveria habilitar o serializador json para camel case
+            //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
+
             // Remove XML formatting 
-            formatters.Remove(config.Formatters.XmlFormatter);
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
 
             // Web API routes
             config.MapHttpAttributeRoutes();

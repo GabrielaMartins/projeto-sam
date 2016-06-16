@@ -8,13 +8,17 @@ namespace SamApi.Mappers
     {
         protected override void Configure()
         {
+
+            Mapper.CreateMap<Cargo, CargoViewModel>();
+
             Mapper
                 .CreateMap<Usuario, UsuarioViewModel>()
                 .ForMember(
                     u => u.Cargo,
-                    opt => opt.MapFrom(src => src.Cargo));
-
-            Mapper.CreateMap<Cargo, CargoViewModel>();
+                    opt => opt.MapFrom(src => src.Cargo))
+                .ForMember(
+                    u => u.redes,
+                    opt => opt.MapFrom(src => src.redes.Split(';')));            
                 
         }
     }
