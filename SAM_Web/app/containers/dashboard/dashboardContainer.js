@@ -2,7 +2,6 @@ var React = require('react');
 var Dashboard = require('../../components/dashboard/dashboard');
 var axios = require("axios");
 
-
 var DashboardContainer = React.createClass({
   getInitialState: function() {
     return {
@@ -27,14 +26,9 @@ var DashboardContainer = React.createClass({
       },
       columnChart: {
 				data: [],
-        options : {
-          title: "Certificações mais procuradas por ano",
-          bar: {groupWidth: "100%"},
-          legend: { position: 'right', maxLines: 3 },
-          isStacked: true
-        },
-        chartType: "ColumnChart",
-  			div_id: "ColumnChart"
+        options : {},
+        chartType: "",
+  			div_id: ""
 			}
     };
 
@@ -82,6 +76,24 @@ var DashboardContainer = React.createClass({
               }
             })
           }.bind(this));
+
+          axios.get("http://localhost:65120/api/sam/Dashboard/certificacoesProcuradas").then(
+            function(response){
+              this.setState({
+                columnChart: {
+                  data: response.data,
+                  options : {
+                    title: "Certificações mais procuradas por ano",
+                    bar: {groupWidth: "100%"},
+                    legend: { position: 'right', maxLines: 3 },
+                    isStacked: true,
+                    vAxis: {maxValue: 10, format: '0'}
+                  },
+                  chartType: "ColumnChart",
+                  div_id: "ColumnChart"
+                }
+              })
+            }.bind(this));
 
   },
   render : function(){

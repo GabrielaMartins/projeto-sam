@@ -210,5 +210,16 @@ export default StyleSheet.create({
     },
     "btn": {
         "backgroundColor": "#550000 !important"
+    },
+    "campoBusca": {
+        "transition": "all 0.4s ease"
+    },
+    "campoBuscastick": {
+        "display": "block",
+        "position": "fixed",
+        "zIndex": 500,
+        "width": "100%",
+        "marginLeft": "0 !important",
+        "marginRight": "0 !important"
     }
 });

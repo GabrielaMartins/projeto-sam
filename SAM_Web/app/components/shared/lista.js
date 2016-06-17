@@ -20,11 +20,16 @@ var Lista = function(props){
   }
 
   return(
-    <div className="row" style={{"marginLeft":"5%", "marginRight":"5%"}}>
-      <div className="card col l12 m12 s12 wrapper">
-        <input id="search" placeholder={placeholder} className="colorText-default"/><i className="material-icons colorText-default">search</i>
+    <div id="lista">
+      <div className="row" id="campoBusca" style={{"marginLeft":"5%", "marginRight":"5%", "marginBottom":"0px"}}>
+          <div className="card wrapper">
+              <input id="search" placeholder={placeholder} className="colorText-default" />
+              <i className="material-icons colorText-default left " >search</i>
+          </div>
+        </div>
+        <div className="row" style={{"marginLeft":"5%", "marginRight":"5%"}}>
+          {lista}
       </div>
-        {lista}
     </div>
   );
 }

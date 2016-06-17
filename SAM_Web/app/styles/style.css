@@ -263,3 +263,28 @@ textarea:focus:not([readonly])+label {
 .btn{
   background-color: #550000 !important;
 }
+
+#campoBusca{
+  transition: all 0.4s ease;
+}
+
+@media screen and (min-width: 992px){
+  #campoBusca.stick {
+    top: 54px;
+  }
+}
+
+@media screen and (max-width: 990px){
+    #campoBusca.stick {
+      top: 45px;
+    }
+}
+
+#campoBusca.stick {
+    display: block;
+    position: fixed;
+    z-index: 500;
+    width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
