@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b1f95687740644d38019f87e19e2d916" Name="Diagram1">
+      <Diagram DiagramId="b1f95687740644d38019f87e19e2d916" Name="Diagram1" ZoomLevel="76">
         <EntityTypeShape EntityType="sam.model.Cargo" Width="1.5" PointX="1.5" PointY="8.625" />
         <EntityTypeShape EntityType="sam.model.Categoria" Width="1.5" PointX="1.5" PointY="17" />
         <EntityTypeShape EntityType="sam.model.Evento" Width="1.5" PointX="3" PointY="3.375" />
         <EntityTypeShape EntityType="sam.model.Iten" Width="1.5" PointX="0.75" PointY="12.5" />
         <EntityTypeShape EntityType="sam.model.ItensTagged" Width="1.5" PointX="3" PointY="12.875" />
         <EntityTypeShape EntityType="sam.model.Pendencia" Width="1.5" PointX="5.25" PointY="0.75" />
-        <EntityTypeShape EntityType="sam.model.ResultadoVotaco" Width="1.5" PointX="5.25" PointY="3.625" />
+        <EntityTypeShape EntityType="sam.model.ResultadoVotacao" Width="1.5" PointX="5.25" PointY="3.625" />
         <EntityTypeShape EntityType="sam.model.Tag" Width="1.5" PointX="0.75" PointY="20" />
         <EntityTypeShape EntityType="sam.model.Usuario" Width="1.5" PointX="0.75" PointY="2.875" />
         <AssociationConnector Association="sam.model.FK__Cargos__anterior__117F9D94" />

@@ -72,7 +72,7 @@
     <Compile Include="Model\Pendencia.cs">
       <DependentUpon>SamConnection.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ResultadoVotaco.cs">
+    <Compile Include="Model\ResultadoVotacao.cs">
       <DependentUpon>SamConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

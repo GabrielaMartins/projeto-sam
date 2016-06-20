@@ -63,8 +63,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ResultadoVotacoes">
-      <EntityTypeMapping TypeName="sam.model.ResultadoVotaco">
+    <EntitySetMapping Name="ResultadoVotacaos">
+      <EntityTypeMapping TypeName="sam.model.ResultadoVotacao">
         <MappingFragment StoreEntitySet="ResultadoVotacoes">
           <ScalarProperty Name="modificador" ColumnName="modificador" />
           <ScalarProperty Name="dificuldade" ColumnName="dificuldade" />
