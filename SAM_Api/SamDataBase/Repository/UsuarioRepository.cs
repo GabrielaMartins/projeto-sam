@@ -2,15 +2,19 @@ using SamDataBase.Model;
 using Opus.RepositoryPattern;
 using System.Data.Entity;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using SamApiModels;
+<<<<<<< HEAD
+=======
+using AutoMapper;
+using System;
+>>>>>>> 22d34add76fe9a0ac00af9ecbd1aaf58daa53df0
 
 namespace Opus.DataBaseEnvironment
 {
 	public class UsuarioRepository : Repository<Usuario>
 	{
-        SamEntities db;
+        private SamEntities db;
 		public UsuarioRepository(DbContext context) : base (context)
 		{
             db = new SamEntities();
@@ -32,6 +36,49 @@ namespace Opus.DataBaseEnvironment
                         }).ToList<PromocoesViewModel>();
 
             return dados;
+        }
+
+        public List<CargoViewModel> RecuperaProximoCargo(string samaccount)
+        {
+
+            var query = (from cargo in db.Cargos
+                         from usuario in db.Usuarios
+                         where cargo.anterior == usuario.cargo && usuario.samaccount == samaccount
+                         select cargo);
+
+            var cargos = query.ToList();
+            var cargosViewModel = new List<CargoViewModel>();
+            foreach(var cargo in cargos)
+            {
+                var cargoViewModel = Mapper.Map<Cargo, CargoViewModel>(cargo);
+                cargosViewModel.Add(cargoViewModel);
+            }
+
+            return cargosViewModel;
+        }
+
+        public PerfilViewModel RecuperaPerfil(string samaccount)
+        {
+
+            try
+            {
+                var usuario = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount == samaccount).SingleOrDefault();
+                var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id).ToList();
+
+                var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
+                var eventoViewModels = new List<EventoViewModel>();
+                foreach (var evento in eventos)
+                {
+                    var eventoViewModel = Mapper.Map<Evento, EventoViewModel>(evento);
+                    eventoViewModels.Add(eventoViewModel);
+                }
+
+                return new PerfilViewModel() { Usuario = usuarioViewModel, Eventos = eventoViewModels };
+
+            }catch(NullReferenceException)
+            {
+                return null;
+            }
         }
 
     }

@@ -12,7 +12,7 @@ namespace SamDataBase.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class ResultadoVotacoes
+    public partial class ResultadoVotacao
     {
         public int id { get; set; }
         public Nullable<int> evento { get; set; }

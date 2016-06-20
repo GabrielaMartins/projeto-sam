@@ -9,8 +9,7 @@ namespace SamApiModels
 
         public EventoViewModel()
         {
-            Pendencias = new HashSet<PendenciaViewModel>();
-            ResultadoVotacoes = new HashSet<ResultadoVotacoesViewModel>();
+          
         }
 
         public int id { get; set; }
@@ -27,10 +26,5 @@ namespace SamApiModels
 
         public virtual ItemViewModel Item { get; set; }
 
-        public virtual UsuarioViewModel Usuario { get; set; }
-
-        public virtual ICollection<PendenciaViewModel> Pendencias { get; set; }
-
-        public virtual ICollection<ResultadoVotacoesViewModel> ResultadoVotacoes { get; set; }
     }
 }
