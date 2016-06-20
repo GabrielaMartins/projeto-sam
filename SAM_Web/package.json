@@ -3,13 +3,17 @@
   "version": "1.0.0",
   "description": "O SAM (Sistema de Acompanhamento de Méritos) visa por meio de uma plataforma Web e outra mobile, permitir um total acompanhamento do processo de crescimento técnico do funcionário.  Composto por categorias e seus itens, o SAM é baseado num conjunto de matrizes que quantifica através de pontos cada novo item realizado pelo funcionário.",
   "main": "index.js",
-  "authors": ["Jesley", "Gabriela"],
+  "authors": [
+    "Jesley",
+    "Gabriela"
+  ],
   "license": "ISC",
   "scripts": {
     "production": "webpack -p",
-	   "start" : "webpack-dev-server"
+    "start": "webpack-dev-server"
   },
   "dependencies": {
+    "moment": "^2.13.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-router": "^2.0.0-rc5"

@@ -1,7 +1,8 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
-
+var moment = require('moment');
+moment.locale('pt-br');
 
 var CardEventos = React.createClass({
   render : function(){
@@ -14,9 +15,10 @@ var CardEventos = React.createClass({
                   <p className="center-align pequena">{this.props.conteudo.cargoAtual} > {this.props.conteudo.proximoCargo}</p>
               </div>
     }else if(this.props.conteudo.evento){
+
       infos = <div className="right">
                   <h5 className="right-align extraGrande">{this.props.conteudo.evento}</h5>
-                  <p className="right-align pequena">{this.props.conteudo.data}</p>
+                  <p className="right-align pequena">{moment(this.props.conteudo.data).format('L')}</p>
               </div>
     }else if(this.props.conteudo.pontos){
       infos = <h5 className="right"><b>{this.props.conteudo.pontos} pontos</b></h5>

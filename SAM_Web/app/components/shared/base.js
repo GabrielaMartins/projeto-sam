@@ -25,7 +25,7 @@ var Base = function(props){
         <header>
           {dropdowns}
           <div className="navbar-fixed">
-            <nav className="nav-wrapper color-default z-depth-2 row">
+            <nav className="nav-wrapper color-default row">
               <div className="col s10 offset-s1">
                 <Link to="/Dashboard" className="brand-logo"><img src="./app/imagens/logo-sam.png" style={{height:60}} /></Link>
                 <a data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>

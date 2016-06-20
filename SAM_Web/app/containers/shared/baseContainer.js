@@ -19,7 +19,26 @@ var BaseContainer = React.createClass({
       }); // End Document Ready
     })(jQuery);
 
-    this.forceUpdate();
+    (function($) {
+      $(window).scroll(function() {
+        var distanceFromTop = $(this).scrollTop();
+        if (distanceFromTop > 45) {
+          $('#campoBusca').addClass('stick');
+          $('#campoBusca > .card').css('background-color', '#801515');
+          $('#search').addClass('white-text');
+          $('#campoBusca > .card > .material-icons').addClass('white-text');
+          return false;
+        } else {
+          $('#campoBusca').removeClass('stick');
+          $('#campoBusca > .card').css('background-color', '#FFF');
+          $('#search').removeClass('white-text');
+          $('#campoBusca > .card > .material-icons').removeClass('white-text');
+          return false;
+        }
+      });
+    })(jQuery);
+
+    //this.forceUpdate();
   },
   componentWillMount: function(){
     this.setState({
