@@ -26,7 +26,7 @@
     <Property Name="usuario" Type="int" />
     <Property Name="data" Type="date" Nullable="false" />
     <Property Name="estado" Type="bit" Nullable="false" />
-    <Property Name="tipo" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="tipo" Type="varchar" MaxLength="15" Nullable="false" />
   </EntityType>
   <EntityType Name="Itens">
     <Key>

@@ -12,13 +12,13 @@ var Votacao = require('../containers/votacao/votacaoContainer');
 var CadastroItem = require('../containers/cadastro_itens/cadastroItemContainer');
 var ListaUsuarios = require('../containers/usuario/listaUsuariosContainer');
 var ListaItens = require('../containers/item/listaItensContainer');
-var Perfil = require('../containers/usuario/perfilUsuarioContainer');
+var Perfil = require('../containers/perfil/perfilUsuarioContainer');
 
 var Routes = (
   <Router history={HashHistory}>
     <Route path='/' component={Login}/>
       <Route component={Base}>
-        <Route path='/Dashboard' component={Dashboard}/>
+        <Route path='/Dashboard/:samaccount' component={Dashboard}/>
         <Route path="/Item/Cadastro" component={CadastroItem}/>
         <Route path='/Votacao/:id' component={Votacao}/>
         <Route path='/Funcionario/Listagem' component={ListaUsuarios}/>
