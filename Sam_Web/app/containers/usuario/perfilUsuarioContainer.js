@@ -26,7 +26,7 @@ const PerfilUsuarioContainer = React.createClass({
       axios.defaults.headers.common['token'] = token;
 
       // busca no banco esse samaccount
-      axios.get('http://localhost:65122/api/sam/user/' + usuario).then(
+      axios.get('http://10.10.15.81:65122/api/sam/user/' + usuario).then(
 
         // sucesso
         function(response){

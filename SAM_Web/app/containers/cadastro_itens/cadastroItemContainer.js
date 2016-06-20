@@ -50,7 +50,7 @@ const CadastroItemContainer = React.createClass({
   },
 
   componentWillMount: function(){
-    this.getCategory('http://localhost:65120/api/sam/categoria/all');
+    this.getCategory('http://10.10.15.81:65120/api/sam/categoria/all');
   },
 
   getCategory: function(url){

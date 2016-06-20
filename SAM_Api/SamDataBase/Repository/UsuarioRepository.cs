@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using SamApiModels;
 
 namespace Opus.DataBaseEnvironment
 {
@@ -15,12 +16,20 @@ namespace Opus.DataBaseEnvironment
             db = new SamEntities();
         }
         
-        public List<dynamic> proximasPromocoes()
+        public List<PromocoesViewModel> proximasPromocoes()
         {
+            
             var dados = (from usuarios in db.Usuarios
                         from cargos in db.Cargos
                         where usuarios.cargo == cargos.CargoAnterior.id && (cargos.pontuacao - usuarios.pontos > 0 && cargos.pontuacao - usuarios.pontos < 100) && usuarios.cargo != null
-                        select new {usuarios.id, usuarios.nome, imagem = usuarios.foto, cargoAtual = usuarios.Cargo.nome, proximoCargo = cargos.nome, pontosFaltantes = cargos.pontuacao - usuarios.pontos }).ToList<dynamic>();
+                        select new PromocoesViewModel {
+                            id = usuarios.id,
+                            nome = usuarios.nome,
+                            imagem = usuarios.foto,
+                            cargoAtual = usuarios.Cargo.nome,
+                            proximoCargo = cargos.nome,
+                            pontosFaltantes = cargos.pontuacao - usuarios.pontos
+                        }).ToList<PromocoesViewModel>();
 
             return dados;
         }

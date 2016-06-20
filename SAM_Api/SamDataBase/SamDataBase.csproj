@@ -132,7 +132,12 @@
       <LastGenOutput>SamConnection.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SamApiModels\SamApiModels.csproj">
+      <Project>{776689b3-741d-4e4d-a8b4-873db0925d80}</Project>
+      <Name>SamApiModels</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

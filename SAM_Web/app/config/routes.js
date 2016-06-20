@@ -18,7 +18,7 @@ var Routes = (
   <Router history={HashHistory}>
     <Route path='/' component={Login}/>
       <Route component={Base}>
-        <Route path='/Dashboard' component={Dashboard}/>
+        <Route path='/Dashboard/:samaccount' component={Dashboard}/>
         <Route path="/Item/Cadastro" component={CadastroItem}/>
         <Route path='/Votacao/:id' component={Votacao}/>
         <Route path='/Funcionario/Listagem' component={ListaUsuarios}/>

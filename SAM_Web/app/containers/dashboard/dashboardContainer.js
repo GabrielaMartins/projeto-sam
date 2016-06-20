@@ -78,7 +78,9 @@ var DashboardContainer = React.createClass({
           }.bind(this));
 
           axios.get("http://localhost:65120/api/sam/Dashboard/certificacoesProcuradas").then(
+
             function(response){
+              debugger;
               this.setState({
                 columnChart: {
                   data: response.data,
