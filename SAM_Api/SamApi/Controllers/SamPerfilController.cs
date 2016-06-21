@@ -6,12 +6,13 @@ using SamApiModels;
 using System.Linq;
 using AutoMapper;
 using SamDataBase.Model;
+using System;
 
 namespace SamApi.Controllers
 {
 
     [RoutePrefix("api/sam/perfil")]
-    public class PerfilController : ApiController
+    public class SamPerfilController : ApiController
     {
 
         [Route("{samaccount}")]
@@ -32,14 +33,19 @@ namespace SamApi.Controllers
 
             //var token = commonOperations.DecodedToken;
 
+            try
+            {
+                var usuario = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount == samaccount).SingleOrDefault();
+                var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
 
-            var perfil = DataAccess.Instance.UsuarioRepository().RecuperaPerfil(samaccount);
-            if (perfil == null)
+                var eventosViewModel = DataAccess.Instance.UsuarioRepository().RecuperaEventos(usuario).Take(10);
+                var perfilViewModel = new PerfilViewModel() { Usuario = usuarioViewModel, Eventos = eventosViewModel.ToList() };
+                return Request.CreateResponse(HttpStatusCode.OK, perfilViewModel);
+            }
+            catch (NullReferenceException)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.NotFound, "Perfil not found", "we can't find perfil for this user"));
             }
-
-            return Request.CreateResponse(HttpStatusCode.OK, perfil);
 
         }
 

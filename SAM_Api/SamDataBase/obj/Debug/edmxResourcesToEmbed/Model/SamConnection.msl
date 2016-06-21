@@ -32,8 +32,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Itens">
-      <EntityTypeMapping TypeName="sam.model.Iten">
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="sam.model.Item">
         <MappingFragment StoreEntitySet="Itens">
           <ScalarProperty Name="categoria" ColumnName="categoria" />
           <ScalarProperty Name="modificador" ColumnName="modificador" />

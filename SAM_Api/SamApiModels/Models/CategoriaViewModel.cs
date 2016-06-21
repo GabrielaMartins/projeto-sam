@@ -8,13 +8,13 @@ namespace SamApiModels
 
         public CategoriaViewModel()
         {
-            Itens = new HashSet<ItemViewModel>();
+            //Itens = new HashSet<ItemViewModel>();
         }
 
         public int id { get; set; }
         public string nome { get; set; }
         public int peso { get; set; }
 
-        public virtual ICollection<ItemViewModel> Itens { get; set; }
+        //public virtual ICollection<ItemViewModel> Itens { get; set; }
     }
 }

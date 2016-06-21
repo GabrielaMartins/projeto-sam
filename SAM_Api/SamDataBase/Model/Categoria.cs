@@ -17,7 +17,7 @@ namespace SamDataBase.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Categoria()
         {
-            this.Itens = new HashSet<Iten>();
+            this.Itens = new HashSet<Item>();
         }
     
         public int id { get; set; }
@@ -25,6 +25,6 @@ namespace SamDataBase.Model
         public int peso { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Iten> Itens { get; set; }
+        public virtual ICollection<Item> Itens { get; set; }
     }
 }

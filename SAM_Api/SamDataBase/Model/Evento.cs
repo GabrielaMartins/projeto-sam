@@ -28,7 +28,7 @@ namespace SamDataBase.Model
         public bool estado { get; set; }
         public string tipo { get; set; }
     
-        public virtual Iten Item { get; set; }
+        public virtual Item Item { get; set; }
         public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pendencia> Pendencias { get; set; }
