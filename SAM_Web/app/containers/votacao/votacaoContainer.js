@@ -8,8 +8,14 @@ var VotacaoContainer = React.createClass({
       votos: null,
       evento: null,
       dificuldades:null,
-      profundidades:null
+      profundidades:null,
+      resultado: false
     };
+  },
+  handleMostraResultado: function(resposta){
+    this.setState({
+      resultado: resposta
+    })
   },
   componentWillMount: function(){
     //fazer fetch aqui
@@ -67,7 +73,7 @@ var VotacaoContainer = React.createClass({
 },
 
   render : function(){
-      return(<Votacao votos = {this.state.votos} evento = {this.state.evento} perfil = "rh"/>)
+      return(<Votacao votos = {this.state.votos} evento = {this.state.evento} perfil = "funcionario" mostraResultado = {this.handleMostraResultado} resultado = {this.state.resultado}/>)
   }
 });
 

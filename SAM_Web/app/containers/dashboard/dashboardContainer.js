@@ -44,6 +44,11 @@ var DashboardContainer = React.createClass({
 
     window.addEventListener('resize', this.handleResize);
 
+    var samaccount = this.props.params.samaccount;
+
+    //Busca no banco as pendências e o perfil do usuário
+    //axios.post("")
+
     //Ultimos Eventos
     axios.get("http://localhost:65120/api/sam/Dashboard/ultimosEventos").then(
       function(response){
@@ -77,6 +82,7 @@ var DashboardContainer = React.createClass({
             })
           }.bind(this));
 
+          //Gráfico: certificações mais procuradas
           axios.get("http://localhost:65120/api/sam/Dashboard/certificacoesProcuradas").then(
 
             function(response){

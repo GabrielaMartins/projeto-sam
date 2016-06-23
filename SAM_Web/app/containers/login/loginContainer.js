@@ -56,7 +56,7 @@ var LoginContainer = React.createClass({
             // Sorry! No Web Storage support..
           }
 
-          self.context.router.push('/Dashboard');
+          self.context.router.push('/Dashboard/mario');
         },
 
         // falha

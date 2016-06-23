@@ -23,8 +23,8 @@ var Lista = function(props){
     <div id="lista">
       <div className="row" id="campoBusca" style={{"marginLeft":"5%", "marginRight":"5%", "marginBottom":"0px"}}>
           <div className="card wrapper">
-              <input id="search" placeholder={placeholder} className="colorText-default" />
-              <i className="material-icons colorText-default left " >search</i>
+            <i className="material-icons colorText-default right" >search</i>
+            <input id="search" placeholder={placeholder} className="colorText-default" />
           </div>
         </div>
         <div className="row" style={{"marginLeft":"5%", "marginRight":"5%"}}>

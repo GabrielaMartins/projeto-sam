@@ -9,6 +9,11 @@ var Link = ReactRouter.Link;
 var Votacao = function(props){
     var votos = [];
 
+    var getResult = function(resposta){
+      debugger;
+      props.mostraResultado(resposta);
+    }
+
     props.votos.forEach(function(voto){
       votos.push(<CardEventos conteudo = {voto}></CardEventos>);
     });
@@ -27,7 +32,11 @@ var Votacao = function(props){
                             </div>;
     }else{
       this.painelEsquerdo = <Usuario conteudo = {props.evento.funcionario}/>;
-      this.painelDireito = <SelecaoVoto titulo = "Votação" botao = "Votar"/>
+      if(props.resultado == false){
+        this.painelDireito = <SelecaoVoto titulo = "Votação" botao = "Votar" mostraResultado = {getResult.bind(this)}/>
+      }else{
+        this.painelDireito = null;//faz mostrar resultado da votação (gráfico)
+      }
     }
 
     return(

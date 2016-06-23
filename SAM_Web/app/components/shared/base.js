@@ -27,7 +27,7 @@ var Base = function(props){
           <div className="navbar-fixed">
             <nav className="nav-wrapper color-default row">
               <div className="col s10 offset-s1">
-                <Link to="/Dashboard" className="brand-logo"><img src="./app/imagens/logo-sam.png" style={{height:60}} /></Link>
+                <Link to="/Dashboard/mario" className="brand-logo"><img src="./app/imagens/logo-sam.png" style={{height:60}} /></Link>
                 <a data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
                 <ul className="right hide-on-med-and-down"><li><a className="dropdown-button" data-beloworigin="true"
                   href="#!" data-activates={this.menuUsuario}>Olá, {this.menuUsuario}<i className="material-icons right">arrow_drop_down</i></a></li></ul>
