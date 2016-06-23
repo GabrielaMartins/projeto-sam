@@ -22,9 +22,11 @@ namespace SamApiModels
 
         public bool estado { get; set; }
 
-        public int tipo { get; set; }
+        public string tipo { get; set; }
 
-        public virtual ItemViewModel Item { get; set; }
+        public ItemViewModel Item { get; set; }
+
+        public UsuarioViewModel Usuario { get; set; }
 
     }
 }

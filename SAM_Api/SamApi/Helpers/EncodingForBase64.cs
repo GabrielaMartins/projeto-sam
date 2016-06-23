@@ -1,4 +1,4 @@
-﻿namespace Opus.Helpers.Encoding
+﻿namespace Opus.Helpers
 {
     public static class EncodingForBase64
     {

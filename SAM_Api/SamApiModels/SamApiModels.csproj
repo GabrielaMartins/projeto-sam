@@ -43,8 +43,10 @@
     <Compile Include="Models\ActiveDirectoryUser.cs" />
     <Compile Include="Models\CargoViewModel.cs" />
     <Compile Include="Models\CategoriaViewModel.cs" />
+    <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\PerfilViewModel.cs" />
-    <Compile Include="Models\UltimosEventos.cs" />
+    <Compile Include="Models\PromocaoViewModel.cs" />
+    <Compile Include="Models\UltimoEventoViewModel.cs" />
     <Compile Include="Models\EventoViewModel.cs" />
     <Compile Include="Models\ItemViewModel.cs" />
     <Compile Include="Models\ItensTaggedViewModel.cs" />

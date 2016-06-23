@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using SamApiModels;
+using System.Net.Http;
 
-namespace Opus.Helpers.Security
+namespace Opus.Helpers
 {
 
     public class JwtManagement

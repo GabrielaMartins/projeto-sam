@@ -11,7 +11,7 @@ namespace Opus.DataBaseEnvironment
 		private CargoRepository cargoRepository;
 		private CategoriaRepository categoriaRepository;
 		private EventoRepository eventoRepository;
-		private ItenRepository itenRepository;
+		private ItemRepository itenRepository;
 		private PendenciaRepository pendenciaRepository;
 		private ResultadoVotacoesRepository resultadoVotacoesRepository;
 		private TagRepository tagRepository;
@@ -32,7 +32,7 @@ namespace Opus.DataBaseEnvironment
 			return eventoRepository;
 		}
 
-		public ItenRepository ItenRepository()
+		public ItemRepository ItemRepository()
 		{
 			return itenRepository;
 		}
@@ -63,7 +63,7 @@ namespace Opus.DataBaseEnvironment
 			cargoRepository = new CargoRepository(context);
 			categoriaRepository = new CategoriaRepository(context);
 			eventoRepository = new EventoRepository(context);
-			itenRepository = new ItenRepository(context);
+			itenRepository = new ItemRepository(context);
 			pendenciaRepository = new PendenciaRepository(context);
 			resultadoVotacoesRepository = new ResultadoVotacoesRepository(context);
 			tagRepository = new TagRepository(context);

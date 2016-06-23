@@ -63,7 +63,7 @@
     <Compile Include="Model\Evento.cs">
       <DependentUpon>SamConnection.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Iten.cs">
+    <Compile Include="Model\Item.cs">
       <DependentUpon>SamConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ItensTagged.cs">
@@ -72,7 +72,8 @@
     <Compile Include="Model\Pendencia.cs">
       <DependentUpon>SamConnection.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ResultadoVotaco.cs">
+    <Compile Include="Model\Promocao.cs" />
+    <Compile Include="Model\ResultadoVotacao.cs">
       <DependentUpon>SamConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,7 +103,7 @@
     <Compile Include="Repository\DataAccess.cs" />
     <Compile Include="Repository\EventoRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Repository\ItenRepository.cs" />
+    <Compile Include="Repository\ItemRepository.cs" />
     <Compile Include="Repository\PendenciaRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\ResultadoVotacoesRepository.cs" />

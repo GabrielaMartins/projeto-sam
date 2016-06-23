@@ -19,7 +19,7 @@ namespace SamDataBase.Model
         {
             this.Eventos = new HashSet<Evento>();
             this.Pendencias = new HashSet<Pendencia>();
-            this.ResultadoVotacoes = new HashSet<ResultadoVotaco>();
+            this.ResultadoVotacoes = new HashSet<ResultadoVotacao>();
         }
     
         public int id { get; set; }
@@ -40,6 +40,6 @@ namespace SamDataBase.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pendencia> Pendencias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResultadoVotaco> ResultadoVotacoes { get; set; }
+        public virtual ICollection<ResultadoVotacao> ResultadoVotacoes { get; set; }
     }
 }

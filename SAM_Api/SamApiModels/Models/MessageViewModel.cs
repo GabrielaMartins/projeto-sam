@@ -13,9 +13,11 @@ namespace SamApiModels
 
         public static readonly MessageViewModel TokenMissing = new MessageViewModel(HttpStatusCode.BadRequest, "Invalid header", "The server cannot find a key named 'token' in http header");
 
-        public static readonly MessageViewModel InvalidToken = new MessageViewModel(HttpStatusCode.BadRequest, "Invalid token", "The server cannot validate the token");
+        public static readonly MessageViewModel InvalidToken = new MessageViewModel(HttpStatusCode.Unauthorized, "Invalid token", "The server cannot validate the token");
 
-        public static readonly MessageViewModel Unauthorized = new MessageViewModel(HttpStatusCode.Unauthorized, "Unauthorized", "You have no permission");
+        public static readonly MessageViewModel Unauthorized = new MessageViewModel(HttpStatusCode.Unauthorized, "Unauthorized", "The user has no permission");
+
+        public static readonly MessageViewModel Unauthenticated = new MessageViewModel(HttpStatusCode.Forbidden, "Unauthenticated", "The server could not authenticated the user");
 
         public MessageViewModel(HttpStatusCode code, string title, string description)
         {

@@ -18,7 +18,7 @@ namespace SamDataBase.Model
         public Nullable<int> item { get; set; }
         public Nullable<int> tag { get; set; }
     
-        public virtual Iten Item { get; set; }
+        public virtual Item Item { get; set; }
         public virtual Tag Tag { get; set; }
     }
 }

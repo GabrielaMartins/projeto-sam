@@ -4,10 +4,10 @@
     <EntitySet Name="Cargos" EntityType="sam.model.Cargo" />
     <EntitySet Name="Categorias" EntityType="sam.model.Categoria" />
     <EntitySet Name="Eventos" EntityType="sam.model.Evento" />
-    <EntitySet Name="Itens" EntityType="sam.model.Iten" />
+    <EntitySet Name="Items" EntityType="sam.model.Item" />
     <EntitySet Name="ItensTaggeds" EntityType="sam.model.ItensTagged" />
     <EntitySet Name="Pendencias" EntityType="sam.model.Pendencia" />
-    <EntitySet Name="ResultadoVotacoes" EntityType="sam.model.ResultadoVotaco" />
+    <EntitySet Name="ResultadoVotacaos" EntityType="sam.model.ResultadoVotacao" />
     <EntitySet Name="Tags" EntityType="sam.model.Tag" />
     <EntitySet Name="Usuarios" EntityType="sam.model.Usuario" />
     <AssociationSet Name="FK__Cargos__anterior__117F9D94" Association="sam.model.FK__Cargos__anterior__117F9D94">
@@ -20,10 +20,10 @@
     </AssociationSet>
     <AssociationSet Name="FK__Itens__categoria__22AA2996" Association="sam.model.FK__Itens__categoria__22AA2996">
       <End Role="Categoria" EntitySet="Categorias" />
-      <End Role="Iten" EntitySet="Itens" />
+      <End Role="Iten" EntitySet="Items" />
     </AssociationSet>
     <AssociationSet Name="FK__Eventos__item__29572725" Association="sam.model.FK__Eventos__item__29572725">
-      <End Role="Iten" EntitySet="Itens" />
+      <End Role="Iten" EntitySet="Items" />
       <End Role="Evento" EntitySet="Eventos" />
     </AssociationSet>
     <AssociationSet Name="FK__Eventos__usuario__2A4B4B5E" Association="sam.model.FK__Eventos__usuario__2A4B4B5E">
@@ -36,10 +36,10 @@
     </AssociationSet>
     <AssociationSet Name="FK__Resultado__event__33D4B598" Association="sam.model.FK__Resultado__event__33D4B598">
       <End Role="Evento" EntitySet="Eventos" />
-      <End Role="ResultadoVotaco" EntitySet="ResultadoVotacoes" />
+      <End Role="ResultadoVotaco" EntitySet="ResultadoVotacaos" />
     </AssociationSet>
     <AssociationSet Name="FK__ItensTagge__item__25869641" Association="sam.model.FK__ItensTagge__item__25869641">
-      <End Role="Iten" EntitySet="Itens" />
+      <End Role="Iten" EntitySet="Items" />
       <End Role="ItensTagged" EntitySet="ItensTaggeds" />
     </AssociationSet>
     <AssociationSet Name="FK__ItensTagged__tag__267ABA7A" Association="sam.model.FK__ItensTagged__tag__267ABA7A">
@@ -52,7 +52,7 @@
     </AssociationSet>
     <AssociationSet Name="FK__Resultado__usuar__34C8D9D1" Association="sam.model.FK__Resultado__usuar__34C8D9D1">
       <End Role="Usuario" EntitySet="Usuarios" />
-      <End Role="ResultadoVotaco" EntitySet="ResultadoVotacoes" />
+      <End Role="ResultadoVotaco" EntitySet="ResultadoVotacaos" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Cargo">
@@ -91,7 +91,7 @@
     <NavigationProperty Name="Pendencias" Relationship="sam.model.FK__Pendencia__event__300424B4" FromRole="Evento" ToRole="Pendencia" />
     <NavigationProperty Name="ResultadoVotacoes" Relationship="sam.model.FK__Resultado__event__33D4B598" FromRole="Evento" ToRole="ResultadoVotaco" />
   </EntityType>
-  <EntityType Name="Iten">
+  <EntityType Name="Item">
     <Key>
       <PropertyRef Name="id" />
     </Key>
@@ -126,7 +126,7 @@
     <NavigationProperty Name="Evento" Relationship="sam.model.FK__Pendencia__event__300424B4" FromRole="Pendencia" ToRole="Evento" />
     <NavigationProperty Name="Usuario" Relationship="sam.model.FK__Pendencia__usuar__2F10007B" FromRole="Pendencia" ToRole="Usuario" />
   </EntityType>
-  <EntityType Name="ResultadoVotaco">
+  <EntityType Name="ResultadoVotacao">
     <Key>
       <PropertyRef Name="id" />
     </Key>
@@ -192,7 +192,7 @@
   </Association>
   <Association Name="FK__Itens__categoria__22AA2996">
     <End Type="sam.model.Categoria" Role="Categoria" Multiplicity="0..1" />
-    <End Type="sam.model.Iten" Role="Iten" Multiplicity="*" />
+    <End Type="sam.model.Item" Role="Iten" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Categoria">
         <PropertyRef Name="id" />
@@ -203,7 +203,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Eventos__item__29572725">
-    <End Type="sam.model.Iten" Role="Iten" Multiplicity="0..1" />
+    <End Type="sam.model.Item" Role="Iten" Multiplicity="0..1" />
     <End Type="sam.model.Evento" Role="Evento" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Iten">
@@ -242,7 +242,7 @@
   </Association>
   <Association Name="FK__Resultado__event__33D4B598">
     <End Type="sam.model.Evento" Role="Evento" Multiplicity="0..1" />
-    <End Type="sam.model.ResultadoVotaco" Role="ResultadoVotaco" Multiplicity="*" />
+    <End Type="sam.model.ResultadoVotacao" Role="ResultadoVotaco" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Evento">
         <PropertyRef Name="id" />
@@ -253,7 +253,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__ItensTagge__item__25869641">
-    <End Type="sam.model.Iten" Role="Iten" Multiplicity="0..1">
+    <End Type="sam.model.Item" Role="Iten" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
     <End Type="sam.model.ItensTagged" Role="ItensTagged" Multiplicity="*" />
@@ -296,7 +296,7 @@
   </Association>
   <Association Name="FK__Resultado__usuar__34C8D9D1">
     <End Type="sam.model.Usuario" Role="Usuario" Multiplicity="0..1" />
-    <End Type="sam.model.ResultadoVotaco" Role="ResultadoVotaco" Multiplicity="*" />
+    <End Type="sam.model.ResultadoVotacao" Role="ResultadoVotaco" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Usuario">
         <PropertyRef Name="id" />

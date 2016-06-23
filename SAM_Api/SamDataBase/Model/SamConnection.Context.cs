@@ -28,10 +28,10 @@ namespace SamDataBase.Model
         public virtual DbSet<Cargo> Cargos { get; set; }
         public virtual DbSet<Categoria> Categorias { get; set; }
         public virtual DbSet<Evento> Eventos { get; set; }
-        public virtual DbSet<Iten> Itens { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<ItensTagged> ItensTaggeds { get; set; }
         public virtual DbSet<Pendencia> Pendencias { get; set; }
-        public virtual DbSet<ResultadoVotaco> ResultadoVotacoes { get; set; }
+        public virtual DbSet<ResultadoVotacao> ResultadoVotacaos { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
     }
