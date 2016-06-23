@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Http;
 using Opus.Helpers.ActiveDirectoryService;
-using Opus.Helpers.Security;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
@@ -11,6 +10,7 @@ using System.Linq;
 using SamApiModels;
 using AutoMapper;
 using SamDataBase.Model;
+using Opus.Helpers;
 
 namespace SamApiService.Controllers
 {
@@ -26,59 +26,37 @@ namespace SamApiService.Controllers
         {
 
             ActiveDirectoryConsumer adConsumer = new ActiveDirectoryConsumer("opus.local");
-            HttpResponseMessage response = null;
             string token = string.Empty;
 
             // ask Active Directory if the User's credentials is valid
-            if (adConsumer.IsValidUser(login.User, login.Password))
+            if (!adConsumer.IsValidUser(login.User, login.Password))
             {
-
-                // if yes, get User's information from database
-                var userRepository = DataAccess.Instance.UsuarioRepository();
-                var usr = userRepository.Find(u => u.samaccount.Equals(login.User)).SingleOrDefault();
-                
-                // check if our user not exists in our database
-                if (usr == null)
-                {
-
-                    // return a http error
-                    var error1 = new MessageViewModel(HttpStatusCode.NotFound, "User Not Found", "We could not found the user '" + login.User + "' in our database");
-                   
-                    response = Request.CreateResponse(HttpStatusCode.NotFound, error1);
-                    response.Headers.CacheControl = new CacheControlHeaderValue()
-                    {
-                        MaxAge = TimeSpan.FromMinutes(20)
-                    };
-
-                    return response;
-                }
-                else
-                {
-                    // Transform our Usuario model to UsuarioViewModel (erro)
-                    var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usr);
-
-                    // generate token based on User
-                    token = JwtManagement.GenerateToken(usuarioViewModel);
-                    var result2 = new Dictionary<string, object>() { { "token", token } };
-                    response = Request.CreateResponse(HttpStatusCode.OK, result2);
-                    response.Headers.CacheControl = new CacheControlHeaderValue()
-                    {
-                        MaxAge = TimeSpan.FromMinutes(20)
-                    };
-
-                    return response;
-                }
+                // if credential is invalid, return an error
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, MessageViewModel.Unauthenticated);
             }
 
-            // if credential is invalid
-            var error2 = new MessageViewModel(HttpStatusCode.Unauthorized, "User Not Authorized", "User login has failed");
-            response = Request.CreateResponse(HttpStatusCode.Unauthorized, error2);
-            response.Headers.CacheControl = new CacheControlHeaderValue()
-            {
-                MaxAge = TimeSpan.FromMinutes(20)
-            };
 
-            return response;
+            // if yes, get User's information from database
+            var usr = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount.Equals(login.User)).SingleOrDefault();
+
+            // check if our user not exists in our database
+            if (usr == null)
+            {
+
+                // return a http error
+                var error = new MessageViewModel(HttpStatusCode.NotFound, "User Not Found", "We could not found the user '" + login.User + "' in our database");
+                return Request.CreateResponse(HttpStatusCode.NotFound, error);
+            }
+
+            // Transform our Usuario model to UsuarioViewModel
+            var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usr);
+
+            // generate token based on User
+            token = JwtManagement.GenerateToken(usuarioViewModel);
+            var tokenResult = new Dictionary<string, object>() { { "token", token } };
+
+            // returns our token
+            return Request.CreateResponse(HttpStatusCode.OK, tokenResult);
 
         }
 
@@ -150,7 +128,7 @@ namespace SamApiService.Controllers
                 string jsonPayload = JWT.JsonWebToken.Decode(token, secretKey);
                 payload = JWT.JsonWebToken.DecodeToObject(token, secretKey) as IDictionary<string, object>;
 
-                response = Request.CreateResponse(HttpStatusCode.OK,payload);
+                response = Request.CreateResponse(HttpStatusCode.OK, payload);
             }
             catch (JWT.SignatureVerificationException)
             {

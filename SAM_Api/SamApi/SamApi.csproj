@@ -190,9 +190,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ActiveDirectoryConsumer.cs" />
-    <Compile Include="Helpers\CommonOperations.cs" />
     <Compile Include="Helpers\EncodingForBase64.cs" />
-    <Compile Include="Helpers\HeaderHelper.cs" />
+    <Compile Include="Helpers\HeaderHandler.cs" />
     <Compile Include="Helpers\JwtManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

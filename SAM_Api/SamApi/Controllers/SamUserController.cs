@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
 using System;
-using SamApi.Helpers;
 using Opus.DataBaseEnvironment;
 using SamApiModels;
 using AutoMapper;
@@ -20,24 +19,9 @@ namespace SamApi.Controllers
         [Route("all")]
         public HttpResponseMessage Get()
         {
-            CommonOperations commonOperations = new CommonOperations(Request);
-            HttpResponseMessage response = null;
-
-            // this line check and prepare some variables for us
-            commonOperations.Check();
-
-            // if we have response, so it's an error
-            if (commonOperations.ResponseError != null)
-                return commonOperations.ResponseError;
-
-            var token = commonOperations.DecodedToken;
-
-            // fill here
-
-            // ********* //
-
+            
             // erase here
-            response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
+            var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
             response.Headers.CacheControl = new CacheControlHeaderValue()
             {
                 MaxAge = TimeSpan.FromMinutes(20)
@@ -52,6 +36,7 @@ namespace SamApi.Controllers
         public HttpResponseMessage GetBySamaccount(string samaccount)
         {
 
+            // TODO: verificações com o token
             var userRepository = DataAccess.Instance.UsuarioRepository();
             var user = userRepository.Find(u => u.samaccount.Equals(samaccount)).SingleOrDefault();
 

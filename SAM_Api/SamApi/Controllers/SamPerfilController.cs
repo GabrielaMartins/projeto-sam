@@ -7,6 +7,8 @@ using System.Linq;
 using AutoMapper;
 using SamDataBase.Model;
 using System;
+using Opus.Helpers;
+using System.Collections.Generic;
 
 namespace SamApi.Controllers
 {
@@ -15,37 +17,28 @@ namespace SamApi.Controllers
     public class SamPerfilController : ApiController
     {
 
-        [Route("{samaccount}")]
+        [Route("")]
         [HttpGet]
-        public HttpResponseMessage Get(string samaccount)
+        public HttpResponseMessage Get()
         {
 
-            // fazer verificações com o token
-            //CommonOperations commonOperations = new CommonOperations(Request);
-            //HttpResponseMessage response = null;
-
-            //// this line check and prepare some variables for us
-            //commonOperations.Check();
-
-            //// if we have response, so it's an error
-            //if (commonOperations.ResponseError != null)
-            //    return commonOperations.ResponseError;
-
-            //var token = commonOperations.DecodedToken;
-
-            try
+            var token = HeaderHandler.ExtractHeaderValue(Request, "token");
+            if (token == null)
             {
-                var usuario = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount == samaccount).SingleOrDefault();
-                var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, MessageViewModel.TokenMissing);
+            }
 
-                var eventosViewModel = DataAccess.Instance.UsuarioRepository().RecuperaEventos(usuario).Take(10);
-                var perfilViewModel = new PerfilViewModel() { Usuario = usuarioViewModel, Eventos = eventosViewModel.ToList() };
-                return Request.CreateResponse(HttpStatusCode.OK, perfilViewModel);
-            }
-            catch (NullReferenceException)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.NotFound, "Perfil not found", "we can't find perfil for this user"));
-            }
+            var decodedToken = JwtManagement.DecodeToken(token.SingleOrDefault());
+            var context = decodedToken["context"] as Dictionary<string, object>;
+            var userInfo = context["user"] as Dictionary<string, object>;
+            var samaccount = userInfo["samaccount"] as string;
+
+            var usuario = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount == samaccount).SingleOrDefault();
+            var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
+
+            var eventosViewModel = DataAccess.Instance.UsuarioRepository().RecuperaEventos(usuario).Take(10);
+            var perfilViewModel = new PerfilViewModel() { Usuario = usuarioViewModel, Eventos = eventosViewModel.ToList() };
+            return Request.CreateResponse(HttpStatusCode.OK, perfilViewModel);
 
         }
 

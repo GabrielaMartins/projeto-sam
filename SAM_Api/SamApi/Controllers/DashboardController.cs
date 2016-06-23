@@ -5,10 +5,10 @@ using System.Net.Http;
 using System.Web.Http;
 using Opus.DataBaseEnvironment;
 using SamApiModels;
-using System.Net.Http.Headers;
 using System.Collections.Generic;
 using SamDataBase.Model;
 using AutoMapper;
+using Opus.Helpers;
 
 namespace SamApi.Controllers
 {
@@ -16,13 +16,24 @@ namespace SamApi.Controllers
     public class DashboardController : ApiController
     {
 
-        // GET: api/sam/Dashboard/samaccount
-        [Route("{samaccount}")]
+        // GET: api/sam/Dashboard
         [HttpGet]
-        public HttpResponseMessage Get(string samaccount)
+        [Route("")]
+        public HttpResponseMessage Get()
         {
-            var usuario = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount == samaccount).SingleOrDefault();
 
+            var token = HeaderHandler.ExtractHeaderValue(Request, "token");
+            if(token == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, MessageViewModel.TokenMissing);
+            }
+
+            var decodedToken = JwtManagement.DecodeToken(token.SingleOrDefault());
+            var context = decodedToken["context"] as Dictionary<string, object>;
+            var userInfo = context["user"] as Dictionary<string, object>;
+            var samaccount = userInfo["samaccount"] as string;
+
+            var usuario = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount == samaccount).SingleOrDefault();
             var ultimosEventos = UltimosEventos();
             var proximasPromocoes = ProximasPromocoes(usuario);
             var ranking = Ranking();
