@@ -40,7 +40,6 @@ const PerfilUsuarioContainer = React.createClass({
   },
 
   atualizaEstado: function(novoEstado){
-    debugger;
     var usuario = novoEstado;
     var tempoDeCasa = this.calculaTempoDeCasa(usuario.dataInicio);
 

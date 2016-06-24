@@ -10,12 +10,22 @@ var Votacao = function(props){
     var votos = [];
 
     var getResult = function(resposta){
-      debugger;
       props.mostraResultado(resposta);
     }
 
     props.votos.forEach(function(voto){
-      votos.push(<CardEventos conteudo = {voto}></CardEventos>);
+      if(voto.dificuldade && voto.profundidade){
+        votos.push(<CardEventos usuario = {voto} estilo = "aberta card-panel z-depth-1 col l12 m12 s12 green lighten-3 waves-effect">
+                      <div className="left">
+                        <p className="media"><b>Dificuldade: </b>{voto.dificuldade}</p>
+                        <p className="media"><b>Profundidade: </b>{voto.profundidade}</p>
+                      </div>
+                  </CardEventos>);
+        }else{
+          votos.push(<CardEventos usuario = {voto} estilo = "finalizada card-panel z-depth-1 col l12 m12 s12 red lighten-3 waves-effect">
+                        <div className="media left"><p><b>Ainda não registrou o voto.</b></p></div>
+                    </CardEventos>);
+        }
     });
 
     if(props.perfil == "rh"){

@@ -6,7 +6,7 @@ var BaseHistorico = React.createClass({
   render: function(){
     return(
       <div className="card-panel">
-        <h4 className="card-title extraGrande colorText-default center-align"><b>Atividades</b></h4>
+        <h4 className="card-title extraGrande colorText-default center-align"><b>{this.props.titulo}</b></h4>
         <div className="card wrapper">
           <i className="material-icons colorText-default right" >search</i>
           <input id="search" placeholder={this.props.placeholder} className="colorText-default" />

@@ -3,12 +3,12 @@ var ReactRouter = require('react-router');
 var Avatar = require('./avatar');
 var AtividadesHistorico = require('../item/itemCard');
 var PromocoesHistorico = require('./promocoesHistorico');
-var pontuacaoGrafico = require('./pontuacaoGrafico');
+var PontuacaoGrafico = require('./pontuacaoGrafico');
 var BaseHistorico = require('./BaseHistorico');
 
 var Perfil = React.createClass({
   render: function(){
-    
+
     var promocoes = null;
     var atividades = null;
 
@@ -36,18 +36,18 @@ var Perfil = React.createClass({
           "/>
         <div className="row">
           <div className="col l7 m6 s12">
-            <BaseHistorico placeholder = "Pesquise por atividades realizadas">
-              <AtividadesHistorico/>
+            <BaseHistorico placeholder = "Pesquise por atividades realizadas" titulo = "Atividades Realizadas">
+              {/*<AtividadesHistorico/>*/}
             </BaseHistorico>
           </div>
           <div className="col l5 m6 s12">
-            <BaseHistorico placeholder = "Pesquise por cargos alcançados">
-              <PromocoesHistorico/>
+            <BaseHistorico placeholder = "Pesquise por cargos alcançados" titulo = "Promoções Alcançadas">
+              {/*<PromocoesHistorico/>*/}
             </BaseHistorico>
           </div>
         </div>
         <div className="row">
-          <pontuacaoGrafico/>
+          <PontuacaoGrafico/>
         </div>
       </div>
     );
