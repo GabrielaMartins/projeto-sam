@@ -1,6 +1,11 @@
 var React = require('react');
-var Dashboard = require('../../components/dashboard/dashboard');
+var DashboardRH = require('../../components/dashboard/dashboardRH');
 var axios = require("axios");
+var ReactRouter = require('react-router');
+var CardEventos = require('../../components/dashboard/cardsEventos');
+var Pendencias = require('../../components/dashboard/pendencias');
+var moment = require('moment');
+moment.locale('pt-br');
 
 var DashboardContainer = React.createClass({
   getInitialState: function() {
@@ -73,11 +78,51 @@ var DashboardContainer = React.createClass({
     );
   },
   render : function(){
-      return(<Dashboard
-        ultimosEventos = {this.state.dados.UltimosEventos}
-        proximasPromocoes = {this.state.dados.ProximasPromocoes}
+    var eventos = [];
+    var promocoes = [];
+    var ranking = [];
+
+    //cria lista de eventos
+    this.state.dados.UltimosEventos.forEach(function(conteudo){
+      if(conteudo.Evento.Usuario.foto == null){
+        conteudo.Evento.Usuario.foto = "./app/imagens/fulano.jpg"
+      }
+      eventos.push(<CardEventos usuario = {conteudo.Evento.Usuario} estilo = "card-panel z-depth-1 col l12 m12 s12 waves-effect">
+                      <div className="right">
+                          <h5 className="right-align extraGrande">{conteudo.Evento.Item.nome}</h5>
+                          <p className="right-align pequena">{moment(conteudo.Evento.data).format('L')}</p>
+                      </div>
+                  </CardEventos>);
+    });
+
+    //cria lista de promocoes
+    this.state.dados.ProximasPromocoes.forEach(function(conteudo){
+      if(conteudo.Usuario.foto == null){
+        conteudo.Usuario.foto = "./app/imagens/fulano.jpg"
+      }
+      promocoes.push(<CardEventos usuario = {conteudo.Usuario} estilo = "card-panel z-depth-1 col l12 m12 s12 waves-effect">
+                        <div className="left">
+                          <p className="center-align grande">Faltam <b>{conteudo.PontosFaltantes}</b> pontos</p>
+                          <p className="center-align pequena">{conteudo.Usuario.Cargo.nome} > {conteudo.Usuario.ProximoCargo[0].nome}<br/></p>
+                        </div>
+                      </CardEventos>);
+    });
+
+    //cria lista de ranking
+    this.state.dados.Ranking.forEach(function(rankingCard){
+      if(rankingCard.foto == null){
+        rankingCard.foto = "./app/imagens/fulano.jpg";
+      }
+      ranking.push(<CardEventos usuario = {rankingCard} estilo = "card-panel z-depth-1 col l12 m12 s12 waves-effect">
+                      <h5 className="right"><b>{rankingCard.pontos} pontos</b></h5>
+                    </CardEventos>)
+    });
+
+      return(<DashboardRH
+        eventos = {eventos}
+        promocoes = {promocoes}
         pendencias = {this.state.dados.Pendencias}
-        ranking = {this.state.dados.Ranking}
+        ranking = {ranking}
         columnChart = {this.state.columnChart}/>)
   }
 });

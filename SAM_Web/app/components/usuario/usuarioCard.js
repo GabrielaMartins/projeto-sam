@@ -14,7 +14,7 @@ var Card = React.createClass({
         </div>
         <div className="card-action">
           <div className="row">
-            <div className="col l4 m12 s12"><a className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light yellow darken-3 btn">Histórico</a><br/><br/></div>
+            <div className="col l4 m12 s12"><a className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light yellow darken-3 btn">Perfil</a><br/><br/></div>
             <div className="col l4 m12 s12"><a className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light green darken-3 btn">Editar</a><br/><br/></div>
             <div className="col l4 m12 s12"><a className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light red darken-3 btn">Desativar</a><br/><br/></div>
           </div>

@@ -11,8 +11,10 @@ var BaseHistorico = React.createClass({
           <i className="material-icons colorText-default right" >search</i>
           <input id="search" placeholder={this.props.placeholder} className="colorText-default" />
         </div>
-        <div className="row">
-          {this.props.children}
+        <div className="card-content scrollbar" id="base-historico">
+          <div className="row">
+            {this.props.children}
+          </div>
         </div>
       </div>
     );

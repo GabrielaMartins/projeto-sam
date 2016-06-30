@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var UsuarioCard = require('../usuario/usuarioCard');
-var ItemCard = require('../item/itemCard');;
+var ItemCard = require('../../containers/item/itemCardContainer');
 
 var Lista = function(props){
     var lista = [];
@@ -14,7 +14,7 @@ var Lista = function(props){
     placeholder = "Procure por Funcionários";
   }else{
     props.itens.forEach(function(item){
-      lista.push(<div className="col l4 m6 s12"><ItemCard conteudo = {item}/></div>)
+      lista.push(<div className="col l4 m6 s12"><ItemCard item = {item}/></div>)
     });
     placeholder = "Procure por Itens e Categorias";
   }
@@ -24,7 +24,7 @@ var Lista = function(props){
       <div className="row" id="campoBusca" style={{"marginLeft":"5%", "marginRight":"5%", "marginBottom":"0px"}}>
           <div className="card wrapper">
             <i className="material-icons colorText-default right" >search</i>
-            <input id="search" placeholder={placeholder} className="colorText-default" />
+            <input id="search" placeholder={placeholder} className="colorText-default pesquisar" />
           </div>
         </div>
         <div className="row" style={{"marginLeft":"5%", "marginRight":"5%"}}>
