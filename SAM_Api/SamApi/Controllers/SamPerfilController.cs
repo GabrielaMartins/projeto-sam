@@ -36,7 +36,7 @@ namespace SamApi.Controllers
             var usuario = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount == samaccount).SingleOrDefault();
             var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
 
-            var eventosViewModel = DataAccess.Instance.UsuarioRepository().RecuperaEventos(usuario).Take(10);
+            var eventosViewModel = DataAccess.Instance.UsuarioRepository().RecuperaAtividades(usuario).Take(10);
             var perfilViewModel = new PerfilViewModel() { Usuario = usuarioViewModel, Eventos = eventosViewModel.ToList() };
             return Request.CreateResponse(HttpStatusCode.OK, perfilViewModel);
 
