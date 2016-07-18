@@ -8,43 +8,49 @@ var VotacaoContainer = React.createClass({
       votos: null,
       evento: null,
       dificuldades:null,
-      profundidades:null
+      profundidades:null,
+      resultado: false
     };
+  },
+  handleMostraResultado: function(resposta){
+    this.setState({
+      resultado: resposta
+    })
   },
   componentWillMount: function(){
     //fazer fetch aqui
     this.setState({
       votos:[
         {
-          imagem:"./app/imagens/fulano.jpg",
+          foto:"./app/imagens/fulano.jpg",
           nome:"Gabriela",
           dificuldade:"médio",
           profundidade:"profundo"
         },
         {
-          imagem:"./app/imagens/fulano.jpg",
+          foto:"./app/imagens/fulano.jpg",
           nome:"Telles",
           dificuldade:"fácil",
           profundidade:"profundo"
         },
         {
-          imagem:"./app/imagens/fulano.jpg",
+          foto:"./app/imagens/fulano.jpg",
           nome:"Thiago",
           dificuldade:"médio",
           profundidade:"profundo"
         },
         {
-          imagem:"./app/imagens/fulano.jpg",
+          foto:"./app/imagens/fulano.jpg",
           nome:"Jesley",
           dificuldade:"fácil",
           profundidade:"raso"
         },
         {
-          imagem:"./app/imagens/fulano.jpg",
+          foto:"./app/imagens/fulano.jpg",
           nome:"Vitor",
         },
         {
-          imagem:"./app/imagens/fulano.jpg",
+          foto:"./app/imagens/fulano.jpg",
           nome:"Caio",
         }
       ],
@@ -67,7 +73,7 @@ var VotacaoContainer = React.createClass({
 },
 
   render : function(){
-      return(<Votacao votos = {this.state.votos} evento = {this.state.evento} perfil = "rh"/>)
+      return(<Votacao votos = {this.state.votos} evento = {this.state.evento} perfil = "rh" mostraResultado = {this.handleMostraResultado} resultado = {this.state.resultado}/>)
   }
 });
 

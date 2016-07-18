@@ -17,13 +17,15 @@ var LoginContainer = React.createClass({
 
   handleUpdateUsuario: function(event){
     this.setState({
-      usuario: event.target.value
+      usuario: event.target.value,
+      msg: ""
     })
   },
 
   handleUpdateSenha: function(event){
     this.setState({
-      senha: event.target.value
+      senha: event.target.value,
+      msg: ""
     })
   },
 
@@ -56,7 +58,7 @@ var LoginContainer = React.createClass({
             // Sorry! No Web Storage support..
           }
 
-          self.context.router.push('/Dashboard');
+          self.context.router.push('/Dashboard/mario');
         },
 
         // falha

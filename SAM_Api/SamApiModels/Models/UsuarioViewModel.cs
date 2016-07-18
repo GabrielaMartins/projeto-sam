@@ -26,7 +26,7 @@ namespace SamApiModels
 
         public DateTime dataInicio { get; set; }
 
-        public string foto { get; set; }
+        public string imagem { get; set; }
 
         public bool ativo { get; set; }
 
