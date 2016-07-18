@@ -9,23 +9,8 @@ var Link = ReactRouter.Link;
 var Votacao = function(props){
     var votos = [];
 
-    var getResult = function(resposta){
-      props.mostraResultado(resposta);
-    }
-
     props.votos.forEach(function(voto){
-      if(voto.dificuldade && voto.profundidade){
-        votos.push(<CardEventos usuario = {voto} estilo = "aberta card-panel z-depth-1 col l12 m12 s12 green lighten-3 waves-effect">
-                      <div className="left">
-                        <p className="media"><b>Dificuldade: </b>{voto.dificuldade}</p>
-                        <p className="media"><b>Profundidade: </b>{voto.profundidade}</p>
-                      </div>
-                  </CardEventos>);
-        }else{
-          votos.push(<CardEventos usuario = {voto} estilo = "finalizada card-panel z-depth-1 col l12 m12 s12 red lighten-3 waves-effect">
-                        <div className="media left"><p><b>Ainda não registrou o voto.</b></p></div>
-                    </CardEventos>);
-        }
+      votos.push(<CardEventos conteudo = {voto}></CardEventos>);
     });
 
     if(props.perfil == "rh"){
@@ -42,11 +27,7 @@ var Votacao = function(props){
                             </div>;
     }else{
       this.painelEsquerdo = <Usuario conteudo = {props.evento.funcionario}/>;
-      if(props.resultado == false){
-        this.painelDireito = <SelecaoVoto titulo = "Votação" botao = "Votar" mostraResultado = {getResult.bind(this)}/>
-      }else{
-        this.painelDireito = null;//faz mostrar resultado da votação (gráfico)
-      }
+      this.painelDireito = <SelecaoVoto titulo = "Votação" botao = "Votar"/>
     }
 
     return(

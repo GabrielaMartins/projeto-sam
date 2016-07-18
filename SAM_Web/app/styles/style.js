@@ -221,17 +221,5 @@ export default StyleSheet.create({
         "width": "100%",
         "marginLeft": "0 !important",
         "marginRight": "0 !important"
-    },
-    "base-historico": {
-        "overflowY": "scroll",
-        "overflowX": "hidden",
-        "height": 400
-    },
-    "full-screen-perfil": {
-        "minHeight": "calc(100vh - 114px)"
-    },
-    "arrow": {
-        "WebkitAnimation": "animation 3000ms linear infinite both",
-        "animation": "animation 3000ms linear infinite both"
     }
 });

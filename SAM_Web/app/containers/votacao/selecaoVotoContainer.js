@@ -7,9 +7,7 @@ var SelecaoVotoContainer = React.createClass({
     return {
       dificuldade:"",
       profundidade:"",
-      pontuacaoGerada: 0,
-      mensagemErro: "",
-      mostraResultado: false
+      pontuacaoGerada: 0
     };
   },
 
@@ -26,28 +24,6 @@ var SelecaoVotoContainer = React.createClass({
     if(this.state.dificuldade != "" && this.state.profundidade != ""){
       //pontuação de workshops e palestras é a dificuldade * profundidade * 6 (o peso da categoria)
       this.setState({pontuacaoGerada: parseInt(this.state.dificuldade) * parseInt(this.state.profundidade) * 6})
-    }
-  },
-
-  handleSubmitPontos: function(){
-    if(this.state.dificuldade != "" && this.state.profundidade != ""){
-      //insere a pontuação no banco (this.state.pontuacaoGerada)
-      this.props.mostraResultado(true);
-
-    }else{
-      if(this.state.dificuldade == "" && this.state.profundidade != ""){
-        this.setState({
-          mensagemErro: "Insira uma dificuldade"
-        });
-      }else if(this.state.dificuldade != "" && this.state.profundidade == ""){
-        this.setState({
-          mensagemErro: "Insira uma profundidade"
-        });
-      }else{
-        this.setState({
-          mensagemErro: "Insira uma dificuldade e uma profundidade"
-        });
-      }
     }
   },
 
@@ -69,7 +45,6 @@ var SelecaoVotoContainer = React.createClass({
         profundidade = {this.state.profundidade}
         titulo = {this.props.titulo}
         botao = {this.props.botao}
-        submit = {this.handleSubmitPontos}
         />)
   }
 });

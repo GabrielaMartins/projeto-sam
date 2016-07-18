@@ -28,7 +28,7 @@ namespace SamApi.Mappers
 
             Mapper.CreateMap<Promocao, PromocaoViewModel>()
             .ForMember(
-                u => u.Usuario,
+                u => u.UsuarioViewModel,
                 opt => opt.MapFrom(src => src.Usuario));
 
             Mapper.CreateMap<Item, ItemViewModel>()
@@ -42,8 +42,10 @@ namespace SamApi.Mappers
                 opt => opt.MapFrom(src => src.Cargo))
             .ForMember(
                 u => u.ProximoCargo,
-                opt => opt.MapFrom(src => DataAccess.Instance.UsuarioRepository().RecuperaProximoCargo(src))
-            );
+                opt => opt.MapFrom(src => DataAccess.Instance.UsuarioRepository().RecuperaProximoCargo(src)))
+            .ForMember(
+                u => u.redes,
+                opt => opt.MapFrom(src => src.redes.Split(';')));
 
             // Nao funciona
             //Mapper.CreateMap<List<Usuario>, List<UsuarioViewModel>>();

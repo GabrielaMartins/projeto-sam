@@ -29,7 +29,7 @@ var SelecaoVoto = function(props){
         <div className="row">
           <h5 className="center-align">Pontuação final: <b className="colorText-default">{props.pontuacaoGerada}</b></h5><br/>
           <div className="col s8 offset-s2">
-            <a className="waves-effect color-default waves-light btn left col l12 m12 s12" onClick={props.submit}>{props.botao}</a>
+            <a className="waves-effect color-default waves-light btn left col l12 m12 s12">{props.botao}</a>
           </div>
         </div>
       </div>

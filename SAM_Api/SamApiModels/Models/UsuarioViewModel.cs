@@ -22,15 +22,11 @@ namespace SamApiModels
 
         public string descricao { get; set; }
 
-        public string facebook { get; set; }
-
-        public string github { get; set; }
-
-        public string linkedin { get; set; }
+        public string[] redes { get; set; }
 
         public DateTime dataInicio { get; set; }
 
-        public string imagem { get; set; }
+        public string foto { get; set; }
 
         public bool ativo { get; set; }
 

@@ -2,7 +2,7 @@
 {
     public class PromocaoViewModel
     {
-        public UsuarioViewModel Usuario { get; set; }
+        public UsuarioViewModel UsuarioViewModel { get; set; }
 
         public int PontosFaltantes { get; set; }
 

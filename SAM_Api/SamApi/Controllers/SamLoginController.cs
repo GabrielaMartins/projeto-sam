@@ -60,61 +60,88 @@ namespace SamApiService.Controllers
 
         }
 
-        // GET api/sam/testGenerateForUser/{samaccount}
-        [Route("testGenerateForUser/{samaccount}")]
+        // GET api/sam/testGenerate
+        [Route("testGenerate")]
         [HttpGet]
-        public HttpResponseMessage TestGenerate(string samaccount)
+        public Dictionary<string, string> TestGenerate()
         {
+            // variables to configure our token
+            var currentTime = System.DateTime.Now;
+            //var expTime = currentTime.AddMinutes(500000L);
 
-            // if yes, get User's information from database
-            var usr = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount.Equals(samaccount)).SingleOrDefault();
-
-            // check if our user not exists in our database
-            if (usr == null)
+            var userInfo = new Dictionary<string, object>()
             {
+                {"key", "jesley"},
+                {"name", "Jesley Marcelino"},
+                {"email", "jesley@opus.software.com.br"}
 
-                // return a http error
-                var error = new MessageViewModel(HttpStatusCode.NotFound, "User Not Found", "We could not found the user '" + samaccount + "' in our database");
-                return Request.CreateResponse(HttpStatusCode.NotFound, error);
-            }
+                // we can put more information here
+            };
 
-            // Transform our Usuario model to UsuarioViewModel
-            var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usr);
+            var context = new Dictionary<string, object>()
+            {
+                {"user", userInfo}
 
-            // generate token based on User
-            var token = JwtManagement.GenerateToken(usuarioViewModel);
-            var tokenResult = new Dictionary<string, object>() { { "token", token } };
+                // we can put more information here
+            };
 
-            // returns our token
-            return Request.CreateResponse(HttpStatusCode.OK, tokenResult);
+            var payload = new Dictionary<string, object>()
+            {
+                // informa o cliente quem emitiu o token
+                { "iss", "http://opus.sam.com" },
+
+                // informa a dasta e hora que o token foi emitido
+                { "iat", currentTime},
+
+                // esse é o tempo de vida do token (isso faz dar erro)
+                //{ "exp", expTime},
+
+                // assunto do token
+                { "sub", "Jesley Marcelino"},
+
+                // contém informações que queremos colocar no token, como usuário por exemplo
+                { "context", context }
+
+            };
+
+            var secretKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk";
+            string token = JWT.JsonWebToken.Encode(payload, secretKey, JWT.JwtHashAlgorithm.HS256);
+
+            return new Dictionary<string, string>()
+            {
+                { "token", token }
+            };
+
         }
 
         // GET api/sam/testDecode
         [Route("testDecode")]
         [HttpGet]
-        public HttpResponseMessage TestDecode()
+        public HttpResponseMessage TestDecode([FromUri] string token)
         {
-            var token = HeaderHandler.ExtractHeaderValue(Request, "token");
-            if (token == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, MessageViewModel.TokenMissing);
-            }
-
+            HttpResponseMessage response = null;
             IDictionary<string, object> payload = null;
             try
             {
                 var secretKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk";
-                string valor = token.SingleOrDefault();
-                string jsonPayload = JWT.JsonWebToken.Decode(valor, secretKey);
-                payload = JWT.JsonWebToken.DecodeToObject(valor, secretKey) as IDictionary<string, object>;
 
-                return Request.CreateResponse(HttpStatusCode.OK, payload);
+                string jsonPayload = JWT.JsonWebToken.Decode(token, secretKey);
+                payload = JWT.JsonWebToken.DecodeToObject(token, secretKey) as IDictionary<string, object>;
+
+                response = Request.CreateResponse(HttpStatusCode.OK, payload);
             }
             catch (JWT.SignatureVerificationException)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, MessageViewModel.InvalidToken);
+                var res = new Dictionary<string, object>()
+                {
+                    {"code", HttpStatusCode.InternalServerError},
+                    {"title", "Invalid token!"},
+                    {"message", "The token signature has failed"}
+                };
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, res);
             }
 
+            return response;
         }
     }
 }

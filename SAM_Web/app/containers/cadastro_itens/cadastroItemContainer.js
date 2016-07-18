@@ -40,18 +40,17 @@ const CadastroItemContainer = React.createClass({
   componentDidMount: function(){
 
     var self = this;
-
-    this.getCategory('http://10.10.15.113:65122/api/sam/category/all');
+    $(document).ready(function() {
+       $('select').material_select();
+    });
 
     $("#select_categoria").on('change', self.handleCategoryChanges);
     $("#select_dificuldade").on('change', self.handleDificultyChanges);
 
   },
 
-  componentDidUpdate: function(prevProps, prevState){
-    $(document).ready(function() {
-      $('select').material_select();
-    });
+  componentWillMount: function(){
+    this.getCategory('http://localhost:65120/api/sam/categoria/all');
   },
 
   getCategory: function(url){
@@ -152,14 +151,10 @@ const CadastroItemContainer = React.createClass({
 
       $("input:radio").prop("checked", false);
 
-      this.setState({
-        rotulosRadio: ["Raso", "Profundo"],
-        dificuldade: "Selecione a dificuldade",
-        categoria: "Selecione a categoria",
-        item: "",
-        descricao: "",
-        checked: false
-      });
+      debugger;
+      var cmbCategoria = $('#select_categoria');
+      cmbCategoria.val('Selecione a categoria');
+      this.setState(this.getInitialState());
 
   }
 

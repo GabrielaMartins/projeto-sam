@@ -5,10 +5,17 @@ var Link = ReactRouter.Link;
 
 var Ranking = React.createClass({
   render : function(){
+    var ranking = [];
+    this.props.ranking.forEach(function(rankingCard){
+      if(rankingCard.imagem == null){
+        rankingCard.imagem = "./app/imagens/fulano.jpg";
+      }
+      ranking.push(<CardEventos conteudo={rankingCard}></CardEventos>)
+    });
     return(
         <div className="row">
           <div className="l4 m12 s12">
-            {this.props.ranking}
+            {ranking}
           </div>
         </div>
     );
