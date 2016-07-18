@@ -20,7 +20,7 @@ namespace Opus.DataBaseEnvironment
         //Preencher aqui
         public List<EventoViewModel> RecuperaEventos(Usuario usuario, int? quantidade = null)
         {
-            
+
             if (quantidade.HasValue)
             {
                 var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id).Take(quantidade.Value).ToList();
@@ -39,41 +39,34 @@ namespace Opus.DataBaseEnvironment
 
         public List<PromocaoViewModel> RecuperaProximasPromocoes(Usuario usuario)
         {
-            IQueryable<Promocao> query = null;
+            var promocoesViewModel = new List<PromocaoViewModel>();
             var db = (SamEntities)DbContext;
-           
+
             if (usuario == null)
                 return null;
 
-            if (usuario.perfil == "RH")
+            promocoesViewModel =
+            (from c in db.Cargos
+             from u in db.Usuarios
+             where
+             u.id == usuario.id &&
+             u.cargo != c.id &&
+             (c.pontuacao - u.pontos) >= 0 &&
+             (c.pontuacao - u.pontos) <= (c.pontuacao * 0.2)
+             select new
+             {
+                 usuario = u,
+                 cargo = c,
+                 PontosFaltantes = c.pontuacao - u.pontos
+             }).AsEnumerable()
+            .Select(x => new PromocaoViewModel()
             {
-                query = (from usr in db.Usuarios
-                         from cargo in db.Cargos
-                         where usr.cargo == cargo.CargoAnterior.id &&
-                               (cargo.pontuacao - usr.pontos > 0 && cargo.pontuacao - usr.pontos < 50) &&
-                               usr.cargo != null
-                         select new Promocao() { Usuario = usr, PontosFaltantes = cargo.pontuacao - usr.pontos });
-
-                var promocoes = query.ToList();
-                var promocoesViewModel = Mapper.Map<List<Promocao>, List<PromocaoViewModel>>(promocoes);
-
-                return promocoesViewModel;
+                Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.usuario),
+                PontosFaltantes = x.PontosFaltantes
             }
-            else
-            {
-                var proximoCargo = RecuperaProximoCargo(usuario).FirstOrDefault();
+            ).ToList();
 
-                var promocao = new Promocao() {Usuario = usuario, PontosFaltantes = proximoCargo.pontuacao - usuario.pontos };
-                var promocaoViewModel = Mapper.Map<Promocao, PromocaoViewModel>(promocao);
-
-                var promocoesViewModel = new List<PromocaoViewModel>()
-                {
-                    promocaoViewModel
-                };
-
-                return promocoesViewModel;
-            }
-                       
+            return promocoesViewModel;
         }
 
         public UsuarioViewModel RecuperaUsuario(string samaccount)
@@ -102,7 +95,7 @@ namespace Opus.DataBaseEnvironment
                 var cargoViewModel = Mapper.Map<Cargo, CargoViewModel>(cargo);
                 cargosViewModel.Add(cargoViewModel);
             }
-                   
+
             return cargosViewModel;
         }
 
@@ -124,7 +117,7 @@ namespace Opus.DataBaseEnvironment
         public List<PendenciaViewModel> RecuperaPendencias(Usuario usuario)
         {
             // recupera toda pendencia onde o usuario é RH
-            if(usuario.perfil == "RH")
+            if (usuario.perfil == "RH")
             {
                 var pendenciasRH = DataAccess.Instance.PendenciaRepository().Find(p => p.Usuario.perfil == usuario.perfil).ToList();
                 var pendenciaViewModel = Mapper.Map<List<Pendencia>, List<PendenciaViewModel>>(pendenciasRH);
@@ -140,7 +133,7 @@ namespace Opus.DataBaseEnvironment
 
                 return pendenciaViewModel;
             }
-            
+
         }
     }
 }

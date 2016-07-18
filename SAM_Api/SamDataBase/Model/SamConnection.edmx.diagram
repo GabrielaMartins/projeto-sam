@@ -25,6 +25,10 @@
         <AssociationConnector Association="sam.model.FK__ItensTagged__tag__267ABA7A" />
         <AssociationConnector Association="sam.model.FK__Pendencia__usuar__2F10007B" />
         <AssociationConnector Association="sam.model.FK__Resultado__usuar__34C8D9D1" />
+        <EntityTypeShape EntityType="sam.model.Promocao" Width="1.5" PointX="3.75" PointY="7.875" />
+        <AssociationConnector Association="sam.model.FK__Promocoes__cargo__440B1D61" />
+        <AssociationConnector Association="sam.model.FK__Promocoes__cargo__44FF419A" />
+        <AssociationConnector Association="sam.model.FK__Promocoes__usuar__4316F928" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -20,6 +20,7 @@ namespace SamDataBase.Model
             this.Eventos = new HashSet<Evento>();
             this.Pendencias = new HashSet<Pendencia>();
             this.ResultadoVotacoes = new HashSet<ResultadoVotacao>();
+            this.Promocoes = new HashSet<Promocao>();
         }
     
         public int id { get; set; }
@@ -28,11 +29,13 @@ namespace SamDataBase.Model
         public string samaccount { get; set; }
         public string nome { get; set; }
         public string descricao { get; set; }
-        public string redes { get; set; }
         public string perfil { get; set; }
         public System.DateTime dataInicio { get; set; }
         public string foto { get; set; }
         public bool ativo { get; set; }
+        public string facebook { get; set; }
+        public string linkedin { get; set; }
+        public string github { get; set; }
     
         public virtual Cargo Cargo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -41,5 +44,7 @@ namespace SamDataBase.Model
         public virtual ICollection<Pendencia> Pendencias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResultadoVotacao> ResultadoVotacoes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Promocao> Promocoes { get; set; }
     }
 }

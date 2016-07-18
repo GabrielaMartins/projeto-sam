@@ -19,6 +19,8 @@ namespace SamDataBase.Model
         {
             this.Cargos = new HashSet<Cargo>();
             this.Usuarios = new HashSet<Usuario>();
+            this.Promocoes = new HashSet<Promocao>();
+            this.Promocoes1 = new HashSet<Promocao>();
         }
     
         public int id { get; set; }
@@ -31,5 +33,9 @@ namespace SamDataBase.Model
         public virtual Cargo CargoAnterior { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuarios { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Promocao> Promocoes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Promocao> Promocoes1 { get; set; }
     }
 }

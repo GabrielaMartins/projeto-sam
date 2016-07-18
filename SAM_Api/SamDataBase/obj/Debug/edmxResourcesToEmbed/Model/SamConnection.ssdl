@@ -56,6 +56,16 @@
     <Property Name="evento" Type="int" />
     <Property Name="estado" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="Promocoes">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="usuario" Type="int" />
+    <Property Name="cargoAnterior" Type="int" />
+    <Property Name="cargoAdquirido" Type="int" />
+    <Property Name="data" Type="date" Nullable="false" />
+  </EntityType>
   <EntityType Name="ResultadoVotacoes">
     <Key>
       <PropertyRef Name="id" />
@@ -83,11 +93,13 @@
     <Property Name="samaccount" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="descricao" Type="varchar" MaxLength="200" />
-    <Property Name="redes" Type="varchar" MaxLength="200" />
     <Property Name="perfil" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="dataInicio" Type="date" Nullable="false" />
     <Property Name="foto" Type="varchar" MaxLength="150" />
     <Property Name="ativo" Type="bit" Nullable="false" />
+    <Property Name="facebook" Type="varchar" MaxLength="200" />
+    <Property Name="linkedin" Type="varchar" MaxLength="200" />
+    <Property Name="github" Type="varchar" MaxLength="200" />
   </EntityType>
   <Association Name="FK__Cargos__anterior__117F9D94">
     <End Role="Cargos" Type="Self.Cargos" Multiplicity="0..1" />
@@ -193,6 +205,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Promocoes__cargo__440B1D61">
+    <End Role="Cargos" Type="Self.Cargos" Multiplicity="0..1" />
+    <End Role="Promocoes" Type="Self.Promocoes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cargos">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Promocoes">
+        <PropertyRef Name="cargoAnterior" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Promocoes__cargo__44FF419A">
+    <End Role="Cargos" Type="Self.Cargos" Multiplicity="0..1" />
+    <End Role="Promocoes" Type="Self.Promocoes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cargos">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Promocoes">
+        <PropertyRef Name="cargoAdquirido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Promocoes__usuar__4316F928">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+    <End Role="Promocoes" Type="Self.Promocoes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Promocoes">
+        <PropertyRef Name="usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Resultado__event__33D4B598">
     <End Role="Eventos" Type="Self.Eventos" Multiplicity="0..1" />
     <End Role="ResultadoVotacoes" Type="Self.ResultadoVotacoes" Multiplicity="*" />
@@ -236,6 +284,7 @@
     <EntitySet Name="Itens" EntityType="Self.Itens" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ItensTagged" EntityType="Self.ItensTagged" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pendencias" EntityType="Self.Pendencias" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Promocoes" EntityType="Self.Promocoes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ResultadoVotacoes" EntityType="Self.ResultadoVotacoes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
@@ -270,6 +319,18 @@
     <AssociationSet Name="FK__Pendencia__usuar__2F10007B" Association="Self.FK__Pendencia__usuar__2F10007B">
       <End Role="Usuarios" EntitySet="Usuarios" />
       <End Role="Pendencias" EntitySet="Pendencias" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Promocoes__cargo__440B1D61" Association="Self.FK__Promocoes__cargo__440B1D61">
+      <End Role="Cargos" EntitySet="Cargos" />
+      <End Role="Promocoes" EntitySet="Promocoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Promocoes__cargo__44FF419A" Association="Self.FK__Promocoes__cargo__44FF419A">
+      <End Role="Cargos" EntitySet="Cargos" />
+      <End Role="Promocoes" EntitySet="Promocoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Promocoes__usuar__4316F928" Association="Self.FK__Promocoes__usuar__4316F928">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Promocoes" EntitySet="Promocoes" />
     </AssociationSet>
     <AssociationSet Name="FK__Resultado__event__33D4B598" Association="Self.FK__Resultado__event__33D4B598">
       <End Role="Eventos" EntitySet="Eventos" />

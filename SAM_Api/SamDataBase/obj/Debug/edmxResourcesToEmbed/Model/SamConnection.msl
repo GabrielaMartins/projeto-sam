@@ -85,16 +85,29 @@
     <EntitySetMapping Name="Usuarios">
       <EntityTypeMapping TypeName="sam.model.Usuario">
         <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="github" ColumnName="github" />
+          <ScalarProperty Name="linkedin" ColumnName="linkedin" />
+          <ScalarProperty Name="facebook" ColumnName="facebook" />
           <ScalarProperty Name="ativo" ColumnName="ativo" />
           <ScalarProperty Name="foto" ColumnName="foto" />
           <ScalarProperty Name="dataInicio" ColumnName="dataInicio" />
           <ScalarProperty Name="perfil" ColumnName="perfil" />
-          <ScalarProperty Name="redes" ColumnName="redes" />
           <ScalarProperty Name="descricao" ColumnName="descricao" />
           <ScalarProperty Name="nome" ColumnName="nome" />
           <ScalarProperty Name="samaccount" ColumnName="samaccount" />
           <ScalarProperty Name="pontos" ColumnName="pontos" />
           <ScalarProperty Name="cargo" ColumnName="cargo" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Promocaos">
+      <EntityTypeMapping TypeName="sam.model.Promocao">
+        <MappingFragment StoreEntitySet="Promocoes">
+          <ScalarProperty Name="data" ColumnName="data" />
+          <ScalarProperty Name="cargoAdquirido" ColumnName="cargoAdquirido" />
+          <ScalarProperty Name="cargoAnterior" ColumnName="cargoAnterior" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

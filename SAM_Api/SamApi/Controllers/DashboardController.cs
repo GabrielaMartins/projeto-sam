@@ -13,7 +13,7 @@ using Opus.Helpers;
 namespace SamApi.Controllers
 {
     [RoutePrefix("api/sam/Dashboard")]
-    public class DashboardController : ApiController
+    public class SamDashboardController : ApiController
     {
 
         // GET: api/sam/Dashboard
@@ -23,7 +23,7 @@ namespace SamApi.Controllers
         {
 
             var token = HeaderHandler.ExtractHeaderValue(Request, "token");
-            if(token == null)
+            if (token == null)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, MessageViewModel.TokenMissing);
             }
@@ -32,12 +32,23 @@ namespace SamApi.Controllers
             var context = decodedToken["context"] as Dictionary<string, object>;
             var userInfo = context["user"] as Dictionary<string, object>;
             var samaccount = userInfo["samaccount"] as string;
+            var perfil = context["perfil"] as string;
 
             var usuario = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount == samaccount).SingleOrDefault();
+
             var ultimosEventos = UltimosEventos();
-            var proximasPromocoes = ProximasPromocoes(usuario);
             var ranking = Ranking();
             var certificacoes = CertificacoesProcuradas();
+
+            var proximasPromocoes = new List<PromocaoViewModel>();
+            if (perfil == "RH")
+            {
+                proximasPromocoes = ProximasPromocoes();
+            }
+            else
+            {
+                proximasPromocoes = ProximasPromocoes(usuario);
+            }
 
             var dashboardViewModel = new DashboardViewModel()
             {
@@ -67,13 +78,24 @@ namespace SamApi.Controllers
                         Evento = Mapper.Map<Evento, EventoViewModel>(x),
                         UsuariosQueFizeram = DataAccess.Instance.ItemRepository().RecuperaUsuariosQueFizeram(x.item.Value)
                     }).ToList();
-            
+
             return ultimosEventos;
         }
 
-        private List<PromocaoViewModel> ProximasPromocoes(Usuario usuario)
+        private List<PromocaoViewModel> ProximasPromocoes(Usuario usuario = null)
         {
-            var proximasPromocoes = DataAccess.Instance.UsuarioRepository().RecuperaProximasPromocoes(usuario);
+            List<PromocaoViewModel> proximasPromocoes = new List<PromocaoViewModel>();
+            if (usuario != null)
+            {
+                // Dashboard for normal staff
+                proximasPromocoes = DataAccess.Instance.UsuarioRepository().RecuperaProximasPromocoes(usuario);
+            }
+            else
+            {
+                // Dashboard for HR(human resources) staff
+                proximasPromocoes = DataAccess.Instance.PromocaoRepository().RecuperaProximasPromocoes();
+            }
+
             return proximasPromocoes;
         }
 
@@ -83,7 +105,7 @@ namespace SamApi.Controllers
 
             List<Usuario> ranking = usuarioRepositorio.GetAll().OrderByDescending(x => x.pontos).Take(10).ToList();
             var rankingViewModel = new List<UsuarioViewModel>();
-            foreach(var usuario in ranking)
+            foreach (var usuario in ranking)
             {
                 var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
                 rankingViewModel.Add(usuarioViewModel);

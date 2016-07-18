@@ -16,13 +16,19 @@ namespace Opus.DataBaseEnvironment
 		private ResultadoVotacoesRepository resultadoVotacoesRepository;
 		private TagRepository tagRepository;
 		private UsuarioRepository usuarioRepository;
+        private PromocaoRepository promocaoRepository;
 
 		public CargoRepository CargoRepository()
 		{
 			return cargoRepository;
 		}
 
-		public CategoriaRepository CategoriaRepository()
+        public PromocaoRepository PromocaoRepository()
+        {
+            return promocaoRepository;
+        }
+
+        public CategoriaRepository CategoriaRepository()
 		{
 			return categoriaRepository;
 		}
@@ -60,7 +66,8 @@ namespace Opus.DataBaseEnvironment
 		public DataAccess()
 		{
 			var context = new SamEntities();
-			cargoRepository = new CargoRepository(context);
+            promocaoRepository = new PromocaoRepository(context);
+            cargoRepository = new CargoRepository(context);
 			categoriaRepository = new CategoriaRepository(context);
 			eventoRepository = new EventoRepository(context);
 			itenRepository = new ItemRepository(context);

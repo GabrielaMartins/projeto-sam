@@ -54,6 +54,19 @@
       <End Role="Usuario" EntitySet="Usuarios" />
       <End Role="ResultadoVotaco" EntitySet="ResultadoVotacaos" />
     </AssociationSet>
+    <EntitySet Name="Promocaos" EntityType="sam.model.Promocao" />
+    <AssociationSet Name="FK__Promocoes__cargo__440B1D61" Association="sam.model.FK__Promocoes__cargo__440B1D61">
+      <End Role="Cargo" EntitySet="Cargos" />
+      <End Role="Promoco" EntitySet="Promocaos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Promocoes__cargo__44FF419A" Association="sam.model.FK__Promocoes__cargo__44FF419A">
+      <End Role="Cargo" EntitySet="Cargos" />
+      <End Role="Promoco" EntitySet="Promocaos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Promocoes__usuar__4316F928" Association="sam.model.FK__Promocoes__usuar__4316F928">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Promoco" EntitySet="Promocaos" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Cargo">
     <Key>
@@ -66,6 +79,8 @@
     <NavigationProperty Name="Cargos" Relationship="sam.model.FK__Cargos__anterior__117F9D94" FromRole="Cargo" ToRole="Cargo1" />
     <NavigationProperty Name="CargoAnterior" Relationship="sam.model.FK__Cargos__anterior__117F9D94" FromRole="Cargo1" ToRole="Cargo" />
     <NavigationProperty Name="Usuarios" Relationship="sam.model.FK__Usuarios__cargo__15502E78" FromRole="Cargo" ToRole="Usuario" />
+    <NavigationProperty Name="Promocoes" Relationship="sam.model.FK__Promocoes__cargo__440B1D61" FromRole="Cargo" ToRole="Promoco" />
+    <NavigationProperty Name="Promocoes1" Relationship="sam.model.FK__Promocoes__cargo__44FF419A" FromRole="Cargo" ToRole="Promoco" />
   </EntityType>
   <EntityType Name="Categoria">
     <Key>
@@ -156,7 +171,6 @@
     <Property Name="samaccount" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="descricao" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="redes" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="perfil" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="dataInicio" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="foto" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
@@ -165,6 +179,10 @@
     <NavigationProperty Name="Eventos" Relationship="sam.model.FK__Eventos__usuario__2A4B4B5E" FromRole="Usuario" ToRole="Evento" />
     <NavigationProperty Name="Pendencias" Relationship="sam.model.FK__Pendencia__usuar__2F10007B" FromRole="Usuario" ToRole="Pendencia" />
     <NavigationProperty Name="ResultadoVotacoes" Relationship="sam.model.FK__Resultado__usuar__34C8D9D1" FromRole="Usuario" ToRole="ResultadoVotaco" />
+    <Property Name="facebook" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="linkedin" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="github" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Promocoes" Relationship="sam.model.FK__Promocoes__usuar__4316F928" FromRole="Usuario" ToRole="Promoco" />
   </EntityType>
   <Association Name="FK__Cargos__anterior__117F9D94">
     <End Type="sam.model.Cargo" Role="Cargo" Multiplicity="0..1" />
@@ -302,6 +320,55 @@
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="ResultadoVotaco">
+        <PropertyRef Name="usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Promocao">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="usuario" Type="Int32" />
+    <Property Name="cargoAnterior" Type="Int32" />
+    <Property Name="cargoAdquirido" Type="Int32" />
+    <Property Name="data" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="CargoAnterior" Relationship="sam.model.FK__Promocoes__cargo__440B1D61" FromRole="Promoco" ToRole="Cargo" />
+    <NavigationProperty Name="Cargo" Relationship="sam.model.FK__Promocoes__cargo__44FF419A" FromRole="Promoco" ToRole="Cargo" />
+    <NavigationProperty Name="Usuario" Relationship="sam.model.FK__Promocoes__usuar__4316F928" FromRole="Promoco" ToRole="Usuario" />
+  </EntityType>
+  <Association Name="FK__Promocoes__cargo__440B1D61">
+    <End Type="sam.model.Cargo" Role="Cargo" Multiplicity="0..1" />
+    <End Type="sam.model.Promocao" Role="Promoco" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cargo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Promoco">
+        <PropertyRef Name="cargoAnterior" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Promocoes__cargo__44FF419A">
+    <End Type="sam.model.Cargo" Role="Cargo" Multiplicity="0..1" />
+    <End Type="sam.model.Promocao" Role="Promoco" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cargo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Promoco">
+        <PropertyRef Name="cargoAdquirido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Promocoes__usuar__4316F928">
+    <End Type="sam.model.Usuario" Role="Usuario" Multiplicity="0..1" />
+    <End Type="sam.model.Promocao" Role="Promoco" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Promoco">
         <PropertyRef Name="usuario" />
       </Dependent>
     </ReferentialConstraint>
