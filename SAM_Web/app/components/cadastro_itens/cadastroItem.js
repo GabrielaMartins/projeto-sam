@@ -9,9 +9,10 @@ var CadastroItem = function(props){
   return(
       <div>
         <form>
-          <div className="row valign-wrapper" style={{paddingTop: '5%' }}>
+          <div className="row valign-wrapper" style={{paddingTop: 30 }}>
             <div className="col l6 m6 s12 center-block">
-              <div className="card-panel z-depth-6 transparent-white">
+              <div className="card-panel z-depth-6">
+                <h3 className="colorText-default card-title center-align">Cadastrar Novo Item</h3>
                 <div className="row">
                   <div className="input-field col l12 m12 s12">
                     <input
@@ -25,7 +26,7 @@ var CadastroItem = function(props){
                   </div>
                 </div>
                 <div className="row">
-                  <div className=" col l6 m6 s12">
+                  <div className="input-field col l6 m6 s12">
                     <select
                       id ="select_categoria"
                       value = {props.categoria}
@@ -70,8 +71,11 @@ var CadastroItem = function(props){
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col s6">
-                      <div className="right">
+                    <label>Status: </label>
+                  </div>
+                  <div className="row">
+                    <div className="col s2">
+                      <div className="left">
                         <Radio
                           className="right"
                           id = "radio1"

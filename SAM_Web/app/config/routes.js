@@ -12,7 +12,7 @@ var Votacao = require('../containers/votacao/votacaoContainer');
 var CadastroItem = require('../containers/cadastro_itens/cadastroItemContainer');
 var ListaUsuarios = require('../containers/usuario/listaUsuariosContainer');
 var ListaItens = require('../containers/item/listaItensContainer');
-var Perfil = require('../containers/perfil/perfilUsuarioContainer');
+var Perfil = require('../containers/usuario/perfilUsuarioContainer');
 
 var Routes = (
   <Router history={HashHistory}>

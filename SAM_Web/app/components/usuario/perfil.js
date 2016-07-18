@@ -1,9 +1,9 @@
 var React = require('react');
 var ReactRouter = require('react-router');
-var Avatar = require('./avatar');
-var PromocoesHistorico = require('./promocoesHistorico');
-var PontuacaoGrafico = require('./pontuacaoGrafico');
-var BaseHistorico = require('./BaseHistorico');
+var Avatar = require('../perfil/avatar');
+var PromocoesHistorico = require('../perfil/promocoesHistorico');
+var PontuacaoGrafico = require('../perfil/pontuacaoGrafico');
+var BaseHistorico = require('../perfil/BaseHistorico');
 
 var Perfil = function(props){
 
