@@ -9,7 +9,7 @@ var Perfil = function(props){
 
     var promocoes = null;
     var atividades = null;
-    console.log(props);
+  
     //foreach aqui
     return(
       <div style={{marginTop:50}} className="container">

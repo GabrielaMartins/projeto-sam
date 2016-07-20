@@ -26,7 +26,7 @@ var Login = function(props){
                         type="text"
                         onChange = {props.updateUsuario}
                       />
-                      <label for="nome">Usuário</label>
+                    <label htmlFor="nome">Usuário</label>
                     </div>
                     <div className="input-field">
                       <i className="material-icons prefix">lock</i>
@@ -34,7 +34,7 @@ var Login = function(props){
                         type="password"
                         onChange = {props.updateSenha}
                       />
-                    <label for="senha">Senha</label>
+                    <label htmlFor="senha">Senha</label>
                     </div>
                   </div>
                   <div className="row">

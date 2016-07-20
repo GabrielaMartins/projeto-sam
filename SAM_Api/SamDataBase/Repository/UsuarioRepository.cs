@@ -18,21 +18,38 @@ namespace Opus.DataBaseEnvironment
         }
 
         //Preencher aqui
-        public List<EventoViewModel> RecuperaEventos(Usuario usuario, int? quantidade = null)
+        public List<EventoViewModel> RecuperaEventos(Usuario usuario, int? quantidade = null, string tipo = null)
         {
 
             if (quantidade.HasValue)
             {
-                var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id).Take(quantidade.Value).ToList();
-                var eventosViewModel = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-                return eventosViewModel;
+                if (tipo != null)
+                {
+                    var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id && e.tipo == tipo).Take(quantidade.Value).ToList();
+                    var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
+                    return eventoViewModels;
+                }
+                else
+                {
+                    var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id).Take(quantidade.Value).ToList();
+                    var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
+                    return eventoViewModels;
+                }
             }
             else
             {
-                var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id).ToList();
-                var eventosViewModel = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-
-                return eventosViewModel;
+                if (tipo != null)
+                {
+                    var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id && e.tipo == tipo).ToList();
+                    var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
+                    return eventoViewModels;
+                }
+                else
+                {
+                    var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id).ToList();
+                    var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
+                    return eventoViewModels;
+                }
             }
 
         }
@@ -69,15 +86,29 @@ namespace Opus.DataBaseEnvironment
             return promocoesViewModel;
         }
 
-        public UsuarioViewModel RecuperaUsuario(string samaccount)
+        public List<PromocaoAdquiridaViewModel> RecuperaPromocoes(Usuario usuario)
         {
-            var usuario = Find(u => u.samaccount == samaccount).SingleOrDefault();
-            if (usuario == null)
-                return null;
+            var db = DbContext as SamEntities;
+            var q = (from p in db.Promocoes
+                     where p.usuario == usuario.id
+                     select new
+                     {
+                         Usuario = p.Usuario,
+                         CargoAnterior = p.CargoAnterior,
+                         Cargo = p.Cargo,
+                         Data = p.data
+                     }).AsEnumerable()
+                     .Select(x => new PromocaoAdquiridaViewModel()
+                     {
+                         Cargo = Mapper.Map<Cargo, CargoViewModel>(x.Cargo),
+                         CargoAnterior = Mapper.Map<Cargo, CargoViewModel>(x.CargoAnterior),
+                         Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.Usuario),
+                         Data = x.Data
+                     });
 
-            var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
+            var promocoesRealizadas = q.ToList();
 
-            return usuarioViewModel;
+            return promocoesRealizadas;
         }
 
         public List<CargoViewModel> RecuperaProximoCargo(Usuario usuario)
@@ -97,21 +128,6 @@ namespace Opus.DataBaseEnvironment
             }
 
             return cargosViewModel;
-        }
-
-        public List<EventoViewModel> RecuperaEventos(Usuario usuario)
-        {
-            try
-            {
-                var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id).ToList();
-                var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-
-                return eventoViewModels;
-            }
-            catch (NullReferenceException)
-            {
-                return null;
-            }
         }
 
         public List<PendenciaViewModel> RecuperaPendencias(Usuario usuario)

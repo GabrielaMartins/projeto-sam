@@ -11,7 +11,7 @@ var BaseContainer = React.createClass({
   },
 
   componentDidMount: function(){
-      debugger;
+  
     //fetch informações do usuario
     var token = localStorage.getItem("token");
 

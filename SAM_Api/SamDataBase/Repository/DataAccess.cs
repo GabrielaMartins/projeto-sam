@@ -66,15 +66,15 @@ namespace Opus.DataBaseEnvironment
 		public DataAccess()
 		{
 			var context = new SamEntities();
-            promocaoRepository = new PromocaoRepository(context);
-            cargoRepository = new CargoRepository(context);
-			categoriaRepository = new CategoriaRepository(context);
-			eventoRepository = new EventoRepository(context);
-			itenRepository = new ItemRepository(context);
-			pendenciaRepository = new PendenciaRepository(context);
-			resultadoVotacoesRepository = new ResultadoVotacoesRepository(context);
-			tagRepository = new TagRepository(context);
-			usuarioRepository = new UsuarioRepository(context);
+            promocaoRepository = new PromocaoRepository(new SamEntities());
+            cargoRepository = new CargoRepository(new SamEntities());
+			categoriaRepository = new CategoriaRepository(new SamEntities());
+			eventoRepository = new EventoRepository(new SamEntities());
+			itenRepository = new ItemRepository(new SamEntities());
+			pendenciaRepository = new PendenciaRepository(new SamEntities());
+			resultadoVotacoesRepository = new ResultadoVotacoesRepository(new SamEntities());
+			tagRepository = new TagRepository(new SamEntities());
+			usuarioRepository = new UsuarioRepository(new SamEntities());
 		}
 
 	}

@@ -21,7 +21,7 @@ var Avatar = React.createClass({
         </div>
         <div className="row">
           <div className="col l6 m6 s6">
-              <span className="col l4 right"><b>{this.props.usuario.pontos}</b>/{this.props.usuario.Cargo.pontuacao}</span><br/>
+              <span className="col l4 right"><b>{this.props.usuario.pontos}</b>/{this.props.usuario.ProximoCargo[0].pontuacao}</span><br/>
               <div className="progress col s10 m6 l4 right">
                 <div className="determinate" style={{width: this.props.progresso + "%"}}></div>
               </div>

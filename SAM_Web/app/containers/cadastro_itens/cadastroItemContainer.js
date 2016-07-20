@@ -8,12 +8,6 @@ const CadastroItemContainer = React.createClass({
   render: function(){
     return(
       <CadastroItem
-        categorias = {this.state.categorias.map(function(c){return c.nome})}
-        rotulosRadio = {this.state.rotulosRadio}
-        item = {this.state.item}
-        descricao = {this.state.descricao}
-        categoria = {this.state.categoria}
-        dificuldade = {this.state.dificuldade}
         handleCategoryChanges = {this.handleCategoryChanges}
         handleDificultyChanges = {this.handleDificultyChanges}
         handleModifierChanges = {this.handleModifierChanges}
@@ -21,13 +15,21 @@ const CadastroItemContainer = React.createClass({
         handleItemChanges = {this.handleItemChanges}
         handleSubmit = {this.handleSubmit}
         handleClear = {this.handleClear}
+        rotulosRadio = {this.state.rotulosRadio}
+        item = {this.state.item}
+        descricao = {this.state.descricao}
+        categoria = {this.state.categoria}
+        dificuldade = {this.state.dificuldade}
+        categorias = {this.state.categorias.map(function(categoria, index){
+          return <option value = {categoria.id} key = {index + 1}>{categoria.nome}</option>
+        })}
       />
     )
   },
 
   getInitialState: function(){
       return {
-		categorias: [],
+		    categorias: [],
         rotulosRadio: ["Raso", "Profundo"],
         dificuldade: "Selecione a dificuldade",
         categoria: "Selecione a categoria",
@@ -60,34 +62,32 @@ const CadastroItemContainer = React.createClass({
       var self = this;
       axios.get(url).then(
         function(response){
-          //debugger;
+          debugger;
           var categorias = response.data;
           self.setState({categorias: categorias});
         },
         function(reason){
-
+          debugger;
         }
       );
-
-      // teste: remover depois
-    //  debugger;
-      //var categorias = [{nome:"Categoria 1"},{nome:"Categoria 2"}];
-      //self.categorias = categorias;
   },
 
   handleCategoryChanges: function(event){
-    var categoria = event.target.value;
+
+    // obtem a categoria escolhida
+    var categoriaId = parseInt(event.target.value);
+    var categoria = this.state.categorias.find(function(c){return c.id == categoriaId;});
 
     // troca o rotulo dos radio
-    if(categoria === "Categoria 1"){
+    if(categoria.nome.toLowerCase() === "workshop"){
       this.setState({
           rotulosRadio: ["Raso", "Profundo"],
-          categoria: categoria
+          categoria: event.target.value
       });
     }else{
       this.setState({
         rotulosRadio: ["Alinhado", "Não Alinhado"],
-        categoria: categoria
+        categoria: event.target.value
       });
     }
 

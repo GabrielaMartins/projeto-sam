@@ -9,19 +9,18 @@ moment.locale('pt-br');
 const PerfilUsuarioContainer = React.createClass({
 
   render: function(){
-    var atividades = [];
-
-    this.state.atividades.forEach(function(atividade){
-      var pontuacao = atividade.Item.dificuldade * atividade.Item.modificador * atividade.Item.Categoria.peso;
-      console.log(atividade);
-      atividades.push(<div className="col l12 m12 s12">
-                        <AtividadesHistorico
-                          item = {atividade.Item}
-                          usuarios = {atividade.Usuario}
-                          pontuacao = {pontuacao}
-                          perfil = {true}
-                          />
-                      </div>);
+    debugger;
+    var atividades = this.state.atividades.map(function(atividade, index){
+      return(
+        <div className="col l12 m12 s12" key={index}>
+          <AtividadesHistorico
+            item = {atividade.Item}
+            usuarios = {atividade.Usuario}
+            pontuacao = {atividade.Item.dificuldade * atividade.Item.modificador * atividade.Item.Categoria.peso}
+            perfil = {true}
+            />
+        </div>
+      );
     });
 
     return(<Perfil usuario = {this.state.usuario}
@@ -63,21 +62,21 @@ const PerfilUsuarioContainer = React.createClass({
 
   componentWillMount: function(){
       var self = this;
-      var token = localStorage.getItem("token");
-
       var usuario = this.props.params.samaccount;
 
-      axios.defaults.headers.common['token'] = token;
+      axios.defaults.headers.common['token'] = localStorage.getItem("token");
 
       // busca no banco esse samaccount
       axios.get('http://10.10.15.113:65122/api/sam/perfil/').then(
 
         // sucesso
         function(response){
-          var u = response.data.Usuario;
-
-          self.atualizaEstado(u);
+          debugger;
+          var estado = self.montaEstado(response.data.Usuario);
           self.setState({
+            usuario: estado.usuario,
+            tempoDeCasa: estado.tempoDeCasa,
+            progresso: estado.progresso,
             atividades : response.data.Atividades,
             promocoes : response.data.PromocoesAdquiridas,
             columnChart: {
@@ -97,13 +96,14 @@ const PerfilUsuarioContainer = React.createClass({
 
         //falha
         function(jqXHR){
+          self.setState(self.getInitialState());
         }
 
       );
   },
 
-  atualizaEstado: function(novoEstado){
-    var usuario = novoEstado;
+  montaEstado: function(estado){
+    var usuario = estado;
     var tempoDeCasa = this.calculaTempoDeCasa(usuario.DataInicio);
 
     if(tempoDeCasa > 1){
@@ -113,16 +113,11 @@ const PerfilUsuarioContainer = React.createClass({
     }
 
     var progresso = 0;
-
     if(usuario.Cargo.pontuacao != 0){
-      progresso = usuario.pontos * 100 / usuario.Cargo.pontuacao;
+          progresso = usuario.pontos * 100 / usuario.ProximoCargo[0].pontuacao;
     }
 
-    this.setState({
-      usuario: usuario,
-      tempoDeCasa: tempoDeCasa,
-      progresso: progresso
-    });
+    return {usuario: usuario, progresso: progresso, tempoDeCasa: tempoDeCasa};
   },
 
   calculaTempoDeCasa: function(dataInicio){

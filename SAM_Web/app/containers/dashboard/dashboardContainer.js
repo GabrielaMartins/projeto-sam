@@ -49,8 +49,9 @@ var DashboardContainer = React.createClass({
     var samaccount = this.props.params.samaccount;
 
     //configurações para passar o token
+    var token = localStorage.getItem("token");
     var config = {
-      headers: {'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vb3B1cy5zYW0uY29tIiwiaWF0IjoiXC9EYXRlKDE0NjY3MDkyMjI4OTgpXC8iLCJzdWIiOiJHYWJyaWVsYSBNYXJ0aW5zIiwiY29udGV4dCI6eyJ1c2VyIjp7ImlkIjoyLCJzYW1hY2NvdW50IjoiZ2FicmllbGEifSwicGVyZmlsIjoiRnVuY2lvbsOhcmlvIn19.nXiBQb5npG9QFFv7OYlb2QylCx0tdgloNYwo96uLp8M'}
+      headers: {'token': token}
     };
 
     //obtém dados

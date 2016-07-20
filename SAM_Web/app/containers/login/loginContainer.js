@@ -31,9 +31,9 @@ var LoginContainer = React.createClass({
 
   handleSubmit: function(e){
 
-    var self = this;
     e.preventDefault();
-
+    
+    var self = this;
     self.setState({msg: ""});
 
     if(self.state.usuario === "" || self.state.senha === ""){
@@ -58,7 +58,7 @@ var LoginContainer = React.createClass({
             // Sorry! No Web Storage support..
           }
 
-          self.context.router.push('/Dashboard/mario');
+          self.context.router.push('/Dashboard');
         },
 
         // falha

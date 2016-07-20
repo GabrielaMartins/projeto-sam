@@ -5,7 +5,7 @@ var Radio = require('../../ui_elements/radio');
 var Link = ReactRouter.Link;
 
 var CadastroItem = function(props){
-
+debugger;
   return(
       <div>
         <form>
@@ -22,7 +22,7 @@ var CadastroItem = function(props){
                       onChange = {props.handleItemChanges}
                       value = {props.item}
                     />
-                    <label for="nome_item">Nome do Item:</label>
+                  <label htmlFor="nome_item">Nome do Item:</label>
                   </div>
                 </div>
                 <div className="row">
@@ -36,7 +36,7 @@ var CadastroItem = function(props){
                         key = {0}
                         >Selecione a categoria
                       </option>
-                      {props.categorias.map( function(opt, index){ return <option value = {opt} key = {index + 1}>{opt}</option>})}
+                      {props.categorias}
                    </select>
                     <label>Categoria</label>
                   </div>
@@ -67,7 +67,7 @@ var CadastroItem = function(props){
                         onChange = {props.handleDescriptionChanges}
                         value = {props.descricao}
                       />
-                      <label for="descricao_item">Descrição</label>
+                    <label htmlFor="descricao_item">Descrição</label>
                     </div>
                   </div>
                   <div className="row">
@@ -134,9 +134,8 @@ var CadastroItem = function(props){
 }
 
 CadastroItem.propTypes = {
-   categorias: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+   categorias: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
    rotulosRadio: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-   //checked: React.PropTypes.bool.isRequired,
    item: React.PropTypes.string.isRequired,
    descricao: React.PropTypes.string.isRequired,
    categoria: React.PropTypes.string.isRequired,

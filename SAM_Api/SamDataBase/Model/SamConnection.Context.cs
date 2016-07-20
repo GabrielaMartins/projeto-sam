@@ -34,6 +34,6 @@ namespace SamDataBase.Model
         public virtual DbSet<ResultadoVotacao> ResultadoVotacaos { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
-        public virtual DbSet<Promocao> Promocaos { get; set; }
+        public virtual DbSet<Promocao> Promocoes { get; set; }
     }
 }

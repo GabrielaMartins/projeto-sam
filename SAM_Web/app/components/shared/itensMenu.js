@@ -20,25 +20,32 @@ var ItemMenu = React.createClass({
     }); // End Document Ready
   })(jQuery); // End of jQuery name space
 
-    var itensMenu = [];
-    var itensMenuMobile = [];
     //navbar
-    this.props.itensMenu.forEach(function(item){
-      itensMenu.push(<li key={item}><a className="dropdown-button" data-activates={item}>{item}<i className="material-icons right">arrow_drop_down</i></a></li>);
+    var itensMenu = this.props.itensMenu.map(function(item, index){
+      return(
+        <li key={index}>
+          <a className="dropdown-button" data-activates={item}>
+            {item}<i className="material-icons right">arrow_drop_down</i>
+          </a>
+        </li>
+      );
     });
 
     //mobile sidebar
-    this.props.dropdowns.forEach(function(dropdown){
+    var itensMenuMobile = this.props.dropdowns.map(function(dropdown, index){
       if(dropdown.itemMenu == "Itens" || dropdown.itemMenu == "Funcionarios"){
 
-        itensMenuMobile.push(<li>
-                                <a className="collapsible-header">{dropdown.itemMenu}<i className="material-icons right">expand_more</i></a>
-                                  <div className="collapsible-body">
-                                    <Dropdown key = {dropdown.id} itensDrop = {dropdown.itens} itemMenu = {dropdown.itemMenu} isMobile={true}/>
-                                  </div>
-                              </li>);
+        return(
+          <li key={index}>
+            <a className="collapsible-header">
+              {dropdown.itemMenu}<i className="material-icons right">expand_more</i>
+            </a>
+            <div className="collapsible-body">
+              <Dropdown key = {dropdown.id} itensDrop = {dropdown.itens} itemMenu = {dropdown.itemMenu} isMobile={true}/>
+            </div>
+          </li>
+        );
       }
-
     });
 
     return(
