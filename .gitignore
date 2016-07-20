@@ -3,12 +3,3 @@
 
 dist/
 node_modules/
-SAM_Api/.vs/
-SAM_Api/obj/
-SAM_Api/packages/
-SAM_Api/SamApi/SamApi/bin/
-SAM_Api/SamApi/SamApi/obj/
-SAM_Api/SamApi/SamApiModels/bin/
-SAM_Api/SamApi/SamApiModels/obj/
-SAM_Api/SamApi/SamDataBase/bin/
-SAM_Api/SamApi/SamDataBase/obj/
