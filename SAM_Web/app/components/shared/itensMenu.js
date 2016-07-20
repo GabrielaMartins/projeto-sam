@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var Dropdown = require('./itensDropdown');
-
+var Link = ReactRouter.Link;
 
 var ItemMenu = React.createClass({
   render : function(){
@@ -22,7 +22,6 @@ var ItemMenu = React.createClass({
 
     var itensMenu = [];
     var itensMenuMobile = [];
-
     //navbar
     this.props.itensMenu.forEach(function(item){
       itensMenu.push(<li key={item}><a className="dropdown-button" data-activates={item}>{item}<i className="material-icons right">arrow_drop_down</i></a></li>);
@@ -30,7 +29,7 @@ var ItemMenu = React.createClass({
 
     //mobile sidebar
     this.props.dropdowns.forEach(function(dropdown){
-      if(dropdown.itemMenu != "Gabriela"){
+      if(dropdown.itemMenu == "Itens" || dropdown.itemMenu == "Funcionarios"){
 
         itensMenuMobile.push(<li>
                                 <a className="collapsible-header">{dropdown.itemMenu}<i className="material-icons right">expand_more</i></a>
@@ -53,7 +52,7 @@ var ItemMenu = React.createClass({
               <img className="center circle" src={this.props.imagemUsuario} style={{height:150, marginTop:12}}/>
             </div>
           </div>
-            <a className="center"><b>Olá, {this.props.usuario}</b></a>
+            <Link to ={this.props.urlUsuario} className="center"><b>Olá, {this.props.usuario}</b></Link>
             <ul>
               <li className="no-padding">
                 <ul className="collapsible" data-collapsible="accordion">

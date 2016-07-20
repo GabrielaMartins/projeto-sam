@@ -12,7 +12,8 @@ var Votacao = require('../containers/votacao/votacaoContainer');
 var CadastroItem = require('../containers/cadastro_itens/cadastroItemContainer');
 var ListaUsuarios = require('../containers/usuario/listaUsuariosContainer');
 var ListaItens = require('../containers/item/listaItensContainer');
-var Perfil = require('../containers/usuario/perfilUsuarioContainer');
+var Perfil = require('../containers/perfil/perfilContainer');
+var EdicaoFuncionario = require('../containers/edicao_funcionario/edicaoFuncionarioContainer');
 
 var Routes = (
   <Router history={HashHistory}>
@@ -22,6 +23,7 @@ var Routes = (
         <Route path="/Item/Cadastro" component={CadastroItem}/>
         <Route path='/Votacao/:id' component={Votacao}/>
         <Route path='/Funcionario/Listagem' component={ListaUsuarios}/>
+        <Route path='/Funcionario/Edicao/:samaccount' component={EdicaoFuncionario}/>
         <Route path='/Item/Listagem' component={ListaItens}/>
         <Route path='/Perfil/:samaccount' component={Perfil}/>
       </Route>
