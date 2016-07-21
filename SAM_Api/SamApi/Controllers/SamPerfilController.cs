@@ -54,5 +54,9 @@ namespace SamApi.Controllers
 
         }
 
+        private void CreateChart()
+        {
+
+        }
     }
 }

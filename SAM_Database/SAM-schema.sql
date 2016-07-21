@@ -20,7 +20,7 @@ CREATE TABLE Usuarios
 	redes VARCHAR(200),
 	perfil VARCHAR(20) NOT NULL DEFAULT 'Funcionário',
 	dataInicio DATE NOT NULL,
-	foto VARCHAR(150),
+	foto VARCHAR(150) DEFAULT 'http://10.10.15.113:65122/Public/Images/Users/new.jpg',
 	ativo BIT NOT NULL DEFAULT 1
 );
 

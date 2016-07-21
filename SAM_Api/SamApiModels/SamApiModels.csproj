@@ -45,6 +45,7 @@
     <Compile Include="Models\CategoriaViewModel.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\PerfilViewModel.cs" />
+    <Compile Include="Models\PromocaoAdquirida.cs" />
     <Compile Include="Models\PromocaoViewModel.cs" />
     <Compile Include="Models\UltimoEventoViewModel.cs" />
     <Compile Include="Models\EventoViewModel.cs" />
