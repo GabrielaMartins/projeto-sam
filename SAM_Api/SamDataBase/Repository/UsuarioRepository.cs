@@ -25,13 +25,13 @@ namespace Opus.DataBaseEnvironment
             {
                 if (tipo != null)
                 {
-                    var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id && e.tipo == tipo).Take(quantidade.Value).ToList();
+                    var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario.id && e.tipo == tipo).Take(quantidade.Value).ToList();
                     var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
                     return eventoViewModels;
                 }
                 else
                 {
-                    var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id).Take(quantidade.Value).ToList();
+                    var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario.id).Take(quantidade.Value).ToList();
                     var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
                     return eventoViewModels;
                 }
@@ -40,13 +40,13 @@ namespace Opus.DataBaseEnvironment
             {
                 if (tipo != null)
                 {
-                    var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id && e.tipo == tipo).ToList();
+                    var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario.id && e.tipo == tipo).ToList();
                     var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
                     return eventoViewModels;
                 }
                 else
                 {
-                    var eventos = DataAccess.Instance.EventoRepository().Find(e => e.usuario == usuario.id).ToList();
+                    var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario.id).ToList();
                     var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
                     return eventoViewModels;
                 }
@@ -134,7 +134,7 @@ namespace Opus.DataBaseEnvironment
             // recupera toda pendencia onde o usuario é RH
             if (usuario.perfil == "RH")
             {
-                var pendenciasRH = DataAccess.Instance.PendenciaRepository().Find(p => p.Usuario.perfil == usuario.perfil).ToList();
+                var pendenciasRH = DataAccess.Instance.GetPendenciaRepository().Find(p => p.Usuario.perfil == usuario.perfil).ToList();
                 var pendenciaViewModel = Mapper.Map<List<Pendencia>, List<PendenciaViewModel>>(pendenciasRH);
 
                 return pendenciaViewModel;
@@ -143,7 +143,7 @@ namespace Opus.DataBaseEnvironment
             // recupera as pendencias do usuario especifico
             else
             {
-                var pendencias = DataAccess.Instance.PendenciaRepository().Find(p => p.usuario == usuario.id).ToList();
+                var pendencias = DataAccess.Instance.GetPendenciaRepository().Find(p => p.usuario == usuario.id).ToList();
                 var pendenciaViewModel = Mapper.Map<List<Pendencia>, List<PendenciaViewModel>>(pendencias);
 
                 return pendenciaViewModel;

@@ -7,83 +7,54 @@ namespace Opus.DataBaseEnvironment
 		private static readonly DataAccess instance = new DataAccess();
 		public static DataAccess Instance { get { return instance; } }
 
-		// Auto generated repositories
-		//private CargoRepository cargoRepository;
-		//private CategoriaRepository categoriaRepository;
-		//private EventoRepository eventoRepository;
-		//private ItemRepository itenRepository;
-		//private PendenciaRepository pendenciaRepository;
-		//private ResultadoVotacoesRepository resultadoVotacoesRepository;
-		//private TagRepository tagRepository;
-		//private UsuarioRepository usuarioRepository;
-        //private PromocaoRepository promocaoRepository;
-
-		public CargoRepository CargoRepository()
+		public CargoRepository GetCargoRepository()
 		{
             return new CargoRepository(new SamEntities());
-            //return cargoRepository;
 		}
 
-        public PromocaoRepository PromocaoRepository()
+        public PromocaoRepository GetPromocaoRepository()
         {
             return new PromocaoRepository(new SamEntities());
-            //return promocaoRepository;
         }
 
-        public CategoriaRepository CategoriaRepository()
+        public CategoriaRepository GetCategoriaRepository()
 		{
             return new CategoriaRepository(new SamEntities());
-            //return categoriaRepository;
 		}
 
-		public EventoRepository EventoRepository()
+		public EventoRepository GetEventoRepository()
 		{
             return new EventoRepository(new SamEntities());
-			//return eventoRepository;
 		}
 
-		public ItemRepository ItemRepository()
+		public ItemRepository GetItemRepository()
 		{
             return new ItemRepository(new SamEntities());
-			//return itenRepository;
 		}
 
-		public PendenciaRepository PendenciaRepository()
+		public PendenciaRepository GetPendenciaRepository()
 		{
             return new PendenciaRepository(new SamEntities());
-			//return pendenciaRepository;
 		}
 
-		public ResultadoVotacoesRepository ResultadoVotacoRepository()
+		public ResultadoVotacoesRepository GetResultadoVotacoRepository()
 		{
             return new ResultadoVotacoesRepository(new SamEntities());
-			//return resultadoVotacoesRepository;
 		}
 
-		public TagRepository TagRepository()
+		public TagRepository GetTagRepository()
 		{
             return new TagRepository(new SamEntities());
-			//return tagRepository;
 		}
 
-		public UsuarioRepository UsuarioRepository()
+		public UsuarioRepository GetUsuarioRepository()
 		{
             return new UsuarioRepository(new SamEntities());
-			//return usuarioRepository;
 		}
 
-		public DataAccess()
+		private DataAccess()
 		{
-			//var context = new SamEntities();
-            //promocaoRepository = new PromocaoRepository(new SamEntities());
-            //cargoRepository = new CargoRepository(new SamEntities());
-			//categoriaRepository = new CategoriaRepository(new SamEntities());
-			//eventoRepository = new EventoRepository(new SamEntities());
-			//itenRepository = new ItemRepository(new SamEntities());
-			//pendenciaRepository = new PendenciaRepository(new SamEntities());
-			//resultadoVotacoesRepository = new ResultadoVotacoesRepository(new SamEntities());
-			//tagRepository = new TagRepository(new SamEntities());
-			//usuarioRepository = new UsuarioRepository(new SamEntities());
+			
 		}
 
 	}

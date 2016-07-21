@@ -34,52 +34,57 @@ namespace SamApi.Controllers
             var samaccount = userInfo["samaccount"] as string;
             var perfil = context["perfil"] as string;
 
-            var usuario = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount == samaccount).SingleOrDefault();
-
-            var ultimosEventos = UltimosEventos();
-            var ranking = Ranking();
-            var certificacoes = CertificacoesProcuradas();
-
-            var proximasPromocoes = new List<ProximaPromocaoViewModel>();
-            if (perfil == "RH")
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-                proximasPromocoes = ProximasPromocoes();
+                var usuario = userRep.Find(u => u.samaccount == samaccount).SingleOrDefault();
+
+                var ultimosEventos = UltimosEventos();
+                var ranking = Ranking();
+                var certificacoes = CertificacoesProcuradas();
+
+                var proximasPromocoes = new List<ProximaPromocaoViewModel>();
+                if (perfil == "RH")
+                {
+                    proximasPromocoes = ProximasPromocoes();
+                }
+                else
+                {
+                    proximasPromocoes = ProximasPromocoes(usuario);
+                }
+
+                var dashboardViewModel = new DashboardViewModel()
+                {
+                    Usuario = Mapper.Map<Usuario, UsuarioViewModel>(usuario),
+                    UltimosEventos = ultimosEventos,
+                    ProximasPromocoes = proximasPromocoes,
+                    Ranking = ranking,
+                    CertificacoesMaisProcuradas = certificacoes
+                };
+
+                return Request.CreateResponse(HttpStatusCode.OK, dashboardViewModel);
             }
-            else
-            {
-                proximasPromocoes = ProximasPromocoes(usuario);
-            }
-
-            var dashboardViewModel = new DashboardViewModel()
-            {
-                Usuario = Mapper.Map<Usuario, UsuarioViewModel>(usuario),
-                UltimosEventos = ultimosEventos,
-                ProximasPromocoes = proximasPromocoes,
-                Ranking = ranking,
-                CertificacoesMaisProcuradas = certificacoes
-            };
-
-            return Request.CreateResponse(HttpStatusCode.OK, dashboardViewModel);
         }
 
         private List<UltimoEventoViewModel> UltimosEventos()
         {
 
-            var eventosRepository = DataAccess.Instance.EventoRepository();
+            using (var eventosRepository = DataAccess.Instance.GetEventoRepository())
+            {
 
-            // TODO: refatorar isso depois, tentar inserir como um metodo do repositorio de eventos
-            var ultimosEventos = eventosRepository.GetAll()
-                .OrderByDescending(x => x.data)
-                .ThenBy(x => x.Item.nome)
-                .Take(10).AsEnumerable()
-                .Select(x =>
-                    new UltimoEventoViewModel
-                    {
-                        Evento = Mapper.Map<Evento, EventoViewModel>(x),
-                        UsuariosQueFizeram = DataAccess.Instance.ItemRepository().RecuperaUsuariosQueFizeram(x.item.Value)
-                    }).ToList();
+                // TODO: refatorar isso depois, tentar inserir como um metodo do repositorio de eventos
+                var ultimosEventos = eventosRepository.GetAll()
+                    .OrderByDescending(x => x.data)
+                    .ThenBy(x => x.Item.nome)
+                    .Take(10).AsEnumerable()
+                    .Select(x =>
+                        new UltimoEventoViewModel
+                        {
+                            Evento = Mapper.Map<Evento, EventoViewModel>(x),
+                            UsuariosQueFizeram = DataAccess.Instance.GetItemRepository().RecuperaUsuariosQueFizeram(x.item.Value)
+                        }).ToList();
 
-            return ultimosEventos;
+                return ultimosEventos;
+            }
         }
 
         private List<ProximaPromocaoViewModel> ProximasPromocoes(Usuario usuario = null)
@@ -88,12 +93,18 @@ namespace SamApi.Controllers
             if (usuario != null)
             {
                 // Dashboard for normal staff
-                proximasPromocoes = DataAccess.Instance.UsuarioRepository().RecuperaProximasPromocoes(usuario);
+                using (var userRep = DataAccess.Instance.GetUsuarioRepository())
+                {
+                    proximasPromocoes = userRep.RecuperaProximasPromocoes(usuario);
+                }
             }
             else
             {
                 // Dashboard for HR(human resources) staff
-                proximasPromocoes = DataAccess.Instance.PromocaoRepository().RecuperaProximasPromocoes();
+                using (var promoRep = DataAccess.Instance.GetPromocaoRepository())
+                {
+                    proximasPromocoes = promoRep.RecuperaProximasPromocoes();
+                }
             }
 
             return proximasPromocoes;
@@ -101,18 +112,19 @@ namespace SamApi.Controllers
 
         private List<UsuarioViewModel> Ranking()
         {
-            var usuarioRepositorio = DataAccess.Instance.UsuarioRepository();
-
-            List<Usuario> ranking = usuarioRepositorio.GetAll().OrderByDescending(x => x.pontos).Take(10).ToList();
-            var rankingViewModel = new List<UsuarioViewModel>();
-            foreach (var usuario in ranking)
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-                var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
-                rankingViewModel.Add(usuarioViewModel);
+
+                List<Usuario> ranking = userRep.GetAll().OrderByDescending(x => x.pontos).Take(10).ToList();
+                var rankingViewModel = new List<UsuarioViewModel>();
+                foreach (var usuario in ranking)
+                {
+                    var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
+                    rankingViewModel.Add(usuarioViewModel);
+                }
+
+                return rankingViewModel;
             }
-
-            return rankingViewModel;
-
         }
 
         // TODO: REFATORAR ESSE MÉTODO
@@ -125,57 +137,55 @@ namespace SamApi.Controllers
             var opGrafico = new Dictionary<string, string>();
             opGrafico.Add("role", "annotation");
 
-
-            var eventoRepositorio = DataAccess.Instance.EventoRepository();
-            var categoriaRepositorio = DataAccess.Instance.CategoriaRepository();
-
-
-            //Consulta para encontrar itens que são certificados em eventos
-            int indiceCategoria = categoriaRepositorio.GetAll().Where(
-                        categoria => categoria.nome == "Certificação"
-                    ).Select(y => y.id).First();
-
-            var certificados = eventoRepositorio.GetAll().Where(
-                 evento => evento.Item.Categoria.id.Equals(indiceCategoria));
-
-
-            //Obtém categorias e cria as colunas
-            List<String> nomesCertificados = certificados.Select(x => x.Item.nome).Distinct().ToList();
-
-
-            colunas.Add("Certificações");
-
-            foreach (var certificado in nomesCertificados)
+            using (var eventoRepositorio = DataAccess.Instance.GetEventoRepository())
+            using (var categoriaRepositorio = DataAccess.Instance.GetCategoriaRepository())
             {
-                colunas.Add(certificado);
-            }
 
-            colunas.Add(opGrafico);
+                //Consulta para encontrar itens que são certificados em eventos
+                int indiceCategoria = categoriaRepositorio.GetAll().Where(
+                            categoria => categoria.nome == "Certificação"
+                        ).Select(y => y.id).First();
 
-            tabela.Add(colunas);
+                var certificados = eventoRepositorio.GetAll().Where(
+                     evento => evento.Item.Categoria.id.Equals(indiceCategoria));
 
-            //Verifica para cada certificação quantas vezes ao longo de um ano ela foi procurada
 
-            var anos = certificados.Select(certificado => certificado.data.Year).Distinct().ToList();
+                //Obtém categorias e cria as colunas
+                List<String> nomesCertificados = certificados.Select(x => x.Item.nome).Distinct().ToList();
 
-            foreach (var ano in anos)
-            {
-                linha.Add(ano.ToString());
+
+                colunas.Add("Certificações");
 
                 foreach (var certificado in nomesCertificados)
                 {
-                    var quantidadesCertificacoes = certificados.Where(x => x.Item.nome == certificado && x.data.Year == ano).GroupBy(x => x.Item.nome).Count();
-                    linha.Add(quantidadesCertificacoes);
+                    colunas.Add(certificado);
                 }
-                linha.Add("");
-                tabela.Add(linha);
-                linha = new List<dynamic>();
+
+                colunas.Add(opGrafico);
+
+                tabela.Add(colunas);
+
+                //Verifica para cada certificação quantas vezes ao longo de um ano ela foi procurada
+
+                var anos = certificados.Select(certificado => certificado.data.Year).Distinct().ToList();
+
+                foreach (var ano in anos)
+                {
+                    linha.Add(ano.ToString());
+
+                    foreach (var certificado in nomesCertificados)
+                    {
+                        var quantidadesCertificacoes = certificados.Where(x => x.Item.nome == certificado && x.data.Year == ano).GroupBy(x => x.Item.nome).Count();
+                        linha.Add(quantidadesCertificacoes);
+                    }
+                    linha.Add("");
+                    tabela.Add(linha);
+                    linha = new List<dynamic>();
+                }
+
+
+                return tabela;
             }
-
-
-            return tabela;
-
         }
-
     }
 }

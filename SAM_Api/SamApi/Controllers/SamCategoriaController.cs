@@ -19,7 +19,7 @@ namespace SamApi.Controllers
         [Route("all")]
         public HttpResponseMessage Get()
         {
-            var categorias = DataAccess.Instance.CategoriaRepository().GetAll().ToList();
+            var categorias = DataAccess.Instance.GetCategoriaRepository().GetAll().ToList();
             var categoriasViewModel = new List<CategoriaViewModel>();
             foreach(var categoria in categorias)
             {

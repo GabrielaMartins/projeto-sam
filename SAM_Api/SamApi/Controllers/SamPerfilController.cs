@@ -33,21 +33,24 @@ namespace SamApi.Controllers
             var userInfo = context["user"] as Dictionary<string, object>;
             var samaccount = userInfo["samaccount"] as string;
 
-            var usuario = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount == samaccount).SingleOrDefault();
-
-            // dados para o perfil
-            var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
-            var eventosViewModel = DataAccess.Instance.UsuarioRepository().RecuperaEventos(usuario);
-            var promocoesAdquiridas = DataAccess.Instance.UsuarioRepository().RecuperaPromocoesAdquiridas(usuario);
-
-            var perfilViewModel = new PerfilViewModel()
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-                Usuario = usuarioViewModel,
-                Atividades = eventosViewModel.ToList(),
-                PromocoesAdquiridas = promocoesAdquiridas
-            };
+                var usuario = userRep.Find(u => u.samaccount == samaccount).SingleOrDefault();
 
-            return Request.CreateResponse(HttpStatusCode.OK, perfilViewModel);
+                // dados para o perfil
+                var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
+                var eventosViewModel = userRep.RecuperaEventos(usuario);
+                var promocoesAdquiridas = userRep.RecuperaPromocoesAdquiridas(usuario);
+
+                var perfilViewModel = new PerfilViewModel()
+                {
+                    Usuario = usuarioViewModel,
+                    Atividades = eventosViewModel.ToList(),
+                    PromocoesAdquiridas = promocoesAdquiridas
+                };
+
+                return Request.CreateResponse(HttpStatusCode.OK, perfilViewModel);
+            }
 
         }
 

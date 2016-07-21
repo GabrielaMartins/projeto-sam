@@ -37,19 +37,21 @@ namespace SamApi.Controllers
         {
 
             // TODO: verificações com o token
-            var userRepository = DataAccess.Instance.UsuarioRepository();
-            var user = userRepository.Find(u => u.samaccount.Equals(samaccount)).SingleOrDefault();
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository()) {
+
+                var user = userRep.Find(u => u.samaccount.Equals(samaccount)).SingleOrDefault();
 
 
-            if (user == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "User not found", "We can't find this user");
+                if (user == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "User not found", "We can't find this user");
+                }
+
+                // Transform our Usuario model to UsuarioViewModel (Da erro)
+                var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(user);
+
+                return Request.CreateResponse(HttpStatusCode.OK, usuarioViewModel);
             }
-
-            // Transform our Usuario model to UsuarioViewModel (Da erro)
-            var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(user);
-
-            return Request.CreateResponse(HttpStatusCode.OK, usuarioViewModel);
 
         }
 
@@ -85,31 +87,34 @@ namespace SamApi.Controllers
         [Route("update/{id}")]
         public HttpResponseMessage Put(int id, [FromBody]UsuarioViewModel user)
         {
-
-            // erase here
-            var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
-            response.Headers.CacheControl = new CacheControlHeaderValue()
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-                MaxAge = TimeSpan.FromMinutes(20)
-            };
+                // erase here
+                var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
+                response.Headers.CacheControl = new CacheControlHeaderValue()
+                {
+                    MaxAge = TimeSpan.FromMinutes(20)
+                };
 
-            return response;
-
+                return response;
+            }
         }
 
         // DELETE: api/sam/user/delete/{id}
         [Route("delete/{id}")]
         public HttpResponseMessage Delete(int id)
         {
-
-            // erase here
-            var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
-            response.Headers.CacheControl = new CacheControlHeaderValue()
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-                MaxAge = TimeSpan.FromMinutes(20)
-            };
+                // erase here
+                var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
+                response.Headers.CacheControl = new CacheControlHeaderValue()
+                {
+                    MaxAge = TimeSpan.FromMinutes(20)
+                };
 
-            return response;
+                return response;
+            }
         }
     }
 }

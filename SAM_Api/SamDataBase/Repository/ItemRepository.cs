@@ -18,7 +18,7 @@ namespace Opus.DataBaseEnvironment
         //Preencher aqui
         public List<UsuarioViewModel> RecuperaUsuariosQueFizeram(int item)
         {
-            var repositorioEvento = DataAccess.Instance.EventoRepository();
+            var repositorioEvento = DataAccess.Instance.GetEventoRepository();
 
             var usuarios = repositorioEvento.GetAll().Where(x => x.item == item).Where(y => y.usuario == y.Usuario.id).Select(u => u.Usuario).ToList();
             var usuariosViewModel = new List<UsuarioViewModel>();

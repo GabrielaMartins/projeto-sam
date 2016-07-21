@@ -42,7 +42,7 @@ namespace SamApi.Mappers
                 opt => opt.MapFrom(src => src.Cargo))
             .ForMember(
                 u => u.ProximoCargo,
-                opt => opt.MapFrom(src => DataAccess.Instance.UsuarioRepository().RecuperaProximoCargo(src))
+                opt => opt.MapFrom(src => DataAccess.Instance.GetUsuarioRepository().RecuperaProximoCargo(src))
             );
 
             // Nao funciona

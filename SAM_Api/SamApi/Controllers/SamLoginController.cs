@@ -35,29 +35,31 @@ namespace SamApiService.Controllers
                 return Request.CreateResponse(HttpStatusCode.Unauthorized, MessageViewModel.Unauthenticated);
             }
 
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository()) {
 
-            // if yes, get User's information from database
-            var usr = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount.Equals(login.User)).SingleOrDefault();
+                // if yes, get User's information from database
+                var query = userRep.Find(u => u.samaccount.Equals(login.User));
+                var usr = query.SingleOrDefault();
 
-            // check if our user not exists in our database
-            if (usr == null)
-            {
+                // check if our user not exists in our database
+                if (usr == null)
+                {
 
-                // return a http error
-                var error = new MessageViewModel(HttpStatusCode.NotFound, "User Not Found", "We could not found the user '" + login.User + "' in our database");
-                return Request.CreateResponse(HttpStatusCode.NotFound, error);
+                    // return a http error
+                    var error = new MessageViewModel(HttpStatusCode.NotFound, "User Not Found", "We could not found the user '" + login.User + "' in our database");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, error);
+                }
+
+                // Transform our Usuario model to UsuarioViewModel
+                var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usr);
+
+                // generate token based on User
+                token = JwtManagement.GenerateToken(usuarioViewModel);
+                var tokenResult = new Dictionary<string, object>() { { "token", token } };
+
+                // returns our token
+                return Request.CreateResponse(HttpStatusCode.OK, tokenResult);
             }
-
-            // Transform our Usuario model to UsuarioViewModel
-            var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usr);
-
-            // generate token based on User
-            token = JwtManagement.GenerateToken(usuarioViewModel);
-            var tokenResult = new Dictionary<string, object>() { { "token", token } };
-
-            // returns our token
-            return Request.CreateResponse(HttpStatusCode.OK, tokenResult);
-
         }
 
         // GET api/sam/testGenerate
