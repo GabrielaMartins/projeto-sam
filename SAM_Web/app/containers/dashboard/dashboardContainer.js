@@ -57,6 +57,7 @@ var DashboardContainer = React.createClass({
     //obtém dados
     axios.get("http://10.10.15.113:65122/api/sam/dashboard", config).then(
       function(response){
+        debugger;
         this.setState({
           dados: response.data,
           columnChart: {
@@ -84,39 +85,45 @@ var DashboardContainer = React.createClass({
     var ranking = [];
 
     //cria lista de eventos
-    this.state.dados.UltimosEventos.forEach(function(conteudo){
-      if(conteudo.Evento.Usuario.foto == null){
-        conteudo.Evento.Usuario.foto = "./app/imagens/fulano.jpg"
-      }
-      eventos.push(<CardEventos usuario = {conteudo.Evento.Usuario} estilo = "card-panel z-depth-1 col l12 m12 s12 waves-effect">
-                      <div className="right">
-                          <h5 className="right-align extraGrande">{conteudo.Evento.Item.nome}</h5>
-                          <p className="right-align pequena">{moment(conteudo.Evento.data).format('L')}</p>
-                      </div>
-                  </CardEventos>);
+    var eventos = this.state.dados.UltimosEventos.map(function(conteudo, index){
+      //if(conteudo.Evento.Usuario.foto == null){
+      //  conteudo.Evento.Usuario.foto = "./app/imagens/fulano.jpg"
+      //}
+      return(
+        <CardEventos key={index} usuario = {conteudo.Evento.Usuario} estilo = "card-panel z-depth-1 col l12 m12 s12 waves-effect">
+          <div className="right">
+              <h5 className="right-align extraGrande">{conteudo.Evento.Item.nome}</h5>
+              <p className="right-align pequena">{moment(conteudo.Evento.data).format('L')}</p>
+          </div>
+        </CardEventos>
+      );
     });
 
     //cria lista de promocoes
-    this.state.dados.ProximasPromocoes.forEach(function(conteudo){
-      if(conteudo.Usuario.foto == null){
-        conteudo.Usuario.foto = "./app/imagens/fulano.jpg"
-      }
-      promocoes.push(<CardEventos usuario = {conteudo.Usuario} estilo = "card-panel z-depth-1 col l12 m12 s12 waves-effect">
-                        <div className="left">
-                          <p className="center-align grande">Faltam <b>{conteudo.PontosFaltantes}</b> pontos</p>
-                          <p className="center-align pequena">{conteudo.Usuario.Cargo.nome} > {conteudo.Usuario.ProximoCargo[0].nome}<br/></p>
-                        </div>
-                      </CardEventos>);
+    var promocoes = this.state.dados.ProximasPromocoes.map(function(conteudo, index){
+      //if(conteudo.Usuario.foto == null){
+      //  conteudo.Usuario.foto = "./app/imagens/fulano.jpg"
+      //}
+      return (
+        <CardEventos key={index} usuario = {conteudo.Usuario} estilo = "card-panel z-depth-1 col l12 m12 s12 waves-effect">
+          <div className="left">
+            <p className="center-align grande">Faltam <b>{conteudo.PontosFaltantes}</b> pontos</p>
+            <p className="center-align pequena">{conteudo.Usuario.Cargo.nome} > {conteudo.Usuario.ProximoCargo[0].nome}<br/></p>
+          </div>
+        </CardEventos>
+      );
     });
 
     //cria lista de ranking
-    this.state.dados.Ranking.forEach(function(rankingCard){
-      if(rankingCard.foto == null){
-        rankingCard.foto = "./app/imagens/fulano.jpg";
-      }
-      ranking.push(<CardEventos usuario = {rankingCard} estilo = "card-panel z-depth-1 col l12 m12 s12 waves-effect">
-                      <h5 className="right"><b>{rankingCard.pontos} pontos</b></h5>
-                    </CardEventos>)
+    var ranking = this.state.dados.Ranking.map(function(rankingCard, index){
+      //if(rankingCard.foto == null){
+      //  rankingCard.foto = "./app/imagens/fulano.jpg";
+      //}
+      return(
+        <CardEventos key={index} usuario = {rankingCard} estilo = "card-panel z-depth-1 col l12 m12 s12 waves-effect">
+          <h5 className="right"><b>{rankingCard.pontos} pontos</b></h5>
+        </CardEventos>
+      );
     });
 
       return(<DashboardRH
