@@ -26,7 +26,7 @@ namespace SamApi.Mappers
 
             Mapper.CreateMap<Categoria, CategoriaViewModel>();
 
-            Mapper.CreateMap<Promocao, PromocaoViewModel>()
+            Mapper.CreateMap<Promocao, ProximaPromocaoViewModel>()
             .ForMember(
                 u => u.Usuario,
                 opt => opt.MapFrom(src => src.Usuario));

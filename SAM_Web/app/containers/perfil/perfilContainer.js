@@ -3,13 +3,15 @@ var axios = require("axios");
 var React = require('react');
 var Perfil = require('../../components/perfil/perfil');
 var AtividadesHistorico = require('../../containers/item/itemCardContainer');
+var PromocoesHistorico = require('../../components/perfil/promocoesHistorico');
+
 var moment = require('moment');
 moment.locale('pt-br');
 
 const PerfilUsuarioContainer = React.createClass({
 
   render: function(){
-    debugger;
+
     var atividades = this.state.atividades.map(function(atividade, index){
       return(
         <div className="col l12 m12 s12" key={index}>
@@ -23,13 +25,25 @@ const PerfilUsuarioContainer = React.createClass({
       );
     });
 
-    return(<Perfil usuario = {this.state.usuario}
-      tempoDeCasa = {this.state.tempoDeCasa}
-      progresso = {this.state.progresso}
-      atividades = {atividades}
-      promocoes = {this.state.promocoes}
-      columnChart = {this.state.columnChart}
-      scroll = {this.scrollParaHistorico}/>);
+    var promocoes = this.state.promocoes.map(function(promocao, index){
+      return(
+        <div className="col l12 m12 s12" key={index}>
+          <PromocoesHistorico promocao = {promocao} />
+        </div>
+      );
+    });
+
+    return(
+      <Perfil
+        usuario = {this.state.usuario}
+        tempoDeCasa = {this.state.tempoDeCasa}
+        progresso = {this.state.progresso}
+        atividades = {atividades}
+        promocoes = {promocoes}
+        columnChart = {this.state.columnChart}
+        scroll = {this.scrollParaHistorico}
+      />
+    );
   },
 
   getInitialState: function(){
@@ -80,7 +94,7 @@ const PerfilUsuarioContainer = React.createClass({
             atividades : response.data.Atividades,
             promocoes : response.data.PromocoesAdquiridas,
             columnChart: {
-      				data: response.data.DadosDoGraficoDoFuncionario,
+      				data: [],//response.data.DadosDoGraficoDoFuncionario,
               options : {
                 title: "Pontuações Atingidas por Ano",
                 bar: {groupWidth: "100%"},

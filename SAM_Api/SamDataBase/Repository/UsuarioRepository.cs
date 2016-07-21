@@ -18,7 +18,7 @@ namespace Opus.DataBaseEnvironment
         }
 
         //Preencher aqui
-        public List<EventoViewModel> RecuperaEventos(Usuario usuario, int? quantidade = null, string tipo = null)
+        public List<EventoViewModel> RecuperaEventos(Usuario usuario, string tipo = null, int? quantidade = null)
         {
 
             if (quantidade.HasValue)
@@ -54,9 +54,9 @@ namespace Opus.DataBaseEnvironment
 
         }
 
-        public List<PromocaoViewModel> RecuperaProximasPromocoes(Usuario usuario)
+        public List<ProximaPromocaoViewModel> RecuperaProximasPromocoes(Usuario usuario)
         {
-            var promocoesViewModel = new List<PromocaoViewModel>();
+            var promocoesViewModel = new List<ProximaPromocaoViewModel>();
             var db = (SamEntities)DbContext;
 
             if (usuario == null)
@@ -73,10 +73,9 @@ namespace Opus.DataBaseEnvironment
              select new
              {
                  usuario = u,
-                 cargo = c,
                  PontosFaltantes = c.pontuacao - u.pontos
              }).AsEnumerable()
-            .Select(x => new PromocaoViewModel()
+            .Select(x => new ProximaPromocaoViewModel()
             {
                 Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.usuario),
                 PontosFaltantes = x.PontosFaltantes
@@ -86,27 +85,27 @@ namespace Opus.DataBaseEnvironment
             return promocoesViewModel;
         }
 
-        public List<PromocaoAdquiridaViewModel> RecuperaPromocoes(Usuario usuario)
+        public List<PromocaoAdquiridaViewModel> RecuperaPromocoesAdquiridas(Usuario usuario)
         {
             var db = DbContext as SamEntities;
-            var q = (from p in db.Promocoes
-                     where p.usuario == usuario.id
-                     select new
-                     {
-                         Usuario = p.Usuario,
-                         CargoAnterior = p.CargoAnterior,
-                         Cargo = p.Cargo,
-                         Data = p.data
-                     }).AsEnumerable()
-                     .Select(x => new PromocaoAdquiridaViewModel()
-                     {
-                         Cargo = Mapper.Map<Cargo, CargoViewModel>(x.Cargo),
-                         CargoAnterior = Mapper.Map<Cargo, CargoViewModel>(x.CargoAnterior),
-                         Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.Usuario),
-                         Data = x.Data
-                     });
+            var promocoesRealizadas =
+            (from p in db.Promocoes
+             where p.usuario == usuario.id
+             select new
+             {
+                 Usuario = p.Usuario,
+                 CargoAnterior = p.CargoAnterior,
+                 CargoAdquirido = p.Cargo,
+                 Data = p.data
+             }).AsEnumerable()
+            .Select(x => new PromocaoAdquiridaViewModel()
+            {
+                CargoAdquirido = Mapper.Map<Cargo, CargoViewModel>(x.CargoAdquirido),
+                CargoAnterior = Mapper.Map<Cargo, CargoViewModel>(x.CargoAnterior),
+                Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.Usuario),
+                Data = x.Data
 
-            var promocoesRealizadas = q.ToList();
+            }).ToList();
 
             return promocoesRealizadas;
         }

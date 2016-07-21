@@ -34,10 +34,11 @@ namespace SamApi.Controllers
             var samaccount = userInfo["samaccount"] as string;
 
             var usuario = DataAccess.Instance.UsuarioRepository().Find(u => u.samaccount == samaccount).SingleOrDefault();
-            var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
 
+            // dados para o perfil
+            var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
             var eventosViewModel = DataAccess.Instance.UsuarioRepository().RecuperaEventos(usuario);
-            var promocoesAdquiridas = DataAccess.Instance.UsuarioRepository().RecuperaPromocoes(usuario);
+            var promocoesAdquiridas = DataAccess.Instance.UsuarioRepository().RecuperaPromocoesAdquiridas(usuario);
 
             var perfilViewModel = new PerfilViewModel()
             {

@@ -7,10 +7,6 @@ var BaseHistorico = require('./BaseHistorico');
 
 var Perfil = function(props){
 
-    var promocoes = null;
-    var atividades = null;
-  
-    //foreach aqui
     return(
       <div style={{marginTop:50}} className="container">
         <div className="full-screen-perfil">
@@ -34,7 +30,9 @@ var Perfil = function(props){
             </div>
             <div className="col l6 m6 s12">
               <BaseHistorico placeholder = "Pesquise por cargos alcançados" titulo = "Promoções Alcançadas">
-                {/*<PromocoesHistorico/>*/}
+                <div className="row" style={{"marginLeft":"5%", "marginRight":"5%"}}>
+                  {props.promocoes}
+                </div>
               </BaseHistorico>
             </div>
           </div>

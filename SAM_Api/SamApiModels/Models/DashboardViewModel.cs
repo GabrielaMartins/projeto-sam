@@ -8,7 +8,7 @@ namespace SamApiModels
 
         public List<UltimoEventoViewModel> UltimosEventos { get; set; }
 
-        public List<PromocaoViewModel> ProximasPromocoes { get; set; }
+        public List<ProximaPromocaoViewModel> ProximasPromocoes { get; set; }
 
         public List<UsuarioViewModel> Ranking { get; set; }
 

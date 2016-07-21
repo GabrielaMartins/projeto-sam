@@ -8,9 +8,11 @@ var PromocoesHistorico = React.createClass({
     return(
       <div className="scrollreveal card">
         <div className="card-content">
-          <h5 className="card-title center-align"><b>{this.props.conteudo.cargo_atual} > {this.props.conteudo.prox_cargo}</b></h5><br/>
-          <h2 className="center-align"><b>{this.props.conteudo.pontos}</b></h2><br/>
-          <p className="center-align media"> Alcançada em: <b>{moment(this.props.conteudo.data).format('L')}</b></p>
+          <h5 className="card-title center-align">
+            <b>{this.props.promocao.CargoAnterior.nome} > {this.props.promocao.CargoAdquirido.nome}</b>
+          </h5><br/>
+        <h2 className="center-align"><b>{this.props.promocao.Usuario.pontos}</b></h2><br/>
+          <p className="center-align media"> Alcançada em: <b>{moment(this.props.promocao.Data).format('L')}</b></p>
         </div>
       </div>
     );

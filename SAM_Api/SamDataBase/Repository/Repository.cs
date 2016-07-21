@@ -49,6 +49,7 @@ namespace Opus.RepositoryPattern
             var entry = DbContext.Entry(entity);
             entry.State = EntityState.Modified;
             //DbContext.SaveChanges();
+
         }
 
         public virtual void Delete(Expression<Func<T, bool>> filter)
@@ -59,7 +60,7 @@ namespace Opus.RepositoryPattern
             {
                 DbSet.Attach(entity);
                 DbSet.Remove(entity);
-               // DbContext.SaveChanges();
+                // DbContext.SaveChanges();
             }
         }
 
@@ -80,10 +81,6 @@ namespace Opus.RepositoryPattern
             return DbContext.SaveChanges();
         }
 
-        public void UseLazyLoad(bool value)
-        {
-            DbContext.Configuration.LazyLoadingEnabled = value;
-        }
 
         public void Dispose()
         {

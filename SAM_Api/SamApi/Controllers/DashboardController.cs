@@ -40,7 +40,7 @@ namespace SamApi.Controllers
             var ranking = Ranking();
             var certificacoes = CertificacoesProcuradas();
 
-            var proximasPromocoes = new List<PromocaoViewModel>();
+            var proximasPromocoes = new List<ProximaPromocaoViewModel>();
             if (perfil == "RH")
             {
                 proximasPromocoes = ProximasPromocoes();
@@ -82,9 +82,9 @@ namespace SamApi.Controllers
             return ultimosEventos;
         }
 
-        private List<PromocaoViewModel> ProximasPromocoes(Usuario usuario = null)
+        private List<ProximaPromocaoViewModel> ProximasPromocoes(Usuario usuario = null)
         {
-            List<PromocaoViewModel> proximasPromocoes = new List<PromocaoViewModel>();
+            List<ProximaPromocaoViewModel> proximasPromocoes = new List<ProximaPromocaoViewModel>();
             if (usuario != null)
             {
                 // Dashboard for normal staff

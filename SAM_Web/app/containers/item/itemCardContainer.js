@@ -23,7 +23,7 @@ const ItemCardContainer = React.createClass({
                 <div className="col l4 m12 s12"><button className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light red darken-3 btn">Deletar</button><br/><br/></div>
               </div>
     }
-    console.log(pontuacao);
+
     return(<ItemCard data = {data} acoes = {acoes}
       item = {this.props.item}
       pontuacao = {pontuacao}

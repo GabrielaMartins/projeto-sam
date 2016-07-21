@@ -1,12 +1,12 @@
 ﻿namespace SamApiModels
 {
-    public class PromocaoViewModel
+    public class ProximaPromocaoViewModel
     {
         public UsuarioViewModel Usuario { get; set; }
 
         public int PontosFaltantes { get; set; }
 
-        public PromocaoViewModel()
+        public ProximaPromocaoViewModel()
         {
 
         }
