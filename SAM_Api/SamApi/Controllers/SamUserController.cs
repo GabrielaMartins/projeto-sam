@@ -9,6 +9,12 @@ using Opus.DataBaseEnvironment;
 using SamApiModels;
 using AutoMapper;
 using SamDataBase.Model;
+using Opus.Helpers;
+using System.Configuration;
+using System.Web;
+using SamApi.Helpers;
+using System.IO;
+using System.Data.Entity.Validation;
 
 namespace SamApi.Controllers
 {
@@ -17,9 +23,10 @@ namespace SamApi.Controllers
     {
         // GET: api/sam/user/all
         [Route("all")]
+        [HttpGet]
         public HttpResponseMessage Get()
         {
-            
+
             // erase here
             var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
             response.Headers.CacheControl = new CacheControlHeaderValue()
@@ -33,11 +40,13 @@ namespace SamApi.Controllers
 
         // GET: api/sam/user/{samaccount}
         [Route("{samaccount}")]
+        [HttpGet]
         public HttpResponseMessage GetBySamaccount(string samaccount)
         {
 
             // TODO: verificações com o token
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository()) {
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
+            {
 
                 var user = userRep.Find(u => u.samaccount.Equals(samaccount)).SingleOrDefault();
 
@@ -58,45 +67,117 @@ namespace SamApi.Controllers
 
         // POST: api/sam/user/save
         [Route("save")]
+        [HttpPost]
         public HttpResponseMessage Post([FromBody]UsuarioViewModel user)
         {
 
-            //CommonOperations commonOperations = new CommonOperations(Request);
-            //HttpResponseMessage response = null;
-
-            //// this line check and prepare some variables for us
-            //commonOperations.Check();
-
-            //// if we have response, so it's an error
-            //if (commonOperations.ResponseError != null)
-            //    return commonOperations.ResponseError;
-
-            //var token = commonOperations.DecodedToken;
-
-            // erase here
-            var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
-            response.Headers.CacheControl = new CacheControlHeaderValue()
+            var token = HeaderHelper.ExtractHeaderValue(Request, "token");
+            if (token == null)
             {
-                MaxAge = TimeSpan.FromMinutes(20)
-            };
+                return Request.CreateResponse(HttpStatusCode.BadRequest, MessageViewModel.TokenMissing);
+            }
 
-            return response;
+            var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
+            var context = decodedToken["context"] as Dictionary<string, object>;
+            var userInfo = context["user"] as Dictionary<string, object>;
+            var samaccount = userInfo["samaccount"] as string;
+
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
+            {
+
+                try
+                {
+                    // save image to disk (we need do it before all other task)
+                    ImageHelper.saveAsImage(user.foto, user.samaccount);
+
+                    // map new values to our reference
+                    var newUser = Mapper.Map<UsuarioViewModel, Usuario>(user);
+                    
+                    // add to entity context
+                    userRep.Add(newUser);
+
+                    // commit changes
+                    userRep.SubmitChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "User Updated", "User updated"));
+                }
+                catch (Exception ex)
+                {
+                    // if error, we delete the image
+                    ImageHelper.DeleteImage(user.samaccount);
+
+                    if(ex is DbEntityValidationException)
+                    {
+                        var msgList = new List<string>();
+                        var err = ex as DbEntityValidationException;
+                        foreach(var e in err.EntityValidationErrors)
+                        {
+                            msgList = e.ValidationErrors.Select(el => el.ErrorMessage).ToList();
+                        }
+
+                        var msg = string.Empty;
+                        foreach(var s in msgList)
+                        {
+                            msg += s + "\n";
+                        }
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, new MessageViewModel(HttpStatusCode.BadRequest, "some fields are required", msg));
+                    }
+
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+                }
+
+            }
         }
 
         // PUT: api/sam/user/update/{id}
         [Route("update/{id}")]
+        [HttpPut]
         public HttpResponseMessage Put(int id, [FromBody]UsuarioViewModel user)
         {
+            var token = HeaderHelper.ExtractHeaderValue(Request, "token");
+            if (token == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, MessageViewModel.TokenMissing);
+            }
+
+            var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
+            var context = decodedToken["context"] as Dictionary<string, object>;
+            var userInfo = context["user"] as Dictionary<string, object>;
+            var samaccount = userInfo["samaccount"] as string;
+            var perfil = context["perfil"] as string;
+
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-                // erase here
-                var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
-                response.Headers.CacheControl = new CacheControlHeaderValue()
-                {
-                    MaxAge = TimeSpan.FromMinutes(20)
-                };
+                // it will be updated with values provided by the parameter
+                var userToBeUpdated = userRep.Find(u => u.id == id).SingleOrDefault();
 
-                return response;
+                // is the user using the service at this moment
+                var userMakingAction = userRep.Find(u => u.samaccount == samaccount).SingleOrDefault();
+
+                // only RH can update different staffs, else just can update himself
+                if (perfil == "RH" || userMakingAction.id == userToBeUpdated.id)
+                {
+
+                    // map values from 'user' to 'userToBeUpdated'
+                    var updatedUser = Mapper.Map(user, userToBeUpdated);
+
+                    // update: flush changes to proxy
+                    userRep.Update(updatedUser);
+
+                    // commit changes to database
+                    userRep.SubmitChanges();
+
+                    // save to disk
+                    ImageHelper.saveAsImage(user.foto, samaccount);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "User Updated", "User updated"));
+
+                }
+                else
+                {
+                    // return an error
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, new MessageViewModel(HttpStatusCode.Unauthorized, "Unauthorized", "You can't update other users"));
+                }
             }
         }
 

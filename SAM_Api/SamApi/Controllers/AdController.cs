@@ -16,7 +16,7 @@ namespace SamApiService.Controllers
         public List<ActiveDirectoryUser> GetUsers()
         {
 
-            var adConsumer = new ActiveDirectoryConsumer("opus.local");
+            var adConsumer = new ActiveDirectoryHelper("opus.local");
             var users = adConsumer.GetAllUsers();
 
             return users;
@@ -28,7 +28,7 @@ namespace SamApiService.Controllers
         public ActiveDirectoryUser GetUser(string samAccount)
         {
 
-            var adConsumer = new ActiveDirectoryConsumer("opus.local");
+            var adConsumer = new ActiveDirectoryHelper("opus.local");
             var user = adConsumer.GetUser(samAccount);
 
             return user;

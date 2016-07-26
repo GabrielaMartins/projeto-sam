@@ -175,6 +175,7 @@
   <ItemGroup>
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\SamPerfilController.cs" />
+    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Mappers\AutoMapperConfig.cs" />
     <Compile Include="Mappers\DomainToViewModelMappingProfile.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -189,10 +190,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ActiveDirectoryConsumer.cs" />
-    <Compile Include="Helpers\EncodingForBase64.cs" />
-    <Compile Include="Helpers\HeaderHandler.cs" />
-    <Compile Include="Helpers\JwtManagement.cs" />
+    <Compile Include="Helpers\ActiveDirectoryHelper.cs" />
+    <Compile Include="Helpers\HeaderHelper.cs" />
+    <Compile Include="Helpers\JwtHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

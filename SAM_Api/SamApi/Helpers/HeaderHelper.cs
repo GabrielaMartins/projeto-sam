@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Opus.Helpers
 {
-    public class HeaderHandler
+    public class HeaderHelper
     {
 
         public static IEnumerable<string> ExtractHeaderValue(HttpRequestMessage request, string key)

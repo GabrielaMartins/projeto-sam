@@ -7,12 +7,12 @@ using System.DirectoryServices.AccountManagement;
 
 namespace Opus.Helpers.ActiveDirectoryService
 {
-    public class ActiveDirectoryConsumer
+    public class ActiveDirectoryHelper
     {
 
         public string DC { get; private set; }
 
-        public ActiveDirectoryConsumer(string DC)
+        public ActiveDirectoryHelper(string DC)
         {
             this.DC = DC;
         }

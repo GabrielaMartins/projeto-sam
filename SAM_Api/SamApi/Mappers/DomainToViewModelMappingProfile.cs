@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Opus.DataBaseEnvironment;
+using SamApi.Helpers;
 using SamApiModels;
 using SamDataBase.Model;
 using System.Collections.Generic;
@@ -40,6 +41,9 @@ namespace SamApi.Mappers
             .ForMember(
                 u => u.Cargo,
                 opt => opt.MapFrom(src => src.Cargo))
+            .ForMember(
+                u => u.foto,
+                opt => opt.MapFrom(src => ImageHelper.GetLogicPathForImage(src.samaccount)))
             .ForMember(
                 u => u.ProximoCargo,
                 opt => opt.MapFrom(src => DataAccess.Instance.GetUsuarioRepository().RecuperaProximoCargo(src))

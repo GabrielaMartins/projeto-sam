@@ -6,12 +6,12 @@ using System.Net.Http;
 namespace Opus.Helpers
 {
 
-    public class JwtManagement
+    public class JwtHelper
     {
 
         private static readonly string plainTextSecurityKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk45Xdlgsyfc";
 
-        public JwtManagement()
+        public JwtHelper()
         {
 
         }

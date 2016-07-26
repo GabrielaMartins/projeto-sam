@@ -25,7 +25,7 @@ namespace SamApiService.Controllers
         public HttpResponseMessage Login(LoginViewModel login)
         {
 
-            ActiveDirectoryConsumer adConsumer = new ActiveDirectoryConsumer("opus.local");
+            ActiveDirectoryHelper adConsumer = new ActiveDirectoryHelper("opus.local");
             string token = string.Empty;
 
             // ask Active Directory if the User's credentials is valid
@@ -54,7 +54,7 @@ namespace SamApiService.Controllers
                 var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usr);
 
                 // generate token based on User
-                token = JwtManagement.GenerateToken(usuarioViewModel);
+                token = JwtHelper.GenerateToken(usuarioViewModel);
                 var tokenResult = new Dictionary<string, object>() { { "token", token } };
 
                 // returns our token
