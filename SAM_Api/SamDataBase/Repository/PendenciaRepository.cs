@@ -8,7 +8,9 @@ namespace Opus.DataBaseEnvironment
 	{
 		public PendenciaRepository(DbContext context) : base (context)
 		{
+
 		}
+
 		//Preencher aqui
 	}
 }

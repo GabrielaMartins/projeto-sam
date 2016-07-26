@@ -1,10 +1,12 @@
-using SamApiModels;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SamApiModels
 {
-
-    public partial class ResultadoVotacoesViewModel
+    public class ResultadoVotacaoViewModel
     {
         public int id { get; set; }
 

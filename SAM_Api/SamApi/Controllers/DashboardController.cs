@@ -37,79 +37,34 @@ namespace SamApi.Controllers
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
                 var usuario = userRep.Find(u => u.samaccount == samaccount).SingleOrDefault();
-
-                var ultimosEventos = UltimosEventos();
                 var ranking = Ranking();
                 var certificacoes = CertificacoesProcuradas();
 
-                var proximasPromocoes = new List<ProximaPromocaoViewModel>();
                 if (perfil == "RH")
                 {
-                    proximasPromocoes = ProximasPromocoes();
+                    // coisas do rh aqui
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "not implemented");
                 }
                 else
                 {
-                    proximasPromocoes = ProximasPromocoes(usuario);
+                    var pendencias = userRep.RecuperaPendencias(usuario);
+                    var resultadoVotacoes = userRep.RecuperaVotacoes(usuario);
+                    var ultimosEventos = userRep.RecuperaEventos(usuario, "votacao", 10);
+                    var certicacoesMaisProcuradas = CertificacoesProcuradas();
+                    var dashFuncionario = new
+                    {
+                        UltimosEventos = ultimosEventos,
+                        Alertas = pendencias,
+                        CartificacoesMaisProcuradas = certicacoesMaisProcuradas
+                    };
+
+                    return Request.CreateResponse(HttpStatusCode.OK, dashFuncionario);
                 }
-
-                var dashboardViewModel = new DashboardViewModel()
-                {
-                    Usuario = Mapper.Map<Usuario, UsuarioViewModel>(usuario),
-                    UltimosEventos = ultimosEventos,
-                    ProximasPromocoes = proximasPromocoes,
-                    Ranking = ranking,
-                    CertificacoesMaisProcuradas = certificacoes
-                };
-
-                return Request.CreateResponse(HttpStatusCode.OK, dashboardViewModel);
             }
         }
 
-        private List<UltimoEventoViewModel> UltimosEventos()
-        {
-
-            using (var eventosRepository = DataAccess.Instance.GetEventoRepository())
-            {
-
-                // TODO: refatorar isso depois, tentar inserir como um metodo do repositorio de eventos
-                var ultimosEventos = eventosRepository.GetAll()
-                    .OrderByDescending(x => x.data)
-                    .ThenBy(x => x.Item.nome)
-                    .Take(10).AsEnumerable()
-                    .Select(x =>
-                        new UltimoEventoViewModel
-                        {
-                            Evento = Mapper.Map<Evento, EventoViewModel>(x),
-                            UsuariosQueFizeram = DataAccess.Instance.GetItemRepository().RecuperaUsuariosQueFizeram(x.item.Value)
-                        }).ToList();
-
-                return ultimosEventos;
-            }
-        }
-
-        private List<ProximaPromocaoViewModel> ProximasPromocoes(Usuario usuario = null)
-        {
-            List<ProximaPromocaoViewModel> proximasPromocoes = new List<ProximaPromocaoViewModel>();
-            if (usuario != null)
-            {
-                // Dashboard for normal staff
-                using (var userRep = DataAccess.Instance.GetUsuarioRepository())
-                {
-                    proximasPromocoes = userRep.RecuperaProximasPromocoes(usuario);
-                }
-            }
-            else
-            {
-                // Dashboard for HR(human resources) staff
-                using (var promoRep = DataAccess.Instance.GetPromocaoRepository())
-                {
-                    proximasPromocoes = promoRep.RecuperaProximasPromocoes();
-                }
-            }
-
-            return proximasPromocoes;
-        }
-
+     
         private List<UsuarioViewModel> Ranking()
         {
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())

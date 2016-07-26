@@ -13,7 +13,6 @@ namespace SamApiModels
 
         public bool estado { get; set; }
 
-
         public virtual EventoViewModel Evento { get; set; }
 
         public virtual UsuarioViewModel Usuario { get; set; }

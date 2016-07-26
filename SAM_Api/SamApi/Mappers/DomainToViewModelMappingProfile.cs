@@ -13,7 +13,13 @@ namespace SamApi.Mappers
         protected override void Configure()
         {
 
-            Mapper.CreateMap<Pendencia, PendenciaViewModel>();
+            Mapper.CreateMap<ResultadoVotacao, ResultadoVotacaoViewModel>()
+            .ForMember(p => p.Evento, opt => opt.MapFrom(src => src.Evento))
+            .ForMember(p => p.Usuario, opt => opt.MapFrom(src => src.Usuario));
+
+            Mapper.CreateMap<Pendencia, PendenciaViewModel>()
+            .ForMember(p => p.Evento, opt => opt.MapFrom(src => src.Evento))
+            .ForMember(p => p.Usuario, opt => opt.MapFrom(src => src.Usuario));
 
             Mapper.CreateMap<Cargo, CargoViewModel>();
 
@@ -46,7 +52,7 @@ namespace SamApi.Mappers
                 opt => opt.MapFrom(src => ImageHelper.GetLogicPathForImage(src.samaccount)))
             .ForMember(
                 u => u.ProximoCargo,
-                opt => opt.MapFrom(src => DataAccess.Instance.GetUsuarioRepository().RecuperaProximoCargo(src))
+                opt => opt.MapFrom(src => DataAccess.Instance.GetCargoRepository().RecuperaProximoCargo(src.cargo))
             );
 
             // Nao funciona
