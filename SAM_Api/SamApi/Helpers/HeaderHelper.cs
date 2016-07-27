@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ExceptionSystem.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Web;
+using System.Net;
 
 namespace Opus.Helpers
 {
@@ -16,9 +16,10 @@ namespace Opus.Helpers
             {
                 return request.Headers.GetValues(key);
             }
-            catch
+            catch(Exception ex)
             {
-                return null;
+                var e = new Exception(ex.Message, new Exception(" key '" + key + "' is not present"));
+                throw new ExpectedException((int)HttpStatusCode.BadRequest, "Invalid Header", e);
             }
         }
 

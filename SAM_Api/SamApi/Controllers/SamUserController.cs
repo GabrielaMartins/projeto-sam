@@ -1,20 +1,18 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
-using System;
 using Opus.DataBaseEnvironment;
 using SamApiModels;
 using AutoMapper;
 using SamDataBase.Model;
 using Opus.Helpers;
-using System.Configuration;
-using System.Web;
 using SamApi.Helpers;
-using System.IO;
 using System.Data.Entity.Validation;
+using ExceptionSystem.Models;
 
 namespace SamApi.Controllers
 {
@@ -72,11 +70,6 @@ namespace SamApi.Controllers
         {
 
             var token = HeaderHelper.ExtractHeaderValue(Request, "token");
-            if (token == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, MessageViewModel.TokenMissing);
-            }
-
             var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
             var context = decodedToken["context"] as Dictionary<string, object>;
             var userInfo = context["user"] as Dictionary<string, object>;
@@ -85,47 +78,31 @@ namespace SamApi.Controllers
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
 
+
+                // save image to disk (we need do it before all other task)
+                ImageHelper.saveAsImage(user.foto, user.samaccount);
+
+                // map new values to our reference
+                var newUser = Mapper.Map<UsuarioViewModel, Usuario>(user);
+
+                // add to entity context
+                userRep.Add(newUser);
+
                 try
                 {
-                    // save image to disk (we need do it before all other task)
-                    ImageHelper.saveAsImage(user.foto, user.samaccount);
-
-                    // map new values to our reference
-                    var newUser = Mapper.Map<UsuarioViewModel, Usuario>(user);
-                    
-                    // add to entity context
-                    userRep.Add(newUser);
-
                     // commit changes
                     userRep.SubmitChanges();
 
-                    return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "User Updated", "User updated"));
+                    return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "User Added", "User Added"));
                 }
-                catch (Exception ex)
+                catch (DbEntityValidationException ex)
                 {
                     // if error, we delete the image
                     ImageHelper.DeleteImage(user.samaccount);
 
-                    if(ex is DbEntityValidationException)
-                    {
-                        var msgList = new List<string>();
-                        var err = ex as DbEntityValidationException;
-                        foreach(var e in err.EntityValidationErrors)
-                        {
-                            msgList = e.ValidationErrors.Select(el => el.ErrorMessage).ToList();
-                        }
-
-                        var msg = string.Empty;
-                        foreach(var s in msgList)
-                        {
-                            msg += s + "\n";
-                        }
-                        return Request.CreateResponse(HttpStatusCode.BadRequest, new MessageViewModel(HttpStatusCode.BadRequest, "some fields are required", msg));
-                    }
-
-                    return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+                    // show error
+                    throw ex;
                 }
-
             }
         }
 
@@ -134,13 +111,10 @@ namespace SamApi.Controllers
         [HttpPut]
         public HttpResponseMessage Put(int id, [FromBody]UsuarioViewModel user)
         {
-            var token = HeaderHelper.ExtractHeaderValue(Request, "token");
-            if (token == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, MessageViewModel.TokenMissing);
-            }
 
-            var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
+
+            var token = HeaderHelper.ExtractHeaderValue(Request, "token").SingleOrDefault();
+            var decodedToken = JwtHelper.DecodeToken(token);
             var context = decodedToken["context"] as Dictionary<string, object>;
             var userInfo = context["user"] as Dictionary<string, object>;
             var samaccount = userInfo["samaccount"] as string;
@@ -148,11 +122,16 @@ namespace SamApi.Controllers
 
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-                // it will be updated with values provided by the parameter
-                var userToBeUpdated = userRep.Find(u => u.id == id).SingleOrDefault();
 
                 // is the user using the service at this moment
                 var userMakingAction = userRep.Find(u => u.samaccount == samaccount).SingleOrDefault();
+
+                // it will be updated with values provided by the parameter
+                var userToBeUpdated = userRep.Find(u => u.id == id).SingleOrDefault();
+                if (userToBeUpdated == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.NotFound, "User Not Found", "The server could not find the user with id = '" + id + "'"));
+                }
 
                 // only RH can update different staffs, else just can update himself
                 if (perfil == "RH" || userMakingAction.id == userToBeUpdated.id)
@@ -164,8 +143,18 @@ namespace SamApi.Controllers
                     // update: flush changes to proxy
                     userRep.Update(updatedUser);
 
-                    // commit changes to database
-                    userRep.SubmitChanges();
+                    try
+                    {
+                        // commit changes to database
+                        userRep.SubmitChanges();
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        // if error, we delete the image
+                        ImageHelper.DeleteImage(user.samaccount);
+
+                        throw ex;
+                    }
 
                     // save to disk
                     ImageHelper.saveAsImage(user.foto, samaccount);
@@ -179,6 +168,7 @@ namespace SamApi.Controllers
                     return Request.CreateResponse(HttpStatusCode.Unauthorized, new MessageViewModel(HttpStatusCode.Unauthorized, "Unauthorized", "You can't update other users"));
                 }
             }
+
         }
 
         // DELETE: api/sam/user/delete/{id}

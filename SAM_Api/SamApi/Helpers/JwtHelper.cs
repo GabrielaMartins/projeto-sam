@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using SamApiModels;
-using System.Net.Http;
+using ExceptionSystem.Models;
+using System.Net;
+using System.Configuration;
 
 namespace Opus.Helpers
 {
@@ -9,7 +11,7 @@ namespace Opus.Helpers
     public class JwtHelper
     {
 
-        private static readonly string plainTextSecurityKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk45Xdlgsyfc";
+        private static readonly string plainTextSecurityKey = ConfigurationManager.AppSettings["securityKey"];
 
         public JwtHelper()
         {
@@ -77,9 +79,10 @@ namespace Opus.Helpers
                 var res = JWT.JsonWebToken.DecodeToObject(token, plainTextSecurityKey) as IDictionary<string, object>;
                 return res;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw e;
+                var e = new Exception(ex.Message, new Exception("Token is invalid"));
+                throw new ExpectedException(HttpStatusCode.Unauthorized, "Invalid Token", e);
             }
             
         }

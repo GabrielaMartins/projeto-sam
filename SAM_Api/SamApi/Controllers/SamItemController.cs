@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System;
 using SamApiModels;
+using Opus.DataBaseEnvironment;
 
 namespace SamApi.Controllers
 {
@@ -13,9 +14,13 @@ namespace SamApi.Controllers
     {
         // GET: api/sam/item/all
         [Route("all")]
-        public IEnumerable<string> Get()
+        public HttpResponseMessage Get()
         {
-            return new string[] { "value1", "value2" };
+            using(var itemRep = DataAccess.Instance.GetItemRepository())
+            {
+                var itens = itemRep.GetAll();
+                return Request.CreateResponse(HttpStatusCode.OK, itens);
+            }
         }
 
         // GET: api/sam/item/{id}
@@ -23,20 +28,18 @@ namespace SamApi.Controllers
         public HttpResponseMessage Get(int id)
         {
 
-            // erase here
-            var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
-            response.Headers.CacheControl = new CacheControlHeaderValue()
+            using (var itemRep = DataAccess.Instance.GetItemRepository())
             {
-                MaxAge = TimeSpan.FromMinutes(20)
-            };
-
-            return response;
+                var item = itemRep.Find(i => i.id == id);
+                return Request.CreateResponse(HttpStatusCode.OK, item);
+            }
         }
 
         // POST: api/sam/item/save
         [Route("save")]
         public HttpResponseMessage Post([FromBody]string item)
         {
+
             // erase here
             var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
             response.Headers.CacheControl = new CacheControlHeaderValue()

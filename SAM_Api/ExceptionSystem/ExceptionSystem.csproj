@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{776689B3-741D-4E4D-A8B4-873DB0925D80}</ProjectGuid>
+    <ProjectGuid>{184313A8-E40D-476B-9CA3-946FD38E9D15}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SamApiModels</RootNamespace>
-    <AssemblyName>SamApiModels</AssemblyName>
+    <RootNamespace>ExceptionSystem</RootNamespace>
+    <AssemblyName>ExceptionSystem</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,23 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\ActiveDirectoryUser.cs" />
-    <Compile Include="Models\CargoViewModel.cs" />
-    <Compile Include="Models\CategoriaViewModel.cs" />
-    <Compile Include="Models\DashboardViewModel.cs" />
-    <Compile Include="Models\PerfilViewModel.cs" />
-    <Compile Include="Models\PromocaoAdquirida.cs" />
-    <Compile Include="Models\PromocaoViewModel.cs" />
-    <Compile Include="Models\ResultadoVotacaoViewModel.cs" />
-    <Compile Include="Models\UltimoEventoViewModel.cs" />
-    <Compile Include="Models\EventoViewModel.cs" />
-    <Compile Include="Models\ItemViewModel.cs" />
-    <Compile Include="Models\ItensTaggedViewModel.cs" />
-    <Compile Include="Models\LoginViewModel.cs" />
-    <Compile Include="Models\MessageViewModel.cs" />
-    <Compile Include="Models\PendenciaViewModel.cs" />
-    <Compile Include="Models\TagViewModel.cs" />
-    <Compile Include="Models\UsuarioViewModel.cs" />
+    <Compile Include="Models\ErrorMessage.cs" />
+    <Compile Include="Models\ExpectedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

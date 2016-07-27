@@ -10,14 +10,10 @@ namespace SamApiModels
     {
         public int id { get; set; }
 
-        public Nullable<int> evento { get; set; }
-
-        public Nullable<int> usuario { get; set; }
-
+       
         public int dificuldade { get; set; }
 
         public int modificador { get; set; }
-
 
         public virtual EventoViewModel Evento { get; set; }
 

@@ -107,9 +107,9 @@ namespace SamApi.Helpers
                 var imgInfo = GetImageInfo(name);
                 File.Delete(imgInfo.FullName);
             }
-            catch(Exception ex)
+            catch
             {
-                throw ex;
+                return;
             }
         }
     }
