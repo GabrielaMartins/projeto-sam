@@ -11,7 +11,7 @@ namespace Opus.Helpers
     public class JwtHelper
     {
 
-        private static readonly string plainTextSecurityKey = ConfigurationManager.AppSettings["securityKey"];
+        private static readonly string plainTextSecurityKey = ConfigurationManager.AppSettings["SecurityKey"];
 
         public JwtHelper()
         {

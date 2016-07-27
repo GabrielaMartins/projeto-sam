@@ -78,7 +78,6 @@ namespace SamApi.Controllers
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
 
-
                 // save image to disk (we need do it before all other task)
                 ImageHelper.saveAsImage(user.foto, user.samaccount);
 
@@ -88,21 +87,11 @@ namespace SamApi.Controllers
                 // add to entity context
                 userRep.Add(newUser);
 
-                try
-                {
-                    // commit changes
-                    userRep.SubmitChanges();
+                // commit changes
+                userRep.SubmitChanges();
 
-                    return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "User Added", "User Added"));
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    // if error, we delete the image
-                    ImageHelper.DeleteImage(user.samaccount);
+                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "User Added", "User Added"));
 
-                    // show error
-                    throw ex;
-                }
             }
         }
 

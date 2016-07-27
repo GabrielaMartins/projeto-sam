@@ -14,10 +14,6 @@ namespace SamApiModels
 
         public int id { get; set; }
 
-        public Nullable<int> item { get; set; }
-
-        public Nullable<int> usuario { get; set; }
-
         public System.DateTime data { get; set; }
 
         public bool estado { get; set; }

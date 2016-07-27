@@ -1,5 +1,6 @@
 ﻿using ExceptionSystem.Models;
 using System.Data.Entity.Validation;
+using System.Dynamic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -16,7 +17,8 @@ namespace SamApi.Filters
             {
                 var ex = context.Exception as ExpectedException;
 
-                dynamic content = new {Info = ex.Info};
+                dynamic content = new ExpandoObject();
+                content.Info = ex.Info;
                 if (ex.Reason != null)
                     content.Exception = ex.Reason;
 
@@ -48,7 +50,7 @@ namespace SamApi.Filters
                 context.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
                     Content = new ObjectContent(context.Exception.GetType(), context.Exception, new JsonMediaTypeFormatter()),
-                    ReasonPhrase = context.Exception.Message,
+                    ReasonPhrase = "Unexpected Error",
                 };
 
                

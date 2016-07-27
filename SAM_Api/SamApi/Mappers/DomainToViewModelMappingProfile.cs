@@ -12,6 +12,7 @@ namespace SamApi.Mappers
     {
         protected override void Configure()
         {
+            Mapper.CreateMap<Cargo, CargoViewModel>();
 
             Mapper.CreateMap<ResultadoVotacao, ResultadoVotacaoViewModel>()
             .ForMember(p => p.Evento, opt => opt.MapFrom(src => src.Evento))
@@ -21,7 +22,6 @@ namespace SamApi.Mappers
             .ForMember(p => p.Evento, opt => opt.MapFrom(src => src.Evento))
             .ForMember(p => p.Usuario, opt => opt.MapFrom(src => src.Usuario));
 
-            Mapper.CreateMap<Cargo, CargoViewModel>();
 
             Mapper.CreateMap<Evento, EventoViewModel>()
                 .ForMember(
@@ -38,10 +38,7 @@ namespace SamApi.Mappers
                 u => u.Usuario,
                 opt => opt.MapFrom(src => src.Usuario));
 
-            Mapper.CreateMap<Item, ItemViewModel>()
-                .ForMember(
-                i => i.Categoria,
-                opt => opt.MapFrom(src => src.Categoria));
+            Mapper.CreateMap<Item, ItemViewModel>(); ;
 
             Mapper.CreateMap<Usuario, UsuarioViewModel>()
             .ForMember(
@@ -54,17 +51,6 @@ namespace SamApi.Mappers
                 u => u.ProximoCargo,
                 opt => opt.MapFrom(src => DataAccess.Instance.GetCargoRepository().RecuperaProximoCargo(src.cargo))
             );
-
-            // Nao funciona
-            //Mapper.CreateMap<List<Usuario>, List<UsuarioViewModel>>();
-
-            //Mapper.CreateMap<List<Evento>, List<EventoViewModel>>();
-
-            //Mapper.CreateMap<List<Cargo>, List<CargoViewModel>>();
-
-            //Mapper.CreateMap<List<Pendencia>, List<PendenciaViewModel>>();
-
-
         }
     }
 }

@@ -9,8 +9,7 @@ namespace SamApiModels
 
         public ItemViewModel()
         {
-            //Eventos = new HashSet<EventoViewModel>();
-            //TaggedItens = new HashSet<ItensTaggedViewModel>();
+          
         }
 
         public int id { get; set; }
@@ -23,9 +22,11 @@ namespace SamApiModels
 
         public int modificador { get; set; }
 
-        public Nullable<int> categoria { get; set; }
+        public CategoriaViewModel Categoria { get; set; }
 
-        public virtual CategoriaViewModel Categoria { get; set; }
+        public List<EventoViewModel> Eventos { get; set; }
+
+        public List<ItensTaggedViewModel> TaggedItens { get; set; }
 
     }
 }
