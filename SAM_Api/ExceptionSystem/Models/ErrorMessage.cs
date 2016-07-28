@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace ExceptionSystem.Models
@@ -10,21 +11,21 @@ namespace ExceptionSystem.Models
 
         public string Title { get; set; }
 
-        public string Description { get; set; }
+        public List<string> Details { get; set; }
 
        
-        public ErrorMessage(HttpStatusCode code, string title, string description)
+        public ErrorMessage(HttpStatusCode code, string title, List<string> details)
         {
             Code = (int)code;
             Title = title;
-            Description = description;
+            Details = details;
         }
 
-        public ErrorMessage(int code, string title, string description)
+        public ErrorMessage(int code, string title, List<string> description)
         {
             Code = code;
             Title = title;
-            Description = description;
+            Details = description;
         }
     }
 }

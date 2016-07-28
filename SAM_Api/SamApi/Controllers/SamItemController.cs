@@ -11,6 +11,7 @@ using System.Linq;
 using AutoMapper;
 using SamDataBase.Model;
 using System.Data.Entity.Validation;
+using ExceptionSystem.Models;
 
 namespace SamApi.Controllers
 {
@@ -69,7 +70,7 @@ namespace SamApi.Controllers
         [Route("update/{id}")]
         public HttpResponseMessage Put(int id, ItemViewModel item)
         {
-
+     
             var token = HeaderHelper.ExtractHeaderValue(Request, "token");
             var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
             var context = decodedToken["context"] as Dictionary<string, object>;
@@ -80,7 +81,7 @@ namespace SamApi.Controllers
                 var itemToBeUpdated = itemRep.Find(i => i.id == id).SingleOrDefault();
                 if(itemToBeUpdated == null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, new MessageViewModel(HttpStatusCode.NotFound, "Item Not Found", "Item with id '" + id + "' not found"));
+                    throw new ExpectedException(HttpStatusCode.NotFound, "Item Not Found", "Item with id '" + id + "' not found");
                 }
 
                 // map new values to our reference

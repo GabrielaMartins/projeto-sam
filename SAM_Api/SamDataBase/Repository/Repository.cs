@@ -39,8 +39,7 @@ namespace Opus.RepositoryPattern
         {
 
             DbSet.Add(entity);
-            //DbContext.SaveChanges();
-
+            
             return entity;
         }
 
@@ -49,8 +48,7 @@ namespace Opus.RepositoryPattern
 
             var entry = DbContext.Entry(entity);
             entry.State = EntityState.Modified;
-            //DbContext.SaveChanges();
-
+         
         }
 
         public virtual void Delete(Expression<Func<T, bool>> filter)
@@ -61,7 +59,6 @@ namespace Opus.RepositoryPattern
             {
                 DbSet.Attach(entity);
                 DbSet.Remove(entity);
-                // DbContext.SaveChanges();
             }
         }
 
@@ -73,7 +70,6 @@ namespace Opus.RepositoryPattern
             {
                 DbSet.Attach(entity);
                 DbSet.Remove(entity);
-                //DbContext.SaveChanges();
             }
         }
 
@@ -94,10 +90,10 @@ namespace Opus.RepositoryPattern
                 var fullErrorMessage = string.Join(";", errorMessages);
 
                 // Combine the original exception message with the new one.
-                var exceptionMessage = string.Concat("Validation failed for one or more entities. The validation errors are: ", fullErrorMessage);
+                var exceptionMessage = string.Concat("Validation failed for one or more entities", fullErrorMessage);
 
                 // Throw a new DbEntityValidationException with the improved exception message.
-                throw new DbEntityValidationException(exceptionMessage);
+                throw new DbEntityValidationException("Validation failed for one or more entities", new Exception(fullErrorMessage));
             }
             catch(Exception ex)
             {

@@ -18,8 +18,7 @@ namespace Opus.Helpers
             }
             catch(Exception ex)
             {
-                var e = new Exception(ex.Message, new Exception(" key '" + key + "' is not present"));
-                throw new ExpectedException((int)HttpStatusCode.BadRequest, "Invalid Header", e);
+                throw new ExpectedException(HttpStatusCode.BadRequest, ex.Message, "Key '" + key + "' not found.");
             }
         }
 

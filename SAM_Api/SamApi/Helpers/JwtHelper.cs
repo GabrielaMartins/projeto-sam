@@ -81,8 +81,13 @@ namespace Opus.Helpers
             }
             catch (Exception ex)
             {
-                var e = new Exception(ex.Message, new Exception("Token is invalid"));
-                throw new ExpectedException(HttpStatusCode.Unauthorized, "Invalid Token", e);
+                if (ex.Message.ToLower().Contains("signature"))
+                {
+                    throw new ExpectedException(HttpStatusCode.Unauthorized, "Invalid Token");
+                }
+
+                throw ex;
+                
             }
             
         }

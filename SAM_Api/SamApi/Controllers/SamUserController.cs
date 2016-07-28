@@ -142,7 +142,7 @@ namespace SamApi.Controllers
                         // if error, we delete the image
                         ImageHelper.DeleteImage(user.samaccount);
 
-                        throw ex;
+                        throw new ExpectedException(HttpStatusCode.BadRequest, "Properties required", ex);
                     }
 
                     // save to disk

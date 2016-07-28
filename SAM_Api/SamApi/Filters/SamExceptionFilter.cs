@@ -12,41 +12,36 @@ namespace SamApi.Filters
     {
         public override void OnException(HttpActionExecutedContext context)
         {
-            
+            // Exception known to us
             if (context.Exception is ExpectedException)
             {
                 var ex = context.Exception as ExpectedException;
-
-                dynamic content = new ExpandoObject();
-                content.Info = ex.Info;
-                if (ex.Reason != null)
-                    content.Exception = ex.Reason;
-
-                context.Response = new HttpResponseMessage((HttpStatusCode)ex.Info.Code)
+                var errorMessage = ex.GetAsPrettyMessage();
+                context.Response = new HttpResponseMessage((HttpStatusCode)errorMessage.Code)
                 {
-                    Content = new ObjectContent(content.GetType(), content, new JsonMediaTypeFormatter()),
-                    ReasonPhrase = ex.Info.Title
+                    Content = new ObjectContent(errorMessage.GetType(), errorMessage, new JsonMediaTypeFormatter()),
+                    ReasonPhrase = errorMessage.Title
                 };
 
             }
             else if (context.Exception is DbEntityValidationException)
             {
+               
                 var ex = context.Exception as DbEntityValidationException;
-                var content = new
+                var e = new ExpectedException(HttpStatusCode.BadRequest, ex);
+                var errorMessage = e.GetAsPrettyMessage();
+                context.Response = new HttpResponseMessage((HttpStatusCode)errorMessage.Code)
                 {
-                    Info = new ErrorMessage(HttpStatusCode.BadRequest, "Properties required", ex.Message),
-                    Exception = ex
+                    Content = new ObjectContent(errorMessage.GetType(), errorMessage, new JsonMediaTypeFormatter()),
+                    ReasonPhrase = errorMessage.Title
                 };
 
-                context.Response = new HttpResponseMessage(HttpStatusCode.BadRequest)
-                {
-                    Content = new ObjectContent(content.GetType(), content, new JsonMediaTypeFormatter()),
-                    ReasonPhrase = "Property Validator Failed"
-                };
-                
             }
             else
             {
+                // TODO: logar as exceções não esperadas
+
+                // retornar internal server error
                 context.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
                     Content = new ObjectContent(context.Exception.GetType(), context.Exception, new JsonMediaTypeFormatter()),
