@@ -18,7 +18,7 @@ CREATE TABLE Usuarios
 	nome VARCHAR(50) NOT NULL,
 	descricao VARCHAR(200),
 	redes VARCHAR(200),
-	perfil VARCHAR(20) NOT NULL DEFAULT 'Funcionário',
+	perfil VARCHAR(20) NOT NULL DEFAULT 'funcionario' CHECK(perfil IN ('funcionario','rh')),
 	dataInicio DATE NOT NULL,
 	foto VARCHAR(150) DEFAULT 'http://10.10.15.113:65122/Public/Images/Users/new.jpg',
 	ativo BIT NOT NULL DEFAULT 1

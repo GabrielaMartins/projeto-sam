@@ -18,6 +18,7 @@ namespace SamApi
 
             AutoMapperConfig.RegisterMappings();
 
+            log4net.Config.XmlConfigurator.Configure();
         }
     }
 }

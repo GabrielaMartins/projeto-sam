@@ -1,6 +1,6 @@
-﻿using ExceptionSystem.Models;
+﻿using DefaultException.Models;
+using log4net;
 using System.Data.Entity.Validation;
-using System.Dynamic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -10,6 +10,8 @@ namespace SamApi.Filters
 {
     public class SamExceptionFilter : ExceptionFilterAttribute
     {
+        private readonly ILog log = LogManager.GetLogger(typeof(SamExceptionFilter));
+
         public override void OnException(HttpActionExecutedContext context)
         {
             // Exception known to us
@@ -40,6 +42,7 @@ namespace SamApi.Filters
             else
             {
                 // TODO: logar as exceções não esperadas
+                //log.Debug("Registrando eventos com log4net ; Debug", context.Exception);
 
                 // retornar internal server error
                 context.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError)

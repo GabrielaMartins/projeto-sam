@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 
-namespace ExceptionSystem.Models
+namespace DefaultException.Models
 {
     public class ExpectedException : Exception
     {

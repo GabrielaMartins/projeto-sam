@@ -17,7 +17,7 @@ namespace SamApi
 
             // apply exception filter
             config.Filters.Add(new SamExceptionFilter());
-
+           
             // isso deveria habilitar o serializador json para camel case
             //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             //config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;

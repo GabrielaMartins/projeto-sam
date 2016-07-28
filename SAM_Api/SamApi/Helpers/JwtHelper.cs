@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SamApiModels;
-using ExceptionSystem.Models;
+using DefaultException.Models;
 using System.Net;
 using System.Configuration;
 
@@ -35,6 +35,7 @@ namespace Opus.Helpers
             userInfo = new Dictionary<string, object>()
             {
                 {"id", user.id},
+                {"perfil", user.perfil},
                 {"samaccount", user.samaccount}
 
                 // we can put more information here
@@ -43,7 +44,6 @@ namespace Opus.Helpers
             context = new Dictionary<string, object>()
             {
                 {"user", userInfo},
-                {"perfil", user.perfil }
                 // we can put more information here
             };
 
@@ -55,11 +55,8 @@ namespace Opus.Helpers
                 // informa a data e hora que o token foi emitido
                 { "iat", currentTime},
 
-                /// esse é o tempo de vida do token (da erro quando decodifica, nao sei pq)
+                // esse é o tempo de vida do token (da erro quando decodifica, nao sei pq)
                 //{ "exp", currentTime.AddHours(expTime)},
-
-                // assunto do token
-                { "sub", user.nome},
 
                 // contém informações que queremos colocar no token, como usuário por exemplo
                 { "context", context }

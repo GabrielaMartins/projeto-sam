@@ -11,7 +11,8 @@ using System.Linq;
 using AutoMapper;
 using SamDataBase.Model;
 using System.Data.Entity.Validation;
-using ExceptionSystem.Models;
+using DefaultException.Models;
+using SamApi.Attributes;
 
 namespace SamApi.Controllers
 {
@@ -68,13 +69,9 @@ namespace SamApi.Controllers
 
         // PUT: api/sam/item/update/{id}
         [Route("update/{id}")]
+        [SamAuthorize(Roles = "RH")]
         public HttpResponseMessage Put(int id, ItemViewModel item)
         {
-     
-            var token = HeaderHelper.ExtractHeaderValue(Request, "token");
-            var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
-            var context = decodedToken["context"] as Dictionary<string, object>;
-            var perfil = context["perfil"] as string;
 
             using (var itemRep = DataAccess.Instance.GetItemRepository())
             {
@@ -85,7 +82,7 @@ namespace SamApi.Controllers
                 }
 
                 // map new values to our reference
-                itemToBeUpdated = Mapper.Map<ItemViewModel, Item>(item, itemToBeUpdated);
+                itemToBeUpdated = Mapper.Map(item, itemToBeUpdated);
 
                 // add to entity context
                 itemRep.Update(itemToBeUpdated);

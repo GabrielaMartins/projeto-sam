@@ -12,7 +12,8 @@ using SamDataBase.Model;
 using Opus.Helpers;
 using SamApi.Helpers;
 using System.Data.Entity.Validation;
-using ExceptionSystem.Models;
+using DefaultException.Models;
+using SamApi.Attributes;
 
 namespace SamApi.Controllers
 {
@@ -96,18 +97,13 @@ namespace SamApi.Controllers
         }
 
         // PUT: api/sam/user/update/{id}
-        [Route("update/{id}")]
         [HttpPut]
+        [Route("update/{id}")]
+        [SamAuthorize(Roles = "rh,funcionario")]
         public HttpResponseMessage Put(int id, [FromBody]UsuarioViewModel user)
         {
-
-
-            var token = HeaderHelper.ExtractHeaderValue(Request, "token").SingleOrDefault();
-            var decodedToken = JwtHelper.DecodeToken(token);
-            var context = decodedToken["context"] as Dictionary<string, object>;
-            var userInfo = context["user"] as Dictionary<string, object>;
-            var samaccount = userInfo["samaccount"] as string;
-            var perfil = context["perfil"] as string;
+            // get samaccount from decoded token stored on request header
+            var samaccount = Request.Headers.GetValues("samaccount").FirstOrDefault();
 
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
@@ -122,8 +118,9 @@ namespace SamApi.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.NotFound, "User Not Found", "The server could not find the user with id = '" + id + "'"));
                 }
 
+                // TODO: MAYBE PUT IT ON AUTHORIZE CLASS
                 // only RH can update different staffs, else just can update himself
-                if (perfil == "RH" || userMakingAction.id == userToBeUpdated.id)
+                if (userMakingAction.perfil == "RH" || userMakingAction.id == userToBeUpdated.id)
                 {
 
                     // map values from 'user' to 'userToBeUpdated'
@@ -132,19 +129,9 @@ namespace SamApi.Controllers
                     // update: flush changes to proxy
                     userRep.Update(updatedUser);
 
-                    try
-                    {
-                        // commit changes to database
-                        userRep.SubmitChanges();
-                    }
-                    catch (DbEntityValidationException ex)
-                    {
-                        // if error, we delete the image
-                        ImageHelper.DeleteImage(user.samaccount);
-
-                        throw new ExpectedException(HttpStatusCode.BadRequest, "Properties required", ex);
-                    }
-
+                    // commit changes to database
+                    userRep.SubmitChanges();
+                   
                     // save to disk
                     ImageHelper.saveAsImage(user.foto, samaccount);
 
