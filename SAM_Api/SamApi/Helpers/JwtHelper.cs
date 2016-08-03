@@ -4,6 +4,7 @@ using SamApiModels;
 using DefaultException.Models;
 using System.Net;
 using System.Configuration;
+using SamApiModels.User;
 
 namespace Opus.Helpers
 {

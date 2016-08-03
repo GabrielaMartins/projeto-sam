@@ -9,6 +9,7 @@ using SamDataBase.Model;
 using System;
 using Opus.Helpers;
 using System.Collections.Generic;
+using SamApiModels.User;
 
 namespace SamApi.Controllers
 {

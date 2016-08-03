@@ -1,7 +1,8 @@
+using SamApiModels.User;
 using System;
 using System.Collections.Generic;
 
-namespace SamApiModels
+namespace SamApiModels.Event
 {
 
     public class EventoViewModel
@@ -20,9 +21,13 @@ namespace SamApiModels
 
         public string tipo { get; set; }
 
-        public ItemViewModel Item { get; set; }
+        public ItemEventoViewModel Item { get; set; }
 
         public UsuarioViewModel Usuario { get; set; }
+
+        public ICollection<EventoPendenciaViewModel> Pendencias { get; set;}
+
+        //public ICollection<ResultadoVotacoesViewModel> ResultadoVotacoes { get; set; }
 
     }
 }

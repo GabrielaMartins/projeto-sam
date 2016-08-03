@@ -13,6 +13,7 @@ using SamDataBase.Model;
 using Opus.Helpers;
 using System.Configuration;
 using DefaultException.Models;
+using SamApiModels.User;
 
 namespace SamApiService.Controllers
 {

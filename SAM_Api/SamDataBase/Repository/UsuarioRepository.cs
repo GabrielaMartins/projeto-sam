@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using SamApiModels;
 using AutoMapper;
 using System;
+using SamApiModels.Event;
+using SamApiModels.User;
 
 namespace Opus.DataBaseEnvironment
 {
@@ -110,15 +112,21 @@ namespace Opus.DataBaseEnvironment
             return promocoesRealizadas;
         }
 
-        public List<PendenciaViewModel> RecuperaPendencias(Usuario usuario)
+        public List<EventoPendenciaViewModel> RecuperaPendencias(Usuario usuario)
         {
 
             var pendencias = DataAccess.Instance
                 .GetPendenciaRepository()
                 .Find(p => p.usuario == usuario.id && p.estado == true)
-                .ToList();
+                .AsEnumerable()
+                .Select(x => new EventoPendenciaViewModel()
+                {
+                    estado = x.estado,
+                    Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.Usuario)
+                    //Evento = Mapper.Map<Evento, EventoViewModel>(x.Evento)
+                }).ToList();
 
-            return Mapper.Map<List<Pendencia>, List<PendenciaViewModel>>(pendencias);
+            return pendencias;
 
 
         }

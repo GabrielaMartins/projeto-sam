@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using SamDataBase.Model;
 using AutoMapper;
 using Opus.Helpers;
+using SamApi.Attributes;
+using SamApiModels.User;
 
 namespace SamApi.Controllers
 {
@@ -19,36 +21,39 @@ namespace SamApi.Controllers
         // GET: api/sam/Dashboard
         [HttpGet]
         [Route("")]
+        [SamAuthorize(Roles="rh,funcionário")]
         public HttpResponseMessage Get()
         {
 
-            var token = HeaderHelper.ExtractHeaderValue(Request, "token");
-            var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
-            var context = decodedToken["context"] as Dictionary<string, object>;
-            var userInfo = context["user"] as Dictionary<string, object>;
-            var samaccount = userInfo["samaccount"] as string;
-            var perfil = context["perfil"] as string;
-
+            // get samaccount from decoded token stored on request header
+            var samaccount = Request.Headers.GetValues("samaccount").FirstOrDefault();
+            var perfil = Request.Headers.GetValues("perfil").FirstOrDefault();
+            
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
                 var usuario = userRep.Find(u => u.samaccount == samaccount).SingleOrDefault();
-                var ranking = Ranking();
-                var certificacoes = CertificacoesProcuradas();
-
+                
                 if (perfil == "RH")
                 {
                     // coisas do rh aqui
+                    var ranking = Ranking();
+                    var certicacoesMaisProcuradas = CertificacoesProcuradas();
 
                     return Request.CreateResponse(HttpStatusCode.OK, "not implemented");
                 }
                 else
                 {
+                    var ranking = Ranking();
                     var pendencias = userRep.RecuperaPendencias(usuario);
                     var resultadoVotacoes = userRep.RecuperaVotacoes(usuario);
                     var ultimosEventos = userRep.RecuperaEventos(usuario, "votacao", 10);
                     var certicacoesMaisProcuradas = CertificacoesProcuradas();
+
                     var dashFuncionario = new
                     {
+                        Ranking = ranking,
+                
+                        ResultadoVotacoes = resultadoVotacoes,
                         UltimosEventos = ultimosEventos,
                         Alertas = pendencias,
                         CartificacoesMaisProcuradas = certicacoesMaisProcuradas

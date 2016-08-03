@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using System;
+using SamApiModels.User;
 
 namespace Opus.DataBaseEnvironment
 {
@@ -41,7 +42,7 @@ namespace Opus.DataBaseEnvironment
                     return new ProximaPromocaoViewModel()
                     {
                         Usuario = usuarioViewModel,
-                        PontosFaltantes = (usuarioViewModel.ProximoCargo[0].pontuacao - x.usuario.pontos)
+                        PontosFaltantes = (usuarioViewModel.ProximoCargo.ElementAt(0).pontuacao - x.usuario.pontos)
                     };
                 }).ToList();
 

@@ -10,9 +10,9 @@ using Opus.Helpers;
 using System.Linq;
 using AutoMapper;
 using SamDataBase.Model;
-using System.Data.Entity.Validation;
 using DefaultException.Models;
 using SamApi.Attributes;
+using SamApiModels.Item;
 
 namespace SamApi.Controllers
 {

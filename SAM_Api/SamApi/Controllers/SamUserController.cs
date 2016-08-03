@@ -14,6 +14,7 @@ using SamApi.Helpers;
 using System.Data.Entity.Validation;
 using DefaultException.Models;
 using SamApi.Attributes;
+using SamApiModels.User;
 
 namespace SamApi.Controllers
 {
@@ -67,14 +68,9 @@ namespace SamApi.Controllers
         // POST: api/sam/user/save
         [Route("save")]
         [HttpPost]
+        [SamAuthorize(Roles = "rh")]
         public HttpResponseMessage Post([FromBody]UsuarioViewModel user)
         {
-
-            var token = HeaderHelper.ExtractHeaderValue(Request, "token");
-            var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
-            var context = decodedToken["context"] as Dictionary<string, object>;
-            var userInfo = context["user"] as Dictionary<string, object>;
-            var samaccount = userInfo["samaccount"] as string;
 
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
@@ -149,18 +145,17 @@ namespace SamApi.Controllers
 
         // DELETE: api/sam/user/delete/{id}
         [Route("delete/{id}")]
+        [SamAuthorize(Roles = "rh")]
+        [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
+            // get samaccount from decoded token stored on request header
+            //var samaccount = Request.Headers.GetValues("samaccount").FirstOrDefault();
+
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-                // erase here
-                var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
-                response.Headers.CacheControl = new CacheControlHeaderValue()
-                {
-                    MaxAge = TimeSpan.FromMinutes(20)
-                };
-
-                return response;
+                userRep.Delete(id);
+                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "User Deleted", "User deleted"));
             }
         }
     }

@@ -1,17 +1,14 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SamApiModels
+namespace SamApiModels.Item
 {
 
     public class ItemViewModel
     {
-
-        public ItemViewModel()
-        {
-          
-        }
-
         public int id { get; set; }
 
         public string nome { get; set; }
@@ -24,9 +21,10 @@ namespace SamApiModels
 
         public CategoriaViewModel Categoria { get; set; }
 
-        public List<EventoViewModel> Eventos { get; set; }
+        public ItemViewModel()
+        {
 
-        public List<ItensTaggedViewModel> TaggedItens { get; set; }
-
+        }
     }
+
 }

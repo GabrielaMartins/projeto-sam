@@ -1,15 +1,13 @@
-using System;
+using SamApiModels.User;
 
-namespace SamApiModels
+namespace SamApiModels.Event
 {
 
-    public partial class PendenciaViewModel
+    public partial class EventoPendenciaViewModel
     {
         public int id { get; set; }
 
         public bool estado { get; set; }
-
-        public virtual EventoViewModel Evento { get; set; }
 
         public virtual UsuarioViewModel Usuario { get; set; }
     }

@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using SamApi.Helpers;
 using SamApiModels;
+using SamApiModels.Event;
+using SamApiModels.Item;
+using SamApiModels.User;
 using SamDataBase.Model;
 
 namespace SamApi.Mappers
@@ -38,6 +41,19 @@ namespace SamApi.Mappers
             // **************** CategoriaViewModel -> Categoria **************** //
             Mapper.CreateMap<CategoriaViewModel, Categoria>()
            .ForMember(c => c.Itens, opt => opt.Ignore());
+
+            // **************** EventoViewModel -> Evento **************** //
+            Mapper.CreateMap<EventoViewModel, Evento>()
+
+           // ignora as propriedades de navegacoes quando vai inserir no banco
+           .ForMember(e => e.Pendencias, opt => opt.Ignore())
+           .ForMember(e => e.ResultadoVotacoes, opt => opt.Ignore())
+           .ForMember(e => e.Usuario, opt => opt.Ignore())
+           .ForMember(e => e.Item, opt => opt.Ignore())
+
+           // mapeia as chaves estrangeiras
+           .ForMember(e => e.usuario, opt => opt.MapFrom(src => src.Usuario.id))
+           .ForMember(e => e.item, opt => opt.MapFrom(src => src.Item.id));
         }
     }
 }

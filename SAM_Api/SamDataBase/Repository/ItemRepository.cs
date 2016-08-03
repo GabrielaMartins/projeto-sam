@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using SamApiModels;
 using AutoMapper;
 using System;
+using SamApiModels.User;
 
 namespace Opus.DataBaseEnvironment
 {

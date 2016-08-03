@@ -29,10 +29,12 @@ namespace SamApi.Attributes
             var perfil = user["perfil"] as string;
             var samaccount = (context["user"] as Dictionary<string, object>)["samaccount"] as string;
 
-            if (Roles.ToLower().Contains(perfil.ToLower()) || Users.ToLower().Contains(samaccount.ToLower()))
+            if (Roles.ToLowerInvariant().Contains(perfil.ToLowerInvariant()) || 
+                Users.ToLowerInvariant().Contains(samaccount.ToLowerInvariant()))
             {
                 // add to request
                 actionContext.Request.Headers.Add("samaccount", samaccount);
+                actionContext.Request.Headers.Add("perfil", perfil);
                 return true;
             }
 
@@ -41,7 +43,7 @@ namespace SamApi.Attributes
 
         protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
         {
-            throw new ExpectedException(HttpStatusCode.Unauthorized, "Unauthorized", "user has no permission");
+            throw new ExpectedException(HttpStatusCode.Unauthorized, "Unauthorized", "User has no permission");
            
         }
 

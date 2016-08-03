@@ -1,4 +1,6 @@
-﻿namespace SamApiModels
+﻿using SamApiModels.User;
+
+namespace SamApiModels
 {
     public class ProximaPromocaoViewModel
     {
