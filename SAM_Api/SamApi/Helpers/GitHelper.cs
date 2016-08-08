@@ -115,7 +115,7 @@ namespace SamApi.Helpers
 
             }
 
-            var request = GetRequest(url);
+            var request = GetRequest(url, "Get");
             var response = request.GetResponse() as HttpWebResponse;
 
             StreamReader streamReader = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding(response.CharacterSet));
@@ -135,7 +135,7 @@ namespace SamApi.Helpers
 
             var jsonIssue = JsonConvert.SerializeObject(newIssue);
 
-            var request = GetRequest(CreateOrListUrl);
+            var request = GetRequest(CreateOrListUrl, "Post");
           
             var dataStream = new StreamWriter(request.GetRequestStream());
             dataStream.Write(jsonIssue);
@@ -146,11 +146,11 @@ namespace SamApi.Helpers
             return response.StatusCode == HttpStatusCode.Created;
         }
 
-        private WebRequest GetRequest(string url)
+        private WebRequest GetRequest(string url, string method)
         {
             var authorization = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{User}:{Password}"));
             var request = WebRequest.Create(url) as HttpWebRequest;
-            request.Method = "Get";
+            request.Method = method;
             request.ContentType = "application/json; charset=utf-8";
             request.Accept = "application/json";
             request.Headers.Add("Authorization", "Basic " + authorization);

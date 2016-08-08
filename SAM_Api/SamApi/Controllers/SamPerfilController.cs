@@ -2,14 +2,13 @@
 using System.Web.Http;
 using System.Net;
 using Opus.DataBaseEnvironment;
-using SamApiModels;
 using System.Linq;
 using AutoMapper;
 using SamDataBase.Model;
-using System;
 using Opus.Helpers;
 using System.Collections.Generic;
 using SamApiModels.User;
+using SamApiModels.Perfil;
 
 namespace SamApi.Controllers
 {

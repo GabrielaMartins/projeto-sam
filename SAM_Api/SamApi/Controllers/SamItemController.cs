@@ -45,13 +45,9 @@ namespace SamApi.Controllers
 
         // POST: api/sam/item/save
         [Route("save")]
+        [SamAuthorize(Roles="rh")]
         public HttpResponseMessage Post(ItemViewModel item)
         {
-
-            var token = HeaderHelper.ExtractHeaderValue(Request, "token");
-            var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
-            var context = decodedToken["context"] as Dictionary<string, object>;
-            var perfil = context["perfil"] as string;
 
             using (var itemRep = DataAccess.Instance.GetItemRepository())
             {
@@ -64,13 +60,13 @@ namespace SamApi.Controllers
                 // commit changes
                 itemRep.SubmitChanges();
 
-                 return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "Item Added", "Item Added"));
+                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "Item Added", "Item Added"));
             }
         }
 
         // PUT: api/sam/item/update/{id}
         [Route("update/{id}")]
-        [SamAuthorize(Roles = "RH")]
+        [SamAuthorize(Roles = "rh")]
         public HttpResponseMessage Put(int id, ItemViewModel item)
         {
 
@@ -79,7 +75,7 @@ namespace SamApi.Controllers
                 var itemToBeUpdated = itemRep.Find(i => i.id == id).SingleOrDefault();
                 if(itemToBeUpdated == null)
                 {
-                    throw new ExpectedException(HttpStatusCode.NotFound, "Item Not Found", "Item with id '" + id + "' not found");
+                    throw new ExpectedException(HttpStatusCode.NotFound, "Item Not Found", $"Item #{id} not found");
                 }
 
                 // map new values to our reference
@@ -91,24 +87,23 @@ namespace SamApi.Controllers
                 // commit changes
                 itemRep.SubmitChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "Item Updated", "Item Updated"));
+                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "Item Updated", $"Item #{id} Updated"));
             }
 
         }
 
         // DELETE: api/sam/item/delete/{id}
         [Route("delete/{id}")]
+        [SamAuthorize(Roles = "rh")]
         public HttpResponseMessage Delete(int id)
         {
-          
-            // erase here
-            var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
-            response.Headers.CacheControl = new CacheControlHeaderValue()
-            {
-                MaxAge = TimeSpan.FromMinutes(20)
-            };
 
-            return response;
+            using (var itemRep = DataAccess.Instance.GetItemRepository())
+            {
+                itemRep.Delete(id);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "Item Deleted", $"Item #{id} Deleted"));
+            }
         }
     }
 }

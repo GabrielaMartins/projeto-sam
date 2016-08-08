@@ -12,6 +12,7 @@ using SamApi.Helpers;
 using SamApi.Attributes;
 using SamApiModels.User;
 using SamApiModels.Message;
+using DefaultException.Models;
 
 namespace SamApi.Controllers
 {
@@ -38,10 +39,10 @@ namespace SamApi.Controllers
         // GET: api/sam/user/{samaccount}
         [Route("{samaccount}")]
         [HttpGet]
+        [SamAuthorize(Roles="rh")]
         public HttpResponseMessage GetBySamaccount(string samaccount)
         {
 
-            // TODO: verificações com o token
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
 
@@ -50,10 +51,10 @@ namespace SamApi.Controllers
 
                 if (user == null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, "User not found", "We can't find this user");
+                    throw new ExpectedException(HttpStatusCode.NotFound, "User not found", "We can't find this user");
                 }
 
-                // Transform our Usuario model to UsuarioViewModel (Da erro)
+                // Transform our Usuario model to UsuarioViewModel
                 var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(user);
 
                 return Request.CreateResponse(HttpStatusCode.OK, usuarioViewModel);
@@ -92,50 +93,34 @@ namespace SamApi.Controllers
         // PUT: api/sam/user/update/{id}
         [HttpPut]
         [Route("update/{id}")]
-        [SamAuthorize(Roles = "rh,funcionario")]
+        [SamAuthorize(Roles = "rh,funcionario", AuthorizationType = SamAuthorize.AuthType.UpdateUser)]
         public HttpResponseMessage Put(int id, [FromBody]UsuarioViewModel user)
         {
-            // get samaccount from decoded token stored on request header
-            var samaccount = Request.Headers.GetValues("samaccount").FirstOrDefault();
-
+            
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-
-                // is the user using the service at this moment
-                var userMakingAction = userRep.Find(u => u.samaccount == samaccount).SingleOrDefault();
 
                 // it will be updated with values provided by the parameter
                 var userToBeUpdated = userRep.Find(u => u.id == id).SingleOrDefault();
                 if (userToBeUpdated == null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.NotFound, "User Not Found", "The server could not find the user with id = '" + id + "'"));
+                    throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", "The server could not find the user with id = '" + id + "'");
                 }
 
-                // TODO: MAYBE PUT IT ON AUTHORIZE CLASS
-                // only RH can update different staffs, else just can update himself
-                if (userMakingAction.perfil == "RH" || userMakingAction.id == userToBeUpdated.id)
-                {
+                // map values from 'user' to 'userToBeUpdated'
+                var updatedUser = Mapper.Map(user, userToBeUpdated);
 
-                    // map values from 'user' to 'userToBeUpdated'
-                    var updatedUser = Mapper.Map(user, userToBeUpdated);
+                // update: flush changes to proxy
+                userRep.Update(updatedUser);
 
-                    // update: flush changes to proxy
-                    userRep.Update(updatedUser);
+                // commit changes to database
+                userRep.SubmitChanges();
 
-                    // commit changes to database
-                    userRep.SubmitChanges();
-                   
-                    // save to disk
-                    ImageHelper.saveAsImage(user.foto, samaccount);
+                // save image to disk
+                ImageHelper.saveAsImage(user.foto, userToBeUpdated.samaccount);
 
-                    return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "User Updated", "User updated"));
-
-                }
-                else
-                {
-                    // return an error
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, new MessageViewModel(HttpStatusCode.Unauthorized, "Unauthorized", "You can't update other users"));
-                }
+                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "User Updated", "User updated"));
+                
             }
 
         }
@@ -146,9 +131,6 @@ namespace SamApi.Controllers
         [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
-            // get samaccount from decoded token stored on request header
-            //var samaccount = Request.Headers.GetValues("samaccount").FirstOrDefault();
-
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
                 userRep.Delete(id);

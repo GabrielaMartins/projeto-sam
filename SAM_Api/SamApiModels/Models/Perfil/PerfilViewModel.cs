@@ -3,7 +3,7 @@ using SamApiModels.Promocao;
 using SamApiModels.User;
 using System.Collections.Generic;
 
-namespace SamApiModels
+namespace SamApiModels.Perfil
 {
     public class PerfilViewModel
     {
