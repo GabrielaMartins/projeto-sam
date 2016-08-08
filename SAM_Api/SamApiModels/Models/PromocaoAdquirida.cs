@@ -1,4 +1,5 @@
-﻿using SamApiModels.User;
+﻿using SamApiModels.Cargo;
+using SamApiModels.User;
 using System;
 
 namespace SamApiModels

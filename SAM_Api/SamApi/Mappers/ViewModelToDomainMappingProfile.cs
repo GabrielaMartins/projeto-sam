@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SamApi.Helpers;
 using SamApiModels;
+using SamApiModels.Categoria;
 using SamApiModels.Event;
 using SamApiModels.Item;
 using SamApiModels.User;

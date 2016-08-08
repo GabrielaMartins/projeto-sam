@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using SamApiModels;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using SamApiModels.OpusActiveDirectory;
 
 namespace Opus.Helpers.ActiveDirectoryService
 {

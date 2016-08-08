@@ -4,11 +4,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Opus.DataBaseEnvironment;
-using SamApiModels;
 using System.Collections.Generic;
 using SamDataBase.Model;
 using AutoMapper;
-using Opus.Helpers;
 using SamApi.Attributes;
 using SamApiModels.User;
 

@@ -1,13 +1,14 @@
+using SamApiModels.Categoria;
 using System;
 using System.Collections.Generic;
 
 namespace SamApiModels.Event
 {
 
-    public class ItemEventoViewModel
+    public class EventoItemViewModel
     {
 
-        public ItemEventoViewModel()
+        public EventoItemViewModel()
         {
            
         }

@@ -1,3 +1,4 @@
+using SamApiModels.Cargo;
 using System;
 using System.Collections.Generic;
 

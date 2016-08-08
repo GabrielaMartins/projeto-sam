@@ -17,8 +17,6 @@ namespace SamApi
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             AutoMapperConfig.RegisterMappings();
-
-            log4net.Config.XmlConfigurator.Configure();
         }
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace SamApiModels
+namespace SamApiModels.Categoria
 {
 
     public class CategoriaViewModel
