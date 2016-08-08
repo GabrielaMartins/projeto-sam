@@ -1,19 +1,17 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Opus.Helpers.ActiveDirectoryService;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
-using System.Net.Http.Headers;
 using Opus.DataBaseEnvironment;
 using System.Linq;
-using SamApiModels;
 using AutoMapper;
 using SamDataBase.Model;
 using Opus.Helpers;
 using System.Configuration;
 using DefaultException.Models;
 using SamApiModels.User;
+using SamApiModels.Login;
 
 namespace SamApiService.Controllers
 {

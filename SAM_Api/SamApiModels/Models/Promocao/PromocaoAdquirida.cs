@@ -2,7 +2,7 @@
 using SamApiModels.User;
 using System;
 
-namespace SamApiModels
+namespace SamApiModels.Promocao
 {
     public class PromocaoAdquiridaViewModel
     {

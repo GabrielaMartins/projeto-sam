@@ -1,9 +1,4 @@
-﻿using SamApiModels.Pendency;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SamApiModels.Pendencia;
 
 namespace SamApiModels.User
 {

@@ -6,15 +6,12 @@ using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
 using Opus.DataBaseEnvironment;
-using SamApiModels;
 using AutoMapper;
 using SamDataBase.Model;
-using Opus.Helpers;
 using SamApi.Helpers;
-using System.Data.Entity.Validation;
-using DefaultException.Models;
 using SamApi.Attributes;
 using SamApiModels.User;
+using SamApiModels.Message;
 
 namespace SamApi.Controllers
 {

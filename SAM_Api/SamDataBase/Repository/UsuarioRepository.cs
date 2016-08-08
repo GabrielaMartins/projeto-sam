@@ -5,10 +5,11 @@ using System.Linq;
 using System.Collections.Generic;
 using SamApiModels;
 using AutoMapper;
-using SamApiModels.Event;
+using SamApiModels.Evento;
 using SamApiModels.User;
-using SamApiModels.Pendency;
+using SamApiModels.Pendencia;
 using SamApiModels.Cargo;
+using SamApiModels.Promocao;
 
 namespace Opus.DataBaseEnvironment
 {

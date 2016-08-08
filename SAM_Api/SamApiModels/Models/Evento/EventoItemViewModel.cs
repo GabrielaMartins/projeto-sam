@@ -2,7 +2,7 @@ using SamApiModels.Categoria;
 using System;
 using System.Collections.Generic;
 
-namespace SamApiModels.Event
+namespace SamApiModels.Evento
 {
 
     public class EventoItemViewModel

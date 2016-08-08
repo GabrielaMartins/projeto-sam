@@ -4,9 +4,10 @@ using SamApi.Helpers;
 using SamApiModels;
 using SamApiModels.Cargo;
 using SamApiModels.Categoria;
-using SamApiModels.Event;
+using SamApiModels.Evento;
 using SamApiModels.Item;
-using SamApiModels.Pendency;
+using SamApiModels.Pendencia;
+using SamApiModels.Promocao;
 using SamApiModels.User;
 using SamDataBase.Model;
 

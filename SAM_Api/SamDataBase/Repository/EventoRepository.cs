@@ -1,12 +1,11 @@
 using SamDataBase.Model;
 using Opus.RepositoryPattern;
 using System.Data.Entity;
-using SamApiModels;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using System;
-using SamApiModels.Event;
+using SamApiModels.Evento;
 
 namespace Opus.DataBaseEnvironment
 {

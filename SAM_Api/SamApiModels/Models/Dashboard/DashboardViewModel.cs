@@ -1,7 +1,9 @@
-﻿using SamApiModels.User;
+﻿using SamApiModels.Evento;
+using SamApiModels.Promocao;
+using SamApiModels.User;
 using System.Collections.Generic;
 
-namespace SamApiModels
+namespace SamApiModels.Dashboard
 {
     public class DashboardViewModel
     {

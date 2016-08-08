@@ -1,7 +1,7 @@
 using SamApiModels.User;
 using System;
 
-namespace SamApiModels.Event
+namespace SamApiModels.Evento
 {
 
     public class EventoViewModel

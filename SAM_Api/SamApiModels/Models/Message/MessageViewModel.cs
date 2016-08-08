@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace SamApiModels
+namespace SamApiModels.Message
 {
     public class MessageViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using SamApiModels.User;
 
-namespace SamApiModels
+namespace SamApiModels.Promocao
 {
     public class ProximaPromocaoViewModel
     {
