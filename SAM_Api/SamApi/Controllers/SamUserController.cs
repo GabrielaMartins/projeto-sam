@@ -20,8 +20,8 @@ namespace SamApi.Controllers
     public class SamUserController : ApiController
     {
         // GET: api/sam/user/all
-        [Route("all")]
         [HttpGet]
+        [Route("all")]
         public HttpResponseMessage Get()
         {
 
@@ -37,8 +37,8 @@ namespace SamApi.Controllers
 
 
         // GET: api/sam/user/{samaccount}
-        [Route("{samaccount}")]
         [HttpGet]
+        [Route("{samaccount}")]
         [SamAuthorize(Roles="rh")]
         public HttpResponseMessage GetBySamaccount(string samaccount)
         {
@@ -64,8 +64,8 @@ namespace SamApi.Controllers
 
 
         // POST: api/sam/user/save
-        [Route("save")]
         [HttpPost]
+        [Route("save")]
         [SamAuthorize(Roles = "rh")]
         public HttpResponseMessage Post([FromBody]UsuarioViewModel user)
         {
@@ -91,9 +91,9 @@ namespace SamApi.Controllers
         }
 
         // PUT: api/sam/user/update/{id}
-        [HttpPut]
         [Route("update/{id}")]
-        [SamAuthorize(Roles = "rh,funcionario", AuthorizationType = SamAuthorize.AuthType.UpdateUser)]
+        [HttpPut]
+        [SamAuthorize(Roles = "rh,funcionario", AuthorizationType = SamAuthorize.AuthType.TokenEquality)]
         public HttpResponseMessage Put(int id, [FromBody]UsuarioViewModel user)
         {
             
@@ -126,8 +126,8 @@ namespace SamApi.Controllers
         }
 
         // DELETE: api/sam/user/delete/{id}
-        [Route("delete/{id}")]
         [SamAuthorize(Roles = "rh")]
+        [Route("delete/{id}")]
         [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {

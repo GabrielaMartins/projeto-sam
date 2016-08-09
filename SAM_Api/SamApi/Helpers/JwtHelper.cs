@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SamApiModels;
 using DefaultException.Models;
 using System.Net;
 using System.Configuration;
@@ -25,10 +24,11 @@ namespace Opus.Helpers
             if (user == null)
                 return string.Empty;
 
-
-            // variables to configure our token
-            var currentTime = DateTime.Now;
-            //var expTime = 50000;
+            // time in minutes
+            var tokenTTL = 5;
+            var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var currentTime = Math.Round((DateTime.UtcNow - unixEpoch).TotalSeconds);
+            var exp = Math.Round((DateTime.UtcNow.AddMinutes(tokenTTL) - unixEpoch).TotalSeconds);
             Dictionary<string, object> context = null;
             Dictionary<string, object> userInfo = null;
             Dictionary<string, object> payload = null;
@@ -57,7 +57,7 @@ namespace Opus.Helpers
                 { "iat", currentTime},
 
                 // esse é o tempo de vida do token (da erro quando decodifica, nao sei pq)
-                //{ "exp", currentTime.AddHours(expTime)},
+                { "exp", exp},
 
                 // contém informações que queremos colocar no token, como usuário por exemplo
                 { "context", context }
@@ -77,17 +77,20 @@ namespace Opus.Helpers
                 var res = JWT.JsonWebToken.DecodeToObject(token, plainTextSecurityKey) as IDictionary<string, object>;
                 return res;
             }
-            catch (Exception ex)
+            catch (JWT.SignatureVerificationException ex)
             {
-                if (ex.Message.ToLower().Contains("signature"))
+                if (ex.Message.Contains("Invalid signature"))
                 {
-                    throw new ExpectedException(HttpStatusCode.Unauthorized, "Invalid Token");
+                    throw new ExpectedException(HttpStatusCode.Unauthorized, "Invalid Token", "The provided token has invalid signature");
                 }
 
-                throw ex;
-                
+                throw new ExpectedException(HttpStatusCode.Unauthorized, "Invalid Token", ex);
+
             }
-            
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }

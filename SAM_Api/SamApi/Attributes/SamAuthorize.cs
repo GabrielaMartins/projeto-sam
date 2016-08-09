@@ -16,7 +16,7 @@ namespace SamApi.Attributes
         public enum AuthType
         {
             Basic,
-            UpdateUser
+            TokenEquality
         }
 
         public AuthType AuthorizationType { get; set; }
@@ -27,7 +27,6 @@ namespace SamApi.Attributes
 
         public SamAuthorize(AuthType authorizationType = AuthType.Basic )
         {
-            ErrorMessage = "User has no permission";
             AuthorizationType = authorizationType;
         }
 
@@ -46,9 +45,8 @@ namespace SamApi.Attributes
 
             switch (AuthorizationType)
             {
-                case AuthType.UpdateUser:
-                    isComplexAuthorized = AuthorizeUpdateUser(actionContext);
-                    ErrorMessage = "You can't update other users";
+                case AuthType.TokenEquality:
+                    isComplexAuthorized = AuthorizeTokenEquality(actionContext);
                     break;
             }
 
@@ -62,24 +60,40 @@ namespace SamApi.Attributes
 
         }
 
-        private bool AuthorizeUpdateUser(HttpActionContext context)
+        private bool AuthorizeTokenEquality(HttpActionContext context)
         {
+            var r = false;
             var tokenContext = DecodedToken["context"] as Dictionary<string, object>;
 
             // data from user making the request
             var user = tokenContext["user"] as Dictionary<string, object>;
             var id = (int)user["id"];
             var perfil = user["perfil"] as string;
+            var samaccount = user["samaccount"] as string;
 
             // user to be updated
             var size = context.Request.RequestUri.Segments.Length;
             if(size >= 1)
             {
-                var userId = Convert.ToInt32(context.Request.RequestUri.Segments[size - 1]);
-                return (userId == id || perfil == "rh");
+                var param = context.Request.RequestUri.Segments[size - 1];
+
+                int userId;
+                if(int.TryParse(param, out userId))
+                {
+                    r = (userId == id || perfil == "rh");
+                }else
+                {
+                    r = (param == samaccount || perfil == "rh");
+                }
+
             }
 
-            return false;
+            if (r == false)
+            {
+                ErrorMessage = "You can't view or update informations about other users";
+            }
+
+            return r;
         }
 
         private bool BasicAuthorization()
@@ -90,10 +104,15 @@ namespace SamApi.Attributes
             var perfil = user["perfil"] as string;
             var samaccount = user["samaccount"] as string;
 
-            return (
-                Roles.ToLowerInvariant().Contains(perfil.ToLowerInvariant()) ||
-                Users.ToLowerInvariant().Contains(samaccount.ToLowerInvariant())
-            );
+            var isAuthorized = Roles.ToLowerInvariant().Contains(perfil.ToLowerInvariant()) ||
+                               Users.ToLowerInvariant().Contains(samaccount.ToLowerInvariant());
+
+            if (!isAuthorized)
+            {
+                ErrorMessage = $"User '{samaccount}' is not authorized to perform this action.";
+            }
+
+            return isAuthorized;
             
         }
 
