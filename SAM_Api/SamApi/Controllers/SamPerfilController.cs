@@ -20,7 +20,7 @@ namespace SamApi.Controllers
 
         [HttpGet]
         [Route("{samaccount}")]
-        [SamAuthorize(Roles="rh,funcionario", AuthorizationType = SamAuthorize.AuthType.TokenEquality)]
+        [SamAuthorize(AuthorizationType = SamAuthorize.AuthType.TokenEquality)]
         public HttpResponseMessage Get(string samaccount)
         {
 

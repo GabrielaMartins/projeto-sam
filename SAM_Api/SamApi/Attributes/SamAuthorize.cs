@@ -90,7 +90,7 @@ namespace SamApi.Attributes
 
             if (r == false)
             {
-                ErrorMessage = "You can't view or update informations about other users";
+                ErrorMessage = "You can't view, delete or update informations about other users";
             }
 
             return r;
@@ -103,6 +103,11 @@ namespace SamApi.Attributes
             var user = context["user"] as Dictionary<string, object>;
             var perfil = user["perfil"] as string;
             var samaccount = user["samaccount"] as string;
+
+            if(string.IsNullOrEmpty(Roles) && string.IsNullOrEmpty(Users))
+            {
+                return true;
+            }
 
             var isAuthorized = Roles.ToLowerInvariant().Contains(perfil.ToLowerInvariant()) ||
                                Users.ToLowerInvariant().Contains(samaccount.ToLowerInvariant());

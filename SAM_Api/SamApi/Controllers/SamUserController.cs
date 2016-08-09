@@ -93,7 +93,7 @@ namespace SamApi.Controllers
         // PUT: api/sam/user/update/{id}
         [Route("update/{id}")]
         [HttpPut]
-        [SamAuthorize(Roles = "rh,funcionario", AuthorizationType = SamAuthorize.AuthType.TokenEquality)]
+        [SamAuthorize(AuthorizationType = SamAuthorize.AuthType.TokenEquality)]
         public HttpResponseMessage Put(int id, [FromBody]UsuarioViewModel user)
         {
             
@@ -126,9 +126,9 @@ namespace SamApi.Controllers
         }
 
         // DELETE: api/sam/user/delete/{id}
-        [SamAuthorize(Roles = "rh")]
-        [Route("delete/{id}")]
         [HttpDelete]
+        [Route("delete/{id}")]
+        [SamAuthorize(AuthorizationType = SamAuthorize.AuthType.TokenEquality)]
         public HttpResponseMessage Delete(int id)
         {
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
