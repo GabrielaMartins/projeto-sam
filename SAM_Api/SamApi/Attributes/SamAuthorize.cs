@@ -35,22 +35,21 @@ namespace SamApi.Attributes
             // configure some header and decode our token
             ConfigureRequest(ref actionContext);
 
-            bool isComplexAuthorized = true;
-            bool isBasicAuthorized = BasicAuthorization();
-            if(AuthorizationType == AuthType.Basic)
+            // check basic authorization
+            if (!BasicAuthorization())
             {
-                return isBasicAuthorized;
+                return false;
             }
-                       
-
+                      
+            bool isAuthorized = false;
             switch (AuthorizationType)
             {
                 case AuthType.TokenEquality:
-                    isComplexAuthorized = AuthorizeTokenEquality(actionContext);
+                    isAuthorized = AuthorizeTokenEquality(actionContext);
                     break;
             }
 
-            return (isBasicAuthorized && isComplexAuthorized);
+            return isAuthorized;
             
         }
 

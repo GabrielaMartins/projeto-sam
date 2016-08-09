@@ -12,6 +12,8 @@ using System.Configuration;
 using DefaultException.Models;
 using SamApiModels.User;
 using SamApiModels.Login;
+using SamApi.Attributes;
+using System;
 
 namespace SamApiService.Controllers
 {
@@ -61,90 +63,6 @@ namespace SamApiService.Controllers
                 // returns our token
                 return Request.CreateResponse(HttpStatusCode.OK, tokenResult);
             }
-        }
-
-        // GET api/sam/testGenerate
-        [Route("testGenerate")]
-        [HttpGet]
-        public Dictionary<string, string> TestGenerate()
-        {
-            // variables to configure our token
-            var currentTime = System.DateTime.Now;
-            //var expTime = currentTime.AddMinutes(500000L);
-
-            var userInfo = new Dictionary<string, object>()
-            {
-                {"key", "jesley"},
-                {"name", "Jesley Marcelino"},
-                {"email", "jesley@opus.software.com.br"}
-
-                // we can put more information here
-            };
-
-            var context = new Dictionary<string, object>()
-            {
-                {"user", userInfo}
-
-                // we can put more information here
-            };
-
-            var payload = new Dictionary<string, object>()
-            {
-                // informa o cliente quem emitiu o token
-                { "iss", "http://opus.sam.com" },
-
-                // informa a dasta e hora que o token foi emitido
-                { "iat", currentTime},
-
-                // esse é o tempo de vida do token (isso faz dar erro)
-                //{ "exp", expTime},
-
-                // assunto do token
-                { "sub", "Jesley Marcelino"},
-
-                // contém informações que queremos colocar no token, como usuário por exemplo
-                { "context", context }
-
-            };
-
-            var secretKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk";
-            string token = JWT.JsonWebToken.Encode(payload, secretKey, JWT.JwtHashAlgorithm.HS256);
-
-            return new Dictionary<string, string>()
-            {
-                { "token", token }
-            };
-
-        }
-
-        // GET api/sam/testDecode
-        [Route("testDecode")]
-        [HttpGet]
-        public HttpResponseMessage TestDecode([FromUri] string token)
-        {
-            HttpResponseMessage response = null;
-            IDictionary<string, object> payload = null;
-            try
-            {
-                var secretKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk";
-
-                string jsonPayload = JWT.JsonWebToken.Decode(token, secretKey);
-                payload = JWT.JsonWebToken.DecodeToObject(token, secretKey) as IDictionary<string, object>;
-
-                response = Request.CreateResponse(HttpStatusCode.OK, payload);
-            }
-            catch (JWT.SignatureVerificationException)
-            {
-                var res = new Dictionary<string, object>()
-                {
-                    {"code", HttpStatusCode.InternalServerError},
-                    {"title", "Invalid token!"},
-                    {"message", "The token signature has failed"}
-                };
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, res);
-            }
-
-            return response;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using DefaultException.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SamApiModels.Git;
 using System;
 using System.Collections.Generic;
@@ -123,7 +122,7 @@ namespace SamApi.Helpers
             return JsonConvert.DeserializeObject<List<GitIssue>>(streamReader.ReadToEnd());
         }
 
-        public bool CreateIssue(string assignee, string title, string body, List<string> labels = null)
+        public bool CreateIssue(string assignee, string title, string body)
         {
 
             var newIssue = new GitNewIssue()
@@ -132,7 +131,7 @@ namespace SamApi.Helpers
                 title = title,
                 body = body
             };
-
+            
             var jsonIssue = JsonConvert.SerializeObject(newIssue);
 
             var request = GetRequest(CreateOrListUrl, "Post");
@@ -154,7 +153,7 @@ namespace SamApi.Helpers
             request.ContentType = "application/json; charset=utf-8";
             request.Accept = "application/json";
             request.Headers.Add("Authorization", "Basic " + authorization);
-            request.UserAgent = ("Chrome/51.0.2704.103");
+            request.UserAgent = ("SamApi/1.0");
 
             return request;
         }

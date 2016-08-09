@@ -91,8 +91,8 @@ namespace SamApi.Controllers
         }
 
         // PUT: api/sam/user/update/{id}
-        [Route("update/{id}")]
         [HttpPut]
+        [Route("update/{id}")]
         [SamAuthorize(AuthorizationType = SamAuthorize.AuthType.TokenEquality)]
         public HttpResponseMessage Put(int id, [FromBody]UsuarioViewModel user)
         {
