@@ -1,45 +1,63 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net;
-using System.Net.Http.Headers;
 using Opus.DataBaseEnvironment;
 using AutoMapper;
 using SamDataBase.Model;
 using SamApi.Helpers;
 using SamApi.Attributes;
 using SamApiModels.User;
-using SamApiModels.Message;
 using DefaultException.Models;
+using System.IO;
+using System.Configuration;
+using System.Web.Http.Description;
+using System.Web;
+using Swashbuckle.Swagger.Annotations;
 
 namespace SamApi.Controllers
 {
+    ///<Summary>
+    /// Permite efetuar ações sobre usuários do SAM
+    ///</Summary>
     [RoutePrefix("api/sam/user")]
     public class SamUserController : ApiController
     {
-        // GET: api/sam/user/all
+
+        /// <summary>
+        /// Retorna a lista de usuários do SAM
+        /// </summary>
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter a lista de usuários do SAM", typeof(List<UsuarioViewModel>))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [HttpGet]
         [Route("all")]
+        [SamResourceAuthorizer(Roles = "rh")]
         public HttpResponseMessage Get()
         {
-
-            // erase here
-            var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
-            response.Headers.CacheControl = new CacheControlHeaderValue()
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-                MaxAge = TimeSpan.FromMinutes(20)
-            };
+                var users = userRep.GetAll().ToList();
 
-            return response;
+                var usersViewModel = Mapper.Map<List<Usuario>, List<UsuarioViewModel>>(users);
+
+                return Request.CreateResponse(HttpStatusCode.OK, usersViewModel);
+            }
+
         }
 
-
-        // GET: api/sam/user/{samaccount}
+        /// <summary>
+        /// Retorna um usuário específico do SAM
+        /// </summary>
+        /// <param name="samaccount">Identifica o usuário procurado.</param>
+        [SwaggerResponse(HttpStatusCode.OK, "Caso o usuário do SAM seja encontrado", typeof(UsuarioViewModel))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário requerido não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [HttpGet]
         [Route("{samaccount}")]
-        [SamAuthorize(Roles="rh")]
+        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         public HttpResponseMessage GetBySamaccount(string samaccount)
         {
 
@@ -62,22 +80,41 @@ namespace SamApi.Controllers
 
         }
 
-
-        // POST: api/sam/user/save
+        /// <summary>
+        /// Cria um novo usuário na base de dados do SAM.
+        /// </summary>
+        /// <param name="user">Usuário a ser inserido.</param>
+      
+        [SwaggerResponse(HttpStatusCode.OK, "Caso o usuário seja inserido com sucesso na base de dados do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Forbidden, "Caso o usuário a ser inserido ja exista na base de dados do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [HttpPost]
         [Route("save")]
-        [SamAuthorize(Roles = "rh")]
-        public HttpResponseMessage Post([FromBody]UsuarioViewModel user)
+        [ResponseType(typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(Roles = "rh")]
+        public HttpResponseMessage Post([FromBody]AddUsuarioViewModel user)
         {
 
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
 
+                var userFound = userRep.Find(u => u.samaccount == user.samaccount).SingleOrDefault() == null;
+                if (userFound)
+                {
+                    throw new ExpectedException(HttpStatusCode.Forbidden, "Duplicated User", $"user '{user.samaccount}' already exists");
+                }
+
                 // save image to disk (we need do it before all other task)
-                ImageHelper.saveAsImage(user.foto, user.samaccount);
+                var logicPath = ConfigurationManager.AppSettings["LogicImagePath"];
+                var physicalPath = HttpContext.Current.Server.MapPath(logicPath);
+
+                ImageHelper.SaveAsImage(user.foto, user.samaccount, physicalPath);
+
+                user.foto = $"{logicPath}{Path.PathSeparator}{user.samaccount}";
 
                 // map new values to our reference
-                var newUser = Mapper.Map<UsuarioViewModel, Usuario>(user);
+                var newUser = Mapper.Map<AddUsuarioViewModel, Usuario>(user);
 
                 // add to entity context
                 userRep.Add(newUser);
@@ -85,15 +122,23 @@ namespace SamApi.Controllers
                 // commit changes
                 userRep.SubmitChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "User Added", "User Added"));
+                return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.OK, "User Added", "User Added"));
 
             }
         }
 
-        // PUT: api/sam/user/update/{id}
+        /// <summary>
+        /// Atualiza as informações de um usuário na base de dados do SAM.
+        /// </summary>
+        /// <param name="id">Identifica o usuário a ser alterado.</param>
+        [SwaggerResponse(HttpStatusCode.OK, "Caso o usuário seja alterado com sucesso na base de dados do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [HttpPut]
         [Route("update/{id}")]
-        [SamAuthorize(AuthorizationType = SamAuthorize.AuthType.TokenEquality)]
+        [ResponseType(typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         public HttpResponseMessage Put(int id, [FromBody]UsuarioViewModel user)
         {
             
@@ -117,24 +162,35 @@ namespace SamApi.Controllers
                 userRep.SubmitChanges();
 
                 // save image to disk
-                ImageHelper.saveAsImage(user.foto, userToBeUpdated.samaccount);
+                var logicPath = ConfigurationManager.AppSettings["LogicImagePath"];
+                var physicalPath = HttpContext.Current.Server.MapPath(logicPath);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "User Updated", "User updated"));
+                ImageHelper.SaveAsImage(user.foto, user.samaccount, physicalPath);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Updated", "User updated"));
                 
             }
 
         }
 
-        // DELETE: api/sam/user/delete/{id}
+        /// <summary>
+        /// Remove as informações de um usuário na base de dados do SAM.
+        /// </summary>
+        /// <param name="id">Identifica o usuário a ser removido.</param>
+        [SwaggerResponse(HttpStatusCode.OK, "Caso o usuário seja removido com sucesso na base de dados do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [HttpDelete]
         [Route("delete/{id}")]
-        [SamAuthorize(AuthorizationType = SamAuthorize.AuthType.TokenEquality)]
+        [ResponseType(typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         public HttpResponseMessage Delete(int id)
         {
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
                 userRep.Delete(id);
-                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "User Deleted", "User deleted"));
+                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Deleted", "User deleted"));
             }
         }
     }

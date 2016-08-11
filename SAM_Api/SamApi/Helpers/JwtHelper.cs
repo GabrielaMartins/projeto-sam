@@ -25,7 +25,7 @@ namespace Opus.Helpers
                 return string.Empty;
 
             // time in minutes
-            var tokenTTL = 5;
+            var tokenTTL = 60;
             var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             var currentTime = Math.Round((DateTime.UtcNow - unixEpoch).TotalSeconds);
             var exp = Math.Round((DateTime.UtcNow.AddMinutes(tokenTTL) - unixEpoch).TotalSeconds);

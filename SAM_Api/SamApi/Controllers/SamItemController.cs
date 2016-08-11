@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
-using System.Net.Http.Headers;
-using System;
-using SamApiModels;
+
 using Opus.DataBaseEnvironment;
-using Opus.Helpers;
 using System.Linq;
 using AutoMapper;
 using SamDataBase.Model;
 using DefaultException.Models;
 using SamApi.Attributes;
 using SamApiModels.Item;
-using SamApiModels.Message;
 
 namespace SamApi.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [RoutePrefix("api/sam/item")]
     public class SamItemController : ApiController
     {
@@ -45,7 +44,7 @@ namespace SamApi.Controllers
 
         // POST: api/sam/item/save
         [Route("save")]
-        [SamAuthorize(Roles="rh")]
+        [SamResourceAuthorizer(Roles="rh")]
         public HttpResponseMessage Post(ItemViewModel item)
         {
 
@@ -60,13 +59,13 @@ namespace SamApi.Controllers
                 // commit changes
                 itemRep.SubmitChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "Item Added", "Item Added"));
+                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Item Added", "Item Added"));
             }
         }
 
         // PUT: api/sam/item/update/{id}
         [Route("update/{id}")]
-        [SamAuthorize(Roles = "rh")]
+        [SamResourceAuthorizer(Roles = "rh")]
         public HttpResponseMessage Put(int id, ItemViewModel item)
         {
 
@@ -87,14 +86,14 @@ namespace SamApi.Controllers
                 // commit changes
                 itemRep.SubmitChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "Item Updated", $"Item #{id} Updated"));
+                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Item Updated", $"Item #{id} Updated"));
             }
 
         }
 
         // DELETE: api/sam/item/delete/{id}
         [Route("delete/{id}")]
-        [SamAuthorize(Roles = "rh")]
+        [SamResourceAuthorizer(Roles = "rh")]
         public HttpResponseMessage Delete(int id)
         {
 
@@ -102,7 +101,7 @@ namespace SamApi.Controllers
             {
                 itemRep.Delete(id);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "Item Deleted", $"Item #{id} Deleted"));
+                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Item Deleted", $"Item #{id} Deleted"));
             }
         }
     }

@@ -22,7 +22,7 @@ namespace Opus.DataBaseEnvironment
         }
 
         //Preencher aqui
-        public List<EventoViewModel> RecuperaEventos(Usuario usuario, string tipo = null, int? quantidade = null)
+        public List<EventoViewModel> RecuperaEventos(Usuario usuario, int? quantidade = null, string tipo = null)
         {
 
             if (quantidade.HasValue)
@@ -76,12 +76,12 @@ namespace Opus.DataBaseEnvironment
              (c.pontuacao - u.pontos) <= (c.pontuacao * 0.2)
              select new
              {
-                 usuario = u,
+                 Usuario = u,
                  PontosFaltantes = c.pontuacao - u.pontos
-             }).AsEnumerable()
+            }).AsEnumerable()
             .Select(x => new ProximaPromocaoViewModel()
             {
-                Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.usuario),
+                Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.Usuario),
                 PontosFaltantes = x.PontosFaltantes
             }
             ).ToList();

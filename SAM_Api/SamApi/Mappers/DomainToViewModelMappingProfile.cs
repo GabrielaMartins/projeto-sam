@@ -43,10 +43,11 @@ namespace SamApi.Mappers
             
             Mapper.CreateMap<Usuario, UsuarioViewModel>()
             .ForMember( u => u.Cargo, opt => opt.MapFrom(src => src.Cargo))
-            .ForMember(u => u.foto, opt => opt.MapFrom(src => ImageHelper.GetLogicPathForImage(src.samaccount)))
             .ForMember(u => u.ProximoCargo, opt => opt.MapFrom(src => DataAccess.Instance.GetCargoRepository().RecuperaProximoCargo(src.cargo)));
 
-           
+            Mapper.CreateMap<Usuario, AddUsuarioViewModel>();
+
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using SamApi.Attributes;
 using SamApi.Filters;
 using System.Net.Http.Headers;
 using System.Web.Http;
@@ -15,9 +16,12 @@ namespace SamApi
             // Enable CORS
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
-            // apply exception filter
+            // Apply exception filter
             config.Filters.Add(new SamExceptionFilter());
-           
+
+            // Apply token validation to all controllers
+            config.Filters.Add(new SamTokenAuthorizer());
+
             // isso deveria habilitar o serializador json para camel case
             //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             //config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;

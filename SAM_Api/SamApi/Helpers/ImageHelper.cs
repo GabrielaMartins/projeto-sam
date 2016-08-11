@@ -11,19 +11,18 @@ namespace SamApi.Helpers
     public class ImageHelper
     {
 
-        public static void saveAsImage(string base64imageString, string name)
+        public static void SaveAsImage(string img, string name, string where)
         {
             try
             {
              
-                base64imageString = base64imageString.Trim();
-                var init = base64imageString.IndexOf('/') + 1;
-                var end = base64imageString.IndexOf(';') - init;
-                var imageType = base64imageString.Substring(init,end);
-                var content = base64imageString.Substring(base64imageString.IndexOf(',') + 1);
+                img = img.Trim();
+                var init = img.IndexOf('/') + 1;
+                var end = img.IndexOf(';') - init;
+                var imageType = img.Substring(init,end);
+                var content = img.Substring(img.IndexOf(',') + 1);
 
-                var logicPath = ConfigurationManager.AppSettings["LogicImagePath"];
-                var physicalPath = HttpContext.Current.Server.MapPath(logicPath) + Path.DirectorySeparatorChar + name + '.' + imageType;
+                var physicalPath = $"{where}{Path.DirectorySeparatorChar}{name}'.'{imageType}";
 
                 using (FileStream fs = new FileStream(physicalPath, FileMode.OpenOrCreate))
                 {
