@@ -16,9 +16,9 @@ namespace SamApi.Attributes
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
             // if un debug mode, we skip token validator
-            #if DEBUG
-                return true;
-            #endif
+            //#if DEBUG
+            //    return true;
+            //#endif
 
             return ValidateToken(ref actionContext);
         }

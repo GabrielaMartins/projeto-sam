@@ -107,7 +107,7 @@ namespace SamApi.Filters
             if (issue == null)
             {
                 // create an issue
-                return gitIssuer.CreateIssue($"Unexpected Exception #{hashCode}", ex.StackTrace, new string[] {user}, new string[] { "Bug" });
+                return gitIssuer.CreateIssue($"Unexpected Exception #{hashCode}", ex.StackTrace, new string[] {user}, new string[] { "bug" });
 
             }
 

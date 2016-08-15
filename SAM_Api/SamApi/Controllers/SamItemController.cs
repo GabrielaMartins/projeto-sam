@@ -25,8 +25,9 @@ namespace SamApi.Controllers
         {
             using(var itemRep = DataAccess.Instance.GetItemRepository())
             {
-                var itens = itemRep.GetAll();
-                return Request.CreateResponse(HttpStatusCode.OK, itens);
+                var itens = itemRep.GetAll().ToList();
+                var itensViewModel = Mapper.Map<List<Item>, List<ItemViewModel>>(itens);
+                return Request.CreateResponse(HttpStatusCode.OK, itensViewModel);
             }
         }
 
@@ -37,8 +38,9 @@ namespace SamApi.Controllers
 
             using (var itemRep = DataAccess.Instance.GetItemRepository())
             {
-                var item = itemRep.Find(i => i.id == id);
-                return Request.CreateResponse(HttpStatusCode.OK, item);
+                var item = itemRep.Find(i => i.id == id).SingleOrDefault();
+                var itemViewModel = Mapper.Map<Item, ItemViewModel>(item);
+                return Request.CreateResponse(HttpStatusCode.OK, itemViewModel);
             }
         }
 

@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Agendamento\AgendamentoViewModel.cs" />
     <Compile Include="Models\OpusActiveDirectory\ActiveDirectoryUser.cs" />
     <Compile Include="Models\Cargo\CargoViewModel.cs" />
     <Compile Include="Models\Categoria\CategoriaViewModel.cs" />

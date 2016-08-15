@@ -185,6 +185,8 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="Attributes\SamResourceAuthorizer.cs" />
     <Compile Include="Attributes\SamTokenAuthorizer.cs" />
+    <Compile Include="Controllers\SamAgendamentoController.cs" />
+    <Compile Include="Controllers\SamCargoController.cs" />
     <Compile Include="Controllers\SamDashboardController.cs" />
     <Compile Include="Controllers\SamPerfilController.cs" />
     <Compile Include="Filters\SamExceptionFilter.cs" />

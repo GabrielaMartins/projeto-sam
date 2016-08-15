@@ -31,9 +31,9 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter a lista de usuários do SAM", typeof(List<UsuarioViewModel>))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(Roles = "rh")]
         [HttpGet]
         [Route("all")]
-        [SamResourceAuthorizer(Roles = "rh")]
         public HttpResponseMessage Get()
         {
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
@@ -55,9 +55,9 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário requerido não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         [HttpGet]
         [Route("{samaccount}")]
-        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         public HttpResponseMessage GetBySamaccount(string samaccount)
         {
 
@@ -89,10 +89,9 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.Forbidden, "Caso o usuário a ser inserido ja exista na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(Roles = "rh")]
         [HttpPost]
         [Route("save")]
-        [ResponseType(typeof(DescriptionMessage))]
-        [SamResourceAuthorizer(Roles = "rh")]
         public HttpResponseMessage Post([FromBody]AddUsuarioViewModel user)
         {
 
@@ -135,10 +134,9 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         [HttpPut]
         [Route("update/{id}")]
-        [ResponseType(typeof(DescriptionMessage))]
-        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         public HttpResponseMessage Put(int id, [FromBody]UsuarioViewModel user)
         {
             
@@ -181,10 +179,9 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         [HttpDelete]
         [Route("delete/{id}")]
-        [ResponseType(typeof(DescriptionMessage))]
-        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         public HttpResponseMessage Delete(int id)
         {
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
