@@ -96,18 +96,18 @@ namespace SamApi.Filters
             var repOwner = ConfigurationManager.AppSettings["Git:RepOwner"];
             var repName = ConfigurationManager.AppSettings["Git:RepName"];
 
-            var gitHelper = new GitHelper(user, password, repName, repOwner);
+            var gitIssuer = new GitIssuer.GitIssuer(user, password, repName, repOwner);
             var criterias = new Dictionary<string, string>()
             {
                 { "state", "open" }
             };
 
-            var issues = gitHelper.GetIssues(criterias);
+            var issues = gitIssuer.GetIssues(criterias);
             var issue = issues.Where(i => i.title.Contains(hashCode)).SingleOrDefault();
             if (issue == null)
             {
                 // create an issue
-                return gitHelper.CreateIssue(user, $"Unexpected Exception #{hashCode}", ex.StackTrace);
+                return gitIssuer.CreateIssue($"Unexpected Exception #{hashCode}", ex.StackTrace, new string[] {user}, new string[] { "Bug" });
 
             }
 
