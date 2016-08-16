@@ -12,6 +12,18 @@ export default StyleSheet.create({
         "backgroundSize": "cover",
         "backgroundPositionY": "center"
     },
+    "background-404": {
+        "overflow": "hidden",
+        "background": "url('../imagens/404back.jpg') no-repeat fixed",
+        "backgroundSize": "cover",
+        "backgroundPositionY": "center"
+    },
+    "background-erro": {
+        "overflow": "hidden",
+        "background": "url('../imagens/erroback.jpg') no-repeat fixed",
+        "backgroundSize": "cover",
+        "backgroundPositionY": "center"
+    },
     "transparent-dark": {
         "background": "rgba(0,0,0,0.75)"
     },
@@ -56,6 +68,9 @@ export default StyleSheet.create({
     "input-field prefixactive": {
         "color": "#550000"
     },
+    "corMensagemErro": {
+        "color": "#8F8F8F"
+    },
     "full-screen": {
         "height": 100 * vh
     },
@@ -83,12 +98,13 @@ export default StyleSheet.create({
         "marginLeft": -1,
         "display": "none",
         "maxHeight": "auto",
+        "minWidth": 150,
         "overflow": "hidden",
         "opacity": 0,
         "position": "absolute",
         "whiteSpace": "nowrap",
         "zIndex": 4,
-        "willChange": "height"
+        "willChange": "width, height"
     },
     "dropdown-content li>a": {
         "color": "#550000 !important"
@@ -134,6 +150,14 @@ export default StyleSheet.create({
     "promocoes": {
         "overflowY": "scroll",
         "height": 423
+    },
+    "alertas": {
+        "overflowY": "scroll",
+        "height": 580
+    },
+    "ultimasAtualizacoes": {
+        "overflowY": "scroll",
+        "height": 580
     },
     "votacao": {
         "overflowY": "scroll",
@@ -229,6 +253,30 @@ export default StyleSheet.create({
     },
     "full-screen-perfil": {
         "minHeight": "calc(100vh - 114px)"
+    },
+    "picker__weekday-display": {
+        "backgroundColor": "#550000"
+    },
+    "picker__date-display": {
+        "backgroundColor": "#550000"
+    },
+    "picker__day--selected": {
+        "backgroundColor": "#550000"
+    },
+    "picker__day--selected:hover": {
+        "backgroundColor": "#550000"
+    },
+    "picker--focused picker__day--selected": {
+        "backgroundColor": "#550000"
+    },
+    "picker__daypicker__day--today": {
+        "color": "#550000"
+    },
+    "picker__close": {
+        "color": "#550000"
+    },
+    "picker__today": {
+        "color": "#550000"
     },
     "arrow": {
         "WebkitAnimation": "animation 3000ms linear infinite both",

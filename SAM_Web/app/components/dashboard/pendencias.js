@@ -6,12 +6,18 @@ var CardPendencia = require('./cardsPendencia');
 var Pendencias = React.createClass({
   render : function(){
     var cards = [];
-
-    this.props.pendencias.forEach(function(conteudoCard){
-        if(conteudoCard.tipo == "Votação"){
-          cards.push(<div className="col l4 m12 s12"><Link to={{ pathname: '/Votacao/1'}}><CardPendencia conteudo = {conteudoCard}/></Link></div>);
+    var self = this;
+    self.props.pendencias.forEach(function(conteudoCard, index){
+        if(conteudoCard.Evento.tipo == "Votação" || self.props.tipoPendencia == "resultadoVotacao"){
+          cards.push(<div key={index} className={self.props.tipoPendencia == "alerta" ? "col l12 m12 s12" : "col l6 m12 s12"}>
+                        <Link to={{ pathname: '/Votacao/' + conteudoCard.Evento.id}}>
+                          <CardPendencia conteudo = {conteudoCard}/>
+                        </Link>
+                      </div>);
         }else{
-          cards.push(<div className="col l4 m12 s12"><CardPendencia conteudo = {conteudoCard}/></div>);
+          cards.push(<div key={index} classname = {self.props.tipoPendencia == "alerta" ? "col l12 m12 s12" : "col l6 m12 s12"}>
+                        <CardPendencia conteudo = {conteudoCard}/>
+                      </div>);
         }
     });
 

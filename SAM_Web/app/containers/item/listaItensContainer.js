@@ -1,141 +1,74 @@
 var React = require('react');
+var axios = require("axios");
 var ListaItens = require('../../components/shared/lista');
-
+var ItemCard = require('../item/itemCardContainer');
+var fezFetch = false;
 
 var ListaItensContainer = React.createClass({
   getInitialState: function() {
     return {
-      itens: null,
+      itens: [],
+      consulta: ""
     };
   },
   componentDidMount: function(){
-    window.sr = ScrollReveal();
-    sr.reveal('.scrollreveal');
+
+    var token = localStorage.getItem("token");
+    var config = {
+      headers: {'token': token}
+    };
+
+    //obtém dados
+    axios.get("http://sam/api/sam/item/all", config).then(
+      function(response){
+        fezFetch = true;
+        this.setState({
+          itens: response.data
+        });
+      }.bind(this),
+      function(jqXHR){
+
+      }
+    );
   },
-  componentWillMount: function(){
-    //fazer fetch aqui
+
+  componentWillUnmount: function(){
+    fezFetch = false;
+  },
+
+  handlePesquisa: function(event){
+
     this.setState({
-      itens:[
-        {
-          nome:"AWS",
-          categoria: "Workshop",
-          dificuldade: "Difícil",
-          status:true,
-          pontos: 40,
-          id:1,
-          feitoPor:[
-            {
-              nome:"Tancredo",
-              imagem:"./app/imagens/fulano.jpg",
-              id:1
-            },
-            {
-              nome:"Vinicius",
-              imagem:"./app/imagens/fulano.jpg",
-              id:2
-            },
-            {
-              nome:"Reginaldo",
-              imagem:"./app/imagens/fulano.jpg",
-              id:3
-            }
-          ]
-        },
-        {
-          nome:"Java 1",
-          categoria: "Certificação",
-          dificuldade: "Difícil",
-          status:true,
-          pontos: 40,
-          id:2,
-          feitoPor:[
-            {
-              nome:"Gabriel",
-              imagem:"./app/imagens/fulano.jpg",
-              id:4
-            },
-            {
-              nome:"Daniel",
-              imagem:"./app/imagens/fulano.jpg",
-              id:5
-            },
-            {
-              nome:"Bruno",
-              imagem:"./app/imagens/fulano.jpg",
-              id:6
-            }
-          ]
-        },
-        {
-          nome:"ReactJs",
-          categoria: "Workshop",
-          dificuldade: "Médio",
-          status:false,
-          pontos: 20,
-          id:3,
-          feitoPor:[
-            {
-              nome:"Thiago",
-              imagem:"./app/imagens/fulano.jpg",
-              id:7
-            },
-            {
-              nome:"Gabriel",
-              imagem:"./app/imagens/fulano.jpg",
-              id:8
-            }
-          ]
-        },
-        {
-          nome:"Angular",
-          categoria: "Workshop",
-          dificuldade: "Médio",
-          status:true,
-          pontos: 60,
-          id:4,
-          feitoPor:[
-            {
-              nome:"Gabriela",
-              imagem:"./app/imagens/fulano.jpg",
-              id:9
-            },
-            {
-              nome:"Jesley",
-              imagem:"./app/imagens/fulano.jpg",
-              id:10
-            }
-          ]
-        },
-        {
-          nome:"SQL Server 1",
-          categoria: "Certificação",
-          dificuldade: "Difícil",
-          status:true,
-          pontos: 80,
-          id:5,
-          feitoPor:[
-            {
-              nome:"Márcio",
-              imagem:"./app/imagens/fulano.jpg",
-              id:11
-            },
-            {
-              nome:"Marcos",
-              imagem:"./app/imagens/fulano.jpg",
-              id:12
-            },
-            {
-              nome:"Maurício",
-              imagem:"./app/imagens/fulano.jpg",
-              id:13
-            }
-          ]
-        }]
-  });
-},
+      consulta: event.target.value
+    });
+
+  },
 
   render : function(){
-      return(<ListaItens itens = {this.state.itens}/>)
+
+    if(!fezFetch){
+      return null;
+    }
+
+    var lista = [];
+    var placeholder = "Procure por Itens e Categorias";;
+    var self = this;
+
+    self.state.itens.forEach(function(item, index){
+      if(item.nome.toLowerCase().indexOf(self.state.consulta.toLowerCase())!=-1 ||
+        item.Categoria.nome.toLowerCase().indexOf(self.state.consulta.toLowerCase())!=-1){
+            lista.push(<div key={index} className="col l4 m6 s12"><ItemCard item = {item}/></div>)
+      }
+    });
+
+    return(
+      <ListaItens
+        placeholder = {placeholder}
+        consulta = {this.state.consulta}
+        handlePesquisa = {this.handlePesquisa}>
+        {lista}
+      </ListaItens>
+    );
   }
 });
 

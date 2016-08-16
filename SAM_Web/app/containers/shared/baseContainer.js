@@ -1,97 +1,145 @@
 var React = require('react');
 var Base = require('../../components/shared/base');
 var axios = require("axios");
-
 var BaseContainer = React.createClass({
   getInitialState: function() {
     return {
-      dropdowns: null,
-      samaccount:""
+      dropdowns: [
+        {
+          itemMenu: "",
+          id: "",
+          itens:[{
+            nome:"",
+            url:"",
+            id:""
+          }]
+        }
+      ],
+      samaccount:"",
+      perfil:""
     };
   },
 
   componentDidMount: function(){
-  
+
     //fetch informações do usuario
     var token = localStorage.getItem("token");
+    var samaccount = localStorage.getItem("samaccount");
+    var self = this;
 
     axios.defaults.headers.common['token'] = token;
-
     // busca no banco esse samaccount
-    axios.get('http://10.10.15.113:65122/api/sam/perfil/').then(
-        function(response){
-          this.setState({
-            samaccount: response.data.Usuario.samaccount,
+    axios.get('http://sam/api/sam/user/' + samaccount).then(
+      function(response){
+        if(response.data.perfil == "RH"){
+
+          self.setState({
+            perfil: response.data.perfil,
+            samaccount: response.data.samaccount,
             dropdowns : [
-                {
-                  itemMenu : "Funcionarios",
-                  id: 2,
-                  itens: [
-                    {
-                      nome: "Listar",
-                      url: "/Funcionario/Listagem",
-                      id: 3
-                    },
-                    {
-                      nome: "Editar",
-                      url: "/Funcionario/Edicao/gabriela",
-                      id: 4
-                    }
-                  ]
-                },
-                {
-                  itemMenu : "Itens",
-                  id: 5,
-                  itens: [
-                    {
-                      nome: "Listar",
-                      url: "/Item/Listagem",
-                      id: 6
-                    },
-                    {
-                      nome: "Cadastrar",
-                      url: "/Item/Cadastro",
-                      id: 7
-                    }
-                  ]
-                },
-                {
-                  itemMenu : response.data.Usuario.nome,
-                  imagem:response.data.Usuario.foto,
-                  id: 8,
-                  itens: [
-                    {
-                      nome: "Perfil",
-                      url: "/Perfil/" + response.data.Usuario.samaccount,
-                      id: 9
-                    },
-                    {
-                      nome: "Configuração",
-                      url: "#",
-                      id: 10
-                    }
-                  ]
-                }
-              ]
+              {
+                itemMenu : "Funcionarios",
+                id: 1,
+                itens: [
+                  {
+                    nome: "Listar",
+                    url: "/Funcionario/Listagem",
+                    id: 11
+                  },
+                  {
+                    nome: "Editar Meu Perfil",
+                    url: "/Funcionario/Edicao/" + samaccount,
+                    id: 12
+                  },
+                ]
+              },
+              {
+                itemMenu : "Itens",
+                id: 2,
+                itens: [
+                  {
+                    nome: "Listar",
+                    url: "/Item/Listagem",
+                    id: 21
+                  },
+                  {
+                    nome: "Cadastrar",
+                    url: "/Item/Cadastro",
+                    id: 22
+                  }
+                ]
+              },
+              {
+                itemMenu : response.data.nome,
+                imagem:response.data.foto,
+                id: 3,
+                itens: [
+                  {
+                    nome: "Perfil",
+                    url: "/Perfil/" + response.data.samaccount,
+                    id: 31
+                  }
+                ]
+              }
+            ]
           });
-        }.bind(this),
-
-        function(jqXHR){
-          debugger;
+        }else{
+          self.setState({
+            perfil: response.data.perfil,
+            samaccount: response.data.samaccount,
+            dropdowns : [
+              {
+                itemMenu : "Funcionarios",
+                id: 1,
+                itens: [
+                  {
+                    nome: "Editar Meu Perfil",
+                    url: "/Funcionario/Edicao/" + samaccount,
+                    id: 12
+                  }
+                ]
+              },
+              {
+                itemMenu : "Itens",
+                id: 2,
+                itens: [
+                  {
+                    nome: "Listar",
+                    url: "/Item/Listagem",
+                    id: 21
+                  },
+                  {
+                    nome: "Agendamento",
+                    url: "/Item/Agendamento",
+                    id: 23
+                  }
+                ]
+              },
+              {
+                itemMenu : response.data.nome,
+                imagem:response.data.foto,
+                id: 3,
+                itens: [
+                  {
+                    nome: "Perfil",
+                    url: "/Perfil/" + response.data.samaccount,
+                    id: 31
+                  }
+                ]
+              }
+            ]
+          });
         }
+      },
+
+      function(jqXHR){
+        //direcionar para a página de erro
+        debugger;
+        status = jqXHR.status;
+        var rota = '/Erro/' + status;
+        self.props.history.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+      }
     );
-
-
-    (function($) {
-      $(function() {
-        $(document).ready(function() {
-          $(".button-collapse").sideNav({
-            closeOnClick: true
-          });
-          $('.collapsible').collapsible();
-        });
-      }); // End Document Ready
-    })(jQuery);
 
     (function($) {
       $(window).scroll(function() {
@@ -110,65 +158,70 @@ var BaseContainer = React.createClass({
           return false;
         }
       });
+
+      (function($) {
+        $(function() {
+          $('.dropdown-button').dropdown({
+            belowOrigin: true,
+            alignment: 'left',
+            inDuration: 200,
+            outDuration: 150,
+            constrain_width: true,
+            hover: true,
+            gutter: 1
+          });
+        }); // End Document Ready
+      })(jQuery); // End of jQuery name space
+
+      $(document).ready(function() {
+        $(".button-collapse").sideNav({
+          closeOnClick: true
+        });
+        $('.collapsible').collapsible();
+      });
+
     })(jQuery);
+
+    window.sr = ScrollReveal({
+      reset: true
+    }).reveal('.scrollreveal', {
+      duration: 200,
+      origin: 'left'
+    });
+
+    this.forceUpdate();
+
   },
   componentWillMount: function(){
     this.setState({
-      dropdowns : [
-          {
-            itemMenu : "Funcionarios",
-            id: 2,
-            itens: [
-              {
-                nome: "Listar",
-                url: "/Funcionario/Listagem",
-                id: 3
-              },
-              {
-                nome: "Editar",
-                url: "/Funcionario/Edicao/gabriela",
-                id: 4
-              }
-            ]
-          },
-          {
-            itemMenu : "Itens",
-            id: 5,
-            itens: [
-              {
-                nome: "Listar",
-                url: "/Item/Listagem",
-                id: 6
-              },
-              {
-                nome: "Cadastrar",
-                url: "/Item/Cadastro",
-                id: 7
-              }
-            ]
-          },
-          {
-            itemMenu : "",
-            imagem:"",
-            id: 8,
-            itens: [
-              {
-                nome: "Perfil",
-                url: "",
-                id: 9
-              },
-              {
-                nome: "Configuração",
-                url: "#",
-                id: 10
-              }
-            ]
-          }
-        ]
+      dropdowns: [
+        {
+          itemMenu : "Funcionarios",
+          id: 1,
+          itens: []
+        },
+        {
+          itemMenu : "Itens",
+          id: 2,
+          itens: []
+        }
+      ]
     });
+
+  },
+  cleanupLocalStorage: function(){
+    localStorage.clear();
+    this.props.history.push('/');
   },
   render : function(){
-      return(<Base dropdowns = {this.state.dropdowns} children = {this.props.children} samaccount ={this.state.samaccount}/>)
+    return(
+      <Base
+        logout = {this.cleanupLocalStorage}
+        dropdowns = {this.state.dropdowns}
+        children = {this.props.children}
+        samaccount ={this.state.samaccount}
+        perfil = {this.state.perfil}/>
+    );
   }
 });
 

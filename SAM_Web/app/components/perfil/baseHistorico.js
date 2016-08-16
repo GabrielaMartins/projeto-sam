@@ -9,7 +9,13 @@ var BaseHistorico = React.createClass({
         <h4 className="card-title extraGrande colorText-default center-align"><b>{this.props.titulo}</b></h4>
         <div className="card wrapper">
           <i className="material-icons colorText-default right" >search</i>
-          <input id="search" placeholder={this.props.placeholder} className="colorText-default" />
+          <input
+            id="search"
+            placeholder={this.props.placeholder}
+            className="colorText-default"
+            onChange={this.props.handlePesquisa}
+            value = {this.props.consulta}
+          />
         </div>
         <div className="card-content scrollbar" id="base-historico">
           <div className="row">

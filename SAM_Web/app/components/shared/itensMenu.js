@@ -5,21 +5,6 @@ var Link = ReactRouter.Link;
 
 var ItemMenu = React.createClass({
   render : function(){
-
-  (function($) {
-      $(function() {
-        $('.dropdown-button').dropdown({
-          belowOrigin: true,
-          alignment: 'left',
-          inDuration: 200,
-          outDuration: 150,
-          constrain_width: true,
-          hover: true,
-          gutter: 1
-      });
-    }); // End Document Ready
-  })(jQuery); // End of jQuery name space
-
     //navbar
     var itensMenu = this.props.itensMenu.map(function(item, index){
       return(
@@ -32,25 +17,21 @@ var ItemMenu = React.createClass({
     });
 
     //mobile sidebar
+    var self = this;
     var itensMenuMobile = this.props.dropdowns.map(function(dropdown, index){
-      if(dropdown.itemMenu == "Itens" || dropdown.itemMenu == "Funcionarios"){
-
-        return(
-          <li key={index}>
-            <a className="collapsible-header">
-              {dropdown.itemMenu}<i className="material-icons right">expand_more</i>
-            </a>
-            <div className="collapsible-body">
-              <Dropdown key = {dropdown.id} itensDrop = {dropdown.itens} itemMenu = {dropdown.itemMenu} isMobile={true}/>
-            </div>
-          </li>
-        );
+      if(dropdown.itemMenu != self.props.usuario){
+        return(<li key={index}>
+          <a className="collapsible-header">{dropdown.itemMenu}<i className="material-icons right">expand_more</i></a>
+          <div className="collapsible-body">
+            <Dropdown key = {dropdown.id} itensDrop = {dropdown.itens} itemMenu = {dropdown.itemMenu} isMobile={true}/>
+          </div>
+        </li>);
       }
     });
 
     return(
       <div>
-        <ul className="right hide-on-med-and-down">
+        <ul className="left hide-on-med-and-down">
           {itensMenu}
         </ul>
         <div id="slide-out" className="side-nav">
@@ -65,6 +46,9 @@ var ItemMenu = React.createClass({
                 <ul className="collapsible" data-collapsible="accordion">
                   {itensMenuMobile}
                 </ul>
+              </li>
+              <li>
+                <a className="collapsible-header" onClick={this.props.logout}>Logout<i className="fa fa-sign-out right" aria-hidden="true" ></i></a>
               </li>
             </ul>
         </div>

@@ -4,6 +4,7 @@ var Link = ReactRouter.Link;
 
 var Modal = React.createClass({
   render: function(){
+
     var status = null;
     /*var categoriasProfundidade = ["Blog", "Workshop", "Palestra"];
     var categoriasAlinhado = ["Curso", "Certificação", "Repositório"];

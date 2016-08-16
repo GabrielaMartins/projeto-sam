@@ -1,6 +1,6 @@
 var React = require('react');
-var ReactRouter = require('react-router');
-var Link = ReactRouter.Link;
+var moment = require('moment');
+moment.locale('pt-br');
 
 var CardPendencia = React.createClass({
   render : function(){
@@ -13,18 +13,18 @@ var CardPendencia = React.createClass({
     return(
         <div className={classes} id="pendencias">
           <div className="card-title center" style={{marginTop:10}}>
-            <i className="material-icons medium">cake</i>
-            <h5 className="extraGrande">
-              <b>{this.props.conteudo.assunto}</b>
+            <i className="material-icons small">cake</i>
+            <h5 className="grande">
+              <b>{this.props.conteudo.Evento.Item.nome}</b>
             </h5>
           </div>
           <div className="card-content center">
-            <p className="grande">
-              {this.props.conteudo.data}
+            <p className="media">
+              {moment(this.props.conteudo.Evento.data).format('L')}
             </p>
-            <span className="media">
-              {this.props.conteudo.pessoa}
-            </span>
+            <p className="media">
+              <b>{this.props.conteudo.Evento.tipo}</b> - {this.props.conteudo.Usuario.nome}
+            </p>
           </div>
         </div>
     );

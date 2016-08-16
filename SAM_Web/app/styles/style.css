@@ -5,6 +5,20 @@
   background-position-y:center;
 }
 
+.background-404{
+  overflow: hidden;
+  background: url('../imagens/404back.jpg') no-repeat fixed;
+  background-size:cover;
+  background-position-y:center;
+}
+
+.background-erro{
+  overflow: hidden;
+  background: url('../imagens/erroback.jpg') no-repeat fixed;
+  background-size:cover;
+  background-position-y:center;
+}
+
 .transparent-dark {
   background:rgba(0,0,0,0.75);
 }
@@ -66,9 +80,24 @@
      color: #550000;
    }
 
+   .corMensagemErro {
+     color:#8F8F8F;
+   }
+
 
 .full-screen{
   height: 100vh;
+}
+@media screen and (min-width: 640px) {
+  .full-screen-less-nav{
+    height: calc(100vh - 134px) !important;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .full-screen-less-nav{
+    height: 120vh !important;
+  }
 }
 
 .wrapper {
@@ -95,13 +124,14 @@
   margin: 0;
   display: none;
   max-height: auto;
+  min-width: 150px;
 	margin-left: -1px; /* Add this to keep dropdown in line with edge of navbar */
   overflow: hidden; /* Changed this from overflow-y:auto; to overflow:hidden; */
   opacity: 0;
   position: absolute;
   white-space: nowrap;
   z-index: 4;
-  will-change: height;
+  will-change: width, height;
 }
 
 .dropdown-content li>a, .dropdown-content li>span{
@@ -146,6 +176,11 @@ footer.page-footer {
   height: 423px;
 }
 
+.alertas, .ultimasAtualizacoes{
+  overflow-y: scroll;
+  height: 580px;
+}
+
 .votacao{
   overflow-y: scroll;
   overflow-x: hidden;
@@ -184,6 +219,9 @@ input#search:not([type]):focus:not([readonly]){
 }
 
 @media screen and (min-width: 992px){
+  .gigante{
+    font-size: 20vh;
+  }
   .extraGrande{
     font-size: 3.5vh;
   }
@@ -199,6 +237,9 @@ input#search:not([type]):focus:not([readonly]){
 }
 
 @media screen and (max-width: 640px) {
+  .gigante{
+    font-size: 20vmax;
+  }
   .extraGrande{
     font-size: 3.5vmax;
   }
@@ -297,6 +338,14 @@ textarea:focus:not([readonly])+label {
 
 .full-screen-perfil{
   min-height: calc(100vh - 114px);
+}
+
+.picker__weekday-display, .picker__date-display, .picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected{
+  background-color: #550000;
+}
+
+.picker__day.picker__day--today, .picker__close, .picker__today{
+  color: #550000;
 }
 
 /*Animações*/
