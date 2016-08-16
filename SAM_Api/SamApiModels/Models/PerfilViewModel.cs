@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using SamApiModels.Event;
+using SamApiModels.User;
+using System.Collections.Generic;
 
 namespace SamApiModels
 {

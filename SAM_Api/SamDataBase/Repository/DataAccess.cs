@@ -5,6 +5,7 @@ namespace Opus.DataBaseEnvironment
 	public sealed class DataAccess
 	{
 		private static readonly DataAccess instance = new DataAccess();
+
 		public static DataAccess Instance { get { return instance; } }
 
 		public CargoRepository GetCargoRepository()

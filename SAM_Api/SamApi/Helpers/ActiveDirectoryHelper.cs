@@ -1,18 +1,18 @@
 ﻿using System;
 using System.IO;
-using SamApiModels;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using SamApiModels.OpusActiveDirectory;
 
 namespace Opus.Helpers.ActiveDirectoryService
 {
-    public class ActiveDirectoryConsumer
+    public class ActiveDirectoryHelper
     {
 
         public string DC { get; private set; }
 
-        public ActiveDirectoryConsumer(string DC)
+        public ActiveDirectoryHelper(string DC)
         {
             this.DC = DC;
         }
@@ -55,31 +55,36 @@ namespace Opus.Helpers.ActiveDirectoryService
 
         public List<ActiveDirectoryUser> GetAllUsers()
         {
-
-            List<ActiveDirectoryUser> users = new List<ActiveDirectoryUser>();
-
-            using (var context = new PrincipalContext(ContextType.Domain, "opus.local"))
+            try
             {
-                using (var searcher = new PrincipalSearcher(new UserPrincipal(context)))
-                {
+                List<ActiveDirectoryUser> users = new List<ActiveDirectoryUser>();
 
-                    GroupPrincipal grp = GroupPrincipal.FindByIdentity(context, IdentityType.Name, "staff");
-                    if (grp != null)
+                using (var context = new PrincipalContext(ContextType.Domain, "opus.local"))
+                {
+                    using (var searcher = new PrincipalSearcher(new UserPrincipal(context)))
                     {
 
-                        //var sw = System.IO.File.AppendText(@"C:\\Users\\jesley.OPUS\\Desktop\\log1.txt");
-                        foreach (Principal result in grp.GetMembers(true))
+                        GroupPrincipal grp = GroupPrincipal.FindByIdentity(context, IdentityType.Name, "staff");
+                        if (grp != null)
                         {
 
-                            var user = GetUser(result.SamAccountName);
-                            if (user != null)
-                                users.Add(user);
+                            //var sw = System.IO.File.AppendText(@"C:\\Users\\jesley.OPUS\\Desktop\\log1.txt");
+                            foreach (Principal result in grp.GetMembers(true))
+                            {
+
+                                var user = GetUser(result.SamAccountName);
+                                if (user != null)
+                                    users.Add(user);
+                            }
                         }
                     }
                 }
-            }
 
-            return users;
+                return users;
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void ListUserProperties(string username)

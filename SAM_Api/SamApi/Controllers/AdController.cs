@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Opus.Helpers.ActiveDirectoryService;
 using SamApiModels;
+using System.Net.Http;
+using System.Net;
 
 namespace SamApiService.Controllers
 {
@@ -13,25 +15,26 @@ namespace SamApiService.Controllers
         // GET api/ad/user/all
         [Route("user/all")]
         [HttpGet]
-        public List<ActiveDirectoryUser> GetUsers()
+        public HttpResponseMessage GetUsers()
         {
 
-            var adConsumer = new ActiveDirectoryConsumer("opus.local");
+            var adConsumer = new ActiveDirectoryHelper("opus.local");
             var users = adConsumer.GetAllUsers();
 
-            return users;
+            return Request.CreateResponse(HttpStatusCode.OK, users);
+          
         }
 
         // GET api/ad/User/{samaccount}
         [Route("user/{samaccount}")]
         [HttpGet]
-        public ActiveDirectoryUser GetUser(string samAccount)
+        public HttpResponseMessage GetUser(string samAccount)
         {
 
-            var adConsumer = new ActiveDirectoryConsumer("opus.local");
+            var adConsumer = new ActiveDirectoryHelper("opus.local");
             var user = adConsumer.GetUser(samAccount);
 
-            return user;
+            return Request.CreateResponse(HttpStatusCode.OK, user);
         }
     }
 

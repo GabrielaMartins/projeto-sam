@@ -17,7 +17,6 @@ namespace SamApi
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             AutoMapperConfig.RegisterMappings();
-
         }
     }
 }

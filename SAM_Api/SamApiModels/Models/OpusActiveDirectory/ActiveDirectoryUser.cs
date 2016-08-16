@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SamApiModels
+namespace SamApiModels.OpusActiveDirectory
 {
 
     public class ActiveDirectoryUser

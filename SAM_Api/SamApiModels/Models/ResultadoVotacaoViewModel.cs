@@ -1,21 +1,21 @@
-using SamApiModels;
+﻿using SamApiModels.Event;
+using SamApiModels.User;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SamApiModels
 {
-
-    public partial class ResultadoVotacoesViewModel
+    public class ResultadoVotacaoViewModel
     {
         public int id { get; set; }
 
-        public Nullable<int> evento { get; set; }
-
-        public Nullable<int> usuario { get; set; }
-
+       
         public int dificuldade { get; set; }
 
         public int modificador { get; set; }
-
 
         public virtual EventoViewModel Evento { get; set; }
 

@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-
-namespace SamApiModels
+namespace SamApiModels.Cargo
 {
 
     public class CargoViewModel
@@ -17,10 +14,6 @@ namespace SamApiModels
         public string nome { get; set; }
 
         public int pontuacao { get; set; }
-
-        //public Nullable<int> anterior { get; set; }
-
-        //public CargoViewModel CargoAnterior { get; set; }
         
     }
 }

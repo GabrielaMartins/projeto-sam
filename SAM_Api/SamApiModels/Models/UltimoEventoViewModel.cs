@@ -1,8 +1,6 @@
-﻿using System;
+﻿using SamApiModels.Event;
+using SamApiModels.User;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SamApiModels
 {

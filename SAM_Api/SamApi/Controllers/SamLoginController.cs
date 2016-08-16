@@ -11,6 +11,9 @@ using SamApiModels;
 using AutoMapper;
 using SamDataBase.Model;
 using Opus.Helpers;
+using System.Configuration;
+using DefaultException.Models;
+using SamApiModels.User;
 
 namespace SamApiService.Controllers
 {
@@ -25,14 +28,14 @@ namespace SamApiService.Controllers
         public HttpResponseMessage Login(LoginViewModel login)
         {
 
-            ActiveDirectoryConsumer adConsumer = new ActiveDirectoryConsumer("opus.local");
+            ActiveDirectoryHelper adConsumer = new ActiveDirectoryHelper(ConfigurationManager.AppSettings["OpusADServer"]);
             string token = string.Empty;
 
             // ask Active Directory if the User's credentials is valid
             if (!adConsumer.IsValidUser(login.User, login.Password))
             {
                 // if credential is invalid, return an error
-                return Request.CreateResponse(HttpStatusCode.Unauthorized, MessageViewModel.Unauthenticated);
+                throw new ExpectedException(HttpStatusCode.Forbidden, "Unauthenticated", "The server could not authenticated the user");
             }
 
             using (var userRep = DataAccess.Instance.GetUsuarioRepository()) {
@@ -46,15 +49,15 @@ namespace SamApiService.Controllers
                 {
 
                     // return a http error
-                    var error = new MessageViewModel(HttpStatusCode.NotFound, "User Not Found", "We could not found the user '" + login.User + "' in our database");
-                    return Request.CreateResponse(HttpStatusCode.NotFound, error);
+                    throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", "We could not found the user '" + login.User + "' in our database");
+                   
                 }
 
                 // Transform our Usuario model to UsuarioViewModel
                 var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usr);
 
                 // generate token based on User
-                token = JwtManagement.GenerateToken(usuarioViewModel);
+                token = JwtHelper.GenerateToken(usuarioViewModel);
                 var tokenResult = new Dictionary<string, object>() { { "token", token } };
 
                 // returns our token

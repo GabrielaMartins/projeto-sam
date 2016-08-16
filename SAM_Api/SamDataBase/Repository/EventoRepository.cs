@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using System;
+using SamApiModels.Event;
 
 namespace Opus.DataBaseEnvironment
 {
@@ -22,7 +23,7 @@ namespace Opus.DataBaseEnvironment
         {
             if (quantidade.HasValue)
             {
-                var eventos = GetAll().Take(quantidade.Value).ToList();
+                var eventos = GetAll().OrderBy(e => e.data).Take(quantidade.Value).ToList();
                 var eventosViewModel = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
                 return eventosViewModel;
             }
@@ -35,6 +36,7 @@ namespace Opus.DataBaseEnvironment
             }
 
         }
+
 
         public List<EventoViewModel> RecuperaCertificacoesMaisProcuradas()
         {
@@ -59,6 +61,28 @@ namespace Opus.DataBaseEnvironment
             //return certificacoesViewModel;
 
             throw new NotImplementedException();
+        }
+
+        public List<UltimoEventoViewModel> UltimosEventos()
+        {
+
+            using (var eventosRepository = DataAccess.Instance.GetEventoRepository())
+            {
+
+                // TODO: refatorar isso depois, tentar inserir como um metodo do repositorio de eventos
+                var ultimosEventos = eventosRepository.GetAll()
+                    .OrderByDescending(x => x.data)
+                    .ThenBy(x => x.Item.nome)
+                    .Take(10).AsEnumerable()
+                    .Select(x =>
+                        new UltimoEventoViewModel
+                        {
+                            Evento = Mapper.Map<Evento, EventoViewModel>(x),
+                            UsuariosQueFizeram = DataAccess.Instance.GetItemRepository().RecuperaUsuariosQueFizeram(x.item.Value)
+                        }).ToList();
+
+                return ultimosEventos;
+            }
         }
 
     }

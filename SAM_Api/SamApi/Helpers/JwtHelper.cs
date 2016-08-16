@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using SamApiModels;
-using System.Net.Http;
+using DefaultException.Models;
+using System.Net;
+using System.Configuration;
+using SamApiModels.User;
 
 namespace Opus.Helpers
 {
 
-    public class JwtManagement
+    public class JwtHelper
     {
 
-        private static readonly string plainTextSecurityKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk45Xdlgsyfc";
+        private static readonly string plainTextSecurityKey = ConfigurationManager.AppSettings["SecurityKey"];
 
-        public JwtManagement()
+        public JwtHelper()
         {
 
         }
@@ -33,6 +36,7 @@ namespace Opus.Helpers
             userInfo = new Dictionary<string, object>()
             {
                 {"id", user.id},
+                {"perfil", user.perfil},
                 {"samaccount", user.samaccount}
 
                 // we can put more information here
@@ -41,7 +45,6 @@ namespace Opus.Helpers
             context = new Dictionary<string, object>()
             {
                 {"user", userInfo},
-                {"perfil", user.perfil }
                 // we can put more information here
             };
 
@@ -53,11 +56,8 @@ namespace Opus.Helpers
                 // informa a data e hora que o token foi emitido
                 { "iat", currentTime},
 
-                /// esse é o tempo de vida do token (da erro quando decodifica, nao sei pq)
+                // esse é o tempo de vida do token (da erro quando decodifica, nao sei pq)
                 //{ "exp", currentTime.AddHours(expTime)},
-
-                // assunto do token
-                { "sub", user.nome},
 
                 // contém informações que queremos colocar no token, como usuário por exemplo
                 { "context", context }
@@ -77,9 +77,15 @@ namespace Opus.Helpers
                 var res = JWT.JsonWebToken.DecodeToObject(token, plainTextSecurityKey) as IDictionary<string, object>;
                 return res;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw e;
+                if (ex.Message.ToLower().Contains("signature"))
+                {
+                    throw new ExpectedException(HttpStatusCode.Unauthorized, "Invalid Token");
+                }
+
+                throw ex;
+                
             }
             
         }

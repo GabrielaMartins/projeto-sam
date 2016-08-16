@@ -9,6 +9,7 @@ using SamDataBase.Model;
 using System;
 using Opus.Helpers;
 using System.Collections.Generic;
+using SamApiModels.User;
 
 namespace SamApi.Controllers
 {
@@ -22,13 +23,8 @@ namespace SamApi.Controllers
         public HttpResponseMessage Get()
         {
 
-            var token = HeaderHandler.ExtractHeaderValue(Request, "token");
-            if (token == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, MessageViewModel.TokenMissing);
-            }
-
-            var decodedToken = JwtManagement.DecodeToken(token.SingleOrDefault());
+            var token = HeaderHelper.ExtractHeaderValue(Request, "token");
+            var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
             var context = decodedToken["context"] as Dictionary<string, object>;
             var userInfo = context["user"] as Dictionary<string, object>;
             var samaccount = userInfo["samaccount"] as string;

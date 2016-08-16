@@ -1,7 +1,8 @@
+using SamApiModels.Cargo;
 using System;
 using System.Collections.Generic;
 
-namespace SamApiModels
+namespace SamApiModels.User
 {
 
     public partial class UsuarioViewModel
@@ -34,6 +35,6 @@ namespace SamApiModels
 
         public virtual CargoViewModel Cargo { get; set; }
 
-        public virtual List<CargoViewModel> ProximoCargo { get; set; }
+        public virtual ICollection<CargoViewModel> ProximoCargo { get; set; }
     }
 }

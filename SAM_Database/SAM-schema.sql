@@ -18,7 +18,7 @@ CREATE TABLE Usuarios
 	nome VARCHAR(50) NOT NULL,
 	descricao VARCHAR(200),
 	redes VARCHAR(200),
-	perfil VARCHAR(20) NOT NULL DEFAULT 'Funcionário',
+	perfil VARCHAR(20) NOT NULL DEFAULT 'funcionario' CHECK(perfil IN ('funcionario','rh')),
 	dataInicio DATE NOT NULL,
 	foto VARCHAR(150) DEFAULT 'http://10.10.15.113:65122/Public/Images/Users/new.jpg',
 	ativo BIT NOT NULL DEFAULT 1
@@ -44,7 +44,7 @@ CREATE TABLE Itens
 	descricao VARCHAR(200),
 	dificuldade INT NOT NULL CHECK(dificuldade IN (1,3,8)),
 	modificador INT NOT NULL CHECK(modificador IN (1,2,3,8)),
-	categoria INT FOREIGN KEY REFERENCES Categorias(id) ON DELETE NO ACTION,
+	categoria INT FOREIGN KEY REFERENCES Categorias(id) ON DELETE NO ACTION NOT NULL,
 );
 
 CREATE TABLE ItensTagged

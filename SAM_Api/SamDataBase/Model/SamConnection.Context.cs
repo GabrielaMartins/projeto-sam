@@ -12,7 +12,8 @@ namespace SamDataBase.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using System.Data.Entity.Validation;
+    using System.Linq;
     public partial class SamEntities : DbContext
     {
         public SamEntities()
@@ -36,4 +37,5 @@ namespace SamDataBase.Model
         public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<Promocao> Promocoes { get; set; }
     }
+
 }

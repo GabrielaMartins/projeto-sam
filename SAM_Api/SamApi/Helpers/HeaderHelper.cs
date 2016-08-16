@@ -1,12 +1,12 @@
-﻿using System;
+﻿using DefaultException.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Web;
+using System.Net;
 
 namespace Opus.Helpers
 {
-    public class HeaderHandler
+    public class HeaderHelper
     {
 
         public static IEnumerable<string> ExtractHeaderValue(HttpRequestMessage request, string key)
@@ -16,9 +16,9 @@ namespace Opus.Helpers
             {
                 return request.Headers.GetValues(key);
             }
-            catch
+            catch(Exception ex)
             {
-                return null;
+                throw new ExpectedException(HttpStatusCode.BadRequest, ex.Message, "Key '" + key + "' not found.");
             }
         }
 

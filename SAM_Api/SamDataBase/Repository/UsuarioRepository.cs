@@ -5,7 +5,10 @@ using System.Linq;
 using System.Collections.Generic;
 using SamApiModels;
 using AutoMapper;
-using System;
+using SamApiModels.Event;
+using SamApiModels.User;
+using SamApiModels.Pendency;
+using SamApiModels.Cargo;
 
 namespace Opus.DataBaseEnvironment
 {
@@ -110,45 +113,33 @@ namespace Opus.DataBaseEnvironment
             return promocoesRealizadas;
         }
 
-        public List<CargoViewModel> RecuperaProximoCargo(Usuario usuario)
+        public List<PendenciaUsuarioViewModel> RecuperaPendencias(Usuario usuario)
         {
-            var db = (SamEntities)DbContext;
-            var query = (from cargo in db.Cargos
-                         from usr in db.Usuarios
-                         where cargo.anterior == usr.cargo && usr.samaccount == usuario.samaccount
-                         select cargo);
 
-            var cargos = query.ToList();
-            var cargosViewModel = new List<CargoViewModel>();
-            foreach (var cargo in cargos)
-            {
-                var cargoViewModel = Mapper.Map<Cargo, CargoViewModel>(cargo);
-                cargosViewModel.Add(cargoViewModel);
-            }
+            var pendencias = DataAccess.Instance
+                .GetPendenciaRepository()
+                .Find(p => p.usuario == usuario.id && p.estado == true)
+                .AsEnumerable()
+                .Select(x => new PendenciaUsuarioViewModel()
+                {
+                    Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.Usuario),
+                    Evento = Mapper.Map<Evento, PendenciaEventoViewModel>(x.Evento)
+                }).ToList();
 
-            return cargosViewModel;
+            return pendencias;
+
+
         }
 
-        public List<PendenciaViewModel> RecuperaPendencias(Usuario usuario)
+        public List<ResultadoVotacaoViewModel> RecuperaVotacoes(Usuario usuario)
         {
-            // recupera toda pendencia onde o usuario é RH
-            if (usuario.perfil == "RH")
-            {
-                var pendenciasRH = DataAccess.Instance.GetPendenciaRepository().Find(p => p.Usuario.perfil == usuario.perfil).ToList();
-                var pendenciaViewModel = Mapper.Map<List<Pendencia>, List<PendenciaViewModel>>(pendenciasRH);
+            var votacoes = DataAccess.Instance
+                .GetResultadoVotacoRepository()
+                .Find(r => r.usuario == usuario.id || r.Evento.usuario == usuario.id)
+                .ToList();
 
-                return pendenciaViewModel;
-            }
 
-            // recupera as pendencias do usuario especifico
-            else
-            {
-                var pendencias = DataAccess.Instance.GetPendenciaRepository().Find(p => p.usuario == usuario.id).ToList();
-                var pendenciaViewModel = Mapper.Map<List<Pendencia>, List<PendenciaViewModel>>(pendencias);
-
-                return pendenciaViewModel;
-            }
-
+            return Mapper.Map<List<ResultadoVotacao>, List<ResultadoVotacaoViewModel>>(votacoes);
         }
     }
 }

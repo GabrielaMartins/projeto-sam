@@ -5,6 +5,14 @@ using System.Net;
 using System.Net.Http.Headers;
 using System;
 using SamApiModels;
+using Opus.DataBaseEnvironment;
+using Opus.Helpers;
+using System.Linq;
+using AutoMapper;
+using SamDataBase.Model;
+using DefaultException.Models;
+using SamApi.Attributes;
+using SamApiModels.Item;
 
 namespace SamApi.Controllers
 {
@@ -13,9 +21,13 @@ namespace SamApi.Controllers
     {
         // GET: api/sam/item/all
         [Route("all")]
-        public IEnumerable<string> Get()
+        public HttpResponseMessage Get()
         {
-            return new string[] { "value1", "value2" };
+            using(var itemRep = DataAccess.Instance.GetItemRepository())
+            {
+                var itens = itemRep.GetAll();
+                return Request.CreateResponse(HttpStatusCode.OK, itens);
+            }
         }
 
         // GET: api/sam/item/{id}
@@ -23,43 +35,63 @@ namespace SamApi.Controllers
         public HttpResponseMessage Get(int id)
         {
 
-            // erase here
-            var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
-            response.Headers.CacheControl = new CacheControlHeaderValue()
+            using (var itemRep = DataAccess.Instance.GetItemRepository())
             {
-                MaxAge = TimeSpan.FromMinutes(20)
-            };
-
-            return response;
+                var item = itemRep.Find(i => i.id == id);
+                return Request.CreateResponse(HttpStatusCode.OK, item);
+            }
         }
 
         // POST: api/sam/item/save
         [Route("save")]
-        public HttpResponseMessage Post([FromBody]string item)
+        public HttpResponseMessage Post(ItemViewModel item)
         {
-            // erase here
-            var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
-            response.Headers.CacheControl = new CacheControlHeaderValue()
-            {
-                MaxAge = TimeSpan.FromMinutes(20)
-            };
 
-            return response;
+            var token = HeaderHelper.ExtractHeaderValue(Request, "token");
+            var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
+            var context = decodedToken["context"] as Dictionary<string, object>;
+            var perfil = context["perfil"] as string;
+
+            using (var itemRep = DataAccess.Instance.GetItemRepository())
+            {
+                // map new values to our reference
+                var newItem = Mapper.Map<ItemViewModel, Item>(item);
+
+                // add to entity context
+                itemRep.Add(newItem);
+
+                // commit changes
+                itemRep.SubmitChanges();
+
+                 return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "Item Added", "Item Added"));
+            }
         }
 
         // PUT: api/sam/item/update/{id}
         [Route("update/{id}")]
-        public HttpResponseMessage Put(int id, [FromBody]string item)
+        [SamAuthorize(Roles = "RH")]
+        public HttpResponseMessage Put(int id, ItemViewModel item)
         {
-            
-            // erase here
-            var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
-            response.Headers.CacheControl = new CacheControlHeaderValue()
-            {
-                MaxAge = TimeSpan.FromMinutes(20)
-            };
 
-            return response;
+            using (var itemRep = DataAccess.Instance.GetItemRepository())
+            {
+                var itemToBeUpdated = itemRep.Find(i => i.id == id).SingleOrDefault();
+                if(itemToBeUpdated == null)
+                {
+                    throw new ExpectedException(HttpStatusCode.NotFound, "Item Not Found", "Item with id '" + id + "' not found");
+                }
+
+                // map new values to our reference
+                itemToBeUpdated = Mapper.Map(item, itemToBeUpdated);
+
+                // add to entity context
+                itemRep.Update(itemToBeUpdated);
+
+                // commit changes
+                itemRep.SubmitChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.OK, "Item Updated", "Item Updated"));
+            }
 
         }
 

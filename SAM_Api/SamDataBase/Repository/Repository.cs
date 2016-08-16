@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Data.Entity;
 using System.Linq.Expressions;
+using System.Data.Entity.Validation;
 
 namespace Opus.RepositoryPattern
 {
@@ -38,8 +39,7 @@ namespace Opus.RepositoryPattern
         {
 
             DbSet.Add(entity);
-            //DbContext.SaveChanges();
-
+            
             return entity;
         }
 
@@ -48,8 +48,7 @@ namespace Opus.RepositoryPattern
 
             var entry = DbContext.Entry(entity);
             entry.State = EntityState.Modified;
-            //DbContext.SaveChanges();
-
+         
         }
 
         public virtual void Delete(Expression<Func<T, bool>> filter)
@@ -60,7 +59,6 @@ namespace Opus.RepositoryPattern
             {
                 DbSet.Attach(entity);
                 DbSet.Remove(entity);
-                // DbContext.SaveChanges();
             }
         }
 
@@ -72,13 +70,35 @@ namespace Opus.RepositoryPattern
             {
                 DbSet.Attach(entity);
                 DbSet.Remove(entity);
-                //DbContext.SaveChanges();
             }
         }
 
         public int SubmitChanges()
         {
-            return DbContext.SaveChanges();
+            try
+            {
+                return DbContext.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Retrieve the error messages as a list of strings.
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+
+                // Join the list to a single string.
+                var fullErrorMessage = string.Join(";", errorMessages);
+
+                // Combine the original exception message with the new one.
+                var exceptionMessage = string.Concat("Validation failed for one or more entities", fullErrorMessage);
+
+                // Throw a new DbEntityValidationException with the improved exception message.
+                throw new DbEntityValidationException("Validation failed for one or more entities", new Exception(fullErrorMessage));
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
 

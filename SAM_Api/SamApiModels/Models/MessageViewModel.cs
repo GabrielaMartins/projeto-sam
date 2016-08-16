@@ -19,6 +19,7 @@ namespace SamApiModels
 
         public static readonly MessageViewModel Unauthenticated = new MessageViewModel(HttpStatusCode.Forbidden, "Unauthenticated", "The server could not authenticated the user");
 
+
         public MessageViewModel(HttpStatusCode code, string title, string description)
         {
             Code = (int)code;

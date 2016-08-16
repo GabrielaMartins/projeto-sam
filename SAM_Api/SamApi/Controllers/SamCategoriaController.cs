@@ -9,40 +9,41 @@ using Opus.DataBaseEnvironment;
 using System.Linq;
 using AutoMapper;
 using SamDataBase.Model;
+using SamApiModels.Categoria;
 
 namespace SamApi.Controllers
 {
     [RoutePrefix("api/sam/category")]
     public class SamCategoriaController : ApiController
     {
-        // GET: api/sam/categoria/all
+        // GET: api/sam/category/all
         [Route("all")]
         public HttpResponseMessage Get()
         {
-            var categorias = DataAccess.Instance.GetCategoriaRepository().GetAll().ToList();
-            var categoriasViewModel = new List<CategoriaViewModel>();
-            foreach(var categoria in categorias)
-            {
-                var categoriaViewModel = Mapper.Map<Categoria, CategoriaViewModel>(categoria);
-                categoriasViewModel.Add(categoriaViewModel);
-            }
+           
+            using (var rep = DataAccess.Instance.GetCategoriaRepository()) {
+                var categorias = rep.GetAll().ToList();
+                var categoriasViewModel = new List<CategoriaViewModel>();
+                foreach (var categoria in categorias)
+                {
+                    var categoriaViewModel = Mapper.Map<Categoria, CategoriaViewModel>(categoria);
+                    categoriasViewModel.Add(categoriaViewModel);
+                }
 
-            return Request.CreateResponse(HttpStatusCode.OK, categoriasViewModel);
+                return Request.CreateResponse(HttpStatusCode.OK, categoriasViewModel);
+            }
         }
 
         // GET: api/sam/categoria/{id}
         [Route("{id}")]
         public HttpResponseMessage Get(int id)
         {
-
-            // erase here
-            var response = Request.CreateResponse(HttpStatusCode.OK, new MessageViewModel(HttpStatusCode.ServiceUnavailable, "Not Implemented", "under construction"));
-            response.Headers.CacheControl = new CacheControlHeaderValue()
+            using (var rep = DataAccess.Instance.GetCategoriaRepository())
             {
-                MaxAge = TimeSpan.FromMinutes(20)
-            };
-
-            return response;
+                var query = rep.Find(c => c.id == id);
+                var categoria = query.SingleOrDefault();
+                return Request.CreateResponse(HttpStatusCode.OK, categoria);
+            }  
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SamApiModels.User;
+using System.Collections.Generic;
 
 namespace SamApiModels
 {
