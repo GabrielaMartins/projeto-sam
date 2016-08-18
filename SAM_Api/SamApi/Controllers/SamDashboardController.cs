@@ -18,13 +18,12 @@ namespace SamApi.Controllers
 
         // GET: api/sam/Dashboard
         [HttpGet]
-        [Route("")]
-        [SamResourceAuthorizer(Roles="rh,funcionario")]
-        public HttpResponseMessage Get()
+        [Route("{samaccount}")]
+        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
+        public HttpResponseMessage Get(string samaccount)
         {
 
-            // get samaccount from decoded token stored on request header
-            var samaccount = Request.Headers.GetValues("samaccount").FirstOrDefault();
+            // get perfil from decoded token stored on request header
             var perfil = Request.Headers.GetValues("perfil").FirstOrDefault();
             
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())

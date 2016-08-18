@@ -1,7 +1,9 @@
-﻿using DefaultException.Models;
+﻿using AutoMapper;
+using DefaultException.Models;
 using Opus.DataBaseEnvironment;
 using SamApi.Attributes;
 using SamApiModels.Cargo;
+using SamDataBase.Model;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -29,7 +31,7 @@ namespace SamApi.Controllers
         {
             using (var rep = DataAccess.Instance.GetCargoRepository())
             {
-                var cargos = rep.GetAll().ToList();
+                var cargos = Mapper.Map<List<Cargo>,List<CargoViewModel>>(rep.GetAll().ToList());
                 return Request.CreateResponse(HttpStatusCode.OK, cargos);
             }
         }

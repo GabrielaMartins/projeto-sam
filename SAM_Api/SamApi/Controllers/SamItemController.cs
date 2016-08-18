@@ -25,9 +25,9 @@ namespace SamApi.Controllers
         {
             using(var itemRep = DataAccess.Instance.GetItemRepository())
             {
-                var itens = itemRep.GetAll().ToList();
-                var itensViewModel = Mapper.Map<List<Item>, List<ItemViewModel>>(itens);
-                return Request.CreateResponse(HttpStatusCode.OK, itensViewModel);
+
+                var itens = itemRep.RecuperaItensESeusUsuarios();
+                return Request.CreateResponse(HttpStatusCode.OK, itens);
             }
         }
 

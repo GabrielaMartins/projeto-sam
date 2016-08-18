@@ -22,7 +22,7 @@ namespace SamApi.Helpers
                 var imageType = img.Substring(init,end);
                 var content = img.Substring(img.IndexOf(',') + 1);
 
-                var physicalPath = $"{where}{Path.DirectorySeparatorChar}{name}'.'{imageType}";
+                var physicalPath = $"{where}{Path.DirectorySeparatorChar}{name}.{imageType}";
 
                 using (FileStream fs = new FileStream(physicalPath, FileMode.OpenOrCreate))
                 {

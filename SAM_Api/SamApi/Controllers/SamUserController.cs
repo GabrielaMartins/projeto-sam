@@ -15,6 +15,7 @@ using System.Configuration;
 using System.Web.Http.Description;
 using System.Web;
 using Swashbuckle.Swagger.Annotations;
+using SamApiModels.Models.User;
 
 namespace SamApi.Controllers
 {
@@ -84,7 +85,7 @@ namespace SamApi.Controllers
         /// Cria um novo usuário na base de dados do SAM.
         /// </summary>
         /// <param name="user">Usuário a ser inserido.</param>
-      
+
         [SwaggerResponse(HttpStatusCode.OK, "Caso o usuário seja inserido com sucesso na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Forbidden, "Caso o usuário a ser inserido ja exista na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
@@ -136,18 +137,34 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         [HttpPut]
-        [Route("update/{id}")]
-        public HttpResponseMessage Put(int id, [FromBody]UsuarioViewModel user)
+        [Route("update/{samaccount}")]
+        public HttpResponseMessage Put(string samaccount, [FromBody]UpdateUsuarioViewModel user)
         {
-            
+
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
 
                 // it will be updated with values provided by the parameter
-                var userToBeUpdated = userRep.Find(u => u.id == id).SingleOrDefault();
+                var userToBeUpdated = userRep.Find(u => u.samaccount == samaccount).SingleOrDefault();
                 if (userToBeUpdated == null)
                 {
-                    throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", "The server could not find the user with id = '" + id + "'");
+                    throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", $"The server could not find the user '{samaccount}'");
+                }
+
+                if (user.foto == "")
+                {
+                    user.foto = userToBeUpdated.foto;
+                }
+                else
+                {
+                    // save image to disk
+                    var logicPath = ConfigurationManager.AppSettings["LogicImagePath"];
+                    var physicalPath = HttpContext.Current.Server.MapPath(logicPath);
+
+                    ImageHelper.SaveAsImage(user.foto, userToBeUpdated.samaccount, physicalPath);
+
+                    // update image path
+                    user.foto = ImageHelper.GetLogicPathForImage(userToBeUpdated.samaccount);
                 }
 
                 // map values from 'user' to 'userToBeUpdated'
@@ -159,14 +176,9 @@ namespace SamApi.Controllers
                 // commit changes to database
                 userRep.SubmitChanges();
 
-                // save image to disk
-                var logicPath = ConfigurationManager.AppSettings["LogicImagePath"];
-                var physicalPath = HttpContext.Current.Server.MapPath(logicPath);
-
-                ImageHelper.SaveAsImage(user.foto, user.samaccount, physicalPath);
-
-                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Updated", "User updated"));
                 
+                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Updated", "User updated"));
+
             }
 
         }

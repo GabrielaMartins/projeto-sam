@@ -9,6 +9,7 @@ using SamApiModels.Item;
 using SamApiModels.Pendencia;
 using SamApiModels.Promocao;
 using SamApiModels.User;
+using SamApiModels.Votacao;
 using SamDataBase.Model;
 
 namespace SamApi.Mappers
@@ -17,6 +18,12 @@ namespace SamApi.Mappers
     {
         protected override void Configure()
         {
+
+            Mapper.CreateMap<ResultadoVotacao, VotoViewModel>()
+            .ForMember(x => x.Dificuldade, opt => opt.MapFrom(src => src.dificuldade))
+            .ForMember(x => x.Profundidade, opt => opt.MapFrom(src => src.modificador))
+            .ForMember(x => x.Usuario, opt => opt.MapFrom(src => src.Usuario));
+
             Mapper.CreateMap<Cargo, CargoViewModel>();
 
             Mapper.CreateMap<Categoria, CategoriaViewModel>();

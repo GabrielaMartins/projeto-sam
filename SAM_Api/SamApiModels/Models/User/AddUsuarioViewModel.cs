@@ -58,9 +58,19 @@ namespace SamApiModels.User
         public string descricao { get; set; }
 
         /// <summary>
-        /// Vetor de tamanho no máximo 3, contendo as redes sociais:(github; facebook; linkedin;)
+        /// Facebook
         /// </summary>
-        public string[] redes { get; set; }
+        public string facebook { get; set; }
+
+        /// <summary>
+        /// Github
+        /// </summary>
+        public string github { get; set; }
+
+        /// <summary>
+        /// Linkedin
+        /// </summary>
+        public string linkedin { get; set; }
 
         /// <summary>
         /// Quantidade de pontos que o usuário obtém
@@ -69,7 +79,7 @@ namespace SamApiModels.User
 
         public AddUsuarioViewModel()
         {
-            redes = new string[3];
+           
         }
     }
 }

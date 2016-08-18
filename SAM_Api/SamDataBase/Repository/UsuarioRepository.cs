@@ -31,13 +31,33 @@ namespace Opus.DataBaseEnvironment
                 {
                     var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario.id && e.tipo == tipo).Take(quantidade.Value).ToList();
                     var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-                    return eventoViewModels;
+                    var r = new List<EventoViewModel>();
+                    foreach (var evento in eventoViewModels)
+                    {
+                        using (var itemRep = DataAccess.Instance.GetItemRepository())
+                        {
+                            evento.Item.Usuarios = itemRep.RecuperaUsuariosQueFizeram(evento.Item.id);
+                        }
+
+                        r.Add(evento);  
+                    }
+                    return r;
                 }
                 else
                 {
                     var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario.id).Take(quantidade.Value).ToList();
                     var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-                    return eventoViewModels;
+                    var r = new List<EventoViewModel>();
+                    foreach (var evento in eventoViewModels)
+                    {
+                        using (var itemRep = DataAccess.Instance.GetItemRepository())
+                        {
+                            evento.Item.Usuarios = itemRep.RecuperaUsuariosQueFizeram(evento.Item.id);
+                        }
+
+                        r.Add(evento);
+                    }
+                    return r;
                 }
             }
             else
@@ -46,13 +66,33 @@ namespace Opus.DataBaseEnvironment
                 {
                     var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario.id && e.tipo == tipo).ToList();
                     var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-                    return eventoViewModels;
+                    var r = new List<EventoViewModel>();
+                    foreach (var evento in eventoViewModels)
+                    {
+                        using (var itemRep = DataAccess.Instance.GetItemRepository())
+                        {
+                            evento.Item.Usuarios = itemRep.RecuperaUsuariosQueFizeram(evento.Item.id);
+                        }
+
+                        r.Add(evento);
+                    }
+                    return r;
                 }
                 else
                 {
                     var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario.id).ToList();
                     var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-                    return eventoViewModels;
+                    var r = new List<EventoViewModel>();
+                    foreach (var evento in eventoViewModels)
+                    {
+                        using (var itemRep = DataAccess.Instance.GetItemRepository())
+                        {
+                            evento.Item.Usuarios = itemRep.RecuperaUsuariosQueFizeram(evento.Item.id);
+                        }
+
+                        r.Add(evento);
+                    }
+                    return r;
                 }
             }
 

@@ -83,6 +83,5 @@ namespace Opus.DataBaseEnvironment
                 return ultimosEventos;
             }
         }
-
     }
 }

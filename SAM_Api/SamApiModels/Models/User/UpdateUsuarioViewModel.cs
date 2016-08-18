@@ -1,21 +1,16 @@
-using SamApiModels.Cargo;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SamApiModels.User
+namespace SamApiModels.Models.User
 {
-
-    public partial class UsuarioViewModel
+    public class UpdateUsuarioViewModel
     {
-        
 
-        [Required]
-        public int id { get; set; }
-
-        [Required]
-        public string samaccount { get; set; }
-
+     
         [Required]
         public string nome { get; set; }
 
@@ -28,6 +23,7 @@ namespace SamApiModels.User
         [Required]
         public string descricao { get; set; }
 
+        [Required]
         public string facebook { get; set; }
 
         public string github { get; set; }
@@ -38,24 +34,14 @@ namespace SamApiModels.User
         public string foto { get; set; }
 
         [Required]
-        public bool ativo { get; set; }
-
-        [Required]
         public string perfil { get; set; }
 
         [Required]
-        public virtual CargoViewModel Cargo { get; set; }
+        public int cargo { get; set; }
 
-        [Required]
-        public virtual List<CargoViewModel> ProximoCargo { get; set; }
-
-        public UsuarioViewModel()
+        public UpdateUsuarioViewModel()
         {
-          
-            pontos = 0;
-            Cargo = new CargoViewModel();
-            ProximoCargo = new List<CargoViewModel>();
-        }
 
+        }
     }
 }

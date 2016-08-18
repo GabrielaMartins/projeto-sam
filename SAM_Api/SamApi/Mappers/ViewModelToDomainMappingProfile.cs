@@ -5,6 +5,7 @@ using SamApiModels.Categoria;
 using SamApiModels.Evento;
 using SamApiModels.Item;
 using SamApiModels.Models.Agendamento;
+using SamApiModels.Models.User;
 using SamApiModels.User;
 using SamDataBase.Model;
 using System.Linq;
@@ -34,8 +35,8 @@ namespace SamApi.Mappers
                        .Select(u => u.id).SingleOrDefault())
             );
 
-            // **************** UsuarioViewModel -> Usuario **************** //
-            Mapper.CreateMap<UsuarioViewModel, Usuario>()
+            // **************** UpdateUsuarioViewModel -> Usuario **************** //
+            Mapper.CreateMap<UpdateUsuarioViewModel, Usuario>()
 
             // ignora as propriedades de navegacoes quando vai inserir no banco
             .ForMember(u => u.Cargo, opt => opt.Ignore())
@@ -45,8 +46,22 @@ namespace SamApi.Mappers
             .ForMember(u => u.ResultadoVotacoes, opt => opt.Ignore())
 
             // mapeia as chaves estrangeiras
-            .ForMember(u => u.cargo, opt => opt.MapFrom(src => src.Cargo.id))
-            .ForMember(u => u.foto, opt => opt.MapFrom(src => ImageHelper.GetPhysicalPathForImage(src.samaccount)));
+            .ForMember(u => u.cargo, opt => opt.MapFrom(src => src.cargo));
+
+            // **************** UsuarioViewModel -> Usuario **************** //
+            Mapper.CreateMap<UsuarioViewModel, Usuario>()
+
+            //.ForMember(u => u.foto, opt => opt.MapFrom(src => ImageHelper.GetPhysicalPathForImage(src.samaccount)))
+            
+            // ignora as propriedades de navegacoes quando vai inserir no banco
+            .ForMember(u => u.Cargo, opt => opt.Ignore())
+            .ForMember(u => u.Eventos, opt => opt.Ignore())
+            .ForMember(u => u.Pendencias, opt => opt.Ignore())
+            .ForMember(u => u.Promocoes, opt => opt.Ignore())
+            .ForMember(u => u.ResultadoVotacoes, opt => opt.Ignore())
+
+            // mapeia as chaves estrangeiras
+            .ForMember(u => u.cargo, opt => opt.MapFrom(src => src.Cargo.id));
 
 
             // **************** ItemViewModel -> Item **************** //
