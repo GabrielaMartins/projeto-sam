@@ -7,7 +7,7 @@ using Opus.DataBaseEnvironment;
 using System.Collections.Generic;
 using SamDataBase.Model;
 using AutoMapper;
-using SamApi.Attributes;
+using SamApi.Attributes.Authorization;
 using SamApiModels.User;
 
 namespace SamApi.Controllers

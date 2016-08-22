@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using DefaultException.Models;
 using Opus.DataBaseEnvironment;
-using SamApi.Attributes;
+using SamApi.Attributes.Authorization;
 using SamApiModels.Models.Agendamento;
 using SamDataBase.Model;
 using Swashbuckle.Swagger.Annotations;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;

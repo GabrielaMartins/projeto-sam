@@ -12,7 +12,7 @@ using SamDataBase.Model;
 using SamApiModels.Categoria;
 using Swashbuckle.Swagger.Annotations;
 using DefaultException.Models;
-using SamApi.Attributes;
+using SamApi.Attributes.Authorization;
 
 namespace SamApi.Controllers
 {

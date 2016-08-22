@@ -5,7 +5,7 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using DefaultException.Models;
 
-namespace SamApi.Attributes
+namespace SamApi.Attributes.Authorization
 {
     public class SamResourceAuthorizer : AuthorizeAttribute
     {

@@ -7,6 +7,7 @@ using SamApiModels.Item;
 using SamApiModels.Models.Agendamento;
 using SamApiModels.Models.User;
 using SamApiModels.User;
+using SamApiModels.Votacao;
 using SamDataBase.Model;
 using System.Linq;
 
@@ -16,6 +17,25 @@ namespace SamApi.Mappers
     {
         protected override void Configure()
         {
+
+            // **************** AddVotoViewModel -> ResultadoVotacao **************** //
+            Mapper.CreateMap<AddVotoViewModel, ResultadoVotacao>()
+
+            // ignora as propriedades de navegacoes quando vai inserir no banco
+            .ForMember(e => e.Evento, opt => opt.Ignore())
+            .ForMember(e => e.Usuario, opt => opt.Ignore())
+
+            // mapeia campos com nomes diferentes
+            .ForMember(e => e.dificuldade, opt => opt.MapFrom(src => src.Dificuldade))
+            .ForMember(e => e.modificador, opt => opt.MapFrom(src => src.Modificador))
+            .ForMember(e => e.evento, opt => opt.MapFrom(src => src.Evento))
+            .ForMember(e => e.usuario, opt => opt.MapFrom(src => DataAccess
+                                                                .Instance.GetUsuarioRepository()
+                                                                .Find(u => u.samaccount == src.Usuario)
+                                                                .Select(x => x.id)
+                                                                .SingleOrDefault()
+                                                        ));
+            
 
             // **************** AgendamentoViewModel -> Evento **************** //
             Mapper.CreateMap<AgendamentoViewModel, Evento>()

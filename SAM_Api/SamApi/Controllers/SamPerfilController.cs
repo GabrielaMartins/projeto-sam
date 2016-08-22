@@ -5,11 +5,9 @@ using Opus.DataBaseEnvironment;
 using System.Linq;
 using AutoMapper;
 using SamDataBase.Model;
-using Opus.Helpers;
-using System.Collections.Generic;
 using SamApiModels.User;
 using SamApiModels.Perfil;
-using SamApi.Attributes;
+using SamApi.Attributes.Authorization;
 
 namespace SamApi.Controllers
 {

@@ -1,14 +1,12 @@
 ﻿using System.Web.Http;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
-
 using Opus.DataBaseEnvironment;
 using System.Linq;
 using AutoMapper;
 using SamDataBase.Model;
 using DefaultException.Models;
-using SamApi.Attributes;
+using SamApi.Attributes.Authorization;
 using SamApiModels.Item;
 
 namespace SamApi.Controllers

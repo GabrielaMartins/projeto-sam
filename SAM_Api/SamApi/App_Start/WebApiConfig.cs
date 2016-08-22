@@ -1,8 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using SamApi.Attributes;
+﻿using SamApi.Attributes.Authorization;
 using SamApi.Filters;
-using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -18,6 +15,9 @@ namespace SamApi
 
             // Apply exception filter
             config.Filters.Add(new SamExceptionFilter());
+
+            // Apply model validation filter
+            config.Filters.Add(new SamModelValidationFilter());
 
             // Apply token validation to all controllers
             config.Filters.Add(new SamTokenAuthorizer());

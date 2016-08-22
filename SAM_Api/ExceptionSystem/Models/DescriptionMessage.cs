@@ -13,14 +13,14 @@ namespace DefaultException.Models
         public List<string> Details { get; set; }
 
 
-        public DescriptionMessage(HttpStatusCode code, string title, string detail)
+        public DescriptionMessage(HttpStatusCode code, string title, string detail="")
         {
             Code = (int)code;
             Title = title;
             Details = new List<string>(){detail};
         }
 
-        public DescriptionMessage(int code, string title, string detail)
+        public DescriptionMessage(int code, string title, string detail="")
         {
             Code = code;
             Title = title;
@@ -34,11 +34,11 @@ namespace DefaultException.Models
             Details = details;
         }
 
-        public DescriptionMessage(int code, string title, List<string> description)
+        public DescriptionMessage(int code, string title, List<string> details)
         {
             Code = code;
             Title = title;
-            Details = description;
+            Details = details;
         }
     }
 }

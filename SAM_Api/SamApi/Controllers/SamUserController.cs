@@ -7,7 +7,7 @@ using Opus.DataBaseEnvironment;
 using AutoMapper;
 using SamDataBase.Model;
 using SamApi.Helpers;
-using SamApi.Attributes;
+using SamApi.Attributes.Authorization;
 using SamApiModels.User;
 using DefaultException.Models;
 using System.IO;

@@ -12,15 +12,25 @@ using System.Configuration;
 using DefaultException.Models;
 using SamApiModels.User;
 using SamApiModels.Login;
+using Swashbuckle.Swagger.Annotations;
 
 namespace SamApiService.Controllers
 {
-
+    /// <summary>
+    /// Oferece funcionalidades para controlar o login ao SAM
+    /// </summary>
     [RoutePrefix("api/sam")]
     public class SamLoginController : ApiController
     {
-
-        // GET api/sam/login
+        /// <summary>
+        /// Gera o token de acesso para um usuário autenticado
+        /// </summary>
+        /// <param name="login">
+        /// Representa as credencias do usuário no AD da Opus
+        /// </param>
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível gerar o token de acesso do SAM", typeof(SamToken))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso o usuário não seja autorizada pelo AD da OPUS", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [Route("login")]
         [HttpPost]
         public HttpResponseMessage Login(LoginViewModel login)
@@ -30,12 +40,13 @@ namespace SamApiService.Controllers
             string token = string.Empty;
 
             // ask Active Directory if the User's credentials is valid
-            if (!adConsumer.IsValidUser(login.User, login.Password))
-            {
-                // if credential is invalid, return an error
-                throw new ExpectedException(HttpStatusCode.Unauthorized, "Unauthenticated", "The server could not authenticated the user");
-            }
-
+            #if !DEBUG
+                if (!adConsumer.IsValidUser(login.User, login.Password))
+                {
+                    // if credential is invalid, return an error
+                    throw new ExpectedException(HttpStatusCode.Unauthorized, "Unauthenticated", "The server could not authenticated the user");
+                }
+            #endif
             using (var userRep = DataAccess.Instance.GetUsuarioRepository()) {
 
                 // if yes, get User's information from database
@@ -56,7 +67,7 @@ namespace SamApiService.Controllers
 
                 // generate token based on User
                 token = JwtHelper.GenerateToken(usuarioViewModel);
-                var tokenResult = new Dictionary<string, object>() { { "token", token } };
+                var tokenResult = new SamToken(){Token = token};
 
                 // returns our token
                 return Request.CreateResponse(HttpStatusCode.OK, tokenResult);
