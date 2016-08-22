@@ -1,11 +1,7 @@
 ﻿using SamApiModels.Item;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SamApiModels.Pendency
+namespace SamApiModels.Pendencia
 {
     public class PendenciaEventoViewModel
     {

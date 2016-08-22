@@ -4,10 +4,12 @@ using SamApi.Helpers;
 using SamApiModels;
 using SamApiModels.Cargo;
 using SamApiModels.Categoria;
-using SamApiModels.Event;
+using SamApiModels.Evento;
 using SamApiModels.Item;
-using SamApiModels.Pendency;
+using SamApiModels.Pendencia;
+using SamApiModels.Promocao;
 using SamApiModels.User;
+using SamApiModels.Votacao;
 using SamDataBase.Model;
 
 namespace SamApi.Mappers
@@ -16,6 +18,12 @@ namespace SamApi.Mappers
     {
         protected override void Configure()
         {
+
+            Mapper.CreateMap<ResultadoVotacao, VotoViewModel>()
+            .ForMember(x => x.Dificuldade, opt => opt.MapFrom(src => src.dificuldade))
+            .ForMember(x => x.Profundidade, opt => opt.MapFrom(src => src.modificador))
+            .ForMember(x => x.Usuario, opt => opt.MapFrom(src => src.Usuario));
+
             Mapper.CreateMap<Cargo, CargoViewModel>();
 
             Mapper.CreateMap<Categoria, CategoriaViewModel>();
@@ -42,10 +50,11 @@ namespace SamApi.Mappers
             
             Mapper.CreateMap<Usuario, UsuarioViewModel>()
             .ForMember( u => u.Cargo, opt => opt.MapFrom(src => src.Cargo))
-            .ForMember(u => u.foto, opt => opt.MapFrom(src => ImageHelper.GetLogicPathForImage(src.samaccount)))
             .ForMember(u => u.ProximoCargo, opt => opt.MapFrom(src => DataAccess.Instance.GetCargoRepository().RecuperaProximoCargo(src.cargo)));
 
-           
+            Mapper.CreateMap<Usuario, AddUsuarioViewModel>();
+
+
         }
     }
 }

@@ -4,17 +4,20 @@ using Opus.Helpers.ActiveDirectoryService;
 using SamApiModels;
 using System.Net.Http;
 using System.Net;
+using System.Web.Http.Description;
+using SamApiModels.OpusActiveDirectory;
 
 namespace SamApiService.Controllers
 {
 
     [RoutePrefix("api/sam/ad")]
-    public class AdController : ApiController
+    public class ActiveDirectoryController : ApiController
     {
 
         // GET api/ad/user/all
         [Route("user/all")]
         [HttpGet]
+        [ResponseType(typeof(List<ActiveDirectoryUser>))]
         public HttpResponseMessage GetUsers()
         {
 
@@ -28,6 +31,7 @@ namespace SamApiService.Controllers
         // GET api/ad/User/{samaccount}
         [Route("user/{samaccount}")]
         [HttpGet]
+        [ResponseType(typeof(ActiveDirectoryUser))]
         public HttpResponseMessage GetUser(string samAccount)
         {
 

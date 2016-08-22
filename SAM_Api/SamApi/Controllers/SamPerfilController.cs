@@ -2,14 +2,14 @@
 using System.Web.Http;
 using System.Net;
 using Opus.DataBaseEnvironment;
-using SamApiModels;
 using System.Linq;
 using AutoMapper;
 using SamDataBase.Model;
-using System;
 using Opus.Helpers;
 using System.Collections.Generic;
 using SamApiModels.User;
+using SamApiModels.Perfil;
+using SamApi.Attributes;
 
 namespace SamApi.Controllers
 {
@@ -18,16 +18,11 @@ namespace SamApi.Controllers
     public class SamPerfilController : ApiController
     {
 
-        [Route("")]
         [HttpGet]
-        public HttpResponseMessage Get()
+        [Route("{samaccount}")]
+        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
+        public HttpResponseMessage Get(string samaccount)
         {
-
-            var token = HeaderHelper.ExtractHeaderValue(Request, "token");
-            var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
-            var context = decodedToken["context"] as Dictionary<string, object>;
-            var userInfo = context["user"] as Dictionary<string, object>;
-            var samaccount = userInfo["samaccount"] as string;
 
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {

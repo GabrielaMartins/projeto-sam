@@ -1,9 +1,6 @@
 ﻿using SamApiModels.Categoria;
-using System;
+using SamApiModels.User;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SamApiModels.Item
 {
@@ -21,6 +18,8 @@ namespace SamApiModels.Item
         public int modificador { get; set; }
 
         public CategoriaViewModel Categoria { get; set; }
+
+        public List<UsuarioViewModel> Usuarios { get; set; }
 
         public ItemViewModel()
         {

@@ -26,5 +26,12 @@ namespace Opus.DataBaseEnvironment
                 return db.ResultadoVotacaos.OrderBy(v => v.Evento.data).ToList();
             }
         }
-	}
+
+        public List<ResultadoVotacao> RecuperaVotacaoParaOEvento(int evt)
+        {
+            
+            return Find(x => x.evento.Value == evt).ToList();
+
+        }
+    }
 }

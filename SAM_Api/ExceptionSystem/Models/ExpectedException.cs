@@ -40,7 +40,7 @@ namespace DefaultException.Models
             Code = code;
         }
 
-        public ErrorMessage GetAsPrettyMessage()
+        public DescriptionMessage GetAsPrettyMessage()
         {
             var innerMessages = new List<string>();
             var innerException = InnerException;
@@ -54,7 +54,7 @@ namespace DefaultException.Models
                 innerException = innerException.InnerException;
             }
 
-            return new ErrorMessage(Code, Message, innerMessages);
+            return new DescriptionMessage(Code, Message, innerMessages);
         }
 
 

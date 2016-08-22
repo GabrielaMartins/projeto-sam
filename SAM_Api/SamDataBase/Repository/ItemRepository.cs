@@ -7,6 +7,8 @@ using SamApiModels;
 using AutoMapper;
 using System;
 using SamApiModels.User;
+using SamApiModels.Item;
+using SamApiModels.Categoria;
 
 namespace Opus.DataBaseEnvironment
 {
@@ -21,15 +23,30 @@ namespace Opus.DataBaseEnvironment
         {
             var repositorioEvento = DataAccess.Instance.GetEventoRepository();
 
-            var usuarios = repositorioEvento.GetAll().Where(x => x.item == item).Where(y => y.usuario == y.Usuario.id).Select(u => u.Usuario).ToList();
-            var usuariosViewModel = new List<UsuarioViewModel>();
-            foreach(var usuario in usuarios)
+            var db = (SamEntities)DbContext;
+            var query = (from e in db.Eventos
+                     from u in db.Usuarios
+                     where
+                     e.item == item &&
+                     e.usuario == u.id
+                     select u);
+
+            var usuarios = query.Distinct().ToList();
+            return Mapper.Map<List<Usuario>, List<UsuarioViewModel>>(usuarios);
+
+        }
+
+        public List<ItemViewModel> RecuperaItensESeusUsuarios()
+        {
+            var r = new List<ItemViewModel>();
+            var itensViewModel = Mapper.Map<List<Item>,List<ItemViewModel>>(GetAll().ToList());
+            foreach(var item in itensViewModel)
             {
-                var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
-                usuariosViewModel.Add(usuarioViewModel);
+                item.Usuarios = RecuperaUsuariosQueFizeram(item.id);
+                r.Add(item);
             }
 
-            return usuariosViewModel;
+            return r;
         }
     }
 }

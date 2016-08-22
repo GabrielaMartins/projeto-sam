@@ -1,8 +1,7 @@
-﻿using SamApiModels.Event;
-using SamApiModels.User;
+﻿using SamApiModels.User;
 using System.Collections.Generic;
 
-namespace SamApiModels
+namespace SamApiModels.Evento
 {
     public class UltimoEventoViewModel
     {

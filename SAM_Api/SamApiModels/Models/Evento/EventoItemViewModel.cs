@@ -1,8 +1,9 @@
 using SamApiModels.Categoria;
+using SamApiModels.User;
 using System;
 using System.Collections.Generic;
 
-namespace SamApiModels.Event
+namespace SamApiModels.Evento
 {
 
     public class EventoItemViewModel
@@ -25,5 +26,6 @@ namespace SamApiModels.Event
 
         public CategoriaViewModel Categoria { get; set; }
 
+        public List<UsuarioViewModel> Usuarios { get; set; }
     }
 }

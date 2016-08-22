@@ -1,4 +1,4 @@
-﻿namespace SamApiModels
+﻿namespace SamApiModels.Login
 {
     public class LoginViewModel
     {

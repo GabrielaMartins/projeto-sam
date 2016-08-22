@@ -35,6 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\SamApi.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -95,6 +96,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Swashbuckle.Core.5.3.2\lib\net40\Swashbuckle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
@@ -124,6 +129,10 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -173,18 +182,21 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\SamAuthorize.cs" />
-    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="App_Start\SwaggerConfig.cs" />
+    <Compile Include="Attributes\SamResourceAuthorizer.cs" />
+    <Compile Include="Attributes\SamTokenAuthorizer.cs" />
+    <Compile Include="Controllers\SamAgendamentoController.cs" />
+    <Compile Include="Controllers\SamCargoController.cs" />
+    <Compile Include="Controllers\SamDashboardController.cs" />
     <Compile Include="Controllers\SamPerfilController.cs" />
     <Compile Include="Filters\SamExceptionFilter.cs" />
-    <Compile Include="Helpers\GitHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Mappers\AutoMapperConfig.cs" />
     <Compile Include="Mappers\DomainToViewModelMappingProfile.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Mappers\ViewModelToDomainMappingProfile.cs" />
-    <Compile Include="Controllers\AdController.cs" />
+    <Compile Include="Controllers\ActiveDirectoryController.cs" />
     <Compile Include="Controllers\SamCategoriaController.cs" />
     <Compile Include="Controllers\SamLoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -194,7 +206,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ActiveDirectoryHelper.cs" />
-    <Compile Include="Helpers\HeaderHelper.cs" />
     <Compile Include="Helpers\JwtHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -210,6 +221,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Home\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\Jesley.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -219,13 +231,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
-    <Folder Include="Views\SamUser\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\git-issuer\git-issuer\git-issuer\git-issuer.csproj">
+      <Project>{47a257f6-e16c-4bda-b7d3-c9f1f7ec2b3a}</Project>
+      <Name>git-issuer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExceptionSystem\DefaultException.csproj">
       <Project>{184313A8-E40D-476B-9CA3-946FD38E9D15}</Project>
       <Name>DefaultException</Name>

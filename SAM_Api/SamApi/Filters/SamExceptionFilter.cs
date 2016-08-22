@@ -44,35 +44,46 @@ namespace SamApi.Filters
             }
             else
             {
-                // Log exception to github
-                var wasCreated = LogException(context.Exception);
-                var hashCode = context.Exception.StackTrace.GetHashCode();
-
-                if (wasCreated)
-                {
-                    var content = "A new unexpected exception has occurred and logged to github. " +
-                                  $"See git issue 'Unexpected Exception #{hashCode}' to more detail.";
-
-                    // retornar internal server error
+                // if we are in debug mode, we just return the exception
+                #if DEBUG
                     context.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
                     {
-                        Content = new StringContent(content),
-                        ReasonPhrase = "Internal Server Error",
-                    };
-                }
-                else
-                {
-                    var content = "A recidivist exception has occurred. " +
-                                 $"See git issue 'Unexpected Exception #{hashCode}' to more detail.";
-
-                    // retornar internal server error
-                    context.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
-                    {
-                        Content = new StringContent(content),
+                        Content = new ObjectContent(context.Exception.GetType(), context.Exception, new JsonMediaTypeFormatter()),
                         ReasonPhrase = "Internal Server Error.",
                     };
-                }
 
+                // else we log the exception to github
+                #else
+
+                    var wasCreated = LogException(context.Exception);
+
+                    var hashCode = context.Exception.StackTrace.GetHashCode();
+
+                    if (wasCreated)
+                    {
+                        var content = "A new unexpected exception has occurred and logged to github. " +
+                                      $"See git issue 'Unexpected Exception #{hashCode}' to more detail.";
+
+                        // retornar internal server error
+                        context.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                        {
+                            Content = new StringContent(content),
+                            ReasonPhrase = "Internal Server Error",
+                        };
+                    }
+                    else
+                    {
+                        var content = "A recidivist exception has occurred. " +
+                                     $"See git issue 'Unexpected Exception #{hashCode}' to more detail.";
+
+                        // retornar internal server error
+                        context.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                        {
+                            Content = new StringContent(content),
+                            ReasonPhrase = "Internal Server Error.",
+                        };
+                    }
+                #endif
             }
         }
 
@@ -85,18 +96,18 @@ namespace SamApi.Filters
             var repOwner = ConfigurationManager.AppSettings["Git:RepOwner"];
             var repName = ConfigurationManager.AppSettings["Git:RepName"];
 
-            var gitHelper = new GitHelper(user, password, repName, repOwner);
+            var gitIssuer = new GitIssuer.GitIssuer(user, password, repName, repOwner);
             var criterias = new Dictionary<string, string>()
             {
                 { "state", "open" }
             };
 
-            var issues = gitHelper.GetIssues(criterias);
+            var issues = gitIssuer.GetIssues(criterias);
             var issue = issues.Where(i => i.title.Contains(hashCode)).SingleOrDefault();
             if (issue == null)
             {
                 // create an issue
-                return gitHelper.CreateIssue(user, $"Unexpected Exception #{hashCode}", ex.StackTrace);
+                return gitIssuer.CreateIssue($"Unexpected Exception #{hashCode}", ex.StackTrace, new string[] {user}, new string[] { "bug" });
 
             }
 

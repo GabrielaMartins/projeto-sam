@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\ErrorMessage.cs" />
+    <Compile Include="Models\DescriptionMessage.cs" />
     <Compile Include="Models\ExpectedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
