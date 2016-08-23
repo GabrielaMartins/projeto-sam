@@ -5,7 +5,6 @@ namespace SamApiModels.Models.User
     public class UpdateUsuarioViewModel
     {
 
-     
         public string nome { get; set; }
 
         public DateTime dataInicio { get; set; }

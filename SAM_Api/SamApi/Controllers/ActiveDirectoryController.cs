@@ -1,11 +1,10 @@
 ﻿using System.Web.Http;
 using System.Collections.Generic;
 using Opus.Helpers.ActiveDirectoryService;
-using SamApiModels;
 using System.Net.Http;
 using System.Net;
 using System.Web.Http.Description;
-using SamApiModels.OpusActiveDirectory;
+using SamModels.OpusActiveDirectory;
 
 namespace SamApiService.Controllers
 {

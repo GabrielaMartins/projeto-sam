@@ -1,4 +1,4 @@
-﻿using SamApi.Attributes.Validation;
+﻿using SamModelValidationRules.Attributes.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace SamApiModels.Votacao

@@ -101,7 +101,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Promocaos">
+    <EntitySetMapping Name="Promocoes">
       <EntityTypeMapping TypeName="sam.model.Promocao">
         <MappingFragment StoreEntitySet="Promocoes">
           <ScalarProperty Name="data" ColumnName="data" />

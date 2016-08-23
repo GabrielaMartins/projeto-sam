@@ -1,5 +1,4 @@
 ﻿using DefaultException.Models;
-using SamApi.Helpers;
 using System;
 using System.Configuration;
 using System.Data.Entity.Validation;

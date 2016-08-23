@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using DefaultException.Models;
-using Opus.DataBaseEnvironment;
+﻿using DefaultException.Models;
 using SamApi.Attributes.Authorization;
 using SamApiModels.Evento;
 using SamApiModels.Votacao;
-using SamDataBase.Model;
+using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,28 +33,9 @@ namespace SamApi.Controllers
         [HttpGet]
         public HttpResponseMessage Get(int evt)
         {
-
-            using (var repVotacao = DataAccess.Instance.GetResultadoVotacoRepository())
-            using (var repEvento = DataAccess.Instance.GetEventoRepository())
-            {
-                var evento = repEvento.Find(x => x.id == evt).SingleOrDefault();
-                if (evento.tipo != "votacao")
-                {
-                    throw new ExpectedException(HttpStatusCode.Unauthorized, "Not a voting event", "you can not get events that are not voting events");
-                }
-
-                var resultados = repVotacao.RecuperaVotacaoParaOEvento(evt);
-
-                var votos = Mapper.Map<List<ResultadoVotacao>, List<VotoViewModel>>(resultados);
-
-                var votacaoViewModel = new VotacaoViewModel()
-                {
-                    Evento = Mapper.Map<Evento, EventoViewModel>(evento),
-                    Votos = votos
-                };
-
-                return Request.CreateResponse(HttpStatusCode.OK, votacaoViewModel);
-            }
+            var votacao = VotacaoServices.RecuperaVotacao(evt);
+            return Request.CreateResponse(HttpStatusCode.OK, votacao);
+            
         }
 
 
@@ -74,27 +53,9 @@ namespace SamApi.Controllers
         [HttpPost]
         public HttpResponseMessage Vote(AddVotoViewModel vote)
         {
-            using (var rep = DataAccess.Instance.GetResultadoVotacoRepository())
-            using(var eventRep = DataAccess.Instance.GetEventoRepository())
-            {
-                // some validations
-                var evt = eventRep.Find(e => e.id == vote.Evento).SingleOrDefault();
-                if(evt == null)
-                {
-                    throw new ExpectedException(HttpStatusCode.NotFound, "Event not found", $"The event #{vote.Evento} could not be find");
-                }
-                else if (evt.tipo != "votacao")
-                {
-                    throw new ExpectedException(HttpStatusCode.BadRequest, "Is not a voting event", $"The event #{vote.Evento} could not be voted because it's not a voting event");
-                }
-
-                var resultadoVotacao = Mapper.Map<AddVotoViewModel, ResultadoVotacao>(vote);
-
-                rep.Add(resultadoVotacao);
-                rep.SubmitChanges();
-
-                return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.Created, "You have voted", "Thanks for your vote"));
-            }
+            VotacaoServices.CriaVoto(vote);
+             return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.Created, "You have voted", "Thanks for your vote"));
+            
         }
     }
 }

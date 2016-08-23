@@ -3,7 +3,6 @@ using Opus.RepositoryPattern;
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
-using Opus.DataBaseEnvironment;
 
 namespace Opus.DataBaseEnvironment
 {

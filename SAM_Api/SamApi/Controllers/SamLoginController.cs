@@ -1,18 +1,15 @@
 ﻿using System.Web.Http;
 using Opus.Helpers.ActiveDirectoryService;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
-using Opus.DataBaseEnvironment;
 using System.Linq;
-using AutoMapper;
-using SamDataBase.Model;
 using Opus.Helpers;
 using System.Configuration;
 using DefaultException.Models;
 using SamApiModels.User;
 using SamApiModels.Login;
 using Swashbuckle.Swagger.Annotations;
+using SamServices.Services;
 
 namespace SamApiService.Controllers
 {
@@ -26,7 +23,7 @@ namespace SamApiService.Controllers
         /// Gera o token de acesso para um usuário autenticado
         /// </summary>
         /// <param name="login">
-        /// Representa as credencias do usuário no AD da Opus
+        /// Representa as credenciais do usuário no AD da Opus
         /// </param>
         [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível gerar o token de acesso do SAM", typeof(SamToken))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso o usuário não seja autorizada pelo AD da OPUS", typeof(DescriptionMessage))]
@@ -47,31 +44,27 @@ namespace SamApiService.Controllers
                     throw new ExpectedException(HttpStatusCode.Unauthorized, "Unauthenticated", "The server could not authenticated the user");
                 }
             #endif
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository()) {
 
-                // if yes, get User's information from database
-                var query = userRep.Find(u => u.samaccount.Equals(login.User));
-                var usr = query.SingleOrDefault();
+            // if yes, get User's information from database
+            var usuario = UserServices.Recupera(login.User);
+               
+            // check if our user not exists in our database
+            if (usuario == null)
+            {
 
-                // check if our user not exists in our database
-                if (usr == null)
-                {
-
-                    // return a http error
-                    throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", $"We could not found the user '{login.User}' in our database");
+                // return a http error
+                throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", $"We could not found the user '{login.User}' in our database");
                    
-                }
-
-                // Transform our Usuario model to UsuarioViewModel
-                var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usr);
-
-                // generate token based on User
-                token = JwtHelper.GenerateToken(usuarioViewModel);
-                var tokenResult = new SamToken(){Token = token};
-
-                // returns our token
-                return Request.CreateResponse(HttpStatusCode.OK, tokenResult);
             }
+
+                
+            // generate token based on User
+            token = JwtHelper.GenerateToken(usuario);
+            var tokenResult = new SamToken(){Token = token};
+
+            // returns our token
+            return Request.CreateResponse(HttpStatusCode.OK, tokenResult);
+            
         }
     }
 }

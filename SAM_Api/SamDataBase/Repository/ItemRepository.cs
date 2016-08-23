@@ -3,12 +3,6 @@ using Opus.RepositoryPattern;
 using System.Data.Entity;
 using System.Linq;
 using System.Collections.Generic;
-using SamApiModels;
-using AutoMapper;
-using System;
-using SamApiModels.User;
-using SamApiModels.Item;
-using SamApiModels.Categoria;
 
 namespace Opus.DataBaseEnvironment
 {
@@ -19,7 +13,7 @@ namespace Opus.DataBaseEnvironment
 		}
 
         //Preencher aqui
-        public List<UsuarioViewModel> RecuperaUsuariosQueFizeram(int item)
+        public List<Usuario> RecuperaUsuariosQueFizeram(int item)
         {
             var repositorioEvento = DataAccess.Instance.GetEventoRepository();
 
@@ -32,21 +26,10 @@ namespace Opus.DataBaseEnvironment
                      select u);
 
             var usuarios = query.Distinct().ToList();
-            return Mapper.Map<List<Usuario>, List<UsuarioViewModel>>(usuarios);
+
+            return usuarios;
 
         }
 
-        public List<ItemViewModel> RecuperaItensESeusUsuarios()
-        {
-            var r = new List<ItemViewModel>();
-            var itensViewModel = Mapper.Map<List<Item>,List<ItemViewModel>>(GetAll().ToList());
-            foreach(var item in itensViewModel)
-            {
-                item.Usuarios = RecuperaUsuariosQueFizeram(item.id);
-                r.Add(item);
-            }
-
-            return r;
-        }
     }
 }

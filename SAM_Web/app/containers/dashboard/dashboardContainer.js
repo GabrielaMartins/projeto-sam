@@ -85,15 +85,15 @@ var DashboardContainer = React.createClass({
     var ranking = [];
 
     //cria lista de eventos
-    var eventos = this.state.dados.UltimosEventos.map(function(conteudo, index){
-      //if(conteudo.Evento.Usuario.foto == null){
-      //  conteudo.Evento.Usuario.foto = "./app/imagens/fulano.jpg"
+    var eventos = this.state.dados.UltimosEventos.map(function(evento, index){
+      //if(evento.Usuario.foto == null){
+      //  evento.Usuario.foto = "./app/imagens/fulano.jpg"
       //}
       return(
-        <CardEventos key={index} usuario = {conteudo.Evento.Usuario} estilo = "card-panel z-depth-1 col l12 m12 s12 waves-effect">
+        <CardEventos key={index} usuario = {evento.Usuario} estilo = "card-panel z-depth-1 col l12 m12 s12 waves-effect">
           <div className="right">
-              <h5 className="right-align extraGrande">{conteudo.Evento.Item.nome}</h5>
-              <p className="right-align pequena">{moment(conteudo.Evento.data).format('L')}</p>
+              <h5 className="right-align extraGrande">{evento.Item.nome}</h5>
+              <p className="right-align pequena">{moment(evento.data).format('L')}</p>
           </div>
         </CardEventos>
       );

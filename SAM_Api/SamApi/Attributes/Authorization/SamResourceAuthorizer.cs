@@ -66,11 +66,11 @@ namespace SamApi.Attributes.Authorization
 
                 if (int.TryParse(param, out userId))
                 {
-                    r = (userId == id || perfil == "rh");
+                    r = (userId == id || perfil.ToLower() == "rh");
                 }
                 else
                 {
-                    r = (param == samaccount || perfil == "rh");
+                    r = (param == samaccount || perfil.ToLower() == "rh");
                 }
 
                 if (r == false)

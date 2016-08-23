@@ -22,11 +22,6 @@ namespace SamApiModels.User
         [DataType("System.DateTime")]
         public DateTime dataInicio { get; set; }
 
-        /// <summary>
-        /// Diz se o usuário está ou não ativo no sistema do SAM
-        /// </summary>
-        [Required]
-        public bool ativo { get; set; }
 
         /// <summary>
         /// Identifica o cargo atual do usuário

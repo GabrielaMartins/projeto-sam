@@ -3,13 +3,6 @@ using Opus.RepositoryPattern;
 using System.Data.Entity;
 using System.Linq;
 using System.Collections.Generic;
-using SamApiModels;
-using AutoMapper;
-using SamApiModels.Evento;
-using SamApiModels.User;
-using SamApiModels.Pendencia;
-using SamApiModels.Cargo;
-using SamApiModels.Promocao;
 
 namespace Opus.DataBaseEnvironment
 {
@@ -22,165 +15,114 @@ namespace Opus.DataBaseEnvironment
         }
 
         //Preencher aqui
-        public List<EventoViewModel> RecuperaEventos(Usuario usuario, int? quantidade = null, string tipo = null)
+        public List<Evento> RecuperaEventos(int usuario, int? quantidade = null, string tipo = null)
         {
 
             if (quantidade.HasValue)
             {
                 if (tipo != null)
                 {
-                    var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario.id && e.tipo == tipo).Take(quantidade.Value).ToList();
-                    var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-                    var r = new List<EventoViewModel>();
-                    foreach (var evento in eventoViewModels)
-                    {
-                        using (var itemRep = DataAccess.Instance.GetItemRepository())
-                        {
-                            evento.Item.Usuarios = itemRep.RecuperaUsuariosQueFizeram(evento.Item.id);
-                        }
-
-                        r.Add(evento);  
-                    }
-                    return r;
+                    var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario && e.tipo == tipo).Take(quantidade.Value).ToList();
+                    return eventos;
                 }
                 else
                 {
-                    var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario.id).Take(quantidade.Value).ToList();
-                    var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-                    var r = new List<EventoViewModel>();
-                    foreach (var evento in eventoViewModels)
-                    {
-                        using (var itemRep = DataAccess.Instance.GetItemRepository())
-                        {
-                            evento.Item.Usuarios = itemRep.RecuperaUsuariosQueFizeram(evento.Item.id);
-                        }
-
-                        r.Add(evento);
-                    }
-                    return r;
+                    var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario).Take(quantidade.Value).ToList();
+                    return eventos;
                 }
             }
             else
             {
                 if (tipo != null)
                 {
-                    var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario.id && e.tipo == tipo).ToList();
-                    var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-                    var r = new List<EventoViewModel>();
-                    foreach (var evento in eventoViewModels)
-                    {
-                        using (var itemRep = DataAccess.Instance.GetItemRepository())
-                        {
-                            evento.Item.Usuarios = itemRep.RecuperaUsuariosQueFizeram(evento.Item.id);
-                        }
-
-                        r.Add(evento);
-                    }
-                    return r;
+                    var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario && e.tipo == tipo).ToList();
+                    return eventos;
                 }
                 else
                 {
-                    var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario.id).ToList();
-                    var eventoViewModels = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-                    var r = new List<EventoViewModel>();
-                    foreach (var evento in eventoViewModels)
-                    {
-                        using (var itemRep = DataAccess.Instance.GetItemRepository())
-                        {
-                            evento.Item.Usuarios = itemRep.RecuperaUsuariosQueFizeram(evento.Item.id);
-                        }
-
-                        r.Add(evento);
-                    }
-                    return r;
+                    var eventos = DataAccess.Instance.GetEventoRepository().Find(e => e.usuario == usuario).ToList();
+                    return eventos;
                 }
             }
 
         }
 
-        public List<ProximaPromocaoViewModel> RecuperaProximasPromocoes(Usuario usuario)
-        {
-            var promocoesViewModel = new List<ProximaPromocaoViewModel>();
-            var db = (SamEntities)DbContext;
-
-            if (usuario == null)
-                return null;
-
-            promocoesViewModel =
-            (from c in db.Cargos
-             from u in db.Usuarios
-             where
-             u.id == usuario.id &&
-             u.cargo != c.id &&
-             (c.pontuacao - u.pontos) >= 0 &&
-             (c.pontuacao - u.pontos) <= (c.pontuacao * 0.2)
-             select new
-             {
-                 Usuario = u,
-                 PontosFaltantes = c.pontuacao - u.pontos
-            }).AsEnumerable()
-            .Select(x => new ProximaPromocaoViewModel()
-            {
-                Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.Usuario),
-                PontosFaltantes = x.PontosFaltantes
-            }
-            ).ToList();
-
-            return promocoesViewModel;
-        }
-
-        public List<PromocaoAdquiridaViewModel> RecuperaPromocoesAdquiridas(Usuario usuario)
+        public List<Promocao> RecuperaPromocoesAdquiridas(int usuario)
         {
             var db = DbContext as SamEntities;
             var promocoesRealizadas =
             (from p in db.Promocoes
-             where p.usuario == usuario.id
-             select new
-             {
-                 Usuario = p.Usuario,
-                 CargoAnterior = p.CargoAnterior,
-                 CargoAdquirido = p.Cargo,
-                 Data = p.data
-             }).AsEnumerable()
-            .Select(x => new PromocaoAdquiridaViewModel()
-            {
-                CargoAdquirido = Mapper.Map<Cargo, CargoViewModel>(x.CargoAdquirido),
-                CargoAnterior = Mapper.Map<Cargo, CargoViewModel>(x.CargoAnterior),
-                Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.Usuario),
-                Data = x.Data
-
-            }).ToList();
+             where p.usuario == usuario
+             select p).ToList();
 
             return promocoesRealizadas;
         }
 
-        public List<PendenciaUsuarioViewModel> RecuperaPendencias(Usuario usuario)
+        public List<Pendencia> RecuperaPendencias(int usuario)
         {
 
             var pendencias = DataAccess.Instance
                 .GetPendenciaRepository()
-                .Find(p => p.usuario == usuario.id && p.estado == true)
-                .AsEnumerable()
-                .Select(x => new PendenciaUsuarioViewModel()
-                {
-                    Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.Usuario),
-                    Evento = Mapper.Map<Evento, PendenciaEventoViewModel>(x.Evento)
-                }).ToList();
+                .Find(p => p.usuario == usuario && p.estado == true)
+                .ToList();
 
             return pendencias;
 
 
         }
 
-        public List<ResultadoVotacaoViewModel> RecuperaVotacoes(Usuario usuario)
+        public List<ResultadoVotacao> RecuperaVotos(int usuario, int? quantity = null)
         {
-            var votacoes = DataAccess.Instance
-                .GetResultadoVotacoRepository()
-                .Find(r => r.usuario == usuario.id || r.Evento.usuario == usuario.id)
-                .ToList();
+            List<ResultadoVotacao> votos = null;
+            if (quantity.HasValue)
+            {
+                votos = DataAccess.Instance
+                   .GetResultadoVotacoRepository()
+                   .Find(r => r.usuario == usuario || r.Evento.usuario == usuario)
+                   .Take(quantity.Value)
+                   .ToList();
+            }
+            else
+            {
+                votos = DataAccess.Instance
+                    .GetResultadoVotacoRepository()
+                    .Find(r => r.usuario == usuario || r.Evento.usuario == usuario)
+                    .ToList();
+            }
 
-
-            return Mapper.Map<List<ResultadoVotacao>, List<ResultadoVotacaoViewModel>>(votacoes);
+            return votos;
         }
+
+        // COISAS QUE PRECISAMOS RESOLVER
+        //public List<ProximaPromocaoViewModel> RecuperaProximasPromocoes(Usuario usuario)
+        //{
+        //    var promocoesViewModel = new List<ProximaPromocaoViewModel>();
+        //    var db = DbContext as SamEntities;
+
+        //    if (usuario == null)
+        //        return null;
+
+        //    promocoesViewModel =
+        //    (from c in db.Cargos
+        //     from u in db.Usuarios
+        //     where
+        //     u.id == usuario.id &&
+        //     u.cargo != c.id &&
+        //     (c.pontuacao - u.pontos) >= 0 &&
+        //     (c.pontuacao - u.pontos) <= (c.pontuacao * 0.2)
+        //     select new
+        //     {
+        //         Usuario = u,
+        //         PontosFaltantes = c.pontuacao - u.pontos
+        //     }).AsEnumerable()
+        //    .Select(x => new ProximaPromocaoViewModel()
+        //    {
+        //        Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.Usuario),
+        //        PontosFaltantes = x.PontosFaltantes
+        //    }
+        //    ).ToList();
+
+        //    return promocoesViewModel;
+        //}
     }
 }

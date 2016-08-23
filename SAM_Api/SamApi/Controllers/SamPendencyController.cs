@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using DefaultException.Models;
-using Opus.DataBaseEnvironment;
+﻿using DefaultException.Models;
 using SamApiModels.Pendencia;
-using SamDataBase.Model;
+using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +27,9 @@ namespace SamApi.Controllers
         [Route("{pendency}")]
         public HttpResponseMessage Get(int pendency)
         {
-            using(var rep = DataAccess.Instance.GetPendenciaRepository())
-            {
-                var pendencia = rep.Find(p => p.id == pendency).SingleOrDefault();
-
-                var pendenciaViewModel = Mapper.Map<Pendencia, PendenciaEventoViewModel>(pendencia);
-
-                return Request.CreateResponse(HttpStatusCode.OK, pendenciaViewModel);
-            }
+            var pendencia = PendencyServices.Recupera(pendency);
+            return Request.CreateResponse(HttpStatusCode.OK, pendencia);
+            
         }
 
         /// <summary>
@@ -49,33 +42,25 @@ namespace SamApi.Controllers
         [Route("all")]
         public HttpResponseMessage GetAll()
         {
-            using (var rep = DataAccess.Instance.GetPendenciaRepository())
-            {
-                var pendencias = rep.GetAll().ToList();
-
-                var pendenciasViewModel = Mapper.Map<List<Pendencia>, List<PendenciaEventoViewModel>>(pendencias);
-
-                return Request.CreateResponse(HttpStatusCode.OK, pendenciasViewModel);
-            }
+         
+            var pendencias = PendencyServices.RecuperaTodas();
+            return Request.CreateResponse(HttpStatusCode.OK, pendencias);
+            
         }
 
         /// <summary>
         /// Remove uma pendência específica do sam
         /// </summary>
-        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível remover a pendência do SAM", typeof(PendenciaEventoViewModel))]
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível remover a pendência do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [HttpDelete]
         [Route("delete/{pendency}")]
         public HttpResponseMessage Delete(int pendency)
         {
-            using (var rep = DataAccess.Instance.GetPendenciaRepository())
-            {
-
-                rep.Delete(pendency);
-
-                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Pendency removed"));
-            }
+            PendencyServices.Delete(pendency);
+            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Pendency removed"));
+            
         }
 
     }

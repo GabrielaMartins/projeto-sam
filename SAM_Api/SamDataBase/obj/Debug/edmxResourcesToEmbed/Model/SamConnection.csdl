@@ -54,18 +54,18 @@
       <End Role="Usuario" EntitySet="Usuarios" />
       <End Role="ResultadoVotaco" EntitySet="ResultadoVotacaos" />
     </AssociationSet>
-    <EntitySet Name="Promocaos" EntityType="sam.model.Promocao" />
+    <EntitySet Name="Promocoes" EntityType="sam.model.Promocao" />
     <AssociationSet Name="FK__Promocoes__cargo__440B1D61" Association="sam.model.FK__Promocoes__cargo__440B1D61">
       <End Role="Cargo" EntitySet="Cargos" />
-      <End Role="Promoco" EntitySet="Promocaos" />
+      <End Role="Promoco" EntitySet="Promocoes" />
     </AssociationSet>
     <AssociationSet Name="FK__Promocoes__cargo__44FF419A" Association="sam.model.FK__Promocoes__cargo__44FF419A">
       <End Role="Cargo" EntitySet="Cargos" />
-      <End Role="Promoco" EntitySet="Promocaos" />
+      <End Role="Promoco" EntitySet="Promocoes" />
     </AssociationSet>
     <AssociationSet Name="FK__Promocoes__usuar__4316F928" Association="sam.model.FK__Promocoes__usuar__4316F928">
       <End Role="Usuario" EntitySet="Usuarios" />
-      <End Role="Promoco" EntitySet="Promocaos" />
+      <End Role="Promoco" EntitySet="Promocoes" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Cargo">

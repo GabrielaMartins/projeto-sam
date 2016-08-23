@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
-using SamApiModels.OpusActiveDirectory;
+using SamModels.OpusActiveDirectory;
 
 namespace Opus.Helpers.ActiveDirectoryService
 {

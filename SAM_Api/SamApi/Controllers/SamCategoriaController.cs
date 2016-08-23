@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
-using System.Net.Http.Headers;
-using System;
-using SamApiModels;
-using Opus.DataBaseEnvironment;
 using System.Linq;
-using AutoMapper;
-using SamDataBase.Model;
 using SamApiModels.Categoria;
 using Swashbuckle.Swagger.Annotations;
 using DefaultException.Models;
 using SamApi.Attributes.Authorization;
+using SamServices.Services;
 
 namespace SamApi.Controllers
 {
@@ -30,18 +25,9 @@ namespace SamApi.Controllers
         [Route("all")]
         public HttpResponseMessage Get()
         {
-           
-            using (var rep = DataAccess.Instance.GetCategoriaRepository()) {
-                var categorias = rep.GetAll().ToList();
-                var categoriasViewModel = new List<CategoriaViewModel>();
-                foreach (var categoria in categorias)
-                {
-                    var categoriaViewModel = Mapper.Map<Categoria, CategoriaViewModel>(categoria);
-                    categoriasViewModel.Add(categoriaViewModel);
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, categoriasViewModel);
-            }
+            var categorias = CategoriaServices.RecuperaTodas();
+            return Request.CreateResponse(HttpStatusCode.OK, categorias);
+            
         }
 
         /// <summary>
@@ -55,13 +41,9 @@ namespace SamApi.Controllers
         [Route("{id}")]
         public HttpResponseMessage Get(int id)
         {
-            using (var rep = DataAccess.Instance.GetCategoriaRepository())
-            {
-                var query = rep.Find(c => c.id == id);
-                var categoria = query.SingleOrDefault();
-                return Request.CreateResponse(HttpStatusCode.OK, categoria);
-            }  
-        }
 
+            var categoria = CategoriaServices.Recupera(id);
+            return Request.CreateResponse(HttpStatusCode.OK, categoria);
+        }
     }
 }
