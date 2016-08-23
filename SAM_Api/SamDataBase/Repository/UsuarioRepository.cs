@@ -92,37 +92,5 @@ namespace Opus.DataBaseEnvironment
 
             return votos;
         }
-
-        // COISAS QUE PRECISAMOS RESOLVER
-        //public List<ProximaPromocaoViewModel> RecuperaProximasPromocoes(Usuario usuario)
-        //{
-        //    var promocoesViewModel = new List<ProximaPromocaoViewModel>();
-        //    var db = DbContext as SamEntities;
-
-        //    if (usuario == null)
-        //        return null;
-
-        //    promocoesViewModel =
-        //    (from c in db.Cargos
-        //     from u in db.Usuarios
-        //     where
-        //     u.id == usuario.id &&
-        //     u.cargo != c.id &&
-        //     (c.pontuacao - u.pontos) >= 0 &&
-        //     (c.pontuacao - u.pontos) <= (c.pontuacao * 0.2)
-        //     select new
-        //     {
-        //         Usuario = u,
-        //         PontosFaltantes = c.pontuacao - u.pontos
-        //     }).AsEnumerable()
-        //    .Select(x => new ProximaPromocaoViewModel()
-        //    {
-        //        Usuario = Mapper.Map<Usuario, UsuarioViewModel>(x.Usuario),
-        //        PontosFaltantes = x.PontosFaltantes
-        //    }
-        //    ).ToList();
-
-        //    return promocoesViewModel;
-        //}
     }
 }

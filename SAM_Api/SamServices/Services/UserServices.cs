@@ -96,11 +96,31 @@ namespace SamServices.Services
             }
         }
         
-        // TODO: Preciso implementar
-        public static List<ProximaPromocaoViewModel> RecuperaProximasPromocoes(Usuario usuario)
+        public static List<ProximaPromocaoViewModel> RecuperaProximasPromocoes(UsuarioViewModel usuario)
         {
+            
+            if (usuario == null)
+                return null;
+            
+            var cargos = CargoServices.RecuperaTodos();
+            var usuarios = RecuperaTodos();
 
-            return null;
+            var promocoesViewModel =
+            (from c in cargos
+             from u in usuarios
+             where
+             u.id == usuario.id &&
+             u.Cargo.id != c.id &&
+             (c.pontuacao - u.pontos) >= 0 &&
+             (c.pontuacao - u.pontos) <= (c.pontuacao * 0.2)
+             select new ProximaPromocaoViewModel()
+             {
+                 Usuario = u,
+                 PontosFaltantes = c.pontuacao - u.pontos
+
+             }).ToList();
+
+            return promocoesViewModel;
         }
 
         public static void CriaUsuario(AddUsuarioViewModel user)
