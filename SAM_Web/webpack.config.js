@@ -13,6 +13,9 @@ module.exports = {
     path: __dirname + '/dist',
     filename: "index_bundle.js"
   },
+  externals: {
+	'Config': JSON.stringify({serverUrl: "http://sam"})
+  },
   module: {
     loaders: [
       {

@@ -1,6 +1,8 @@
 var React = require('react');
 var Base = require('../../components/shared/base');
 var axios = require("axios");
+var Config = require('Config');
+
 var BaseContainer = React.createClass({
   getInitialState: function() {
     return {
@@ -29,7 +31,7 @@ var BaseContainer = React.createClass({
 
     axios.defaults.headers.common['token'] = token;
     // busca no banco esse samaccount
-    axios.get('http://sam/api/sam/user/' + samaccount).then(
+    axios.get(Config.serverUrl + '/api/sam/user/' + samaccount).then(
       function(response){
         if(response.data.perfil == "RH"){
 
@@ -72,12 +74,12 @@ var BaseContainer = React.createClass({
               {
                 itemMenu : response.data.nome,
                 imagem:response.data.foto,
-                id: 3,
+                id: 4,
                 itens: [
                   {
                     nome: "Perfil",
                     url: "/Perfil/" + response.data.samaccount,
-                    id: 31
+                    id: 41
                   }
                 ]
               }
@@ -107,23 +109,34 @@ var BaseContainer = React.createClass({
                     nome: "Listar",
                     url: "/Item/Listagem",
                     id: 21
-                  },
+                  }
+                ]
+              },
+              {
+                itemMenu : "Eventos",
+                id: 3,
+                itens: [
                   {
                     nome: "Agendamento",
                     url: "/Item/Agendamento",
-                    id: 23
-                  }
+                    id: 31
+                  },
+                  /*{
+                    nome: "Lista de Eventos",
+                    url: "/Item/Agendamento",
+                    id: 32
+                  }*/
                 ]
               },
               {
                 itemMenu : response.data.nome,
                 imagem:response.data.foto,
-                id: 3,
+                id: 4,
                 itens: [
                   {
                     nome: "Perfil",
                     url: "/Perfil/" + response.data.samaccount,
-                    id: 31
+                    id: 41
                   }
                 ]
               }
@@ -134,7 +147,6 @@ var BaseContainer = React.createClass({
 
       function(jqXHR){
         //direcionar para a página de erro
-        debugger;
         status = jqXHR.status;
         var rota = '/Erro/' + status;
         self.props.history.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
@@ -182,16 +194,10 @@ var BaseContainer = React.createClass({
 
     })(jQuery);
 
-    window.sr = ScrollReveal({
-      reset: true
-    }).reveal('.scrollreveal', {
-      duration: 200,
-      origin: 'left'
-    });
-
-    this.forceUpdate();
+    window.sr = ScrollReveal();
 
   },
+
   componentWillMount: function(){
     this.setState({
       dropdowns: [
@@ -203,6 +209,11 @@ var BaseContainer = React.createClass({
         {
           itemMenu : "Itens",
           id: 2,
+          itens: []
+        },
+        {
+          itemMenu : "Eventos",
+          id: 3,
           itens: []
         }
       ]

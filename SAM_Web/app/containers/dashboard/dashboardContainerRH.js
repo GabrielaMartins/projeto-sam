@@ -4,6 +4,7 @@
   var ReactRouter = require('react-router');
   var CardEventos = require('../../components/dashboard/cardsEventos');
   var Pendencias = require('../../components/dashboard/pendencias');
+  var Config = require('Config');
   var moment = require('moment');
   moment.locale('pt-br');
 
@@ -55,7 +56,7 @@
       };
 
       //obtém dados
-      axios.get("http://sam/api/sam/dashboard", config).then(
+      axios.get(Config.serverUrl + "api/sam/dashboard", config).then(
         function(response){
           this.setState({
             dados: response.data,
@@ -86,9 +87,6 @@
 
       //cria lista de eventos (RH)
       var eventos = this.state.dados.UltimosEventos.map(function(conteudo, index){
-        //if(conteudo.Evento.Usuario.foto == null){
-        //  conteudo.Evento.Usuario.foto = "./app/imagens/fulano.jpg"
-        //}
         return(
           <CardEventos key={index} usuario = {conteudo.Evento.Usuario} estilo = "card-panel z-depth-1 col l12 m12 s12 waves-effect">
             <div className="right">

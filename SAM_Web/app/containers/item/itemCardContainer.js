@@ -2,6 +2,8 @@
 var axios = require("axios");
 var React = require('react');
 var ItemCard = require('../../components/item/itemCard');
+var ReactRouter = require('react-router');
+var Link = ReactRouter.Link;
 var moment = require('moment');
 moment.locale('pt-br');
 
@@ -10,6 +12,31 @@ const ItemCardContainer = React.createClass({
     var data = null;
     var acoes = null;
     var perfil = localStorage.getItem("perfil");
+    var usuarios = null;
+
+    //lista de usuarios que fez uma atividade
+    usuarios = this.props.item.Usuarios.map(function(usuario, index){
+      return(
+        <div key={index} className="col l4 m4 s6 wrapper">
+          {perfil == "rh" ?
+            <Link to={"/Perfil/"+ usuario.samaccount}>
+              <img className="responsive-img circle center-block" src={usuario.foto} style={{height:50}}/>
+              <p className="center-align colorText-default"><b>{usuario.nome}</b></p>
+                <br/>
+                <br/>
+            </Link>
+            :
+            <div>
+              <img className="responsive-img circle center-block" src={usuario.foto} style={{height:50}}/>
+              <p className="center-align colorText-default"><b>{usuario.nome}</b></p>
+                <br/>
+                <br/>
+            </div>
+          }
+        </div>
+      );
+    });
+
     //calculo da pontuação de um item
     var pontuacao = this.props.item.dificuldade * this.props.item.modificador * this.props.item.Categoria.peso;
     if(this.props.perfil == true){
@@ -31,7 +58,7 @@ const ItemCardContainer = React.createClass({
     return(<ItemCard data = {data} acoes = {acoes}
       item = {this.props.item}
       pontuacao = {pontuacao}
-      usuarios = {this.props.usuarios}/>);
+      usuarios = {usuarios}/>);
   },
 
   componentDidMount: function(){

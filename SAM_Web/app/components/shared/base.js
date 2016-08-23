@@ -12,7 +12,7 @@ var Base = function(props){
   props.dropdowns.forEach(function(dropdown){
     dropdowns.push(<Dropdown key = {dropdown.id} itensDrop = {dropdown.itens} itemMenu = {dropdown.itemMenu} />);
     //se for diferente do nome da pessoa, cria menu, se não cria menu do usuário
-    if(dropdown.itemMenu == "Itens" || dropdown.itemMenu == "Funcionarios"){
+    if(dropdown.itemMenu == "Itens" || dropdown.itemMenu == "Funcionarios" || dropdown.itemMenu == "Eventos"){
       itensMenu.push(dropdown.itemMenu);
     }else{
       if(dropdown.itemMenu != undefined){

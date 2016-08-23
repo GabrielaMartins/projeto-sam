@@ -4,25 +4,24 @@ var CardEventos = require('../dashboard/cardsEventos');
 var SelecaoVoto = require('../../containers/votacao/SelecaoVotoContainer');
 var Usuario = require('../usuario/usuario');
 
+var moment = require('moment');
+moment.locale('pt-br');
+
 var Link = ReactRouter.Link;
 
 var Votacao = function(props){
     var votos = [];
-
-    var getResult = function(resposta){
-      props.mostraResultado(resposta);
-    }
-
+    console.log(props.resultado);
     props.votos.forEach(function(voto){
-      if(voto.dificuldade && voto.profundidade){
-        votos.push(<CardEventos usuario = {voto} estilo = "aberta card-panel z-depth-1 col l12 m12 s12 green lighten-3 waves-effect">
+      if(voto.Dificuldade && voto.Profundidade){
+        votos.push(<CardEventos usuario = {voto.Usuario} estilo = "aberta card-panel z-depth-1 col l12 m12 s12 green lighten-3 waves-effect">
                       <div className="left">
-                        <p className="media"><b>Dificuldade: </b>{voto.dificuldade}</p>
-                        <p className="media"><b>Profundidade: </b>{voto.profundidade}</p>
+                        <p className="media"><b>Dificuldade: </b>{voto.Dificuldade}</p>
+                        <p className="media"><b>Profundidade: </b>{voto.Profundidade}</p>
                       </div>
                   </CardEventos>);
         }else{
-          votos.push(<CardEventos usuario = {voto} estilo = "finalizada card-panel z-depth-1 col l12 m12 s12 red lighten-3 waves-effect">
+          votos.push(<CardEventos usuario = {voto.Usuario} estilo = "finalizada card-panel z-depth-1 col l12 m12 s12 red lighten-3 waves-effect">
                         <div className="media left"><p><b>Ainda não registrou o voto.</b></p></div>
                     </CardEventos>);
         }
@@ -37,36 +36,41 @@ var Votacao = function(props){
                             </div>;
 
       this.painelDireito =  <div>
-                              <Usuario conteudo = {props.evento.funcionario}/>
+                              <Usuario conteudo = {props.evento.Usuario}/>
                               <SelecaoVoto titulo = "Definir Pontuação" botao = "Atribuir" />
                             </div>;
     }else{
-      this.painelEsquerdo = <Usuario conteudo = {props.evento.funcionario}/>;
+      this.painelEsquerdo = <Usuario conteudo = {props.evento.Usuario}/>;
       if(props.resultado == false){
-        this.painelDireito = <SelecaoVoto titulo = "Votação" botao = "Votar" mostraResultado = {getResult.bind(this)}/>
+        this.painelDireito = <SelecaoVoto
+                              titulo = "Votação"
+                              botao = "Votar"
+                              evento = {props.evento.id}
+                              mostraResultado = {props.mostraResultado.bind(null)}
+                              />
       }else{
         this.painelDireito = null;//faz mostrar resultado da votação (gráfico)
       }
     }
 
     return(
-      <div className="container">
-          <div style={{marginTop:25}}>
-            <div className="card-panel">
-              <h1 className="colorText-default center">{props.evento.nome_item}</h1>
-              <div className="row">
-                <div className="col l6 m6 s6"><span className="right"><b>{props.evento.categoria_item}</b></span></div>
-                <div className="col l6 m6 s6"><span className="left"><b>{props.evento.data_evento}</b></span></div>
-              </div>
-              <p className="center-align" style={{color:"#801515", fontSize: 16}}><b>{props.evento.descricao}</b></p>
-            </div>
+      <div style={{paddingTop: 30 }}>
+        <div className="container">
+          <div className="card-panel">
+            <h1 className="colorText-default center">{props.evento.Item.nome}</h1>
             <div className="row">
-              <div className="col l6 m12 s12">
-                {this.painelEsquerdo}
-              </div>
-              <div className="col l6 m12 s12">
-                {this.painelDireito}
-              </div>
+              <div className="col l6 m6 s6"><span className="right"><b>{props.evento.Item.Categoria.nome}</b></span></div>
+              <div className="col l6 m6 s6"><span className="left"><b>{moment(props.evento.data).format('L')}</b></span></div>
+            </div>
+            <p className="center-align" style={{color:"#801515", fontSize: 16}}><b>{props.evento.Item.descricao}</b></p>
+          </div>
+          <div className="row">
+            <div className="col l6 m12 s12">
+              {this.painelEsquerdo}
+            </div>
+            <div className="col l6 m12 s12">
+              {this.painelDireito}
+            </div>
           </div>
         </div>
       </div>

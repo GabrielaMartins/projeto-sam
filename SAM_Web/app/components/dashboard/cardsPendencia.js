@@ -1,19 +1,27 @@
+//lib
 var React = require('react');
+
+//mommentjs
 var moment = require('moment');
 moment.locale('pt-br');
 
 var CardPendencia = React.createClass({
-  render : function(){
-    var classes = null;
-    if(this.props.conteudo.status == "Finalizado"){
-      classes = "card-panel red lighten-3 col l12 s12 m12 waves-effect finalizada colorText-default";
-    }else{
-      classes = "card-panel green lighten-3 col l12 s12 m12 waves-effect aberta colorText-finalizada";
+  icone : function(){
+    if(this.props.conteudo.Evento.tipo == "votacao"){
+      return "fa fa-lg fa-gavel";
+    }else if(this.props.conteudo.Evento.tipo == "promocao"){
+      return "fa fa-lg fa-trophy";
+    }else if(this.props.conteudo.Evento.tipo == "atividade"){
+      return "fa fa-lg fa-calendar";
     }
+  },
+  render : function(){
     return(
-        <div className={classes} id="pendencias">
+        <div
+          id="pendencias"
+          className={this.props.conteudo.status == "Finalizado" ? "card-panel red lighten-3 col l12 s12 m12 waves-effect finalizada colorText-default" : "card-panel green lighten-3 col l12 s12 m12 waves-effect aberta colorText-finalizada"}>
           <div className="card-title center" style={{marginTop:10}}>
-            <i className="material-icons small">cake</i>
+              <i className={this.icone()}></i>
             <h5 className="grande">
               <b>{this.props.conteudo.Evento.Item.nome}</b>
             </h5>
@@ -30,4 +38,9 @@ var CardPendencia = React.createClass({
     );
   }
 });
+
+CardPendencia.propTypes = {
+  conteudo: React.PropTypes.object.isRequired,
+}
+
 module.exports = CardPendencia;

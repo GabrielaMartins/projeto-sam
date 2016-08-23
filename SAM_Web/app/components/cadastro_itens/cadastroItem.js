@@ -5,7 +5,6 @@ var Radio = require('../../ui_elements/radio');
 var Link = ReactRouter.Link;
 
 var CadastroItem = function(props){
-debugger;
   return(
     <form>
       <div className="full-screen-less-nav">
@@ -58,7 +57,6 @@ debugger;
                       <label>Dificuldade</label>
                     </div>
                   </div>
-                  { /* essa div deve ser escondida e mostrada apenas quando o item é novo */}
                   <div>
                     <div className="row">
                       <div className="input-field col l12 m12 s12">
@@ -102,7 +100,6 @@ debugger;
                   </div>
                 </div>
                 <div className="card-action">
-                  {/* aqui fica os botoes */}
                   <div className="row wrapper">
                     <div className="col l12 m12 s12">
                       <div className="row">

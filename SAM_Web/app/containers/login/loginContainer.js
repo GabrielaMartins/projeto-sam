@@ -3,9 +3,10 @@ var React = require('react');
 var Login = require('../../components/login/login');
 var ReactRouter = require('react-router');
 var axios = require("axios");
+var Config = require('Config');
 
 var LoginContainer = React.createClass({
-  
+
   getInitialState: function(){
     return{
       usuario:"",
@@ -45,11 +46,11 @@ var LoginContainer = React.createClass({
 
     }else{
       var data = {User: self.state.usuario, Password: self.state.senha};
-      axios.post("http://sam/api/sam/login", data).then(
+      axios.post( Config.serverUrl+"/api/sam/login", data).then(
 
   	    // sucesso
         function(response){
-          var token = response.data.token;
+          var token = response.data.Token;
 
           if (typeof(Storage) !== "undefined") {
             localStorage.setItem("token", token);
@@ -63,7 +64,7 @@ var LoginContainer = React.createClass({
           };
 
           //verifica qual é o perfil do usuário para que seja direcionado para a dashboard correta
-          axios.get("http://sam/api/sam/user/" + self.state.usuario, config).then(
+          axios.get(Config.serverUrl + "/api/sam/user/" + self.state.usuario, config).then(
             //se sucesso
             function(response){
               //guarda o perfil do usuario no localStorage
@@ -86,7 +87,7 @@ var LoginContainer = React.createClass({
           // usuário não autenticado
           if(status === 401){
             self.setState({msg: "Senha ou usuário inválido"});
-          // usuário não encontrado no banco de dados ou  no samaccount?
+          // usuário não encontrado no banco de dados ou no samaccount?
         }else if(status === 404){
             var rota = '/Erro/' + status;
             self.context.router.push({pathname: rota, state: {mensagem: "O usuário não foi encontrado no banco de dados! Por favor, entre em contato com o administrador ou funcionário do RH."}});

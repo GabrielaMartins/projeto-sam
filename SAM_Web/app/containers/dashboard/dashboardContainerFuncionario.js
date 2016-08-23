@@ -1,15 +1,26 @@
 var React = require('react');
 var axios = require("axios");
 var ReactRouter = require('react-router');
-var CardEventos = require('../../components/dashboard/cardsEventos');
-var Pendencias = require('../../components/dashboard/pendencias');
-var DashboardFuncionario = require('../../components/dashboard/dashboardFuncionario');
-var moment = require('moment');
-moment.locale('pt-br');
+var Link = ReactRouter.Link;
 
+var Atualizacoes = require('../../components/dashboard/atualizacoes');
+var DashboardFuncionario = require('../../components/dashboard/dashboardFuncionario');
+
+var Config = require('Config');
+
+//configurações para passar o token
+var token = localStorage.getItem("token");
+
+var config = {
+  headers: {'token': token}
+};
+
+//variável que indica se um componente já possui os dados para renderizar
 var fezFetch = false;
 
 var DashboardContainerFuncionario = React.createClass({
+
+  //estado inicial dos objetos
   getInitialState: function() {
     return {
       columnChart: {
@@ -20,38 +31,62 @@ var DashboardContainerFuncionario = React.createClass({
       },
       dados:{
         ResultadoVotacoes:[{}],
-        Alertas:[{}],
         Usuario:[{}],
         Atualizacoes:[{}]
-      }
+      },
+      alertas:[]
     };
 
   },
 
+  //força a re-renderização do gráfico quando a tela muda de tamanho
   handleResize: function(e) {
     if(this._mounted == true){
       this.forceUpdate();
     }
-
   },
+
+  handleDeleteAlerta: function(id){
+    index = -1;
+    var alertas = this.state.alertas;
+    var alertasModificado = [];
+
+    //remove do banco
+    axios.delete(Config.serverUrl+"/api/sam/pendency/delete/" + id, config).then(
+      function(response){
+        //atualiza o estado
+        debugger;
+        for(var i = 0; i < alertas.length; i++) {
+          if (alertas[i].Evento.id !== id) {
+            alertasModificado.push(alertas[i]);
+          }
+        }
+        this.setState({
+          alertas: alertasModificado
+        });
+      }.bind(this),
+      function(jqXHR){
+
+      }
+    );
+  },
+
   componentDidMount: function(){
     this._mounted = true;
+
+    //verifica se a janela mudou de tamanho e força o update
     window.addEventListener('resize', this.handleResize);
 
+    //samaccount passado pela url
     var samaccount = this.props.params.samaccount;
 
-    //configurações para passar o token
-    var token = localStorage.getItem("token");
-    var config = {
-      headers: {'token': token}
-    };
-
     //obtém dados
-    axios.get("http://sam/api/sam/dashboard", config).then(
+    axios.get(Config.serverUrl+"/api/sam/dashboard/" + samaccount, config).then(
       function(response){
         fezFetch = true;
         this.setState({
           dados: response.data,
+          alertas: response.data.Alertas,
           columnChart: {
             data: response.data.CertificacoesMaisProcuradas,
             options : {
@@ -65,62 +100,94 @@ var DashboardContainerFuncionario = React.createClass({
             div_id: "ColumnChart"
           }
         });
+
+        //inicializa o efeito para aparece os elementos quando faz scroll
+        sr.reveal('.scrollreveal');
       }.bind(this),
+
+
       function(jqXHR){
         status = jqXHR.status;
         var rota = '/Erro/' + status;
-        self.props.history.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
-      }
+
+        //erro 401 - acesso não autorizado
+        if(status == "401"){
+          this.props.history.push({pathname: rota, state: {mensagem: "Você está tentando acessar uma página que não te pertence, que feio!"}});
+        }else{
+          this.props.history.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+        }
+      }.bind(this)
     );
+
   },
+
   componentWillUnmount: function(){
     this._mounted = false;
     fezFetch = false;
   },
 
-  render : function(){
-    if(!fezFetch){
-      return false;
-    }
+  componentDidUpdate: function(){
+    //inicializa o modal
+    $(window).ready(function() {
+      $('.modal-trigger').leanModal({
+        dismissible: false
+      });
+    });
+  },
+
+  criaElementoAtualizacoes: function(){
     var atualizacoes = [];
+
     //cria lista de ultimas atualizações do funcionário
     var atualizacoes = this.state.dados.Atualizacoes.map(function(conteudo, index){
+
+      //lista de usuarios que fez uma atividade para inserir no modal de cada item
+      var usuarios = null;
+      usuarios = conteudo.Item.Usuarios.map(function(usuario, index){
+        return(
+          <div key={index} className="col l4 m4 s6 wrapper">
+            {/*<Link to={"/Perfil/"+ usuario.samaccount}>*/}
+            <div>
+              <img className="responsive-img circle center-block" src={usuario.foto} style={{height:50}}/>
+              <p className="center-align colorText-default"><b>{usuario.nome}</b></p>
+                <br/>
+                <br/>
+            </div>
+            {/*</Link>*/}
+          </div>
+        );
+      });
+
+      //agendamento não é um evento realizado. Aqui deve aparecer apenas os elementos realizados
       if(conteudo.tipo != "agendamento"){
         var pontuacao = conteudo.Item.dificuldade * conteudo.Item.modificador * conteudo.Item.Categoria.peso;
-        return(<div  key={index} className="eventsCard row">
-          <div className="card-panel z-depth-1 col l12 m12 s12 waves-effect" style={{height:100}}>
-            <div className="row wrapper">
-              <div className="col s5">
-                <div className="left">
-                  <h5 className="media">{conteudo.Item.nome}</h5>
-                </div>
-              </div>
-              <div className="col s3">
-                <div className="center">
-                  <span className="extraGrande"><b>{pontuacao}</b></span>
-                    <div>
-                      <span className="pequena">{conteudo.tipo}</span>
-                    </div>
-                </div>
-
-              </div>
-              <div className="col s4">
-                <div className="right">
-                  <span className="media"> pontos</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>);
+        return(
+          <Atualizacoes key={index} pontuacao = {pontuacao} conteudo = {conteudo} usuarios = {usuarios}/>
+          );
       }
     });
 
+    return atualizacoes;
+  },
+
+
+
+  render : function(){
+
+    //se a tela não possui dados para renderizar, então não renderiza (mudar posteriormente para loading)
+    if(!fezFetch){
+      return false;
+    }
+
+    var atualizacoes = this.criaElementoAtualizacoes();
+
     return(<DashboardFuncionario
-      alertas = {this.state.dados.Alertas}
+      alertas = {this.state.alertas}
       usuario = {this.state.dados.Usuario}
       resultadoVotacao = {this.state.dados.ResultadoVotacoes}
       atualizacoes = {atualizacoes}
-      columnChart = {this.state.columnChart}/>);
+      columnChart = {this.state.columnChart}
+      handleDeleteAlerta = {this.handleDeleteAlerta}/>);
 
     }
   });

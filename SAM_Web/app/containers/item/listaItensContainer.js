@@ -2,6 +2,7 @@ var React = require('react');
 var axios = require("axios");
 var ListaItens = require('../../components/shared/lista');
 var ItemCard = require('../item/itemCardContainer');
+var Config = require('Config');
 var fezFetch = false;
 
 var ListaItensContainer = React.createClass({
@@ -19,12 +20,13 @@ var ListaItensContainer = React.createClass({
     };
 
     //obtém dados
-    axios.get("http://sam/api/sam/item/all", config).then(
+    axios.get(Config.serverUrl+"/api/sam/item/all", config).then(
       function(response){
         fezFetch = true;
         this.setState({
           itens: response.data
         });
+        sr.reveal('.scrollreveal');
       }.bind(this),
       function(jqXHR){
 

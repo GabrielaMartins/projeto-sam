@@ -2,6 +2,7 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var EdicaoFuncionario = require('../../components/edicao_funcionario/edicaoFuncionario');
+var Config = require('Config');
 var axios = require("axios");
 var moment = require('moment');
 moment.locale('pt-br');
@@ -33,13 +34,16 @@ const EdicaoFuncionarioContainer = React.createClass({
     axios.defaults.headers.common['token'] = token;
 
     //fetch aqui
-    axios.get("http://sam/api/sam/user/" + usuario).then(
+    axios.get(Config.serverUrl + "/api/sam/user/" + usuario).then(
       function(response){
         var userData = response.data;
-        axios.get("http://sam/api/sam/role/all").then(
+        axios.get(Config.serverUrl + "/api/sam/role/all").then(
           function(response){
+            console.log(userData);
+
             self.setState({
               nome : userData.nome,
+              cargo_nome : userData.Cargo.nome,
               cargo_id : userData.Cargo.id,
               pontos : userData.pontos,
               data_inicio : userData.DataInicio,
@@ -107,31 +111,53 @@ const EdicaoFuncionarioContainer = React.createClass({
     event.preventDefault();
 
     var perfilDados = {
-      Cargo: this.state.cargo_id,
-      Nome: this.state.nome,
-      Pontos: this.state.pontos,
-      DataInicio: this.state.data_inicio,
-      Perfil: this.state.perfil,
-      Facebook: this.state.facebook,
-      Linkedin: this.state.linkedin,
-      Github: this.state.github,
-      Descricao: this.state.descricao,
-      Foto: ""
+      cargo: this.state.cargo_id,
+      nome: this.state.nome,
+      pontos: this.state.pontos,
+      dataInicio: this.state.data_inicio,
+      perfil: this.state.perfil,
+      facebook: this.state.facebook,
+      linkedin: this.state.linkedin,
+      github: this.state.github,
+      descricao: this.state.descricao,
+      foto: ""
     }
 
     var imagem = this.getFile();
 
-    var reader = new FileReader();
+    if(imagem != undefined){
+      var reader = new FileReader();
 
-    reader.onloadend = function(evento){
-      perfilDados.Foto = evento.target.result;
+      reader.onloadend = function(evento){
+        perfilDados.Foto = evento.target.result;
+
+        var token = localStorage.getItem("token");
+        var samaccount = localStorage.getItem("samaccount");
+
+        var config = {
+          headers: {'token': token}
+        };
+
+        axios.put(Config.serverUrl+"/api/sam/user/update/" + samaccount, perfilDados, config).then(
+          function(response){
+            Materialize.toast('Seus dados foram atualizados com sucesso', 4000);
+          },
+          function(jqXHR){
+            console.log(jqXHR);
+          }
+        );
+      }
+      reader.readAsDataURL(imagem);
+    }else{
 
       var token = localStorage.getItem("token");
+      var samaccount = localStorage.getItem("samaccount");
+
       var config = {
         headers: {'token': token}
       };
 
-      axios.put("http://sam/api/sam/user/update", perfilDados, config).then(
+      axios.put(Config.serverUrl+"/api/sam/user/update/" + samaccount, perfilDados, config).then(
         function(response){
           Materialize.toast('Seus dados foram atualizados com sucesso', 4000);
         },
@@ -141,7 +167,6 @@ const EdicaoFuncionarioContainer = React.createClass({
       );
     }
 
-    reader.readAsDataURL(imagem);
 
     //this.context.router.push('/Perfil/gabriela');
 
@@ -199,11 +224,13 @@ const EdicaoFuncionarioContainer = React.createClass({
           </div>
           <div className="row">
             <div className="col s12 m6 l6">
-              <span><b>Level (Cargo):</b> {this.state.nome}</span>
+              <span><b>Level (Cargo):</b> {this.state.cargo_nome}</span>
             </div>
             <div className="col s12 m6 l6">
               <span><b>XP (Pontos):</b> {this.state.pontos}</span>
             </div>
+          </div>
+          <div className="row">
             <div className="col s12 m6 l6">
               <span><b>Data de Início:</b> {moment(this.state.data_inicio).format('L')}</span>
             </div>
@@ -220,34 +247,33 @@ const EdicaoFuncionarioContainer = React.createClass({
             <div className="input-field col s12 m4 l4">
               <input id="facebook"
                     type="text"
-                    onChange={this.handleFacebook}
+                    onChange={this.handleFacebookChanges}
                     value={this.state.facebook}/>
-                  <label for="facebook" className={this.state.facebook ? "active" : null}><b>Facebook:</b></label>
+                  <label htmlFor="facebook" className={this.state.facebook ? "active" : null}><b>Facebook:</b></label>
             </div>
             <div className="input-field col s12 m4 l4">
               <input id="linkedin"
                 type="text"
                 onChange={this.handleLikedinChanges}
                 value={this.state.linkedin}/>
-              <label for="linkedin" className={this.state.linkedin ? "active" : null}><b>Linkedin:</b></label>
+              <label htmlFor="linkedin" className={this.state.linkedin ? "active" : null}><b>Linkedin:</b></label>
             </div>
             <div className="input-field col s12 m4 l4">
               <input id="github"
                 type="text"
-                onChange={this.handleGithub}
+                onChange={this.handleGithubChanges}
                 value={this.state.github}/>
-              <label for="github" className={this.state.github ? "active" : null}><b>GitHub:</b></label>
+              <label htmlFor="github" className={this.state.github ? "active" : null}><b>GitHub:</b></label>
             </div>
           </div>
           <div className="row">
             <div className="input-field col s12">
               <textarea id="bio"
                 className="materialize-textarea"
-                length="200"
-                onChange={this.handleDescricao}
+                onChange={this.handleDescricaoChanges}
                 value={this.state.descricao}>
               </textarea>
-              <label for="bio" className={this.state.descricao ? "active" : null}><b>Bio:</b></label>
+              <label htmlFor="bio" className={this.state.descricao ? "active" : null}><b>Bio:</b></label>
             </div>
           </div>
           <div className="row">
@@ -258,14 +284,14 @@ const EdicaoFuncionarioContainer = React.createClass({
                   <input type="file"
                     accept="image/gif, image/jpeg, image/png"
                     id = "img"
-                    onChange={this.handleFoto}/>
+                    onChange={this.handleFotoChanges}/>
                 </div>
                 <div className="file-path-wrapper">
                   <input className="file-path"
                     type="text"
                     accept="image/gif, image/jpeg, image/png"
                     id = "imagem"
-                    onChange={this.handleFoto}
+                    onChange={this.handleFotoChanges}
                     value={this.state.foto}
                     />
                 </div>
@@ -284,7 +310,7 @@ const EdicaoFuncionarioContainer = React.createClass({
           <div className="row">
             <div className="input-field col s12">
               <input value = {this.state.nome} id="nome" type="text"/>
-              <label for="nome" className="active">Nome: </label>
+              <label htmlFor="nome" className="active">Nome: </label>
             </div>
           </div>
           <div className="row">
@@ -296,13 +322,13 @@ const EdicaoFuncionarioContainer = React.createClass({
             </div>
             <div className="input-field col s12 m6 l6">
               <input value={this.state.pontos} id="pontos" type="text"/>
-              <label for="pontos" className="active">XP (Pontos):</label>
+              <label htmlFor="pontos" className="active">XP (Pontos):</label>
             </div>
           </div>
           <div className="row">
             <div className="input-field col s12 m6 l6">
               <input disabled value={moment(this.state.data_inicio).format('L')} id="inicio" type="text"/>
-              <label for="inicio" className="active">Data de Início:</label>
+              <label htmlFor="inicio" className="active">Data de Início:</label>
             </div>
             <div className="col s6">
               <div className="row">
@@ -312,11 +338,11 @@ const EdicaoFuncionarioContainer = React.createClass({
                 <div className="input-field">
                   <div className="col s6 m4 l4">
                     <input name="group1" type="radio" id="rh" disabled="disabled" checked ={this.state.perfil === "RH" ? true : false}/>
-                    <label for="rh">RH</label>
+                    <label htmlFor="rh">RH</label>
                   </div>
                   <div className="col s6 m4 l4">
                     <input name="group1" type="radio" id="funcionario" disabled="disabled" checked ={this.state.perfil === "Funcionario" ? true : false}/>
-                    <label for="funcionario">Funcionário</label>
+                    <label htmlFor="funcionario">Funcionário</label>
                   </div>
                 </div>
               </div>

@@ -1,7 +1,14 @@
 'use strict'
+
+//libs
 var React = require('react');
-var Agendamento = require('../../components/agendamento/agendamento');
 var axios = require("axios");
+
+//acesso às configurações de url para requisição ao server
+var Config = require('Config');
+
+//componente de Agendamento
+var Agendamento = require('../../components/agendamento/agendamento');
 
 //configurações para passar o token
 var token = localStorage.getItem("token");
@@ -12,29 +19,44 @@ var config = {
 const AgendamentoContainer = React.createClass({
 
   render: function(){
+
+    /*categorias a serem exibidas no select*/
+    var categorias = this.state.categorias.map(function(categoria, index){
+      return <option value = {categoria.id} key = {index + 1}>{categoria.nome}</option>
+    });
+
+    /*Verifica se a categoria selecionada pertence a um determinado item, afim de filtrar os itens a serem exibidos no select*/
+    var itens = this.state.itens.map(function(item, index){
+      if(item.Categoria.id == this.state.categoria || this.state.categoria == "0" || this.state.categoria == "Selecione a categoria"){
+        return <option value = {item.id} key = {index + 1}>{item.nome}</option>
+      }
+    }.bind(this));
+
     return(
       <Agendamento
         handleCategoryChanges = {this.handleCategoryChanges}
         handleDescriptionChanges = {this.handleDescriptionChanges}
         handleItemChanges = {this.handleItemChanges}
-        handleDateChanges = {this.handleDateChanges}
+        handleDataChanges = {this.handleDataChanges}
         handleSubmit = {this.handleSubmit}
         handleClear = {this.handleClear}
         item = {this.state.item}
         itens = {this.state.itens}
         descricao = {this.state.descricao}
         categoria = {this.state.categoria}
-        date = {this.state.date}
-        categorias = {this.state.categorias.map(function(categoria, index){
-          return <option value = {categoria.id} key = {index + 1}>{categoria.nome}</option>
-        })}
-        itens = {this.state.itens.map(function(item, index){
-          return <option value = {item.id} key = {index + 1}>{item.nome}</option>
-        })}
+        data = {this.state.data}
+        erroItem = {this.state.erroItem}
+        erroCategoria= {this.state.erroCategoria}
+        erroData= {this.state.erroData}
+        erroDescricao= {this.state.erroDescricao}
+        categorias = {categorias}
+        itens = {itens}
+        mostraAlerta = {this.state.mostraAlerta}
       />
     )
   },
 
+  //estado inicial das variáveis
   getInitialState: function(){
       return {
 		    categorias: [],
@@ -42,28 +64,34 @@ const AgendamentoContainer = React.createClass({
         categoria: "Selecione a categoria",
         item: "Selecione o item",
         descricao: "",
-        date:""
+        data:"",
+        erroItem: undefined,
+        erroCategoria: undefined,
+        erroData: undefined,
+        erroDescricao: undefined,
+        mostraAlerta: false
       }
   },
 
   componentDidMount: function(){
     var self = this;
 
-    $(document).ready(function() {
-      $('select').material_select();
-      self.setupDatepicker();
-    });
+    //funções para obter categorias e itens
+    this.getCategory(Config.serverUrl+'/api/sam/category/all');
+    this.getItem(Config.serverUrl+'/api/sam/item/all');
 
-    this.getCategory('http://sam/api/sam/category/all');
-    this.getItem('http://sam/api/sam/item/all');
-
+    //faz bind do select e chama a função para setar o novo estado
     $("#select_categoria").on('change', self.handleCategoryChanges);
     $("#select_item").on('change', self.handleItemChanges);
+
+    this.forceUpdate();
 
   },
 
   componentDidUpdate: function(){
     var self = this;
+
+    //inicializador do select do materialize
     $(document).ready(function() {
       $('select').material_select();
       self.setupDatepicker();
@@ -80,7 +108,7 @@ const AgendamentoContainer = React.createClass({
           self.setState({categorias: categorias});
         },
         function(reason){
-          debugger;
+          //retorna a página de erro
         }
       );
   },
@@ -90,43 +118,113 @@ const AgendamentoContainer = React.createClass({
       var self = this;
       axios.get(url, config).then(
         function(response){
-          console.log(response);
           var itens = response.data;
-          self.setState({itens: itens});
+          self.setState({itens: itens, mostraAlerta: true});
         },
         function(reason){
-          debugger;
+          //retorna a página de erro
         }
       );
   },
 
   handleCategoryChanges: function(event){
+    var categoria = event.target.value;
 
-    this.setState({categoria: event.target.value});
+    //se a categoria é diferente de 0 (alguma categoria foi selecionada), não retornará mensagem de erro
+    if( categoria != "0"){
+      this.setState({
+        erroCategoria: undefined
+      });
+    }
+
+    //seta a catogoria selecionada
+    this.setState({categoria: categoria});
   },
 
   handleItemChanges: function(event){
-    this.setState({item: event.target.value});
+
+    var item = event.target.value
+    if( item != "0"){
+      this.setState({
+        erroItem: undefined
+      });
+    }
+
+    this.setState({
+      item: item
+    });
+
   },
 
   handleDescriptionChanges: function(event){
     var descricao = event.target.value;
+    if( descricao != ""){
+      this.setState({
+        erroDescricao: undefined
+      });
+    }
     this.setState({descricao: descricao});
   },
 
-  handleDateChanges: function(event){
-    var date = event.target.value;
-    this.setState({date: date});
+  handleDataChanges: function(event){
+    var data = event.target.value;
+    if( data != ""){
+      this.setState({
+        erroData: undefined
+      });
+    }
+    this.setState({data: data});
   },
+  //faz validação dos campos de agendamento
+  validacao: function(){
+    var valido = true;
 
+    //se nenhum item foi selecionado, então retornará mensagem de erro e tora o formulário inválido
+    if(this.state.item === "Selecione o item" || this.state.item === "0"){
+      this.setState({
+        erroItem: "Por favor, selecione uma atividade"
+      });
+
+      valido = false;
+    }
+
+    if(this.state.categoria === "Selecione a categoria" || this.state.categoria === "0"){
+      this.setState({
+        erroCategoria: "Por favor, selecione uma categoria"
+      });
+      valido = false;
+    }
+
+    if(this.state.data === ""){
+      this.setState({
+        erroData: "Por favor, selecione uma data"
+      });
+      valido = false;
+    }
+
+    if(this.state.descricao === ""){
+      this.setState({
+        erroDescricao: "Por favor, adicione uma descrição"
+      });
+      valido = false;
+    }
+
+    return valido;
+
+  },
   handleSubmit: function(event){
-    debugger;
+
     event.preventDefault();
+
+    //se o formulário não está válido, não envia os dados para o servidor
+    if (this.validacao() == false){
+      return;
+    }
 
     var item = this.state.item;
     var descricao = this.state.descricao;
     var categoria = this.state.categoria;
-    var date = this.state.date;
+    var data = this.state.data;
 
     //obter funcionário que está logado
     var funcionario = localStorage.getItem("samaccount");
@@ -135,34 +233,44 @@ const AgendamentoContainer = React.createClass({
       funcionario: funcionario,
       item: item,
       categoria: categoria,
-      date: date,
+      data: data,
       descricao: descricao
     };
 
-    // fazer post do objeto para o server
-    axios.post("http://sam/api/sam/scheduling/create", itemAgendado, config).then(
+    var self = this;
+
+    // faz post do objeto para o servidor
+    axios.post(Config.serverUrl+"/api/sam/scheduling/create", itemAgendado, config).then(
       function(response){
+        //retorna um alert confirmando o envio dos dados e limpa formulário
+        self.handleClear();
       },
       function(reason){
-        debugger;
+        //retorna página de erro
       }
     );
-    // salvar no banco o item
-    console.log("item: " + itemAgendado);
+
   },
 
+  //limpa os dados do formulário
   handleClear: function(){
 
       this.setState({
         item: "Selecione o item",
         categoria: "Selecione a categoria",
         descricao: "",
-        date:""
+        data:"",
+        erroItem: undefined,
+        erroCategoria: undefined,
+        erroData: undefined,
+        erroDescricao: undefined
       });
 
   },
+
+  //inicializador do datepicker
   setupDatepicker: function() {
-    // cache this so we can reference it inside the datepicker
+
     var self = this;
 
     $('.datepicker').pickadate({
@@ -177,9 +285,8 @@ const AgendamentoContainer = React.createClass({
       selectYears: 5,
       closeOnSelect: true,
       onSet: function(e) {
-        // you can use any of the pickadate options here
         var val = this.get('select', 'dd-mm-yyyy');
-        self.handleDateChanges({target: {value: val}});
+        self.handleDataChanges({target: {value: val}});
       }
     });
   }

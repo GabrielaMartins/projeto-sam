@@ -5,7 +5,6 @@ var Modal = require('./modalItem');
 var Link = ReactRouter.Link;
 
 var Card = function(props){
-    console.log(props);
     return(
         <div>
           <div className="scrollreveal card">
@@ -21,9 +20,11 @@ var Card = function(props){
               </div>
             </div>
           </div>
-          {/*}<Modal item = {props.item}
+          <Modal
+            index = {props.item.id}
+            item = {props.item}
             usuarios = {props.usuarios}
-            pontuacao = {props.pontuacao}/>*/}
+            pontuacao = {props.pontuacao}/>
         </div>
 
     );

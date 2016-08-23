@@ -9,8 +9,6 @@ var Perfil = function(props){
 
     var promocoes = null;
     var atividades = null;
-    console.log(props);
-    //foreach aqui
     return(
       <div style={{marginTop:50}} className="container">
         <div className="full-screen-perfil">
@@ -34,7 +32,7 @@ var Perfil = function(props){
             </div>
             <div className="col l6 m6 s12">
               <BaseHistorico placeholder = "Pesquise por cargos alcançados" titulo = "Promoções Alcançadas">
-                {/*<PromocoesHistorico/>*/}
+                <PromocoesHistorico/>
               </BaseHistorico>
             </div>
           </div>

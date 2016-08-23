@@ -4,14 +4,6 @@ var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
 
 var Login = function(props){
-    var classeUsuario = ""
-    var classeSenha = ""
-    if(props.msg === "Preencha o campo usuário"){
-      classeUsuario = "invalid"
-    }
-    if(props.msg === "Preencha o campo senha"){
-      classeSenha = "invalid"
-    }
     return(
       <main className="background-start">
         <div className="full-screen transparent-dark">
@@ -22,7 +14,7 @@ var Login = function(props){
                   <div className="row">
                     <div className="input-field">
                       <i className="material-icons prefix input-color">account_circle</i>
-                      <input className={classeUsuario} id="usuario"
+                      <input id="usuario"
                         type="text"
                         onChange = {props.updateUsuario}
                       />
@@ -30,7 +22,7 @@ var Login = function(props){
                     </div>
                     <div className="input-field">
                       <i className="material-icons prefix">lock</i>
-                      <input className={classeSenha} id="senha"
+                      <input id="senha"
                         type="password"
                         onChange = {props.updateSenha}
                       />

@@ -1,79 +1,73 @@
 var React = require('react');
 var Votacao = require('../../components/votacao/votacao');
+var Config = require('Config');
+var axios = require("axios");
 
+var fezFetch = false;
 
 var VotacaoContainer = React.createClass({
   getInitialState: function() {
     return {
-      votos: null,
-      evento: null,
-      dificuldades:null,
-      profundidades:null,
+      votos: [],
+      evento: {},
+      dificuldades:undefined,
+      profundidades:undefined,
       resultado: false
     };
+  },
+  componentWillMount: function(){
   },
   handleMostraResultado: function(resposta){
     this.setState({
       resultado: resposta
     })
   },
-  componentWillMount: function(){
-    //fazer fetch aqui
-    this.setState({
-      votos:[
-        {
-          foto:"./app/imagens/fulano.jpg",
-          nome:"Gabriela",
-          dificuldade:"médio",
-          profundidade:"profundo"
-        },
-        {
-          foto:"./app/imagens/fulano.jpg",
-          nome:"Telles",
-          dificuldade:"fácil",
-          profundidade:"profundo"
-        },
-        {
-          foto:"./app/imagens/fulano.jpg",
-          nome:"Thiago",
-          dificuldade:"médio",
-          profundidade:"profundo"
-        },
-        {
-          foto:"./app/imagens/fulano.jpg",
-          nome:"Jesley",
-          dificuldade:"fácil",
-          profundidade:"raso"
-        },
-        {
-          foto:"./app/imagens/fulano.jpg",
-          nome:"Vitor",
-        },
-        {
-          foto:"./app/imagens/fulano.jpg",
-          nome:"Caio",
-        }
-      ],
-      evento:{
-        nome_item:"AWS",
-        descricao:"Amazon Web Services, também conhecido como AWS, é uma coleção de serviços de computação em nuvem ou serviços web, que formam uma plataforma de computação na nuvem oferecida por Amazon.com.",
-        categoria_item:"Workshop",
-        data_evento:"24/05/2016",
-        funcionario:{
-          nome:"Tancredo",
-          imagem:"./app/imagens/fulano.jpg",
-          cargo: "Sênior I",
-          prox_cargo: "Sênior II",
-          pontos:"160",
-          pontos_cargo:"180",
-          tempo_casa:"5 anos"
-        }
-      }
-  });
-},
+  componentDidMount: function(){
 
+    //configurações para passar o token
+    var token = localStorage.getItem("token");
+    var samaccount = localStorage.getItem("samaccount");
+
+    var config = {
+      headers: {'token': token}
+    };
+
+    var id = this.props.params.id;
+    axios.get(Config.serverUrl + "/api/sam/vote/" + id, config).then(
+      function(response){
+        fezFetch = true;
+        this.setState({
+          evento:response.data.Evento,
+          votos:response.data.Votos,
+        });
+
+        for(var i=0; i<this.state.votos.length; i++){
+          if(this.state.votos[i].Usuario.samaccount == samaccount){
+            this.handleMostraResultado(true);
+            break;
+          }
+        }
+
+      }.bind(this),
+      function(jqXHR){
+
+      }
+    );
+
+  },
+  componentWillUnmount: function(){
+    fezFetch = false;
+  },
   render : function(){
-      return(<Votacao votos = {this.state.votos} evento = {this.state.evento} perfil = "rh" mostraResultado = {this.handleMostraResultado} resultado = {this.state.resultado}/>)
+      if(!fezFetch){
+        return null;
+      }
+      var perfil = localStorage.getItem("perfil");
+      return(<Votacao votos = {this.state.votos}
+                      evento = {this.state.evento}
+                      perfil = {perfil}
+                      mostraResultado = {this.handleMostraResultado}
+                      resultado = {this.state.resultado}/>)
   }
 });
 

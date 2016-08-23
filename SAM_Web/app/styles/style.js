@@ -159,6 +159,12 @@ export default StyleSheet.create({
         "overflowY": "scroll",
         "height": 580
     },
+    "cardUsuario": {
+        "height": 300
+    },
+    "cardVotacao": {
+        "height": 300
+    },
     "votacao": {
         "overflowY": "scroll",
         "overflowX": "hidden",

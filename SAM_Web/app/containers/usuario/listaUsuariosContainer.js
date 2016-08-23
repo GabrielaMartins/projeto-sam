@@ -1,6 +1,7 @@
 var React = require('react');
 var ListaUsuarios = require('../../components/shared/lista');
 var UsuarioCard = require('../../components/usuario/usuarioCard');
+var Config = require('Config');
 
 var ListaUsuariosContainer = React.createClass({
   getInitialState: function() {
