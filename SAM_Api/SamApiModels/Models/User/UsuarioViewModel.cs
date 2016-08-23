@@ -1,4 +1,5 @@
 using SamApiModels.Cargo;
+using SamModelValidationRules.Attributes.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,6 +36,7 @@ namespace SamApiModels.User
         public string linkedin { get; set; }
 
         [Required]
+        [ValidPicture]
         public string foto { get; set; }
 
         [Required]

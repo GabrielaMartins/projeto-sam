@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SamModelValidationRules.Attributes.Validation;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,6 +14,7 @@ namespace SamApiModels.User
         /// Segue o formato UrlEncoded64
         /// </summary>
         [Required]
+        [ValidPicture]
         public string foto { get; set; }
 
         /// <summary>

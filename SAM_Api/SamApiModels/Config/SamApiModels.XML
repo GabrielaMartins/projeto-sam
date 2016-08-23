@@ -4,6 +4,24 @@
         <name>SamApiModels</name>
     </assembly>
     <members>
+        <member name="T:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute">
+            <summary>
+            Allow values in array
+            </summary>
+        </member>
+        <member name="M:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            tell if the value is valid
+            </summary>
+            <param name="value">current value suplied to a field</param>
+            <param name="validationContext">the validation context</param>
+            <returns></returns>
+        </member>
         <member name="T:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute">
             <summary>
             Allow values in array
