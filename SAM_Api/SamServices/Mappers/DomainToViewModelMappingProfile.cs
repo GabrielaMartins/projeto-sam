@@ -45,10 +45,6 @@ namespace SamServices.Mappers
             
             Mapper.CreateMap<Item, EventoItemViewModel>()
             .ForMember(i => i.Categoria, opt => opt.MapFrom(src => src.Categoria));
-           
-            Mapper.CreateMap<ResultadoVotacao, ResultadoVotacaoViewModel>()
-            .ForMember(v => v.Evento, opt => opt.MapFrom(src => src.Evento))
-            .ForMember(v => v.Usuario, opt => opt.MapFrom(src => src.Usuario));
             
             Mapper.CreateMap<Evento, PendenciaEventoViewModel>()
             .ForMember(e => e.Item, opt => opt.MapFrom(src => src.Item));

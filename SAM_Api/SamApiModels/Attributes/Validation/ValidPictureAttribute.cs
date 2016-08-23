@@ -34,7 +34,7 @@ namespace SamModelValidationRules.Attributes.Validation
             {
                 ErrorMessage = "Invalid value supplied.|" +
                                 $"Invalid value supplied to '{validationContext.ObjectType}.{validationContext.MemberName}'. " +
-                                "Valid values: a valid string in the format 'data:image/jpeg;base64,{bytes}'";
+                                "Valid values: a string in the format '<data:image/<imgType>;base64,><bytesEncoded>'";
 
                 return new ValidationResult(ErrorMessage);
             }
@@ -48,7 +48,7 @@ namespace SamModelValidationRules.Attributes.Validation
             {
                 ErrorMessage = "Invalid value supplied.|" +
                                $"Invalid value supplied to '{validationContext.ObjectType}.{validationContext.MemberName}'. " +
-                               $"Valid values: 'a valid string base64 encoded'";
+                               $"Valid values: 'a base64 string encoded'";
 
                 return new ValidationResult(ErrorMessage);
             }

@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="Attributes\Validation\ValidPictureAttribute.cs" />
     <Compile Include="Attributes\Validation\AllowedValuesAttribute.cs" />
-    <Compile Include="Attributes\Validation\ValidEventAttribute.cs" />
     <Compile Include="Models\Agendamento\AgendamentoViewModel.cs" />
     <Compile Include="Models\Login\SamToken.cs" />
     <Compile Include="Models\OpusActiveDirectory\ActiveDirectoryUser.cs" />
@@ -56,13 +55,10 @@
     <Compile Include="Models\Perfil\PerfilViewModel.cs" />
     <Compile Include="Models\Promocao\PromocaoAdquirida.cs" />
     <Compile Include="Models\Promocao\PromocaoViewModel.cs" />
-    <Compile Include="Models\ResultadoVotacaoViewModel.cs" />
     <Compile Include="Models\Evento\UltimoEventoViewModel.cs" />
     <Compile Include="Models\Evento\EventoViewModel.cs" />
     <Compile Include="Models\Evento\EventoItemViewModel.cs" />
-    <Compile Include="Models\ItensTaggedViewModel.cs" />
     <Compile Include="Models\Login\LoginViewModel.cs" />
-    <Compile Include="Models\TagViewModel.cs" />
     <Compile Include="Models\User\AddUsuarioViewModel.cs" />
     <Compile Include="Models\User\PendenciaUsuarioViewModel.cs" />
     <Compile Include="Models\User\UpdateUsuarioViewModel.cs" />
@@ -74,6 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SamDataBase\SamDataBase.csproj">
+      <Project>{F725223A-3F2F-4120-9816-B9DE104D6715}</Project>
+      <Name>SamDataBase</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
