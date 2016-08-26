@@ -243,10 +243,25 @@ const AgendamentoContainer = React.createClass({
     axios.post(Config.serverUrl+"/api/sam/scheduling/create", itemAgendado, config).then(
       function(response){
         //retorna um alert confirmando o envio dos dados e limpa formulário
-        self.handleClear();
+        swal({
+          title: "Dados Enviados!",
+          text: "Os dados foram salvos com sucesso",
+          type: "sucess",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#550000"
+        },function(){
+          self.handleClear();
+        });
       },
       function(reason){
         //retorna página de erro
+        swal({
+          title: "Um Erro Ocorreu!",
+          text: "Os dados não puderam ser salvos, tente novamente mais tarde.",
+          type: "error",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#550000"
+        });
       }
     );
 

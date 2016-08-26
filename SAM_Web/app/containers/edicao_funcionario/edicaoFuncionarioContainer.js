@@ -1,18 +1,24 @@
 'use strict'
+
 var React = require('react');
 var ReactRouter = require('react-router');
-var EdicaoFuncionario = require('../../components/edicao_funcionario/edicaoFuncionario');
 var Config = require('Config');
 var axios = require("axios");
+
+//components
+var EdicaoFuncionario = require('../../components/edicao_funcionario/edicaoFuncionario');
+import AvatarEditor from 'react-avatar-editor';
+
+//momentjs
 var moment = require('moment');
 moment.locale('pt-br');
 
 const EdicaoFuncionarioContainer = React.createClass({
   getInitialState: function(){
     return {
-      nome:"..",
+      nome:"",
       cargo:"",
-      cargo_id: null,
+      cargo_id: 0,
       pontos:0,
       data_inicio:"",
       perfil:"",
@@ -20,12 +26,13 @@ const EdicaoFuncionarioContainer = React.createClass({
       linkedin:"",
       github:"",
       descricao:"",
-      foto:null,
+      foto:undefined,
       lista_cargos:[],
-      urlImage:""
+      urlImage:"",
     }
   },
   componentDidMount: function(){
+
     var self = this;
     var token = localStorage.getItem("token");
 
@@ -33,20 +40,18 @@ const EdicaoFuncionarioContainer = React.createClass({
 
     axios.defaults.headers.common['token'] = token;
 
-    //fetch aqui
     axios.get(Config.serverUrl + "/api/sam/user/" + usuario).then(
       function(response){
         var userData = response.data;
         axios.get(Config.serverUrl + "/api/sam/role/all").then(
           function(response){
-            console.log(userData);
-
+            
             self.setState({
               nome : userData.nome,
               cargo_nome : userData.Cargo.nome,
               cargo_id : userData.Cargo.id,
               pontos : userData.pontos,
-              data_inicio : userData.DataInicio,
+              data_inicio : userData.dataInicio,
               perfil : userData.perfil,
               facebook : userData.facebook,
               linkedin : userData.linkedin,
@@ -55,6 +60,7 @@ const EdicaoFuncionarioContainer = React.createClass({
               urlImage: userData.foto,
               lista_cargos:response.data
             });
+
           },
           function(jqXHR){
             /*console.log(self.context);
@@ -72,11 +78,10 @@ const EdicaoFuncionarioContainer = React.createClass({
   },
 
   componentDidUpdate: function(prevProps, prevState){
-
     $(document).ready(function(){
       $('select').material_select();
-      $('.tooltipped').tooltip({delay: 50});
     });
+
   },
 
   handleFacebookChanges: function(event){
@@ -99,7 +104,11 @@ const EdicaoFuncionarioContainer = React.createClass({
     this.setState({
       foto: event.target.value,
       urlImage: (window.URL ? URL : webkitURL).createObjectURL(event.target.files[0])
-    })
+    });
+
+    $('#cropImage').openModal({
+      dismissible: false
+    });
   },
 
   getFile : function() {
@@ -109,6 +118,9 @@ const EdicaoFuncionarioContainer = React.createClass({
 
   handleSubmit: function(event){
     event.preventDefault();
+
+    //obtém a imagem do canvas e transforma em data url para enviar para o server
+    var imagem = this.refs.editor.getImage().toDataURL();
 
     var perfilDados = {
       cargo: this.state.cargo_id,
@@ -120,17 +132,18 @@ const EdicaoFuncionarioContainer = React.createClass({
       linkedin: this.state.linkedin,
       github: this.state.github,
       descricao: this.state.descricao,
-      foto: ""
+      foto: imagem
     }
 
-    var imagem = this.getFile();
+    //var imagem = this.getFile();
 
-    if(imagem != undefined){
+    //console.log(dataURL);
+    /*if(imagem != undefined){
       var reader = new FileReader();
 
       reader.onloadend = function(evento){
         perfilDados.Foto = evento.target.result;
-
+        console.log(perfilDados.Foto);
         var token = localStorage.getItem("token");
         var samaccount = localStorage.getItem("samaccount");
 
@@ -140,18 +153,37 @@ const EdicaoFuncionarioContainer = React.createClass({
 
         axios.put(Config.serverUrl+"/api/sam/user/update/" + samaccount, perfilDados, config).then(
           function(response){
-            Materialize.toast('Seus dados foram atualizados com sucesso', 4000);
+            swal({
+              title: "Dados Enviados!",
+              text: "Os dados foram salvos com sucesso",
+              type: "sucess",
+              confirmButtonText: "Ok",
+              confirmButtonColor: "#550000"
+            },function(){
+              self.props.history.push({pathname: rota});
+            });
           },
           function(jqXHR){
-            console.log(jqXHR);
+            //retorna página de erro
+            swal({
+              title: "Um Erro Ocorreu!",
+              text: "Os dados não puderam ser salvos, tente novamente mais tarde.",
+              type: "error",
+              confirmButtonText: "Ok",
+              confirmButtonColor: "#550000"
+            });
           }
         );
       }
-      reader.readAsDataURL(imagem);
-    }else{
 
+      reader.readAsDataURL(imagem);
+
+    }else{*/
+      var self = this;
       var token = localStorage.getItem("token");
       var samaccount = localStorage.getItem("samaccount");
+
+      var rota = "/Perfil/" + samaccount;
 
       var config = {
         headers: {'token': token}
@@ -159,16 +191,28 @@ const EdicaoFuncionarioContainer = React.createClass({
 
       axios.put(Config.serverUrl+"/api/sam/user/update/" + samaccount, perfilDados, config).then(
         function(response){
-          Materialize.toast('Seus dados foram atualizados com sucesso', 4000);
+          swal({
+            title: "Dados Enviados!",
+            text: "Os dados foram salvos com sucesso",
+            type: "sucess",
+            confirmButtonText: "Ok",
+            confirmButtonColor: "#550000"
+          },function(){
+            self.props.history.push({pathname: rota});
+          });
         },
         function(jqXHR){
-          console.log(jqXHR);
+          //retorna página de erro
+          swal({
+            title: "Um Erro Ocorreu!",
+            text: "Os dados não puderam ser salvos, tente novamente mais tarde.",
+            type: "error",
+            confirmButtonText: "Ok",
+            confirmButtonColor: "#550000"
+          });
         }
       );
-    }
-
-
-    //this.context.router.push('/Perfil/gabriela');
+    //}
 
   },
 
@@ -189,7 +233,7 @@ const EdicaoFuncionarioContainer = React.createClass({
     imagemField.val('');
 
     imagemField = $('#img');
-    imagemField.val(null);
+    imagemField.val(undefined);
 
     this.setState({
       facebook : "",
@@ -201,13 +245,21 @@ const EdicaoFuncionarioContainer = React.createClass({
     });
   },
 
-  render: function(){
-    var editavelRH = undefined;
-    var editavelFuncionario = undefined;
+  onClickSave: function() {
+    var canvas = this.refs.editor.getImage();
 
+    canvas.toBlob(function(blob) {
+      var url = (window.URL ? URL : webkitURL).createObjectURL(blob);
+
+      this.setState({
+        urlImage: url
+      });
+    }.bind(this));
+
+  },
+
+  primeiraParteForms: function(){
     var perfil = localStorage.getItem("perfil");
-
-    var imagemPreview = <img src= {this.state.urlImage} id="img_url"  className="center-block responsive-img"/>
 
     var cargos =[];
     this.state.lista_cargos.forEach(function(cargo){
@@ -215,7 +267,7 @@ const EdicaoFuncionarioContainer = React.createClass({
     });
 
     if(perfil == "Funcionario"){
-      editavelRH = (
+      return (
         <div>
           <div className="row">
             <div className="col s12">
@@ -240,16 +292,68 @@ const EdicaoFuncionarioContainer = React.createClass({
           </div>
         </div>
       );
+    }else{
+      return (
+        <div>
+          <div className="row">
+            <div className="input-field col s12">
+              <input value = {this.state.nome} id="nome" type="text"/>
+              <label htmlFor="nome" className="active">Nome: </label>
+            </div>
+          </div>
+          <div className="row">
+            <div className="input-field col s12 m6 l6">
+              <select value={this.state.cargo_id}>
+                {cargos}
+              </select>
+              <label>Level (Cargo):</label>
+            </div>
+            <div className="input-field col s12 m6 l6">
+              <input value={this.state.pontos} id="pontos" type="text"/>
+              <label htmlFor="pontos" className="active">XP (Pontos):</label>
+            </div>
+          </div>
+          <div className="row">
+            <div className="input-field col s12 m6 l6">
+              <input  value={moment(this.state.data_inicio).format('L')} id="inicio" type="text"/>
+              <label htmlFor="inicio" className="active">Data de Início:</label>
+            </div>
+            <div className="col s6">
+              <div className="row">
+                <div className="col s12 m3 l3">
+                  <span style={{"fontSize" : "0.8rem"}}>Grupo: </span>
+                </div>
+                <div className="input-field">
+                  <div className="col s6 m4 l4">
+                    <input name="group1" type="radio" id="rh" disabled="disabled" checked ={this.state.perfil === "RH" ? true : false}/>
+                    <label htmlFor="rh">RH</label>
+                  </div>
+                  <div className="col s6 m4 l4">
+                    <input name="group1" type="radio" id="funcionario" disabled="disabled" checked ={this.state.perfil === "Funcionario" ? true : false}/>
+                    <label htmlFor="funcionario">Funcionário</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  },
 
-      editavelFuncionario = (
+  segundaParteForms: function(){
+    var perfil = localStorage.getItem("perfil");
+    var imagemPreview = <img src= {this.state.urlImage} id="img_url"  className="center-block responsive-img"/>
+    if(perfil == "Funcionario"){
+      return(
         <div>
           <div className="row">
             <div className="input-field col s12 m4 l4">
               <input id="facebook"
-                    type="text"
-                    onChange={this.handleFacebookChanges}
-                    value={this.state.facebook}/>
-                  <label htmlFor="facebook" className={this.state.facebook ? "active" : null}><b>Facebook:</b></label>
+                type="text"
+                onChange={this.handleFacebookChanges}
+                value={this.state.facebook}/>
+              <label htmlFor="facebook" className={this.state.facebook ? "active" : null}><b>Facebook:</b></label>
             </div>
             <div className="input-field col s12 m4 l4">
               <input id="linkedin"
@@ -277,7 +381,7 @@ const EdicaoFuncionarioContainer = React.createClass({
             </div>
           </div>
           <div className="row">
-            <form action="#" className="col s10">
+            <form action="#" className="col l10 m10 s12">
               <div className="file-field input-field">
                 <div className="btn">
                   <span>Avatar</span>
@@ -297,61 +401,44 @@ const EdicaoFuncionarioContainer = React.createClass({
                 </div>
               </div>
             </form>
-            <div className="col s2">
-                {this.state.urlImage ? imagemPreview : null}
+            <div className="col l2 m2 s12">
+              {this.state.urlImage ? imagemPreview : null}
             </div>
           </div>
-        </div>
-      );
-
-    }else{
-      editavelRH = (
-        <div>
-          <div className="row">
-            <div className="input-field col s12">
-              <input value = {this.state.nome} id="nome" type="text"/>
-              <label htmlFor="nome" className="active">Nome: </label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12 m6 l6">
-              <select value={this.state.cargo_id}>
-                {cargos}
-              </select>
-              <label>Level (Cargo):</label>
-            </div>
-            <div className="input-field col s12 m6 l6">
-              <input value={this.state.pontos} id="pontos" type="text"/>
-              <label htmlFor="pontos" className="active">XP (Pontos):</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12 m6 l6">
-              <input disabled value={moment(this.state.data_inicio).format('L')} id="inicio" type="text"/>
-              <label htmlFor="inicio" className="active">Data de Início:</label>
-            </div>
-            <div className="col s6">
-              <div className="row">
-                <div className="col s12 m3 l3">
-                  <span style={{"fontSize" : "0.8rem"}}>Grupo: </span>
+          <div id="cropImage" className="modal modal-fixed-footer">
+            <div className="modal-content">
+              <h3 className="colorText-default center-align"><b>Editar Imagem</b></h3>
+              <div className="row center">
+                <div className="hide-on-med-and-down">
+                  <AvatarEditor
+                    ref="editor"
+                    image={this.state.urlImage}
+                    width={250}
+                    height={250}
+                    border={50}
+                    color={[255, 255, 255, 0.6]}
+                    scale={1} />
                 </div>
-                <div className="input-field">
-                  <div className="col s6 m4 l4">
-                    <input name="group1" type="radio" id="rh" disabled="disabled" checked ={this.state.perfil === "RH" ? true : false}/>
-                    <label htmlFor="rh">RH</label>
-                  </div>
-                  <div className="col s6 m4 l4">
-                    <input name="group1" type="radio" id="funcionario" disabled="disabled" checked ={this.state.perfil === "Funcionario" ? true : false}/>
-                    <label htmlFor="funcionario">Funcionário</label>
-                  </div>
+                <div className="hide-on-large-only">
+                  <AvatarEditor
+                    ref="editor"
+                    image={this.state.urlImage}
+                    width={150}
+                    height={150}
+                    border={50}
+                    color={[255, 255, 255, 0.6]}
+                    scale={1} />
                 </div>
               </div>
             </div>
+            <div className="modal-footer">
+              <a className="modal-action modal-close waves-effect waves-red btn-flat" onClick={this.onClickSave}>Cortar</a>
+            </div>
           </div>
         </div>
       );
-
-      editavelFuncionario = (
+    }else{
+      return(
         <div>
           <div className="row">
             <div className="col s12 m4 l4">
@@ -373,26 +460,28 @@ const EdicaoFuncionarioContainer = React.createClass({
           <div className="row">
             <div className="col s12">
               <span><b>Avatar: </b></span>
-                <div className="col s2">
-                    {this.state.urlImage ? imagemPreview : null}
-                </div>
+              <div className="col s2">
+                {this.state.urlImage ? imagemPreview : null}
+              </div>
             </div>
           </div>
         </div>
-
       );
-
     }
+
+  },
+
+  render: function(){
 
     return(
       <EdicaoFuncionario
         nome = {this.state.nome}
         handleSubmit = {this.handleSubmit}
         handleClear = {this.handleClear}>
-          <div>
-            {editavelRH}
-            {editavelFuncionario}
-          </div>
+        <div>
+          {this.primeiraParteForms()}
+          {this.segundaParteForms()}
+        </div>
       </EdicaoFuncionario>
     )
 

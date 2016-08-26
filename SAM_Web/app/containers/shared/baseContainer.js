@@ -4,17 +4,27 @@ var axios = require("axios");
 var Config = require('Config');
 
 var BaseContainer = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+
   getInitialState: function() {
     return {
       dropdowns: [
         {
-          itemMenu: "",
-          id: "",
-          itens:[{
-            nome:"",
-            url:"",
-            id:""
-          }]
+          itemMenu : "Funcionarios",
+          id: 1,
+          itens: []
+        },
+        {
+          itemMenu : "Itens",
+          id: 2,
+          itens: []
+        },
+        {
+          itemMenu : "Eventos",
+          id: 3,
+          itens: []
         }
       ],
       samaccount:"",
@@ -91,7 +101,7 @@ var BaseContainer = React.createClass({
             samaccount: response.data.samaccount,
             dropdowns : [
               {
-                itemMenu : "Funcionarios",
+                itemMenu : "Funcionario",
                 id: 1,
                 itens: [
                   {
@@ -149,7 +159,13 @@ var BaseContainer = React.createClass({
         //direcionar para a página de erro
         status = jqXHR.status;
         var rota = '/Erro/' + status;
-        self.props.history.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+        var mensagem = ""
+        if(status == "500"){
+          mensagem = "O seu acesso expirou, por favor, faça o login novamente."
+        }else{
+          mensagem = "Um erro inesperado aconteceu, por favor, tente mais tarde";
+        }
+        self.props.history.push({pathname: rota, state: {mensagem: mensagem}});
       }
     );
 
@@ -195,34 +211,10 @@ var BaseContainer = React.createClass({
     })(jQuery);
 
     window.sr = ScrollReveal();
-
-  },
-
-  componentWillMount: function(){
-    this.setState({
-      dropdowns: [
-        {
-          itemMenu : "Funcionarios",
-          id: 1,
-          itens: []
-        },
-        {
-          itemMenu : "Itens",
-          id: 2,
-          itens: []
-        },
-        {
-          itemMenu : "Eventos",
-          id: 3,
-          itens: []
-        }
-      ]
-    });
-
   },
   cleanupLocalStorage: function(){
     localStorage.clear();
-    this.props.history.push('/');
+    this.context.router.push('/');
   },
   render : function(){
     return(

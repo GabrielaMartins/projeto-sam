@@ -1,3 +1,6 @@
+'use strict'
+
+//libs
 var React = require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
@@ -8,6 +11,7 @@ var Modal = React.createClass({
     var categoriasProfundidade = ["Blog", "Workshop", "Palestra"];
     var categoriasAlinhado = ["Curso", "Certificação", "Repositório"];
 
+    //determina o nome do status que aparecerá na tela
     if(categoriasProfundidade.indexOf(this.props.item.Categoria.nome)){
       if(this.props.item.status == true){
         status = <p className="center col s12 l4"><b>Profundidade: </b> Profundo</p>
@@ -46,5 +50,12 @@ var Modal = React.createClass({
     );
   }
 });
+
+Modal.propTypes = {
+  item: React.PropTypes.object.isRequired,
+  pontuacao: React.PropTypes.number.isRequired,
+  usuarios: React.PropTypes.arrayOf(React.PropTypes.element).isRequired
+}
+
 
 module.exports = Modal;

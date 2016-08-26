@@ -1,5 +1,9 @@
+'use strict'
+
+//libs
 var React = require('react');
 var ReactRouter = require('react-router');
+
 
 var EdicaoFuncionario = function(props){
     return(
@@ -30,5 +34,11 @@ var EdicaoFuncionario = function(props){
     );
   }
 
+  EdicaoFuncionario.propTypes = {
+    nome: React.PropTypes.string.isRequired,
+    handleClear: React.PropTypes.func.isRequired,
+    handleSubmit: React.PropTypes.func.isRequired,
+    children: React.PropTypes.element.isRequired,
+  }
 
 module.exports = EdicaoFuncionario;

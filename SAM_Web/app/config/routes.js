@@ -21,7 +21,7 @@ var EdicaoFuncionario = require('../containers/edicao_funcionario/edicaoFunciona
 
 var Routes = (
   <Router history={HashHistory}>
-    <Route path='/' component={Login}/>
+      <Route path='/' component={Login}/>
       <Route component={Base}>
         <Route path='/Dashboard/RH/:samaccount' component={DashboardRH}/>
         <Route path='/Dashboard/Funcionario/:samaccount' component={DashboardFuncionario}/>

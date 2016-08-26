@@ -1,6 +1,6 @@
+'use strict'
 var React = require('react');
 var ReactRouter = require('react-router');
-
 
 var BaseHistorico = React.createClass({
   render: function(){
@@ -26,5 +26,13 @@ var BaseHistorico = React.createClass({
     );
   }
 });
+
+BaseHistorico.propTypes = {
+  titulo: React.PropTypes.string.isRequired,
+  placeholder: React.PropTypes.string.isRequired,
+  consulta: React.PropTypes.string.isRequired,
+  handlePesquisa: React.PropTypes.func.isRequired,
+  children: React.PropTypes.element.isRequired,
+}
 
 module.exports = BaseHistorico;

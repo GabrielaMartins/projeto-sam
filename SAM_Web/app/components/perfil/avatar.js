@@ -1,3 +1,6 @@
+'use strict'
+
+//libs
 var React = require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
@@ -45,5 +48,10 @@ var Avatar = React.createClass({
     );
   }
 });
+
+Avatar.propTypes = {
+  usuario: React.PropTypes.object.isRequired,
+  progresso: React.PropTypes.number.isRequired
+}
 
 module.exports = Avatar;

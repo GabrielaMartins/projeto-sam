@@ -33,7 +33,7 @@ var LoginContainer = React.createClass({
   handleSubmit: function(e){
 
     e.preventDefault();
-
+    debugger;
     var self = this;
     self.setState({msg: ""});
 

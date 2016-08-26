@@ -1,5 +1,10 @@
+'use strict'
+
+//libs
 var React = require('react');
 var ReactRouter = require('react-router');
+
+//componente
 var Chart = require('react-google-charts').Chart;
 
 var PontuacaoGrafico = React.createClass({
@@ -26,5 +31,9 @@ var PontuacaoGrafico = React.createClass({
     );
   }
 });
+
+PontuacaoGrafico.propTypes = {
+  columnChart: React.PropTypes.object.isRequired
+}
 
 module.exports = PontuacaoGrafico;

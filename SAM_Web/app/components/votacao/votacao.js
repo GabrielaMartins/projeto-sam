@@ -11,7 +11,9 @@ var Link = ReactRouter.Link;
 
 var Votacao = function(props){
     var votos = [];
-    console.log(props.resultado);
+    var painelEsquerdo = null;
+    var painelDireito = null;
+
     props.votos.forEach(function(voto){
       if(voto.Dificuldade && voto.Profundidade){
         votos.push(<CardEventos usuario = {voto.Usuario} estilo = "aberta card-panel z-depth-1 col l12 m12 s12 green lighten-3 waves-effect">
@@ -28,28 +30,28 @@ var Votacao = function(props){
     });
 
     if(props.perfil == "rh"){
-      this.painelEsquerdo = <div className="card-panel" style={{paddingBottom:29}}>
+      painelEsquerdo = <div className="card-panel" style={{paddingBottom:29}}>
                               <h5 className="card-title center-align colorText-default" ><b>Votação</b></h5>
                               <div className="votacao scrollbar card-content" style={{paddingTop:10}}>
                                 {votos}
                               </div>
                             </div>;
 
-      this.painelDireito =  <div>
+      painelDireito =  <div>
                               <Usuario conteudo = {props.evento.Usuario}/>
                               <SelecaoVoto titulo = "Definir Pontuação" botao = "Atribuir" />
                             </div>;
     }else{
-      this.painelEsquerdo = <Usuario conteudo = {props.evento.Usuario}/>;
+      painelEsquerdo = <Usuario conteudo = {props.evento.Usuario}/>;
       if(props.resultado == false){
-        this.painelDireito = <SelecaoVoto
+        painelDireito = <SelecaoVoto
                               titulo = "Votação"
                               botao = "Votar"
                               evento = {props.evento.id}
-                              mostraResultado = {props.mostraResultado.bind(null)}
+                              mostraResultado = {props.mostraResultado}
                               />
       }else{
-        this.painelDireito = null;//faz mostrar resultado da votação (gráfico)
+        painelDireito = null;//faz mostrar resultado da votação (gráfico)
       }
     }
 
@@ -66,10 +68,10 @@ var Votacao = function(props){
           </div>
           <div className="row">
             <div className="col l6 m12 s12">
-              {this.painelEsquerdo}
+              {painelEsquerdo}
             </div>
             <div className="col l6 m12 s12">
-              {this.painelDireito}
+              {painelDireito}
             </div>
           </div>
         </div>

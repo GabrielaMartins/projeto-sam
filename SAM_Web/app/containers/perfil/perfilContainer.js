@@ -4,6 +4,7 @@ var React = require('react');
 var Perfil = require('../../components/perfil/perfil');
 var AtividadesHistorico = require('../../containers/item/itemCardContainer');
 var PromocoesHistorico = require('../../components/perfil/promocoesHistorico');
+var Loading = require('react-loading');
 var Config = require('Config');
 
 var moment = require('moment');
@@ -12,8 +13,14 @@ moment.locale('pt-br');
 const PerfilUsuarioContainer = React.createClass({
 
   render: function(){
+    if(this.state.usuario.nome == null){
+      return(<div className="full-screen-less-nav">
+        <div className="row wrapper">
+          <Loading type='bubbles' color='#550000' height={150} width={150}/>
+        </div>
+      </div>);
+    }
     var self = this;
-
     var atividades = this.state.atividades.map(function(atividade, index){
       if(atividade.tipo !== "agendamento"){
         if(atividade.Item.nome.toLowerCase().indexOf(self.state.consultaAtividades.toLowerCase())!=-1 ||

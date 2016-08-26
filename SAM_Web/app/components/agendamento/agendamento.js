@@ -4,9 +4,6 @@ var React =  require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
 
-//componente para alerta
-//var Alert = require('sweetalert-react');
-
 //componente para Radio buttom
 var Radio = require('../../ui_elements/radio');
 

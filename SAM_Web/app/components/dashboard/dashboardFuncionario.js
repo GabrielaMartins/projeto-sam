@@ -11,7 +11,7 @@ var Chart = require('react-google-charts').Chart;
 //componentes
 var Ranking = require('./ranking');
 var CardUsuario = require('../usuario/usuario');
-var Pendencias = require('../../components/dashboard/pendencias');
+var Pendencias = require('../../containers/dashboard/pendenciaContainer');
 
 var Dashboard = function(props){
   return(
@@ -21,7 +21,7 @@ var Dashboard = function(props){
           <div className="card-panel" style={{paddingBottom:29}}>
             <h5 className="card-title center-align colorText-default scrollreveal" ><b>Alertas</b></h5>
             <div className="card-content scrollbar alertas" style={{paddingTop:10}}>
-              <Pendencias pendencias = {props.alertas} tipoPendencia = "alerta" handleDeleteAlerta = {props.handleDeleteAlerta.bind(null)}/>
+              <Pendencias pendencias = {props.alertas} tipoPendencia = "alerta" handleDeleteAlerta = {props.handleDeleteAlerta}/>
             </div>
           </div>
         </div>

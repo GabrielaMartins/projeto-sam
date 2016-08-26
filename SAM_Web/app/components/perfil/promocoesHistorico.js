@@ -1,5 +1,10 @@
+'use strict'
+
+//libs
 var React = require('react');
 var ReactRouter = require('react-router');
+
+//momentjs
 var moment = require('moment');
 moment.locale('pt-br');
 
@@ -19,5 +24,9 @@ var PromocoesHistorico = React.createClass({
     );
   }
 });
+
+PromocoesHistorico.propTypes = {
+  promocao: React.PropTypes.object.isRequired
+}
 
 module.exports = PromocoesHistorico;

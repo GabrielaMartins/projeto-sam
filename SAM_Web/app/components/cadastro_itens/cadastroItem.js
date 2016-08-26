@@ -1,8 +1,11 @@
 'use strict'
+//libs
 var React =  require('react');
 var ReactRouter = require('react-router');
-var Radio = require('../../ui_elements/radio');
 var Link = ReactRouter.Link;
+
+//Radio Button
+var Radio = require('../../ui_elements/radio');
 
 var CadastroItem = function(props){
   return(

@@ -1,10 +1,13 @@
+'use strict'
 var React = require('react');
 var axios = require("axios");
 var ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
 var Link = ReactRouter.Link;
 
 var Atualizacoes = require('../../components/dashboard/atualizacoes');
 var DashboardFuncionario = require('../../components/dashboard/dashboardFuncionario');
+var Loading = require('react-loading');
 
 var Config = require('Config');
 
@@ -19,6 +22,9 @@ var config = {
 var fezFetch = false;
 
 var DashboardContainerFuncionario = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
 
   //estado inicial dos objetos
   getInitialState: function() {
@@ -47,15 +53,15 @@ var DashboardContainerFuncionario = React.createClass({
   },
 
   handleDeleteAlerta: function(id){
-    index = -1;
+    var index = -1;
     var alertas = this.state.alertas;
     var alertasModificado = [];
 
     //remove do banco
     axios.delete(Config.serverUrl+"/api/sam/pendency/delete/" + id, config).then(
       function(response){
+
         //atualiza o estado
-        debugger;
         for(var i = 0; i < alertas.length; i++) {
           if (alertas[i].Evento.id !== id) {
             alertasModificado.push(alertas[i]);
@@ -112,9 +118,11 @@ var DashboardContainerFuncionario = React.createClass({
 
         //erro 401 - acesso não autorizado
         if(status == "401"){
-          this.props.history.push({pathname: rota, state: {mensagem: "Você está tentando acessar uma página que não te pertence, que feio!"}});
+          this.context.router.push({pathname: rota, state: {mensagem: "Você está tentando acessar uma página que não te pertence, que feio!"}});
+        }if(status == "500"){
+          this.context.router.push({pathname: rota, state: {mensagem: "O seu acesso expirou, por favor, faça o login novamente."}});
         }else{
-          this.props.history.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+          this.context.router.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
         }
       }.bind(this)
     );
@@ -175,19 +183,27 @@ var DashboardContainerFuncionario = React.createClass({
   render : function(){
 
     //se a tela não possui dados para renderizar, então não renderiza (mudar posteriormente para loading)
-    if(!fezFetch){
-      return false;
+    if(fezFetch == false){
+      return (
+        <div className="full-screen-less-nav">
+          <div className="row wrapper">
+            <Loading type='bubbles' color='#550000' height={150} width={150}/>
+          </div>
+        </div>
+      );
     }
 
     var atualizacoes = this.criaElementoAtualizacoes();
 
-    return(<DashboardFuncionario
-      alertas = {this.state.alertas}
-      usuario = {this.state.dados.Usuario}
-      resultadoVotacao = {this.state.dados.ResultadoVotacoes}
-      atualizacoes = {atualizacoes}
-      columnChart = {this.state.columnChart}
-      handleDeleteAlerta = {this.handleDeleteAlerta}/>);
+    return(
+      <DashboardFuncionario
+        alertas = {this.state.alertas}
+        usuario = {this.state.dados.Usuario}
+        resultadoVotacao = {this.state.dados.ResultadoVotacoes}
+        atualizacoes = {atualizacoes}
+        columnChart = {this.state.columnChart}
+        handleDeleteAlerta = {this.handleDeleteAlerta}/>
+    );
 
     }
   });

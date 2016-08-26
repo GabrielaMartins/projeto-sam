@@ -3,7 +3,7 @@
   var axios = require("axios");
   var ReactRouter = require('react-router');
   var CardEventos = require('../../components/dashboard/cardsEventos');
-  var Pendencias = require('../../components/dashboard/pendencias');
+  var Pendencias = require('../../containers/dashboard/pendenciaContainer');
   var Config = require('Config');
   var moment = require('moment');
   moment.locale('pt-br');

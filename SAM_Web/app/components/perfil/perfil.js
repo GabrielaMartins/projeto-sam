@@ -1,3 +1,4 @@
+'use strict'
 var React = require('react');
 var ReactRouter = require('react-router');
 var Avatar = require('./avatar');
@@ -53,6 +54,5 @@ var Perfil = function(props){
       </div>
     );
 }
-
 
 module.exports = Perfil;

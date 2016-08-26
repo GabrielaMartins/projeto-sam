@@ -1,38 +1,50 @@
+'use strict'
+
+//libs
 var React = require('react');
 var ReactRouter = require('react-router');
-var Dropdown = require('./itensDropdown');
 var Link = ReactRouter.Link;
 
-var ItemMenu = React.createClass({
-  render : function(){
-    //navbar
-    var itensMenu = this.props.itensMenu.map(function(item, index){
-      return(
-        <li key={index}>
-          <a className="dropdown-button" data-activates={item}>
-            {item}<i className="material-icons right">arrow_drop_down</i>
-          </a>
-        </li>
-      );
-    });
+//componente
+var Dropdown = require('./itensDropdown');
 
+var ItemMenu = React.createClass({
+  itensMenu: function(){
+    //navbar
+    return(
+      this.props.itensMenu.map(function(item, index){
+        return(
+          <li key={index}>
+            <a className="dropdown-button" data-activates={item}>
+              {item}<i className="material-icons right">arrow_drop_down</i>
+            </a>
+          </li>
+        );
+      })
+    );
+  },
+  itensMenuMobile: function(){
     //mobile sidebar
     var self = this;
-    var itensMenuMobile = this.props.dropdowns.map(function(dropdown, index){
-      if(dropdown.itemMenu != self.props.usuario){
-        return(<li key={index}>
-          <a className="collapsible-header">{dropdown.itemMenu}<i className="material-icons right">expand_more</i></a>
-          <div className="collapsible-body">
-            <Dropdown key = {dropdown.id} itensDrop = {dropdown.itens} itemMenu = {dropdown.itemMenu} isMobile={true}/>
-          </div>
-        </li>);
-      }
-    });
+    return(
+      this.props.dropdowns.map(function(dropdown, index){
+        if(dropdown.itemMenu != self.props.usuario){
+          return(<li key={index}>
+            <a className="collapsible-header">{dropdown.itemMenu}<i className="material-icons right">expand_more</i></a>
+            <div className="collapsible-body">
+              <Dropdown key = {dropdown.id} itensDrop = {dropdown.itens} itemMenu = {dropdown.itemMenu} isMobile={true}/>
+            </div>
+          </li>);
+        }
+      })
+    );
+  },
 
+  render : function(){
     return(
       <div>
         <ul className="left hide-on-med-and-down">
-          {itensMenu}
+          {this.itensMenu()}
         </ul>
         <div id="slide-out" className="side-nav">
           <div className="row">
@@ -44,7 +56,7 @@ var ItemMenu = React.createClass({
             <ul>
               <li className="no-padding">
                 <ul className="collapsible" data-collapsible="accordion">
-                  {itensMenuMobile}
+                  {this.itensMenuMobile()}
                 </ul>
               </li>
               <li>
@@ -54,7 +66,6 @@ var ItemMenu = React.createClass({
         </div>
       </div>
     );
-
   }
 });
 
