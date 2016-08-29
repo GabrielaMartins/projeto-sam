@@ -55,6 +55,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="git-issuer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\k2\pastas\transfer\git-issuer\Release\git-issuer.dll</HintPath>
+    </Reference>
     <Reference Include="JWT, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\JWT.1.3.4\lib\3.5\JWT.dll</HintPath>
       <Private>True</Private>
@@ -231,10 +235,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\git-issuer\git-issuer\git-issuer\Git-Issuer.csproj">
-      <Project>{47a257f6-e16c-4bda-b7d3-c9f1f7ec2b3a}</Project>
-      <Name>Git-Issuer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ExceptionSystem\DefaultException.csproj">
       <Project>{184313A8-E40D-476B-9CA3-946FD38E9D15}</Project>
       <Name>DefaultException</Name>
