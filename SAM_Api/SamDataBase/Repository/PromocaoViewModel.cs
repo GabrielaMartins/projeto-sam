@@ -1,11 +1,6 @@
 ﻿using SamDataBase.Model;
 using Opus.RepositoryPattern;
 using System.Data.Entity;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
-using SamApiModels.User;
-using SamApiModels.Promocao;
 
 namespace Opus.DataBaseEnvironment
 {
@@ -17,36 +12,5 @@ namespace Opus.DataBaseEnvironment
         }
 
         //Preencher aqui
-        public List<ProximaPromocaoViewModel> RecuperaProximasPromocoes()
-        {
-            using (var ctx = DbContext) {
-      
-                var promocoesViewModel = new List<ProximaPromocaoViewModel>();
-
-                var db = ctx as SamEntities;
-                promocoesViewModel =
-                (from c in db.Cargos
-                 from u in db.Usuarios
-                 where
-                 u.cargo != c.id &&
-                 (c.pontuacao - u.pontos) >= 0 &&
-                 (c.pontuacao - u.pontos) <= (c.pontuacao * 0.2)
-                 select new
-                 {
-                     usuario = u,
-                     cargo = c
-                 }).AsEnumerable()
-                .Select(x => {
-                    var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(x.usuario);
-                    return new ProximaPromocaoViewModel()
-                    {
-                        Usuario = usuarioViewModel,
-                        PontosFaltantes = (usuarioViewModel.ProximoCargo.ElementAt(0).pontuacao - x.usuario.pontos)
-                    };
-                }).ToList();
-
-                return promocoesViewModel;
-            }
-        }
     }
 }

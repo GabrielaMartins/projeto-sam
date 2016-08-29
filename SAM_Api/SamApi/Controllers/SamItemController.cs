@@ -1,15 +1,11 @@
 ﻿using System.Web.Http;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
-
-using Opus.DataBaseEnvironment;
 using System.Linq;
-using AutoMapper;
-using SamDataBase.Model;
 using DefaultException.Models;
-using SamApi.Attributes;
+using SamApi.Attributes.Authorization;
 using SamApiModels.Item;
+using SamServices.Services;
 
 namespace SamApi.Controllers
 {
@@ -23,46 +19,29 @@ namespace SamApi.Controllers
         [Route("all")]
         public HttpResponseMessage Get()
         {
-            using(var itemRep = DataAccess.Instance.GetItemRepository())
-            {
 
-                var itens = itemRep.RecuperaItensESeusUsuarios();
-                return Request.CreateResponse(HttpStatusCode.OK, itens);
-            }
+            var itens = ItemServices.RecuperaItens();
+            return Request.CreateResponse(HttpStatusCode.OK, itens);
+
         }
 
         // GET: api/sam/item/{id}
         [Route("{id}")]
         public HttpResponseMessage Get(int id)
         {
-
-            using (var itemRep = DataAccess.Instance.GetItemRepository())
-            {
-                var item = itemRep.Find(i => i.id == id).SingleOrDefault();
-                var itemViewModel = Mapper.Map<Item, ItemViewModel>(item);
-                return Request.CreateResponse(HttpStatusCode.OK, itemViewModel);
-            }
+            var itemViewModel = ItemServices.Recupera(id);
+            return Request.CreateResponse(HttpStatusCode.OK, itemViewModel);
         }
 
         // POST: api/sam/item/save
         [Route("save")]
-        [SamResourceAuthorizer(Roles="rh")]
+        [SamResourceAuthorizer(Roles = "rh")]
         public HttpResponseMessage Post(ItemViewModel item)
         {
+            ItemServices.CriaItem(item);
 
-            using (var itemRep = DataAccess.Instance.GetItemRepository())
-            {
-                // map new values to our reference
-                var newItem = Mapper.Map<ItemViewModel, Item>(item);
-
-                // add to entity context
-                itemRep.Add(newItem);
-
-                // commit changes
-                itemRep.SubmitChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Item Added", "Item Added"));
-            }
+            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Item Added", "Item Added"));
+            
         }
 
         // PUT: api/sam/item/update/{id}
@@ -71,25 +50,10 @@ namespace SamApi.Controllers
         public HttpResponseMessage Put(int id, ItemViewModel item)
         {
 
-            using (var itemRep = DataAccess.Instance.GetItemRepository())
-            {
-                var itemToBeUpdated = itemRep.Find(i => i.id == id).SingleOrDefault();
-                if(itemToBeUpdated == null)
-                {
-                    throw new ExpectedException(HttpStatusCode.NotFound, "Item Not Found", $"Item #{id} not found");
-                }
+            ItemServices.AtualizaItem(id, item);
 
-                // map new values to our reference
-                itemToBeUpdated = Mapper.Map(item, itemToBeUpdated);
-
-                // add to entity context
-                itemRep.Update(itemToBeUpdated);
-
-                // commit changes
-                itemRep.SubmitChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Item Updated", $"Item #{id} Updated"));
-            }
+            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Item Updated", $"Item #{id} Updated"));
+            
 
         }
 
@@ -98,13 +62,9 @@ namespace SamApi.Controllers
         [SamResourceAuthorizer(Roles = "rh")]
         public HttpResponseMessage Delete(int id)
         {
-
-            using (var itemRep = DataAccess.Instance.GetItemRepository())
-            {
-                itemRep.Delete(id);
-
-                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Item Deleted", $"Item #{id} Deleted"));
-            }
+            ItemServices.DeleteItem(id);
+            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Item Deleted", $"Item #{id} Deleted"));
+            
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using SamApi.Attributes;
+﻿using SamApi.Attributes.Authorization;
 using SamApi.Filters;
-using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -19,24 +16,27 @@ namespace SamApi
             // Apply exception filter
             config.Filters.Add(new SamExceptionFilter());
 
-            // Apply token validation to all controllers
+            // Apply model validation filter
+            config.Filters.Add(new SamModelValidationFilter());
+
+            // Apply token validation filter
             config.Filters.Add(new SamTokenAuthorizer());
 
-            // isso deveria habilitar o serializador json para camel case
+            // Isso deveria habilitar o serializador json para camel case
             //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             //config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
 
-            // Remove XML formatting 
+            // Remove o formatador de XML 
             config.Formatters.Remove(config.Formatters.XmlFormatter);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+            //config.Routes.MapHttpRoute(
+            //    name: "DefaultApi",
+            //    routeTemplate: "api/Home",
+            //    defaults: new { id = RouteParameter.Optional }
+            //);
 
         }
     }

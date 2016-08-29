@@ -1,17 +1,12 @@
-﻿using AutoMapper;
-using DefaultException.Models;
-using Opus.DataBaseEnvironment;
-using SamApi.Attributes;
+﻿using DefaultException.Models;
+using SamApi.Attributes.Authorization;
 using SamApiModels.Cargo;
-using SamDataBase.Model;
+using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Security;
 
 namespace SamApi.Controllers
 {
@@ -29,11 +24,9 @@ namespace SamApi.Controllers
         [SamResourceAuthorizer(Roles = "rh,funcionario")]
         public HttpResponseMessage GetAll()
         {
-            using (var rep = DataAccess.Instance.GetCargoRepository())
-            {
-                var cargos = Mapper.Map<List<Cargo>,List<CargoViewModel>>(rep.GetAll().ToList());
-                return Request.CreateResponse(HttpStatusCode.OK, cargos);
-            }
+            var cargos = CargoServices.RecuperaTodos();
+            return Request.CreateResponse(HttpStatusCode.OK, cargos);
+            
         }
     }
 }

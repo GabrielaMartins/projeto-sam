@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SamModelValidationRules.Attributes.Validation;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,6 +14,7 @@ namespace SamApiModels.User
         /// Segue o formato UrlEncoded64
         /// </summary>
         [Required]
+        [ValidPicture]
         public string foto { get; set; }
 
         /// <summary>
@@ -22,11 +24,6 @@ namespace SamApiModels.User
         [DataType("System.DateTime")]
         public DateTime dataInicio { get; set; }
 
-        /// <summary>
-        /// Diz se o usuário está ou não ativo no sistema do SAM
-        /// </summary>
-        [Required]
-        public bool ativo { get; set; }
 
         /// <summary>
         /// Identifica o cargo atual do usuário
@@ -50,6 +47,7 @@ namespace SamApiModels.User
         /// Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (Funcionario, RH)
         /// </summary>
         [Required]
+        [AllowedValues(new[] { "RH", "Funcionario" })]
         public string perfil { get; set; }
 
         /// <summary>

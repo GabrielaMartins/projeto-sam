@@ -2,9 +2,7 @@ using SamDataBase.Model;
 using Opus.RepositoryPattern;
 using System.Data.Entity;
 using System.Linq;
-using AutoMapper;
 using System.Collections.Generic;
-using SamApiModels.Cargo;
 
 namespace Opus.DataBaseEnvironment
 {
@@ -15,7 +13,7 @@ namespace Opus.DataBaseEnvironment
 		}
 
         //Preencher aqui
-        public List<CargoViewModel> RecuperaProximoCargo(int? cargo)
+        public List<Cargo> RecuperaProximoCargo(int? cargo)
         {
             var db = (SamEntities)DbContext;
             var query = (from c in db.Cargos
@@ -23,9 +21,8 @@ namespace Opus.DataBaseEnvironment
                          select c);
 
             var cargos = query.ToList();
-            var cargosViewModel = Mapper.Map<List<Cargo>, List<CargoViewModel>>(cargos);
-            
-            return cargosViewModel;
+                        
+            return cargos;
         }
     }
 }

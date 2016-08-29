@@ -1,15 +1,11 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
 using System.Net;
-using Opus.DataBaseEnvironment;
 using System.Linq;
-using AutoMapper;
-using SamDataBase.Model;
-using Opus.Helpers;
-using System.Collections.Generic;
 using SamApiModels.User;
 using SamApiModels.Perfil;
-using SamApi.Attributes;
+using SamApi.Attributes.Authorization;
+using SamServices.Services;
 
 namespace SamApi.Controllers
 {
@@ -24,24 +20,19 @@ namespace SamApi.Controllers
         public HttpResponseMessage Get(string samaccount)
         {
 
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
+            var usuario = UserServices.Recupera(samaccount);
+            var eventos = UserServices.RecuperaEventos(usuario);
+            var promocoesAdquiridas = UserServices.RecuperaPromocoesAdquiridas(usuario);
+
+            var perfilViewModel = new PerfilViewModel()
             {
-                var usuario = userRep.Find(u => u.samaccount == samaccount).SingleOrDefault();
+                Usuario = usuario,
+                Atividades = eventos,
+                PromocoesAdquiridas = promocoesAdquiridas
+            };
 
-                // dados para o perfil
-                var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(usuario);
-                var eventosViewModel = userRep.RecuperaEventos(usuario);
-                var promocoesAdquiridas = userRep.RecuperaPromocoesAdquiridas(usuario);
+            return Request.CreateResponse(HttpStatusCode.OK, perfilViewModel);
 
-                var perfilViewModel = new PerfilViewModel()
-                {
-                    Usuario = usuarioViewModel,
-                    Atividades = eventosViewModel.ToList(),
-                    PromocoesAdquiridas = promocoesAdquiridas
-                };
-
-                return Request.CreateResponse(HttpStatusCode.OK, perfilViewModel);
-            }
 
         }
 

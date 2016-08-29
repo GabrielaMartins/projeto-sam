@@ -1,21 +1,13 @@
 ﻿using System.Web.Http;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net;
-using Opus.DataBaseEnvironment;
-using AutoMapper;
-using SamDataBase.Model;
-using SamApi.Helpers;
-using SamApi.Attributes;
+using SamApi.Attributes.Authorization;
 using SamApiModels.User;
 using DefaultException.Models;
-using System.IO;
-using System.Configuration;
-using System.Web.Http.Description;
-using System.Web;
 using Swashbuckle.Swagger.Annotations;
 using SamApiModels.Models.User;
+using SamServices.Services;
 
 namespace SamApi.Controllers
 {
@@ -37,15 +29,9 @@ namespace SamApi.Controllers
         [Route("all")]
         public HttpResponseMessage Get()
         {
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
-            {
-                var users = userRep.GetAll().ToList();
 
-                var usersViewModel = Mapper.Map<List<Usuario>, List<UsuarioViewModel>>(users);
-
-                return Request.CreateResponse(HttpStatusCode.OK, usersViewModel);
-            }
-
+            var users = UserServices.RecuperaTodos();
+            return Request.CreateResponse(HttpStatusCode.OK, users);
         }
 
         /// <summary>
@@ -62,23 +48,13 @@ namespace SamApi.Controllers
         public HttpResponseMessage GetBySamaccount(string samaccount)
         {
 
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
+            var usuario = UserServices.Recupera(samaccount);
+            if (usuario == null)
             {
-
-                var user = userRep.Find(u => u.samaccount.Equals(samaccount)).SingleOrDefault();
-
-
-                if (user == null)
-                {
-                    throw new ExpectedException(HttpStatusCode.NotFound, "User not found", "We can't find this user");
-                }
-
-                // Transform our Usuario model to UsuarioViewModel
-                var usuarioViewModel = Mapper.Map<Usuario, UsuarioViewModel>(user);
-
-                return Request.CreateResponse(HttpStatusCode.OK, usuarioViewModel);
+                throw new ExpectedException(HttpStatusCode.NotFound, "User not found", "We can't find this user");
             }
 
+            return Request.CreateResponse(HttpStatusCode.OK, usuario);
         }
 
         /// <summary>
@@ -95,36 +71,8 @@ namespace SamApi.Controllers
         [Route("save")]
         public HttpResponseMessage Post([FromBody]AddUsuarioViewModel user)
         {
-
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
-            {
-
-                var userFound = userRep.Find(u => u.samaccount == user.samaccount).SingleOrDefault() == null;
-                if (userFound)
-                {
-                    throw new ExpectedException(HttpStatusCode.Forbidden, "Duplicated User", $"user '{user.samaccount}' already exists");
-                }
-
-                // save image to disk (we need do it before all other task)
-                var logicPath = ConfigurationManager.AppSettings["LogicImagePath"];
-                var physicalPath = HttpContext.Current.Server.MapPath(logicPath);
-
-                ImageHelper.SaveAsImage(user.foto, user.samaccount, physicalPath);
-
-                user.foto = $"{logicPath}{Path.PathSeparator}{user.samaccount}";
-
-                // map new values to our reference
-                var newUser = Mapper.Map<AddUsuarioViewModel, Usuario>(user);
-
-                // add to entity context
-                userRep.Add(newUser);
-
-                // commit changes
-                userRep.SubmitChanges();
-
-                return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.OK, "User Added", "User Added"));
-
-            }
+            UserServices.CriaUsuario(user);
+            return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.OK, "User Added", "User Added"));
         }
 
         /// <summary>
@@ -140,47 +88,8 @@ namespace SamApi.Controllers
         [Route("update/{samaccount}")]
         public HttpResponseMessage Put(string samaccount, [FromBody]UpdateUsuarioViewModel user)
         {
-
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
-            {
-
-                // it will be updated with values provided by the parameter
-                var userToBeUpdated = userRep.Find(u => u.samaccount == samaccount).SingleOrDefault();
-                if (userToBeUpdated == null)
-                {
-                    throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", $"The server could not find the user '{samaccount}'");
-                }
-
-                if (user.foto == "")
-                {
-                    user.foto = userToBeUpdated.foto;
-                }
-                else
-                {
-                    // save image to disk
-                    var logicPath = ConfigurationManager.AppSettings["LogicImagePath"];
-                    var physicalPath = HttpContext.Current.Server.MapPath(logicPath);
-
-                    ImageHelper.SaveAsImage(user.foto, userToBeUpdated.samaccount, physicalPath);
-
-                    // update image path
-                    user.foto = ImageHelper.GetLogicPathForImage(userToBeUpdated.samaccount);
-                }
-
-                // map values from 'user' to 'userToBeUpdated'
-                var updatedUser = Mapper.Map(user, userToBeUpdated);
-
-                // update: flush changes to proxy
-                userRep.Update(updatedUser);
-
-                // commit changes to database
-                userRep.SubmitChanges();
-
-                
-                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Updated", "User updated"));
-
-            }
-
+            UserServices.AtualizaUsuario(samaccount, user);
+            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Updated", "User updated"));
         }
 
         /// <summary>
@@ -191,16 +100,13 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
-        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
+        [SamResourceAuthorizer(Roles = "rh")]
         [HttpDelete]
-        [Route("delete/{id}")]
-        public HttpResponseMessage Delete(int id)
+        [Route("delete/{samaccount}")]
+        public HttpResponseMessage Delete(string samaccount)
         {
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
-            {
-                userRep.Delete(id);
-                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Deleted", "User deleted"));
-            }
+            UserServices.DeletaUsuario(samaccount);
+            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Deleted", "User deleted"));
         }
     }
 }

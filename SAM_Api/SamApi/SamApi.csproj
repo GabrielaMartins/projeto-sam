@@ -47,10 +47,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -58,6 +54,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="git-issuer">
+      <HintPath>..\..\..\git-issuer\git-issuer\git-issuer\bin\Release\git-issuer.dll</HintPath>
     </Reference>
     <Reference Include="JWT, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\JWT.1.3.4\lib\3.5\JWT.dll</HintPath>
@@ -183,19 +182,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
-    <Compile Include="Attributes\SamResourceAuthorizer.cs" />
-    <Compile Include="Attributes\SamTokenAuthorizer.cs" />
+    <Compile Include="Attributes\Authorization\SamResourceAuthorizer.cs" />
+    <Compile Include="Attributes\Authorization\SamTokenAuthorizer.cs" />
     <Compile Include="Controllers\SamAgendamentoController.cs" />
     <Compile Include="Controllers\SamCargoController.cs" />
     <Compile Include="Controllers\SamDashboardController.cs" />
+    <Compile Include="Controllers\SamPendencyController.cs" />
     <Compile Include="Controllers\SamPerfilController.cs" />
+    <Compile Include="Controllers\SamVotacaoController.cs" />
     <Compile Include="Filters\SamExceptionFilter.cs" />
-    <Compile Include="Helpers\ImageHelper.cs" />
-    <Compile Include="Mappers\AutoMapperConfig.cs" />
-    <Compile Include="Mappers\DomainToViewModelMappingProfile.cs" />
+    <Compile Include="Filters\SamModelValidationFilter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Mappers\ViewModelToDomainMappingProfile.cs" />
     <Compile Include="Controllers\ActiveDirectoryController.cs" />
     <Compile Include="Controllers\SamCategoriaController.cs" />
     <Compile Include="Controllers\SamLoginController.cs" />
@@ -236,21 +234,17 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\git-issuer\git-issuer\git-issuer\git-issuer.csproj">
-      <Project>{47a257f6-e16c-4bda-b7d3-c9f1f7ec2b3a}</Project>
-      <Name>git-issuer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ExceptionSystem\DefaultException.csproj">
       <Project>{184313A8-E40D-476B-9CA3-946FD38E9D15}</Project>
       <Name>DefaultException</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SamApiModels\SamApiModels.csproj">
-      <Project>{776689b3-741d-4e4d-a8b4-873db0925d80}</Project>
-      <Name>SamApiModels</Name>
+    <ProjectReference Include="..\SamApiModels\SamModels.csproj">
+      <Project>{776689B3-741D-4E4D-A8B4-873DB0925D80}</Project>
+      <Name>SamModels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SamDataBase\SamDataBase.csproj">
-      <Project>{f725223a-3f2f-4120-9816-b9de104d6715}</Project>
-      <Name>SamDataBase</Name>
+    <ProjectReference Include="..\SamServices\SamServices.csproj">
+      <Project>{E01C138E-B7A0-49E6-AE91-71B84946254D}</Project>
+      <Name>SamServices</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

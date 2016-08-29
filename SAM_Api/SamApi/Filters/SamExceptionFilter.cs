@@ -1,5 +1,4 @@
 ﻿using DefaultException.Models;
-using SamApi.Helpers;
 using System;
 using System.Configuration;
 using System.Data.Entity.Validation;
@@ -12,9 +11,15 @@ using System.Collections.Generic;
 
 namespace SamApi.Filters
 {
+    /// <summary>
+    /// Filtra as exceções do sistema
+    /// </summary>
     public class SamExceptionFilter : ExceptionFilterAttribute
     {
-
+        /// <summary>
+        /// É disparado quando ocorre uma exceção
+        /// </summary>
+        /// <param name="context"></param>
         public override void OnException(HttpActionExecutedContext context)
         {
             // Exception known to us

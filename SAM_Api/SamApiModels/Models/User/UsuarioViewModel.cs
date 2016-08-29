@@ -1,4 +1,5 @@
 using SamApiModels.Cargo;
+using SamModelValidationRules.Attributes.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -34,6 +35,9 @@ namespace SamApiModels.User
 
         public string linkedin { get; set; }
 
+        /// <summary>
+        /// a string in the format: <!-- '<data:image/<imgType>;base64,><bytesEncoded>' -->
+        /// </summary>
         [Required]
         public string foto { get; set; }
 
@@ -46,6 +50,9 @@ namespace SamApiModels.User
         [Required]
         public virtual CargoViewModel Cargo { get; set; }
 
+        /// <summary>
+        /// É uma lista dos próximos cargos na hierarquia de cargo
+        /// </summary>
         [Required]
         public virtual List<CargoViewModel> ProximoCargo { get; set; }
 

@@ -3,9 +3,7 @@ using Opus.RepositoryPattern;
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
 using System;
-using SamApiModels.Evento;
 
 namespace Opus.DataBaseEnvironment
 {
@@ -18,26 +16,22 @@ namespace Opus.DataBaseEnvironment
 		}
 
         //Preencher aqui
-        public List<EventoViewModel> RecuperaEventos(int? quantidade = null)
+        public List<Evento> RecuperaEventos(int? quantidade = null)
         {
             if (quantidade.HasValue)
             {
                 var eventos = GetAll().OrderBy(e => e.data).Take(quantidade.Value).ToList();
-                var eventosViewModel = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-                return eventosViewModel;
+                return eventos;
             }
             else
             {
-                var eventos = GetAll().ToList();
-                var eventosViewModel = Mapper.Map<List<Evento>, List<EventoViewModel>>(eventos);
-
-                return eventosViewModel;
+               var eventos = GetAll().ToList();
+                return eventos;
             }
 
         }
-
-
-        public List<EventoViewModel> RecuperaCertificacoesMaisProcuradas()
+        
+        public List<Evento> RecuperaCertificacoesMaisProcuradas()
         {
 
             //select ev.item, count(ev.item) as qtd from Eventos ev group by ev.item order by qtd desc
@@ -62,26 +56,5 @@ namespace Opus.DataBaseEnvironment
             throw new NotImplementedException();
         }
 
-        public List<UltimoEventoViewModel> UltimosEventos()
-        {
-
-            using (var eventosRepository = DataAccess.Instance.GetEventoRepository())
-            {
-
-                // TODO: refatorar isso depois, tentar inserir como um metodo do repositorio de eventos
-                var ultimosEventos = eventosRepository.GetAll()
-                    .OrderByDescending(x => x.data)
-                    .ThenBy(x => x.Item.nome)
-                    .Take(10).AsEnumerable()
-                    .Select(x =>
-                        new UltimoEventoViewModel
-                        {
-                            Evento = Mapper.Map<Evento, EventoViewModel>(x),
-                            UsuariosQueFizeram = DataAccess.Instance.GetItemRepository().RecuperaUsuariosQueFizeram(x.item.Value)
-                        }).ToList();
-
-                return ultimosEventos;
-            }
-        }
     }
 }

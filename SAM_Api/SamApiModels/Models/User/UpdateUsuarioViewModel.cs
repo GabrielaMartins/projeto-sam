@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Opus.DataBaseEnvironment;
+using SamDataBase.Model;
+using SamModelValidationRules.Attributes.Validation;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SamApiModels.Models.User
 {
     public class UpdateUsuarioViewModel
     {
 
-     
         [Required]
         public string nome { get; set; }
 
@@ -23,7 +21,6 @@ namespace SamApiModels.Models.User
         [Required]
         public string descricao { get; set; }
 
-        [Required]
         public string facebook { get; set; }
 
         public string github { get; set; }
@@ -31,12 +28,14 @@ namespace SamApiModels.Models.User
         public string linkedin { get; set; }
 
         [Required]
+        [ValidPicture]
         public string foto { get; set; }
 
         [Required]
+        [AllowedValues(new[] { "RH", "Funcionario" })]
         public string perfil { get; set; }
 
-        [Required]
+        //[ValidForeignKey()]
         public int cargo { get; set; }
 
         public UpdateUsuarioViewModel()

@@ -1,12 +1,8 @@
-﻿using AutoMapper;
-using DefaultException.Models;
-using Opus.DataBaseEnvironment;
-using SamApi.Attributes;
+﻿using DefaultException.Models;
+using SamApi.Attributes.Authorization;
 using SamApiModels.Models.Agendamento;
-using SamDataBase.Model;
+using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -29,44 +25,9 @@ namespace SamApi.Controllers
         [Route("create")]
         public HttpResponseMessage Create(AgendamentoViewModel agendamento)
         {
-            using (var rep = DataAccess.Instance.GetEventoRepository())
-            {
-                var evento = Mapper.Map<AgendamentoViewModel, Evento>(agendamento);
-                evento.tipo = "agendamento";
-
-                rep.Add(evento);
-                rep.SubmitChanges();
-
-                // create a pendency to new event
-                GeneratePendencyFor(evento);
-
-                return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.Created, "Scheduling done", ""));
-            }
-        }
-
-        private void GeneratePendencyFor(Evento evt)
-        {
-            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
-            {
-                var users = userRep.Find(u => u.perfil == "RH").ToList();
-                foreach(var u in users)
-                {
-
-                    var pendencia = new Pendencia()
-                    {
-                        usuario = u.id,
-                        evento = evt.id,
-                        Evento = evt,
-                        Usuario = evt.Usuario,
-                        estado = false
-                    };
-
-                    pendencyRep.Add(pendencia);
-                    pendencyRep.SubmitChanges();
-                }
-                
-            }
+            EventoServices.CriaAgendamento(agendamento);
+            return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.Created, "Scheduling done", ""));
+            
         }
     }
 }

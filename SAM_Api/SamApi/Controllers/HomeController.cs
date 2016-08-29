@@ -6,9 +6,10 @@ using System.Web.Mvc;
 
 namespace SamApi.Controllers
 {
+    [RoutePrefix("api/sam")]
     public class HomeController : Controller
     {
-        // GET: Home
+        [Route("home")]
         public ActionResult Index()
         {
             return View();
