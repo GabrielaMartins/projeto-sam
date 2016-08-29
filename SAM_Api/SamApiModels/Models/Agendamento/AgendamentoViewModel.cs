@@ -21,7 +21,7 @@ namespace SamApiModels.Models.Agendamento
         /// <summary>
         /// Identifica o funcionário requerendo o agendamento
         /// </summary>
-        public string Funcionario;
+        public string funcionario;
 
         /// <summary>
         /// Data na qual irá ocorrer o evento

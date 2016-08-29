@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using System.Web.Http.ModelBinding;
 
 namespace SamApi.Filters
 {

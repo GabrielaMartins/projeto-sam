@@ -17,10 +17,12 @@ CREATE TABLE Usuarios
 	samaccount VARCHAR(50) UNIQUE NOT NULL,
 	nome VARCHAR(50) NOT NULL,
 	descricao VARCHAR(200),
-	redes VARCHAR(200),
+	github VARCHAR(100),
+	facebook VARCHAR(100),
+	linkedin VARCHAR(100),
 	perfil VARCHAR(20) NOT NULL DEFAULT 'funcionario' CHECK(perfil IN ('funcionario','rh')),
 	dataInicio DATE NOT NULL,
-	foto VARCHAR(150),
+	foto VARCHAR(300),
 	ativo BIT NOT NULL DEFAULT 1
 );
 

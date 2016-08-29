@@ -11,14 +11,14 @@ namespace SamApiModels.User
     public class AddUsuarioViewModel
     {
         /// <summary>
-        /// Segue o formato UrlEncoded64
+        /// String codificada na base64 cujo o formato é <!-- <data:image/<imgType>;base64,><bytesEncoded> -->
         /// </summary>
         [Required]
         [ValidPicture]
         public string foto { get; set; }
 
         /// <summary>
-        /// Objeto do tipo Date que representa data de início desse usuário no SAM
+        /// Objeto do tipo Date que representa data de início do usuário no SAM
         /// </summary>
         [Required]
         [DataType("System.DateTime")]
@@ -35,39 +35,45 @@ namespace SamApiModels.User
         /// Identifica o usuário no SAM, o samaccout é um dado que vem do ActiveDirectory da Opus
         /// </summary>
         [Required]
+        [StringLength(50, ErrorMessage = "string size is greater than 50 characters")]
         public string samaccount { get; set; }
 
         /// <summary>
         /// Nome completo do usuário
         /// </summary>
         [Required]
+        [StringLength(50, ErrorMessage = "string size is greater than 50 characters")]
         public string nome { get; set; }
 
         /// <summary>
-        /// Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (Funcionario, RH)
+        /// Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (funcionario, rh)
         /// </summary>
         [Required]
-        [AllowedValues(new[] { "RH", "Funcionario" })]
+        [AllowedValues(new[] { "rh", "funcionario" })]
         public string perfil { get; set; }
 
         /// <summary>
         /// Descrição do usuário como hobs por exemplo
         /// </summary>
+        [StringLength(200, ErrorMessage = "string size is greater than 200 characters")]
         public string descricao { get; set; }
 
         /// <summary>
         /// Facebook
         /// </summary>
+        [StringLength(100, ErrorMessage = "string size is greater than 100 characters")]
         public string facebook { get; set; }
 
         /// <summary>
         /// Github
         /// </summary>
+        [StringLength(100, ErrorMessage = "string size is greater than 100 characters")]
         public string github { get; set; }
 
         /// <summary>
         /// Linkedin
         /// </summary>
+        [StringLength(100, ErrorMessage = "string size is greater than 100 characters")]
         public string linkedin { get; set; }
 
         /// <summary>

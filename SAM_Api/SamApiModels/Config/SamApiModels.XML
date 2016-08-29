@@ -23,6 +23,20 @@
             <param name="validationContext">the validation context</param>
             <returns></returns>
         </member>
+        <member name="T:SamModelValidationRules.Attributes.Validation.ValidForeignKeyAttribute">
+            <summary>
+            Allow values in array
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:SamModelValidationRules.Attributes.Validation.ValidForeignKeyAttribute.#ctor(System.Type)" -->
+        <member name="M:SamModelValidationRules.Attributes.Validation.ValidForeignKeyAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            tell if the value is valid
+            </summary>
+            <param name="value">current value suplied to a field</param>
+            <param name="validationContext">the validation context</param>
+            <returns></returns>
+        </member>
         <member name="T:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute">
             <summary>
             Allow values in array
@@ -51,7 +65,7 @@
             Identifica a categoria associada ao item do agendamento
             </summary>
         </member>
-        <member name="F:SamApiModels.Models.Agendamento.AgendamentoViewModel.Funcionario">
+        <member name="F:SamApiModels.Models.Agendamento.AgendamentoViewModel.funcionario">
             <summary>
             Identifica o funcionário requerendo o agendamento
             </summary>
@@ -59,6 +73,41 @@
         <member name="F:SamApiModels.Models.Agendamento.AgendamentoViewModel.Data">
             <summary>
             Data na qual irá ocorrer o evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.descricao">
+            <summary>
+            Descrição do usuário como hobs por exemplo
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.facebook">
+            <summary>
+            Facebook
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.github">
+            <summary>
+            Github
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.linkedin">
+            <summary>
+            Linkedin
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.foto">
+            <summary>
+            String codificada na base64 cujo o formato é <!-- <data:image/<imgType>;base64,><bytesEncoded> -->
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.perfil">
+            <summary>
+            Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (funcionario, rh)
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.cargo">
+            <summary>
+            Identifica o cargo atual do funcionário
             </summary>
         </member>
         <member name="T:SamApiModels.Login.SamToken">
@@ -83,12 +132,12 @@
         </member>
         <member name="P:SamApiModels.User.AddUsuarioViewModel.foto">
             <summary>
-            Segue o formato UrlEncoded64
+            String codificada na base64 cujo o formato é <!-- <data:image/<imgType>;base64,><bytesEncoded> -->
             </summary>
         </member>
         <member name="P:SamApiModels.User.AddUsuarioViewModel.dataInicio">
             <summary>
-            Objeto do tipo Date que representa data de início desse usuário no SAM
+            Objeto do tipo Date que representa data de início do usuário no SAM
             </summary>
         </member>
         <member name="P:SamApiModels.User.AddUsuarioViewModel.cargo">
@@ -108,7 +157,7 @@
         </member>
         <member name="P:SamApiModels.User.AddUsuarioViewModel.perfil">
             <summary>
-            Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (Funcionario, RH)
+            Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (funcionario, rh)
             </summary>
         </member>
         <member name="P:SamApiModels.User.AddUsuarioViewModel.descricao">
@@ -136,14 +185,74 @@
             Quantidade de pontos que o usuário obtém
             </summary>
         </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.id">
+            <summary>
+            Identifica o usuário no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.samaccount">
+            <summary>
+            Identifica o usuário pelo samaccount (usuario da rede interna da opus)
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.nome">
+            <summary>
+            Nome completo do usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.dataInicio">
+            <summary>
+            Objeto do tipo Date que representa data de início do usuário no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.pontos">
+            <summary>
+            Quantidade de pontos que o usuário obtém
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.descricao">
+            <summary>
+            Descrição do usuário como hobs por exemplo
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.facebook">
+            <summary>
+            Facebook
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.github">
+            <summary>
+            Github
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.linkedin">
+            <summary>
+            Linkedin
+            </summary>
+        </member>
         <member name="P:SamApiModels.User.UsuarioViewModel.foto">
             <summary>
-            a string in the format: <!-- '<data:image/<imgType>;base64,><bytesEncoded>' -->
+            Endereço da imagem no servidor
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.ativo">
+            <summary>
+            Diz se o usuário está ou não ativo no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.perfil">
+            <summary>
+            Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (funcionario, rh)
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.Cargo">
+            <summary>
+            Representa o cargo atual do usuário
             </summary>
         </member>
         <member name="P:SamApiModels.User.UsuarioViewModel.ProximoCargo">
             <summary>
-            É uma lista dos próximos cargos na hierarquia de cargo
+            É uma lista dos próximos cargos na hierarquia de cargo, os quais o usuário pode escolher
             </summary>
         </member>
         <member name="P:SamApiModels.Votacao.AddVotoViewModel.Usuario">
