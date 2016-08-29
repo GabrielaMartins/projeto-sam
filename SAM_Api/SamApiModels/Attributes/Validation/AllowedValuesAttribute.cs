@@ -18,14 +18,11 @@ namespace SamModelValidationRules.Attributes.Validation
         /// <param name="values">array of valid values for a field</param>
         public AllowedValuesAttribute(object values)
         {
-<<<<<<< HEAD
-=======
             if(!(values is Array))
             {
                 throw new Exception("You must pass an array as values");
             }
 
->>>>>>> master
             this.values = values;
         }
 

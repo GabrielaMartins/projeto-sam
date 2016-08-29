@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,8 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\Validation\ValidPictureAttribute.cs" />
     <Compile Include="Attributes\Validation\AllowedValuesAttribute.cs" />
+    <Compile Include="Attributes\Validation\ValidForeignKey.cs" />
+    <Compile Include="Attributes\Validation\ValidPictureAttribute.cs" />
     <Compile Include="Models\Agendamento\AgendamentoViewModel.cs" />
     <Compile Include="Models\Login\SamToken.cs" />
     <Compile Include="Models\OpusActiveDirectory\ActiveDirectoryUser.cs" />

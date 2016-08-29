@@ -32,8 +32,8 @@ namespace SamApi.Attributes.Authorization
             }
 
             // this lines throw exception (if an error) captured by our filter
-            var token = ExtractHeaderValue(actionContext.Request, "token");
-            var decodedToken = JwtHelper.DecodeToken(token.SingleOrDefault());
+            var token = ExtractToken(actionContext.Request);
+            var decodedToken = JwtHelper.DecodeToken(token);
 
             // here we need to create an exception if we could not find some keys on decoded token
             try
@@ -58,16 +58,24 @@ namespace SamApi.Attributes.Authorization
             }
         }
 
-        private static IEnumerable<string> ExtractHeaderValue(HttpRequestMessage request, string key)
+        private static string ExtractToken(HttpRequestMessage request)
         {
 
             try
             {
-                return request.Headers.GetValues(key);
+                var token =  request.Headers.GetValues("token").SingleOrDefault();
+                if (token == null || token == "null")
+                {
+                    throw new ExpectedException(HttpStatusCode.BadRequest, "Token empty", "You must provide a valid token");
+                }
+                else
+                {
+                    return token;
+                }
             }
             catch (Exception ex)
             {
-                throw new ExpectedException(HttpStatusCode.BadRequest, ex.Message, "Key '" + key + "' not found.");
+                throw new ExpectedException(HttpStatusCode.BadRequest, ex.Message, "Key 'token' not found.");
             }
         }
     }

@@ -9,12 +9,7 @@ namespace SamModelValidationRules.Attributes.Validation
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class ValidPictureAttribute : ValidationAttribute
     {
-<<<<<<< HEAD
-        private string error;
-
-=======
        
->>>>>>> master
         /// <summary>
         /// Constructor
         /// </summary>

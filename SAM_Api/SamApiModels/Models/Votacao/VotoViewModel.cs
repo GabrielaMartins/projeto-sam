@@ -13,10 +13,7 @@ namespace SamApiModels.Votacao
         public int Dificuldade { get; set; }
 
         public int Modificador { get; set; }
-<<<<<<< HEAD
-=======
 
->>>>>>> master
 
         public VotoViewModel()
         {

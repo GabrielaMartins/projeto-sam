@@ -76,13 +76,8 @@ namespace SamServices.Services
                     {
                         usuario = u.id,
                         evento = evt.id,
-<<<<<<< HEAD
-                        Evento = evt,
-                        Usuario = evt.Usuario,
-=======
                         Evento = null,
                         Usuario = null,
->>>>>>> master
                         estado = false
                     };
 
