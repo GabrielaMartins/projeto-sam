@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DefaultException.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SamModelValidationRules.Attributes.Validation
@@ -9,13 +10,13 @@ namespace SamModelValidationRules.Attributes.Validation
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class AllowedValuesAttribute : ValidationAttribute
     {
-        private int[] values;
+        private object values;
 
         /// <summary>
         /// set the current valid values
         /// </summary>
         /// <param name="values">array of valid values for a field</param>
-        public AllowedValuesAttribute(int[] values)
+        public AllowedValuesAttribute(object values)
         {
             this.values = values;
         }
@@ -28,10 +29,12 @@ namespace SamModelValidationRules.Attributes.Validation
         /// <returns></returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            var array = values as object[];
+            
             // if an error
-            if (!Array.Exists(values, x => x == (int) value))
+            if (!Array.Exists(array, x => x.Equals(value)))
             {
-                string validValues = string.Join(",", values);
+                string validValues = string.Join(",", array);
                
                 // The string before '|' is the title.
                 // The string after '|' is the detail.

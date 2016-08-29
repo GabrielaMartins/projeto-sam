@@ -27,32 +27,13 @@
             Allow values in array
             </summary>
         </member>
-        <member name="M:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute.#ctor(System.Int32[])">
+        <member name="M:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute.#ctor(System.Object)">
             <summary>
             set the current valid values
             </summary>
             <param name="values">array of valid values for a field</param>
         </member>
         <member name="M:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
-            <summary>
-            tell if the value is valid
-            </summary>
-            <param name="value">current value suplied to a field</param>
-            <param name="validationContext">the validation context</param>
-            <returns></returns>
-        </member>
-        <member name="T:SamModelValidationRules.Attributes.Validation.ValidEventAttribute">
-            <summary>
-            Allow values in array
-            </summary>
-        </member>
-        <member name="M:SamModelValidationRules.Attributes.Validation.ValidEventAttribute.#ctor(System.Int32[])">
-            <summary>
-            set the current valid values
-            </summary>
-            <param name="values">array of valid values for a field</param>
-        </member>
-        <member name="M:SamModelValidationRules.Attributes.Validation.ValidEventAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
             <summary>
             tell if the value is valid
             </summary>
@@ -153,6 +134,16 @@
         <member name="P:SamApiModels.User.AddUsuarioViewModel.pontos">
             <summary>
             Quantidade de pontos que o usuário obtém
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.foto">
+            <summary>
+            a string in the format: <!-- '<data:image/<imgType>;base64,><bytesEncoded>' -->
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.ProximoCargo">
+            <summary>
+            É uma lista dos próximos cargos na hierarquia de cargo
             </summary>
         </member>
         <member name="P:SamApiModels.Votacao.AddVotoViewModel.Usuario">

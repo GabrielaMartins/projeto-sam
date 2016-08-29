@@ -51,7 +51,7 @@ namespace SamApiService.Controllers
             // check if our user not exists in our database
             if (usuario == null)
             {
-
+          
                 // return a http error
                 throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", $"We could not found the user '{login.User}' in our database");
                    

@@ -15,7 +15,7 @@ namespace SamServices.Helpers
              
                 img = img.Trim();
                 var init = img.IndexOf('/') + 1;
-                var end = img.IndexOf(';') - init;
+                var end = img.IndexOf(',') - init;
                 var imageType = img.Substring(init,end);
                 var content = img.Substring(img.IndexOf(',') + 1);
 

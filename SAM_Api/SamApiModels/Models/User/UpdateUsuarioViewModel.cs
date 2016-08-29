@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SamModelValidationRules.Attributes.Validation;
+using System;
 
 namespace SamApiModels.Models.User
 {
@@ -21,6 +22,7 @@ namespace SamApiModels.Models.User
 
         public string foto { get; set; }
 
+        [AllowedValues(new[] { "RH", "Funcionario" })]
         public string perfil { get; set; }
 
         public int cargo { get; set; }
