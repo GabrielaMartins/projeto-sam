@@ -13,14 +13,17 @@ module.exports = {
     path: __dirname + '/dist',
     filename: "index_bundle.js"
   },
+  externals: {
+	'Config': JSON.stringify({serverUrl: "http://10.10.15.113:65122"})
+  },
   module: {
     loaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        loader: 'babel-loader',
         query: {
-          presets: ["react"]
+          presets: ['es2015','react']
         }
       }
     ]

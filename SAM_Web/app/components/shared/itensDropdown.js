@@ -8,9 +8,9 @@ var ItensDrop = React.createClass({
     var itensDrop = [];
     var classes = "";
 
-    this.props.itensDrop.forEach(function(item){
-      itensDrop.push(<li key={item.id}><Link to={item.url}>{item.nome}</Link></li>);
-    });
+      this.props.itensDrop.forEach(function(item){
+        itensDrop.push(<li key={item.id}><Link to={item.url}>{item.nome}</Link></li>);
+      });
 
     return(
       <div>

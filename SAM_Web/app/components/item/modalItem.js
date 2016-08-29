@@ -1,3 +1,6 @@
+'use strict'
+
+//libs
 var React = require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
@@ -5,10 +8,10 @@ var Link = ReactRouter.Link;
 var Modal = React.createClass({
   render: function(){
     var status = null;
-    /*var categoriasProfundidade = ["Blog", "Workshop", "Palestra"];
+    var categoriasProfundidade = ["Blog", "Workshop", "Palestra"];
     var categoriasAlinhado = ["Curso", "Certificação", "Repositório"];
-    var funcionarios = [];
 
+    //determina o nome do status que aparecerá na tela
     if(categoriasProfundidade.indexOf(this.props.item.Categoria.nome)){
       if(this.props.item.status == true){
         status = <p className="center col s12 l4"><b>Profundidade: </b> Profundo</p>
@@ -23,22 +26,8 @@ var Modal = React.createClass({
       }
     }
 
-    this.props.usuarios.forEach(function(usuario){
-      funcionarios.push(
-        <div className="col l4 m4 s6 wrapper">
-          <Link to="#">
-            <img className="responsive-img circle" src={usuario.foto} style={{height:50}}/>
-            <br/>
-            <p className="center-align"><b>{usuario.nome}</b></p>
-              <br/>
-              <br/>
-          </Link>
-        </div>
-      );
-    });*/
-
     return(
-      <div id={this.props.item.id} className="modal modal-fixed-footer">
+      <div id={this.props.index} className="modal modal-fixed-footer">
         <div className="modal-content scrollbar">
             <h3 className="colorText-default center-align"><b>{this.props.item.nome}</b></h3>
             <br/>
@@ -51,14 +40,7 @@ var Modal = React.createClass({
             <br/>
             <div className="row center-block">
               <h5 className="center-align colorText-default"><b>Quem já fez:</b></h5><br/><br/>
-                <div className="col l4 m4 s6 wrapper">
-                  <Link to={"/Perfil/"+ this.props.usuarios.samaccount}>
-                    <img className="responsive-img circle center-block" src={this.props.usuarios.foto} style={{height:50}}/>
-                    <p className="center-align"><b>{this.props.usuarios.nome}</b></p>
-                      <br/>
-                      <br/>
-                  </Link>
-                </div>
+                {this.props.usuarios}
             </div>
         </div>
         <div className="modal-footer">
@@ -68,5 +50,12 @@ var Modal = React.createClass({
     );
   }
 });
+
+Modal.propTypes = {
+  item: React.PropTypes.object.isRequired,
+  pontuacao: React.PropTypes.number.isRequired,
+  usuarios: React.PropTypes.arrayOf(React.PropTypes.element).isRequired
+}
+
 
 module.exports = Modal;

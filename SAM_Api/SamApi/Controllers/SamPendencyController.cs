@@ -2,8 +2,11 @@
 using SamApiModels.Pendencia;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
+<<<<<<< HEAD
 using System.Collections.Generic;
 using System.Linq;
+=======
+>>>>>>> master
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;

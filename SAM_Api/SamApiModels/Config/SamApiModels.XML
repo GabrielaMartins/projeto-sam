@@ -4,29 +4,23 @@
         <name>SamApiModels</name>
     </assembly>
     <members>
+<<<<<<< HEAD
         <member name="T:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute">
+=======
+        <member name="T:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute">
+>>>>>>> master
             <summary>
             Allow values in array
             </summary>
         </member>
+<<<<<<< HEAD
         <member name="M:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute.#ctor">
             <summary>
             Constructor
             </summary>
         </member>
         <member name="M:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
-            <summary>
-            tell if the value is valid
-            </summary>
-            <param name="value">current value suplied to a field</param>
-            <param name="validationContext">the validation context</param>
-            <returns></returns>
-        </member>
-        <member name="T:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute">
-            <summary>
-            Allow values in array
-            </summary>
-        </member>
+=======
         <member name="M:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute.#ctor(System.Object)">
             <summary>
             set the current valid values
@@ -34,6 +28,39 @@
             <param name="values">array of valid values for a field</param>
         </member>
         <member name="M:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+>>>>>>> master
+            <summary>
+            tell if the value is valid
+            </summary>
+            <param name="value">current value suplied to a field</param>
+            <param name="validationContext">the validation context</param>
+            <returns></returns>
+        </member>
+<<<<<<< HEAD
+        <member name="T:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute">
+=======
+        <member name="T:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute">
+>>>>>>> master
+            <summary>
+            Allow values in array
+            </summary>
+        </member>
+<<<<<<< HEAD
+        <member name="M:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute.#ctor(System.Object)">
+            <summary>
+            set the current valid values
+            </summary>
+            <param name="values">array of valid values for a field</param>
+        </member>
+        <member name="M:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+=======
+        <member name="M:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+>>>>>>> master
             <summary>
             tell if the value is valid
             </summary>

@@ -3,9 +3,9 @@ var ReactRouter = require('react-router');
 
 var SelecaoVoto = function(props){
     var options = [];
-
+    console.log(props.mensagemErro);
     return(
-      <div className="card-panel">
+      <div className="card-panel" id="cardVotacao">
         <h5 className="card-title center-align colorText-default" ><b>{props.titulo}</b></h5>
         <div className="row">
           <div className="input-field col l6 s12 m6">
@@ -25,6 +25,7 @@ var SelecaoVoto = function(props){
             </select>
             <label>Profundidade</label>
           </div>
+          <p className="pequena red-text center">{props.mensagemErro}</p>
         </div>
         <div className="row">
           <h5 className="center-align">Pontuação final: <b className="colorText-default">{props.pontuacaoGerada}</b></h5><br/>

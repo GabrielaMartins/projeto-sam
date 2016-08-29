@@ -55,9 +55,14 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="git-issuer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\k2\pastas\transfer\git-issuer\Release\git-issuer.dll</HintPath>
+=======
+    <Reference Include="git-issuer">
+      <HintPath>..\..\..\git-issuer\git-issuer\git-issuer\bin\Release\git-issuer.dll</HintPath>
+>>>>>>> master
     </Reference>
     <Reference Include="JWT, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\JWT.1.3.4\lib\3.5\JWT.dll</HintPath>

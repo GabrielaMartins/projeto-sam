@@ -1,57 +1,50 @@
+'use strict'
+
+//libs
 var React = require('react');
 var ReactRouter = require('react-router');
-var Dropdown = require('./itensDropdown');
 var Link = ReactRouter.Link;
 
+//componente
+var Dropdown = require('./itensDropdown');
+
 var ItemMenu = React.createClass({
-  render : function(){
-
-  (function($) {
-      $(function() {
-        $('.dropdown-button').dropdown({
-          belowOrigin: true,
-          alignment: 'left',
-          inDuration: 200,
-          outDuration: 150,
-          constrain_width: true,
-          hover: true,
-          gutter: 1
-      });
-    }); // End Document Ready
-  })(jQuery); // End of jQuery name space
-
+  itensMenu: function(){
     //navbar
-    var itensMenu = this.props.itensMenu.map(function(item, index){
-      return(
-        <li key={index}>
-          <a className="dropdown-button" data-activates={item}>
-            {item}<i className="material-icons right">arrow_drop_down</i>
-          </a>
-        </li>
-      );
-    });
-
-    //mobile sidebar
-    var itensMenuMobile = this.props.dropdowns.map(function(dropdown, index){
-      if(dropdown.itemMenu == "Itens" || dropdown.itemMenu == "Funcionarios"){
-
+    return(
+      this.props.itensMenu.map(function(item, index){
         return(
           <li key={index}>
-            <a className="collapsible-header">
-              {dropdown.itemMenu}<i className="material-icons right">expand_more</i>
+            <a className="dropdown-button" data-activates={item}>
+              {item}<i className="material-icons right">arrow_drop_down</i>
             </a>
+          </li>
+        );
+      })
+    );
+  },
+  itensMenuMobile: function(){
+    //mobile sidebar
+    var self = this;
+    return(
+      this.props.dropdowns.map(function(dropdown, index){
+        if(dropdown.itemMenu != self.props.usuario){
+          return(<li key={index}>
+            <a className="collapsible-header">{dropdown.itemMenu}<i className="material-icons right">expand_more</i></a>
             <div className="collapsible-body">
               <Dropdown key = {dropdown.id} itensDrop = {dropdown.itens} itemMenu = {dropdown.itemMenu} isMobile={true}/>
             </div>
-          </li>
-        );
-      }
-    });
+          </li>);
+        }
+      })
+    );
+  },
 
+  render : function(){
     return(
       <div>
-        <ul className="right hide-on-med-and-down">
-          {itensMenu}
+        <ul className="left hide-on-med-and-down">
+          {this.itensMenu()}
         </ul>
         <div id="slide-out" className="side-nav">
           <div className="row">
@@ -63,14 +56,16 @@ var ItemMenu = React.createClass({
             <ul>
               <li className="no-padding">
                 <ul className="collapsible" data-collapsible="accordion">
-                  {itensMenuMobile}
+                  {this.itensMenuMobile()}
                 </ul>
+              </li>
+              <li>
+                <a className="collapsible-header" onClick={this.props.logout}>Logout<i className="fa fa-sign-out right" aria-hidden="true" ></i></a>
               </li>
             </ul>
         </div>
       </div>
     );
-
   }
 });
 

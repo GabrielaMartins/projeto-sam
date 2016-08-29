@@ -4,6 +4,8 @@ var React = require('react');
 var Perfil = require('../../components/perfil/perfil');
 var AtividadesHistorico = require('../../containers/item/itemCardContainer');
 var PromocoesHistorico = require('../../components/perfil/promocoesHistorico');
+var Loading = require('react-loading');
+var Config = require('Config');
 
 var moment = require('moment');
 moment.locale('pt-br');
@@ -11,26 +13,40 @@ moment.locale('pt-br');
 const PerfilUsuarioContainer = React.createClass({
 
   render: function(){
-
-    var atividades = this.state.atividades.map(function(atividade, index){
-      return(
-        <div className="col l12 m12 s12" key={index}>
-          <AtividadesHistorico
-            item = {atividade.Item}
-            usuarios = {atividade.Usuario}
-            pontuacao = {atividade.Item.dificuldade * atividade.Item.modificador * atividade.Item.Categoria.peso}
-            perfil = {true}
-            />
+    if(this.state.usuario.nome == null){
+      return(<div className="full-screen-less-nav">
+        <div className="row wrapper">
+          <Loading type='bubbles' color='#550000' height={150} width={150}/>
         </div>
-      );
+      </div>);
+    }
+    var self = this;
+    var atividades = this.state.atividades.map(function(atividade, index){
+      if(atividade.tipo !== "agendamento"){
+        if(atividade.Item.nome.toLowerCase().indexOf(self.state.consultaAtividades.toLowerCase())!=-1 ||
+          atividade.Item.Categoria.nome.toLowerCase().indexOf(self.state.consultaAtividades.toLowerCase())!=-1){
+          return(
+            <div className="col l12 m12 s12" key={index}>
+              <AtividadesHistorico
+                item = {atividade.Item}
+                pontuacao = {atividade.Item.dificuldade * atividade.Item.modificador * atividade.Item.Categoria.peso}
+                perfil = {true}
+                />
+            </div>
+          );
+        }
+      }
     });
 
     var promocoes = this.state.promocoes.map(function(promocao, index){
-      return(
-        <div className="col l12 m12 s12" key={index}>
-          <PromocoesHistorico promocao = {promocao} />
-        </div>
-      );
+      if(promocao.CargoAnterior.nome.toLowerCase().indexOf(self.state.consultaPromocoes.toLowerCase())!=-1 ||
+        promocao.CargoAdquirido.nome.toLowerCase().indexOf(self.state.consultaPromocoes.toLowerCase())!=-1){
+          return(
+            <div className="col l12 m12 s12" key={index}>
+              <PromocoesHistorico promocao = {promocao} />
+            </div>
+          );
+        }
     });
 
     return(
@@ -42,6 +58,10 @@ const PerfilUsuarioContainer = React.createClass({
         promocoes = {promocoes}
         columnChart = {this.state.columnChart}
         scroll = {this.scrollParaHistorico}
+        consultaAtividades = {this.state.consultaAtividades}
+        handlePesquisaAtividades = {this.handlePesquisaAtividades}
+        consultaPromocoes = {this.state.consultaPromocoes}
+        handlePesquisaPromocoes = {this.handlePesquisaPromocoes}
       />
     );
   },
@@ -70,7 +90,9 @@ const PerfilUsuarioContainer = React.createClass({
               options : {},
               chartType: "",
         			div_id: ""
-      			}
+      			},
+            consultaAtividades: "",
+            consultaPromocoes: ""
       };
   },
 
@@ -81,11 +103,10 @@ const PerfilUsuarioContainer = React.createClass({
       axios.defaults.headers.common['token'] = localStorage.getItem("token");
 
       // busca no banco esse samaccount
-      axios.get('http://10.10.15.113:65122/api/sam/perfil/').then(
+      axios.get(Config.serverUrl+'/api/sam/perfil/'+ usuario).then(
 
         // sucesso
         function(response){
-          debugger;
           var estado = self.montaEstado(response.data.Usuario);
           self.setState({
             usuario: estado.usuario,
@@ -106,11 +127,20 @@ const PerfilUsuarioContainer = React.createClass({
               div_id: "ColumnChart"
       			}
           })
+          sr.reveal('.scrollreveal');
         },
 
         //falha
         function(jqXHR){
           self.setState(self.getInitialState());
+          status = jqXHR.status;
+          var rota = '/Erro/' + status;
+
+          if(status == "401"){
+            this.props.history.push({pathname: rota, state: {mensagem: "Você está tentando acessar uma página que não te pertence, que feio!"}});
+          }else{
+            this.props.history.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+          }
         }
 
       );
@@ -127,7 +157,7 @@ const PerfilUsuarioContainer = React.createClass({
     }
 
     var progresso = 0;
-    if(usuario.Cargo.pontuacao != 0){
+    if(usuario.pontos != 0){
           progresso = usuario.pontos * 100 / usuario.ProximoCargo[0].pontuacao;
     }
 
@@ -149,6 +179,18 @@ const PerfilUsuarioContainer = React.createClass({
       scrollTop: $("#historico").offset().top - 50
     }, 2000);
 
+  },
+
+  handlePesquisaAtividades: function(event){
+    this.setState({
+      consultaAtividades: event.target.value
+    });
+  },
+
+  handlePesquisaPromocoes: function(event){
+    this.setState({
+      consultaPromocoes: event.target.value
+    });
   }
 
 });

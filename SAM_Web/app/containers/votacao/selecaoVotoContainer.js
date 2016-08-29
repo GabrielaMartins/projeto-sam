@@ -1,6 +1,7 @@
 var React = require('react');
 var SelecaoVoto = require('../../components/votacao/selecaoVoto');
-
+var Config = require('Config');
+var axios = require("axios");
 
 var SelecaoVotoContainer = React.createClass({
   getInitialState: function() {
@@ -14,7 +15,11 @@ var SelecaoVotoContainer = React.createClass({
   },
 
   handleChangeDificuldade: function(event){
-    this.setState({dificuldade:event.target.value});
+    this.setState({
+      dificuldade:event.target.value,
+      mensagemErro:""
+    });
+
     if(this.state.dificuldade != "" && this.state.profundidade != ""){
       //pontuação de workshops e palestras é a dificuldade * profundidade * 6 (o peso da categoria)
       this.setState({pontuacaoGerada: parseInt(this.state.dificuldade) * parseInt(this.state.profundidade) * 6})
@@ -22,7 +27,11 @@ var SelecaoVotoContainer = React.createClass({
   },
 
   handleChangeProfundidade: function(event){
-    this.setState({profundidade:event.target.value});
+    this.setState({
+      profundidade:event.target.value,
+      mensagemErro:""
+    });
+
     if(this.state.dificuldade != "" && this.state.profundidade != ""){
       //pontuação de workshops e palestras é a dificuldade * profundidade * 6 (o peso da categoria)
       this.setState({pontuacaoGerada: parseInt(this.state.dificuldade) * parseInt(this.state.profundidade) * 6})
@@ -31,8 +40,41 @@ var SelecaoVotoContainer = React.createClass({
 
   handleSubmitPontos: function(){
     if(this.state.dificuldade != "" && this.state.profundidade != ""){
-      //insere a pontuação no banco (this.state.pontuacaoGerada)
-      this.props.mostraResultado(true);
+      //insere a pontuação no banco
+
+      //configurações para passar o token
+      var token = localStorage.getItem("token");
+      var samaccount = localStorage.getItem("samaccount");
+
+      var config = {
+        headers: {'token': token}
+      };
+
+      voto = {
+        Usuario:samaccount,
+        Evento:this.props.evento,
+        Modificador:this.state.profundidade,
+        Dificuldade:this.state.dificuldade
+      }
+
+      axios.post("http://10.10.15.113:65122/api/sam/vote", voto, config).then(
+        function(response){
+          this.props.mostraResultado(true);
+          //deleta dos alertas
+          axios.delete(Config.serverUrl+"/api/sam/pendency/delete/" + id, config).then(
+            function(response){
+
+            },
+            function(jqXHR){
+
+            }
+          );
+        }.bind(this),
+        function(jqXHR){
+
+        }
+      );
+
 
     }else{
       if(this.state.dificuldade == "" && this.state.profundidade != ""){
@@ -70,6 +112,7 @@ var SelecaoVotoContainer = React.createClass({
         titulo = {this.props.titulo}
         botao = {this.props.botao}
         submit = {this.handleSubmitPontos}
+        mensagemErro = {this.state.mensagemErro}
         />)
   }
 });

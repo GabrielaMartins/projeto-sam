@@ -1,11 +1,19 @@
 'use strict'
+
 var React = require('react');
 var CadastroItem = require('../../components/cadastro_itens/cadastroItem');
 var axios = require("axios");
+var Config = require('Config');
 
 const CadastroItemContainer = React.createClass({
 
   render: function(){
+
+    //opções do select para categorias
+    var categorias = this.state.categorias.map(function(categoria, index){
+      return <option value = {categoria.id} key = {index + 1}>{categoria.nome}</option>
+    });
+
     return(
       <CadastroItem
         handleCategoryChanges = {this.handleCategoryChanges}
@@ -20,13 +28,12 @@ const CadastroItemContainer = React.createClass({
         descricao = {this.state.descricao}
         categoria = {this.state.categoria}
         dificuldade = {this.state.dificuldade}
-        categorias = {this.state.categorias.map(function(categoria, index){
-          return <option value = {categoria.id} key = {index + 1}>{categoria.nome}</option>
-        })}
+        categorias = {categorias}
       />
     )
   },
 
+  //estado inicial das variáveis
   getInitialState: function(){
       return {
 		    categorias: [],
@@ -40,20 +47,22 @@ const CadastroItemContainer = React.createClass({
   },
 
   componentDidMount: function(){
-
     var self = this;
+    this.getCategory(Config.serverUrl+'/api/sam/category/all');
 
-    this.getCategory('http://10.10.15.113:65122/api/sam/category/all');
-
+    //faz bind do select e chama a função para setar o novo estado
     $("#select_categoria").on('change', self.handleCategoryChanges);
     $("#select_dificuldade").on('change', self.handleDificultyChanges);
 
   },
 
   componentDidUpdate: function(prevProps, prevState){
+
+    //inicializador do select do materialize
     $(document).ready(function() {
       $('select').material_select();
     });
+
   },
 
   getCategory: function(url){
@@ -94,13 +103,13 @@ const CadastroItemContainer = React.createClass({
   },
 
   handleDificultyChanges: function(event){
-    //debugger;
+
     var dificuldade = event.target.value;
     this.setState({dificuldade: dificuldade});
   },
 
   handleModifierChanges: function(event){
-    debugger;
+
     var modificador = event.target.value;
     if(modificador === "Raso"){
       this.modificador = 2;
@@ -142,12 +151,13 @@ const CadastroItemContainer = React.createClass({
       descricao: descricao
     };
 
-    // fazer post do objeto para o server
+    // faz post do objeto para o servidor
 
-    // salvar no banco o item
+    // salva no banco o item
     console.log("item: " + itemObject);
   },
 
+  //limpa os dados do formulário
   handleClear: function(){
 
       $("input:radio").prop("checked", false);

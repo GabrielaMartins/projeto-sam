@@ -1,3 +1,6 @@
+'use strict'
+
+//libs
 var React = require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
@@ -23,5 +26,11 @@ var CardEventos = React.createClass({
     );
   }
 });
+
+CardEventos.propTypes = {
+  usuario: React.PropTypes.object.isRequired,
+  estilo: React.PropTypes.string.isRequired,
+  children:React.PropTypes.element.isRequired
+}
 
 module.exports = CardEventos;

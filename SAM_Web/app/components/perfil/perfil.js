@@ -1,3 +1,4 @@
+'use strict'
 var React = require('react');
 var ReactRouter = require('react-router');
 var Avatar = require('./avatar');
@@ -22,14 +23,22 @@ var Perfil = function(props){
         <div id="historico">
           <div className="row" >
             <div className="col l6 m6 s12">
-              <BaseHistorico  placeholder = "Pesquise por atividades realizadas" titulo = "Atividades Realizadas">
+              <BaseHistorico
+                placeholder = "Pesquise por atividades realizadas"
+                titulo = "Atividades Realizadas"
+                consulta = {props.consultaAtividades}
+                handlePesquisa = {props.handlePesquisaAtividades}>
                 <div className="row" style={{"marginLeft":"5%", "marginRight":"5%"}}>
                   {props.atividades}
                 </div>
               </BaseHistorico>
             </div>
             <div className="col l6 m6 s12">
-              <BaseHistorico placeholder = "Pesquise por cargos alcançados" titulo = "Promoções Alcançadas">
+              <BaseHistorico
+                placeholder = "Pesquise por cargos alcançados"
+                titulo = "Promoções Alcançadas"
+                consulta = {props.consultaPromocoes}
+                handlePesquisa = {props.handlePesquisaPromocoes}>
                 <div className="row" style={{"marginLeft":"5%", "marginRight":"5%"}}>
                   {props.promocoes}
                 </div>
@@ -45,6 +54,5 @@ var Perfil = function(props){
       </div>
     );
 }
-
 
 module.exports = Perfil;

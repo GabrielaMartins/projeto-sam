@@ -26,7 +26,7 @@ namespace SamApiModels.Models.Agendamento
         /// <summary>
         /// Data na qual irá ocorrer o evento
         /// </summary>
-        public DateTime Data;
+        public string Data;
 
         public AgendamentoViewModel()
         {

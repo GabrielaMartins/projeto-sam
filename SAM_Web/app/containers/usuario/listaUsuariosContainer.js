@@ -1,11 +1,13 @@
 var React = require('react');
 var ListaUsuarios = require('../../components/shared/lista');
-
+var UsuarioCard = require('../../components/usuario/usuarioCard');
+var Config = require('Config');
 
 var ListaUsuariosContainer = React.createClass({
   getInitialState: function() {
     return {
       usuarios: null,
+      consulta: ""
     };
   },
   componentDidMount: function(){
@@ -73,9 +75,31 @@ var ListaUsuariosContainer = React.createClass({
       ]
   });
 },
+handlePesquisa: function(event){
+
+  this.setState({
+    consulta: event.target.value
+  });
+
+},
 
   render : function(){
-      return(<ListaUsuarios usuarios = {this.state.usuarios}/>)
+     var placeholder = "Procure por Funcionários ou Cargos";
+     var lista = [];
+
+    this.state.usuarios.forEach(function(usuario){
+      if(usuario.nome.toLowerCase().indexOf(self.state.consulta.toLowerCase())!=-1 ||
+        item.Cargo.nome.toLowerCase().indexOf(self.state.consulta.toLowerCase())!=-1){
+          lista.push(<div className="col l4 m6 s12"><UsuarioCard conteudo = {usuario}/></div>);
+        }
+    });
+
+    <ListaUsuarios
+      placeholder = {placeholder}
+      consulta = {this.state.consulta}
+      handlePesquisa = {this.handlePesquisa}>
+      {lista}
+    </ListaUsuarios>
   }
 });
 

@@ -1,4 +1,5 @@
-﻿using SamApiModels.User;
+﻿using SamApiModels.Evento;
+using SamApiModels.User;
 
 namespace SamApiModels.Votacao
 {
@@ -7,9 +8,15 @@ namespace SamApiModels.Votacao
 
         public UsuarioViewModel Usuario { get; set; }
 
+        public EventoViewModel Evento {get; set;}
+
         public int Dificuldade { get; set; }
 
         public int Modificador { get; set; }
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 
         public VotoViewModel()
         {

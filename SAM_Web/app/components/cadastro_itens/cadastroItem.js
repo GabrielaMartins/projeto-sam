@@ -1,125 +1,128 @@
 'use strict'
+//libs
 var React =  require('react');
 var ReactRouter = require('react-router');
-var Radio = require('../../ui_elements/radio');
 var Link = ReactRouter.Link;
 
+//Radio Button
+var Radio = require('../../ui_elements/radio');
+
 var CadastroItem = function(props){
-debugger;
   return(
-      <div>
-        <form>
-          <div className="row valign-wrapper" style={{paddingTop: 30 }}>
-            <div className="col l6 m6 s12 center-block">
-              <div className="card-panel z-depth-6">
-                <h3 className="colorText-default card-title center-align">Cadastrar Novo Item</h3>
-                <div className="row">
-                  <div className="input-field col l12 m12 s12">
-                    <input
-                      id="nome_item"
-                      type="text"
-                      className="validate"
-                      onChange = {props.handleItemChanges}
-                      value = {props.item}
-                    />
-                  <label htmlFor="nome_item">Nome do Item:</label>
+    <form>
+      <div className="full-screen-less-nav">
+          <div className="row wrapper">
+            <div className="col l8 m10 s12 center-block">
+              <div className="card z-depth-6">
+                <div className="card-content">
+                  <h3 className="colorText-default card-title center-align"><b>Cadastrar Novo Item</b></h3>
+                  <div className="row">
+                    <div className="input-field col l12 m12 s12">
+                      <input
+                        id="nome_item"
+                        type="text"
+                        className="validate"
+                        onChange = {props.handleItemChanges}
+                        value = {props.item}
+                      />
+                    <label htmlFor="nome_item">Nome do Item:</label>
+                    </div>
                   </div>
-                </div>
-                <div className="row">
-                  <div className="input-field col l6 m6 s12">
-                    <select
-                      id ="select_categoria"
-                      value = {props.categoria}
-                      onChange = {props.handleCategoryChanges}>
-                      <option
-                        value = {0}
-                        key = {0}
-                        >Selecione a categoria
-                      </option>
-                      {props.categorias}
-                   </select>
-                    <label>Categoria</label>
-                  </div>
-                  <div className="input-field col l6 m6 s12">
-                    <select
-                      id = "select_dificuldade"
-                      value = {props.dificuldade}
-                      onChange = {props.handleDificultyChanges}>
+                  <div className="row">
+                    <div className="input-field col l6 m6 s12">
+                      <select
+                        id ="select_categoria"
+                        value = {props.categoria}
+                        onChange = {props.handleCategoryChanges}>
                         <option
                           value = {0}
                           key = {0}
-                          >Selecione a dificuldade
+                          >Selecione a categoria
                         </option>
-                        <option value = "1" key = "1">Fácil</option>
-                        <option value = "3" key = "2">Médio</option>
-                        <option value = "8" key = "3">Difícil</option>
-                   </select>
-                    <label>Dificuldade</label>
-                  </div>
-                </div>
-                { /* essa div deve ser escondida e mostrada apenas quando o item é novo */}
-                <div>
-                  <div className="row">
-                    <div className="input-field col l12 m12 s12">
-                      <textarea
-                        id = "descricao_item"
-                        className = "materialize-textarea"
-                        onChange = {props.handleDescriptionChanges}
-                        value = {props.descricao}
-                      />
-                    <label htmlFor="descricao_item">Descrição</label>
+                        {props.categorias}
+                     </select>
+                      <label>Categoria</label>
+                    </div>
+                    <div className="input-field col l6 m6 s12">
+                      <select
+                        id = "select_dificuldade"
+                        value = {props.dificuldade}
+                        onChange = {props.handleDificultyChanges}>
+                          <option
+                            value = {0}
+                            key = {0}
+                            >Selecione a dificuldade
+                          </option>
+                          <option value = "1" key = "1">Fácil</option>
+                          <option value = "3" key = "2">Médio</option>
+                          <option value = "8" key = "3">Difícil</option>
+                     </select>
+                      <label>Dificuldade</label>
                     </div>
                   </div>
-                  <div className="row">
-                    <label>Status: </label>
-                  </div>
-                  <div className="row">
-                    <div className="col s2">
-                      <div className="left">
-                        <Radio
-                          className="right"
-                          id = "radio1"
-                          name = "rdGroup"
-                          label = {props.rotulosRadio[0]}
-                          value = {props.rotulosRadio[0]}
-                          onChange = {props.handleModifierChanges}
-                        />
-                      </div>
-                    </div>
-                    <div className="col s6">
-                      <div className="left">
-                        <Radio
-                          name = "rdGroup"
-                          id = "radio2"
-                          label = {props.rotulosRadio[1]}
-                          value = {props.rotulosRadio[1]}
-                          onChange = {props.handleModifierChanges}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* aqui fica os botoes */}
-                <div className="row wrapper">
-                  <div className="col l12 m12 s12">
+                  <div>
                     <div className="row">
-                      <div className="col s6">
-                        <a
-                          className="color-default waves-effect waves-light btn right"
-                          onClick = {props.handleClear}
-                          name="btn_limpar">Limpar
-                          <i className="material-icons right">send</i>
-                        </a>
+                      <div className="input-field col l12 m12 s12">
+                        <textarea
+                          id = "descricao_item"
+                          className = "materialize-textarea"
+                          onChange = {props.handleDescriptionChanges}
+                          value = {props.descricao}
+                        />
+                      <label htmlFor="descricao_item">Descrição</label>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <label>Status: </label>
+                    </div>
+                    <div className="row">
+                      <div className="col s2">
+                        <div className="left">
+                          <Radio
+                            className="right"
+                            id = "radio1"
+                            name = "rdGroup"
+                            label = {props.rotulosRadio[0]}
+                            value = {props.rotulosRadio[0]}
+                            onChange = {props.handleModifierChanges}
+                          />
+                        </div>
                       </div>
                       <div className="col s6">
-                        <button
-                          className="color-default btn waves-effect waves-light left"
-                          type="submit"
-                          name="btn_enviar"
-                          onClick = {props.handleSubmit}>Enviar
-                          <i className="material-icons right">send</i>
-                        </button>
+                        <div className="left">
+                          <Radio
+                            name = "rdGroup"
+                            id = "radio2"
+                            label = {props.rotulosRadio[1]}
+                            value = {props.rotulosRadio[1]}
+                            onChange = {props.handleModifierChanges}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="card-action">
+                  <div className="row wrapper">
+                    <div className="col l12 m12 s12">
+                      <div className="row">
+                        <div className="col s6">
+                          <a
+                            className="color-default waves-effect waves-light btn right"
+                            onClick = {props.handleClear}
+                            name="btn_limpar">Limpar
+                            <i className="fa fa-eraser right"></i>
+                          </a>
+                        </div>
+                        <div className="col s6">
+                          <button
+                            className="color-default btn waves-effect waves-light left"
+                            type="submit"
+                            name="btn_enviar"
+                            onClick = {props.handleSubmit}>Salvar
+                            <i className="fa fa-floppy-o right"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -127,8 +130,8 @@ debugger;
               </div>
             </div>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     );
 
 }

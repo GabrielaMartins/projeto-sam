@@ -7,19 +7,25 @@ var HashHistory = ReactRouter.hashHistory;
 var Main = require('../components/main');
 var Login = require('../containers/login/loginContainer');
 var Base = require('../containers/shared/baseContainer');
-var Dashboard = require('../containers/dashboard/dashboardContainer');
+var DashboardRH = require('../containers/dashboard/dashboardContainerRH');
+var DashboardFuncionario = require('../containers/dashboard/dashboardContainerFuncionario');
 var Votacao = require('../containers/votacao/votacaoContainer');
 var CadastroItem = require('../containers/cadastro_itens/cadastroItemContainer');
 var ListaUsuarios = require('../containers/usuario/listaUsuariosContainer');
 var ListaItens = require('../containers/item/listaItensContainer');
 var Perfil = require('../containers/perfil/perfilContainer');
+var Agendamento = require('../containers/agendamento/AgendamentoContainer');
+var Erro = require('../components/shared/PaginaErro');
+var Erro404 = require('../components/shared/pagina404');
 var EdicaoFuncionario = require('../containers/edicao_funcionario/edicaoFuncionarioContainer');
 
 var Routes = (
   <Router history={HashHistory}>
-    <Route path='/' component={Login}/>
+      <Route path='/' component={Login}/>
       <Route component={Base}>
-        <Route path='/Dashboard' component={Dashboard}/>
+        <Route path='/Dashboard/RH/:samaccount' component={DashboardRH}/>
+        <Route path='/Dashboard/Funcionario/:samaccount' component={DashboardFuncionario}/>
+        <Route path='Item/Agendamento' component={Agendamento}/>
         <Route path="/Item/Cadastro" component={CadastroItem}/>
         <Route path='/Votacao/:id' component={Votacao}/>
         <Route path='/Funcionario/Listagem' component={ListaUsuarios}/>
@@ -27,6 +33,8 @@ var Routes = (
         <Route path='/Item/Listagem' component={ListaItens}/>
         <Route path='/Perfil/:samaccount' component={Perfil}/>
       </Route>
+      <Route path='/Erro/:status' component={Erro}/>
+      <Route path='*' component={Erro404}/>
   </Router>
 )
 

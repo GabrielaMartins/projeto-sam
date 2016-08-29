@@ -1,13 +1,18 @@
+'use strict'
+
+//libs
 var React = require('react');
 var ReactRouter = require('react-router');
+
+//componente
 var Chart = require('react-google-charts').Chart;
 
 var PontuacaoGrafico = React.createClass({
   render: function(){
     return(
       <div className="card-panel">
-        <h5 className="card-title center-align colorText-default"><b>Pontuações Alcançadas por Período</b></h5>
-        <div className="grafico card-content center" style={{paddingTop:10}}>
+        <h5 className="card-title center-align colorText-default scrollreveal"><b>Pontuações Alcançadas por Período</b></h5>
+        <div className="grafico card-content center scrollreveal" style={{paddingTop:10}}>
           {this.props.columnChart.data.length > 1 ?
             <Chart chartType={this.props.columnChart.chartType}
               width={"100%"}
@@ -26,5 +31,9 @@ var PontuacaoGrafico = React.createClass({
     );
   }
 });
+
+PontuacaoGrafico.propTypes = {
+  columnChart: React.PropTypes.object.isRequired
+}
 
 module.exports = PontuacaoGrafico;
