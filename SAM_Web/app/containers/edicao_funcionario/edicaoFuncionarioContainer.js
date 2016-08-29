@@ -14,6 +14,9 @@ var moment = require('moment');
 moment.locale('pt-br');
 
 const EdicaoFuncionarioContainer = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
   getInitialState: function(){
     return {
       nome:"",
@@ -45,7 +48,7 @@ const EdicaoFuncionarioContainer = React.createClass({
         var userData = response.data;
         axios.get(Config.serverUrl + "/api/sam/role/all").then(
           function(response){
-            
+
             self.setState({
               nome : userData.nome,
               cargo_nome : userData.Cargo.nome,
@@ -135,50 +138,6 @@ const EdicaoFuncionarioContainer = React.createClass({
       foto: imagem
     }
 
-    //var imagem = this.getFile();
-
-    //console.log(dataURL);
-    /*if(imagem != undefined){
-      var reader = new FileReader();
-
-      reader.onloadend = function(evento){
-        perfilDados.Foto = evento.target.result;
-        console.log(perfilDados.Foto);
-        var token = localStorage.getItem("token");
-        var samaccount = localStorage.getItem("samaccount");
-
-        var config = {
-          headers: {'token': token}
-        };
-
-        axios.put(Config.serverUrl+"/api/sam/user/update/" + samaccount, perfilDados, config).then(
-          function(response){
-            swal({
-              title: "Dados Enviados!",
-              text: "Os dados foram salvos com sucesso",
-              type: "sucess",
-              confirmButtonText: "Ok",
-              confirmButtonColor: "#550000"
-            },function(){
-              self.props.history.push({pathname: rota});
-            });
-          },
-          function(jqXHR){
-            //retorna página de erro
-            swal({
-              title: "Um Erro Ocorreu!",
-              text: "Os dados não puderam ser salvos, tente novamente mais tarde.",
-              type: "error",
-              confirmButtonText: "Ok",
-              confirmButtonColor: "#550000"
-            });
-          }
-        );
-      }
-
-      reader.readAsDataURL(imagem);
-
-    }else{*/
       var self = this;
       var token = localStorage.getItem("token");
       var samaccount = localStorage.getItem("samaccount");
@@ -194,11 +153,11 @@ const EdicaoFuncionarioContainer = React.createClass({
           swal({
             title: "Dados Enviados!",
             text: "Os dados foram salvos com sucesso",
-            type: "sucess",
+            type: "success",
             confirmButtonText: "Ok",
             confirmButtonColor: "#550000"
           },function(){
-            self.props.history.push({pathname: rota});
+            this.context.router.push({pathname: rota});
           });
         },
         function(jqXHR){
@@ -271,23 +230,19 @@ const EdicaoFuncionarioContainer = React.createClass({
         <div>
           <div className="row">
             <div className="col s12">
-              <span><b>Nome:</b> {this.state.nome}</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col s12 m6 l6">
-              <span><b>Level (Cargo):</b> {this.state.cargo_nome}</span>
+              <span><b>Nome:</b> {this.state.nome}<br/><br/></span>
             </div>
             <div className="col s12 m6 l6">
-              <span><b>XP (Pontos):</b> {this.state.pontos}</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col s12 m6 l6">
-              <span><b>Data de Início:</b> {moment(this.state.data_inicio).format('L')}</span>
+              <span><b>Level (Cargo):</b> {this.state.cargo_nome}<br/><br/></span>
             </div>
             <div className="col s12 m6 l6">
-              <span><b>Perfil:</b> {this.state.perfil}</span>
+              <span><b>XP (Pontos):</b> {this.state.pontos}<br/><br/></span>
+            </div>
+            <div className="col s12 m6 l6">
+              <span><b>Data de Início:</b> {moment(this.state.data_inicio).format('L')}<br/><br/></span>
+            </div>
+            <div className="col s12 m6 l6">
+              <span><b>Perfil:</b> {this.state.perfil}<br/><br/></span>
             </div>
           </div>
         </div>

@@ -33,7 +33,7 @@ var Pendencias = React.createClass({
   tipoModal: function(conteudo){
     if(conteudo.Evento.tipo == "promocao"){
       return (
-        <Modal index = {conteudo.Evento.id} handleDeleteAlerta = {this.props.handleDeleteAlerta}/>
+        <Modal index = {conteudo.id} handleDeleteAlerta = {this.props.handleDeleteAlerta}/>
       );
     }else{
       return null;
@@ -55,6 +55,7 @@ var Pendencias = React.createClass({
     var self = this;
 
     var pendencias = this.props.pendencias.map(function(conteudo, index){
+      
       return(
         <div key={index} className = {self.classes(self.props.tipoPendencia)}>
           {
@@ -66,7 +67,7 @@ var Pendencias = React.createClass({
             :
                 //se não retorna um modal quando houver clique na pendência
                 <div>
-                  <a className="modal-trigger scrollreveal" data-target={conteudo.Evento.id}>
+                  <a className="modal-trigger scrollreveal" data-target={conteudo.id}>
                     <CardPendencia conteudo = {conteudo} icone= {self.icone(conteudo.Evento.tipo)}/>
                   </a>
                   {

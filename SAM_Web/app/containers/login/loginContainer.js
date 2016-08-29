@@ -33,7 +33,6 @@ var LoginContainer = React.createClass({
   handleSubmit: function(e){
 
     e.preventDefault();
-    debugger;
     var self = this;
     self.setState({msg: ""});
 
@@ -58,7 +57,7 @@ var LoginContainer = React.createClass({
           } else {
             // Sorry! No Web Storage support..
           }
-
+          debugger;
           var config = {
             headers: {'token': token}
           };

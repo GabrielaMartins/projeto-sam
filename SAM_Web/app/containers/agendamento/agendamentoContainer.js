@@ -246,7 +246,7 @@ const AgendamentoContainer = React.createClass({
         swal({
           title: "Dados Enviados!",
           text: "Os dados foram salvos com sucesso",
-          type: "sucess",
+          type: "success",
           confirmButtonText: "Ok",
           confirmButtonColor: "#550000"
         },function(){

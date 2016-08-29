@@ -69,6 +69,7 @@ var Agendamento = function(props){
                         className = "materialize-textarea"
                         onChange = {props.handleDescriptionChanges}
                         value = {props.descricao}
+                        maxLength = "150"
                         />
                       <label htmlFor="descricao_item">Descrição</label>
                       <span className="pequena red-text">{props.erroDescricao}</span>

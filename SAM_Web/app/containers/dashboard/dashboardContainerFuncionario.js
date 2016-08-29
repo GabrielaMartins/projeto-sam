@@ -11,13 +11,6 @@ var Loading = require('react-loading');
 
 var Config = require('Config');
 
-//configurações para passar o token
-var token = localStorage.getItem("token");
-
-var config = {
-  headers: {'token': token}
-};
-
 //variável que indica se um componente já possui os dados para renderizar
 var fezFetch = false;
 
@@ -57,13 +50,20 @@ var DashboardContainerFuncionario = React.createClass({
     var alertas = this.state.alertas;
     var alertasModificado = [];
 
+    //configurações para passar o token
+    var token = localStorage.getItem("token");
+
+    var config = {
+      headers: {'token': token}
+    };
+
     //remove do banco
     axios.delete(Config.serverUrl+"/api/sam/pendency/delete/" + id, config).then(
       function(response){
 
         //atualiza o estado
         for(var i = 0; i < alertas.length; i++) {
-          if (alertas[i].Evento.id !== id) {
+          if (alertas[i].id !== id) {
             alertasModificado.push(alertas[i]);
           }
         }
@@ -85,6 +85,13 @@ var DashboardContainerFuncionario = React.createClass({
 
     //samaccount passado pela url
     var samaccount = this.props.params.samaccount;
+
+    //configurações para passar o token
+    var token = localStorage.getItem("token");
+
+    var config = {
+      headers: {'token': token}
+    };
 
     //obtém dados
     axios.get(Config.serverUrl+"/api/sam/dashboard/" + samaccount, config).then(

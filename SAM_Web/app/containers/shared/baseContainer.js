@@ -4,6 +4,7 @@ var axios = require("axios");
 var Config = require('Config');
 
 var BaseContainer = React.createClass({
+  
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
@@ -165,7 +166,7 @@ var BaseContainer = React.createClass({
         }else{
           mensagem = "Um erro inesperado aconteceu, por favor, tente mais tarde";
         }
-        self.props.history.push({pathname: rota, state: {mensagem: mensagem}});
+        self.context.router.push({pathname: rota, state: {mensagem: mensagem}});
       }
     );
 
