@@ -4,6 +4,9 @@ using System.Net.Http;
 using System.Net;
 using System.Web.Http.Description;
 using SamHelpers;
+using Swashbuckle.Swagger.Annotations;
+using SamApi.Attributes.Authorization;
+using DefaultException.Models;
 
 namespace SamApiService.Controllers
 {
@@ -14,11 +17,15 @@ namespace SamApiService.Controllers
     [RoutePrefix("api/sam/ad")]
     public class ActiveDirectoryController : ApiController
     {
-
-        // GET api/ad/user/all
+        /// <summary>
+        /// Retorna a lista dos usuários do AD da Opus
+        /// </summary>
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter a lista de usuários do SAM", typeof(List<ActiveDirectoryUser>))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(Roles = "rh")]
         [Route("user/all")]
         [HttpGet]
-        [ResponseType(typeof(List<ActiveDirectoryUser>))]
         public HttpResponseMessage GetUsers()
         {
 
@@ -29,15 +36,22 @@ namespace SamApiService.Controllers
           
         }
 
-        // GET api/ad/User/{samaccount}
+        /// <summary>
+        /// Retorna o usuário do AD da Opus
+        /// </summary>
+        /// <param name="samaccount"></param>
+
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível o usuário do AD da Opus", typeof(ActiveDirectoryUser))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(Roles = "rh")]
         [Route("user/{samaccount}")]
         [HttpGet]
-        [ResponseType(typeof(ActiveDirectoryUser))]
-        public HttpResponseMessage GetUser(string samAccount)
+        public HttpResponseMessage GetUser(string samaccount)
         {
 
             var adConsumer = new ActiveDirectoryHelper("opus.local");
-            var user = adConsumer.GetUser(samAccount);
+            var user = adConsumer.GetUser(samaccount);
 
             return Request.CreateResponse(HttpStatusCode.OK, user);
         }

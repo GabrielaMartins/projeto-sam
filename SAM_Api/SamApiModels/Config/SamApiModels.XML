@@ -30,7 +30,7 @@
         </member>
         <member name="M:SamModelValidationRules.Attributes.Validation.ValidDateAttribute.#ctor">
             <summary>
-            set the current valid values
+            Construtor do objeto
             </summary>
         </member>
         <member name="M:SamModelValidationRules.Attributes.Validation.ValidDateAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
@@ -204,6 +204,41 @@
             Construtor do objeto
             </summary>
         </member>
+        <member name="T:SamApiModels.Dashboard.Dashboard">
+            <summary>
+            Representa os dados do dashboard do usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.Dashboard.Usuario">
+            <summary>
+            Representa o usuário do dashboard
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.Dashboard.ResultadoVotacoes">
+            <summary>
+            Representa as votações que esse usuário fez
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.Dashboard.Atualizacoes">
+            <summary>
+            Representa as atualizações referentes a esse usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.Dashboard.Alertas">
+            <summary>
+            Representa os alertas referentes a esse usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.Dashboard.CertificacoesMaisProcuradas">
+            <summary>
+            Representa os dados do gráfico para o dashboard
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Dashboard.Dashboard.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
         <member name="T:SamApiModels.Login.SamToken">
             <summary>
             Representa o token de acesso ao SAM
@@ -372,6 +407,31 @@
             </summary>
         </member>
         <member name="M:SamApiModels.Pendencia.PendenciaEventoViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Perfil.PerfilFuncionario">
+            <summary>
+            Representa os dados do perfil de um usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Perfil.PerfilFuncionario.Atividades">
+            <summary>
+            Representa as atividades que esse funcionário fez
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Perfil.PerfilFuncionario.PromocoesAdquiridas">
+            <summary>
+            Representa as promocoes que esse funcionário adquiriu
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Perfil.PerfilFuncionario.Usuario">
+            <summary>
+            Representa o usuário do perfil
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Perfil.PerfilFuncionario.#ctor">
             <summary>
             Construtor do objeto
             </summary>

@@ -3,18 +3,28 @@ using System.Web.Http;
 using System.Net;
 using SamApi.Attributes.Authorization;
 using SamServices.Services;
+using Swashbuckle.Swagger.Annotations;
+using SamApiModels.Perfil;
+using DefaultException.Models;
 
 namespace SamApi.Controllers
 {
     /// <summary>
-    /// Oferece ações referentes ao perfil de um usuário
+    /// Permite obter os dados do perfil de um usuário do SAM
     /// </summary>
     [RoutePrefix("api/sam/perfil")]
     public class SamPerfilController : ApiController
     {
-
+        /// <summary>
+        /// Retorna as informações do perfil de um usuário
+        /// </summary>
+        /// <param name="samaccount">Identifica o usuário para qual o perfil será montado</param>
         [HttpGet]
         [Route("{samaccount}")]
+        //[SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter os dados do perfil 'rh' no SAM", typeof(PerfilFuncionario))]
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter os dados do perfil 'funcionário' no SAM", typeof(PerfilFuncionario))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         public HttpResponseMessage Get(string samaccount)
         {
@@ -23,7 +33,7 @@ namespace SamApi.Controllers
             var eventos = UserServices.RecuperaEventos(usuario);
             var promocoesAdquiridas = UserServices.RecuperaPromocoesAdquiridas(usuario);
 
-            var perfilViewModel = new
+            var perfilViewModel = new PerfilFuncionario()
             {
                 Usuario = usuario,
                 Atividades = eventos,
@@ -32,11 +42,6 @@ namespace SamApi.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, perfilViewModel);
 
-
-        }
-
-        private void CreateChart()
-        {
 
         }
     }
