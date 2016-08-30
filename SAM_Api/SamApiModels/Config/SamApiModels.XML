@@ -106,22 +106,17 @@
             Representa os dados do agendamento de um evento
             </summary>
         </member>
-        <member name="F:SamApiModels.Models.Agendamento.AgendamentoViewModel.Item">
+        <member name="P:SamApiModels.Models.Agendamento.AgendamentoViewModel.Item">
             <summary>
             Identifica o item associado ao agendamento
             </summary>
         </member>
-        <member name="F:SamApiModels.Models.Agendamento.AgendamentoViewModel.Categoria">
-            <summary>
-            Identifica a categoria associada ao item do agendamento
-            </summary>
-        </member>
-        <member name="F:SamApiModels.Models.Agendamento.AgendamentoViewModel.funcionario">
+        <member name="P:SamApiModels.Models.Agendamento.AgendamentoViewModel.Funcionario">
             <summary>
             Identifica o funcionário requerendo o agendamento
             </summary>
         </member>
-        <member name="F:SamApiModels.Models.Agendamento.AgendamentoViewModel.Data">
+        <member name="P:SamApiModels.Models.Agendamento.AgendamentoViewModel.Data">
             <summary>
             Data na qual irá ocorrer o evento
             </summary>
@@ -231,6 +226,31 @@
             Construtor do objeto
             </summary>
         </member>
+        <member name="T:SamApiModels.Categoria.CategoriaViewModel">
+            <summary>
+            Representa a categoria de um item do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Categoria.CategoriaViewModel.id">
+            <summary>
+            Identifica uma categoria no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Categoria.CategoriaViewModel.nome">
+            <summary>
+            Nome da categoria do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Categoria.CategoriaViewModel.peso">
+            <summary>
+            Cada categoria de item, possui um peso
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Categoria.CategoriaViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
         <member name="T:SamApiModels.Pendencia.PendenciaEventoViewModel">
             <summary>
             Representa o evento associado a uma pendência do SAM
@@ -324,6 +344,11 @@
         <member name="P:SamApiModels.User.AddUsuarioViewModel.pontos">
             <summary>
             Quantidade de pontos que o usuário obtém
+            </summary>
+        </member>
+        <member name="M:SamApiModels.User.AddUsuarioViewModel.#ctor">
+            <summary>
+            Construtor do objeto
             </summary>
         </member>
         <member name="T:SamApiModels.User.PendenciaUsuarioViewModel">

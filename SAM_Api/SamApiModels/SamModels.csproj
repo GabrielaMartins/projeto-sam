@@ -51,7 +51,6 @@
     <Compile Include="Models\Login\SamToken.cs" />
     <Compile Include="Models\Cargo\CargoViewModel.cs" />
     <Compile Include="Models\Categoria\CategoriaViewModel.cs" />
-    <Compile Include="Models\Dashboard\DashboardViewModel.cs" />
     <Compile Include="Models\Item\ItemViewModel.cs" />
     <Compile Include="Models\Pendencia\PendenciaEventoViewModel.cs" />
     <Compile Include="Models\Perfil\PerfilViewModel.cs" />

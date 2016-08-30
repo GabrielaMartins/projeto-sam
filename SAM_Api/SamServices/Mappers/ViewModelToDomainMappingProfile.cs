@@ -50,7 +50,7 @@ namespace SamServices.Mappers
             .ForMember(e => e.item, opt => opt.MapFrom(src => src.Item))
             .ForMember(e => e.usuario, opt => opt.MapFrom(src =>
                        DataAccess.Instance.GetUsuarioRepository()
-                       .Find(u => u.samaccount == src.funcionario)
+                       .Find(u => u.samaccount == src.Funcionario)
                        .Select(u => u.id).SingleOrDefault())
             );
 
