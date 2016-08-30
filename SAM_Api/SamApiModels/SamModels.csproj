@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\Validation\AllowedValuesAttribute.cs" />
+    <Compile Include="Attributes\Validation\ValidDateAttribute.cs" />
     <Compile Include="Attributes\Validation\ValidKey.cs" />
     <Compile Include="Attributes\Validation\ValidPictureAttribute.cs" />
     <Compile Include="Models\Agendamento\AgendamentoViewModel.cs" />
