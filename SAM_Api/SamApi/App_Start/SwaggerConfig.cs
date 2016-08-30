@@ -9,8 +9,14 @@ using System.IO;
 
 namespace SamApi
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class SwaggerConfig
     {
+        /// <summary>
+        /// Aplica configurações ao swagger
+        /// </summary>
         public static void Register()
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;

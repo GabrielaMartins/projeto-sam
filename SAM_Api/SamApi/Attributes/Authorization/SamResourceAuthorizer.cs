@@ -7,24 +7,48 @@ using DefaultException.Models;
 
 namespace SamApi.Attributes.Authorization
 {
+    /// <summary>
+    /// Autoriza o acesso aos recurosos do sam
+    /// </summary>
     public class SamResourceAuthorizer : AuthorizeAttribute
     {
-
+        /// <summary>
+        /// Tipos de autorização
+        /// </summary>
         public enum AuthType
         {
+            /// <summary>
+            /// Checa se usuário está em roles, ou em users
+            /// </summary>
             Basic,
+
+            /// <summary>
+            /// checa se o usuário do request é o mesmo do token
+            /// </summary>
             TokenEquality
         }
 
+        /// <summary>
+        /// informa o tipo de autorização
+        /// </summary>
         public AuthType AuthorizationType { get; set; }
 
         private string ErrorMessage;
 
+        /// <summary>
+        /// Contrutor do objeto
+        /// </summary>
+        /// <param name="authorizationType">Recebe o tipo de autorização requerida</param>
         public SamResourceAuthorizer(AuthType authorizationType = AuthType.Basic)
         {
             AuthorizationType = authorizationType;
         }
 
+        /// <summary>
+        /// Informa se o autoriza a requição ou nega 
+        /// </summary>
+        /// <param name="actionContext">è o contexto da requisição</param>
+        /// <returns></returns>
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
 
@@ -46,6 +70,10 @@ namespace SamApi.Attributes.Authorization
 
         }
 
+        /// <summary>
+        /// Trata o erro quando não é autorizado
+        /// </summary>
+        /// <param name="actionContext">é o contexto da autorização</param>
         protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
         {
             throw new ExpectedException(HttpStatusCode.Unauthorized, "Unauthorized", ErrorMessage);

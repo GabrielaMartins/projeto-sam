@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
@@ -44,17 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\Validation\AllowedValuesAttribute.cs" />
-    <Compile Include="Attributes\Validation\ValidForeignKey.cs" />
+    <Compile Include="Attributes\Validation\ValidDateAttribute.cs" />
+    <Compile Include="Attributes\Validation\ValidKey.cs" />
     <Compile Include="Attributes\Validation\ValidPictureAttribute.cs" />
     <Compile Include="Models\Agendamento\AgendamentoViewModel.cs" />
     <Compile Include="Models\Login\SamToken.cs" />
-    <Compile Include="Models\OpusActiveDirectory\ActiveDirectoryUser.cs" />
     <Compile Include="Models\Cargo\CargoViewModel.cs" />
     <Compile Include="Models\Categoria\CategoriaViewModel.cs" />
-    <Compile Include="Models\Dashboard\DashboardViewModel.cs" />
     <Compile Include="Models\Item\ItemViewModel.cs" />
     <Compile Include="Models\Pendencia\PendenciaEventoViewModel.cs" />
-    <Compile Include="Models\Perfil\PerfilViewModel.cs" />
     <Compile Include="Models\Promocao\PromocaoAdquirida.cs" />
     <Compile Include="Models\Promocao\PromocaoViewModel.cs" />
     <Compile Include="Models\Evento\UltimoEventoViewModel.cs" />
@@ -66,7 +65,6 @@
     <Compile Include="Models\User\UpdateUsuarioViewModel.cs" />
     <Compile Include="Models\User\UsuarioViewModel.cs" />
     <Compile Include="Models\Votacao\AddVotoViewModel.cs" />
-    <Compile Include="Models\Votacao\VotacaoViewModel.cs" />
     <Compile Include="Models\Votacao\VotoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -81,6 +79,10 @@
     <ProjectReference Include="..\SamDataBase\SamDataBase.csproj">
       <Project>{F725223A-3F2F-4120-9816-B9DE104D6715}</Project>
       <Name>SamDataBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SamHelpers\SamHelpers.csproj">
+      <Project>{FFAAC7D0-BAE2-46DE-876C-2D078046B1AA}</Project>
+      <Name>SamHelpers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

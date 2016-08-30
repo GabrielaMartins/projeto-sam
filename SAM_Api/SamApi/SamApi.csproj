@@ -58,10 +58,6 @@
     <Reference Include="git-issuer">
       <HintPath>..\..\..\git-issuer\git-issuer\git-issuer\bin\Release\git-issuer.dll</HintPath>
     </Reference>
-    <Reference Include="JWT, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\JWT.1.3.4\lib\3.5\JWT.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.0.1011, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -203,8 +199,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ActiveDirectoryHelper.cs" />
-    <Compile Include="Helpers\JwtHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +235,14 @@
     <ProjectReference Include="..\SamApiModels\SamModels.csproj">
       <Project>{776689B3-741D-4E4D-A8B4-873DB0925D80}</Project>
       <Name>SamModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SamDataBase\SamDataBase.csproj">
+      <Project>{F725223A-3F2F-4120-9816-B9DE104D6715}</Project>
+      <Name>SamDataBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SamHelpers\SamHelpers.csproj">
+      <Project>{FFAAC7D0-BAE2-46DE-876C-2D078046B1AA}</Project>
+      <Name>SamHelpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\SamServices\SamServices.csproj">
       <Project>{E01C138E-B7A0-49E6-AE91-71B84946254D}</Project>

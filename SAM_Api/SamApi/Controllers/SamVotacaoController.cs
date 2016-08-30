@@ -1,11 +1,9 @@
 ﻿using DefaultException.Models;
 using SamApi.Attributes.Authorization;
-using SamApiModels.Evento;
 using SamApiModels.Votacao;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -25,7 +23,7 @@ namespace SamApi.Controllers
         /// <param name="evt">
         /// Identifica o evento que foi votado
         /// </param>
-        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter o resultado da votação de um evento do do SAM", typeof(VotacaoViewModel))]
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter o resultado da votação de um evento do do SAM", typeof(List<VotoViewModel>))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "rh,funcionario")]

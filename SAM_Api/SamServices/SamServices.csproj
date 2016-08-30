@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Mappers\AutoMapperConfig.cs" />
     <Compile Include="Mappers\DomainToViewModelMappingProfile.cs" />
     <Compile Include="Mappers\ViewModelToDomainMappingProfile.cs" />
@@ -71,6 +70,10 @@
     <ProjectReference Include="..\SamDataBase\SamDataBase.csproj">
       <Project>{f725223a-3f2f-4120-9816-b9de104d6715}</Project>
       <Name>SamDataBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SamHelpers\SamHelpers.csproj">
+      <Project>{FFAAC7D0-BAE2-46DE-876C-2D078046B1AA}</Project>
+      <Name>SamHelpers</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

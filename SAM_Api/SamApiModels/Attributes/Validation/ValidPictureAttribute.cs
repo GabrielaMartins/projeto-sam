@@ -32,8 +32,8 @@ namespace SamModelValidationRules.Attributes.Validation
             if (!System.Text.RegularExpressions.Regex.IsMatch(str, @"data:image\/(.*),"))
             {
                 ErrorMessage = "Invalid value supplied.|" +
-                                $"Invalid value supplied to '{validationContext.ObjectType}.{validationContext.MemberName}'. " +
-                                "Valid values: a string in the format '<data:image/<imgType>;base64,><bytesEncoded>'";
+                                $"'{value}' is invalid value to '{validationContext.ObjectType}.{validationContext.MemberName}'. " +
+                                "Check if it's a string matching with '<data:image/<imgType>;base64,><bytesEncoded>'";
 
                 return new ValidationResult(ErrorMessage);
             }
