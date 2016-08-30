@@ -47,7 +47,6 @@ namespace SamApi.Controllers
         [Route("{samaccount}")]
         public HttpResponseMessage GetBySamaccount(string samaccount)
         {
-
             var usuario = UserServices.Recupera(samaccount);
             if (usuario == null)
             {

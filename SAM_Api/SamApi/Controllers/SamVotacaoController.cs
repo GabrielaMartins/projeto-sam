@@ -1,11 +1,9 @@
 ﻿using DefaultException.Models;
 using SamApi.Attributes.Authorization;
-using SamApiModels.Evento;
 using SamApiModels.Votacao;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;

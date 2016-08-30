@@ -29,13 +29,14 @@ namespace SamApiModels.User
         /// Identifica o cargo atual do usuário
         /// </summary>
         [Required]
-        [ValidForeignKey(typeof(SamDataBase.Model.Cargo))]
+        [ValidKey(ValidKeyAttribute.Entities.Cargo)]
         public int cargo { get; set; }
 
         /// <summary>
         /// Identifica o usuário no SAM, o samaccout é um dado que vem do ActiveDirectory da Opus
         /// </summary>
         [Required]
+        [ValidKey(ValidKeyAttribute.Entities.Usuario)]
         [StringLength(50, ErrorMessage = "string size is greater than 50 characters")]
         public string samaccount { get; set; }
 
@@ -82,6 +83,9 @@ namespace SamApiModels.User
         /// </summary>
         public int pontos { get; set; }
 
+        /// <summary>
+        /// Construtor do objeto
+        /// </summary>
         public AddUsuarioViewModel()
         {
            

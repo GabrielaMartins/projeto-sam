@@ -1,11 +1,11 @@
-﻿using System;
+﻿using DefaultException.Models;
+using SamDataBase.Model;
+using System;
 using System.Collections.Generic;
-using DefaultException.Models;
-using System.Net;
 using System.Configuration;
-using SamApiModels.User;
+using System.Net;
 
-namespace Opus.Helpers
+namespace SamHelpers
 {
 
     public class JwtHelper
@@ -18,7 +18,7 @@ namespace Opus.Helpers
 
         }
 
-        public static string GenerateToken(UsuarioViewModel user)
+        public static string GenerateToken(Usuario user)
         {
 
             if (user == null)

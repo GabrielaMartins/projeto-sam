@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SamModels.OpusActiveDirectory
+namespace SamHelpers
 {
 
     public class ActiveDirectoryUser

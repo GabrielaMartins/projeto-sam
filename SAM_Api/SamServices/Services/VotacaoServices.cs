@@ -1,15 +1,12 @@
 ﻿using AutoMapper;
 using DefaultException.Models;
 using Opus.DataBaseEnvironment;
-using SamApiModels.Evento;
 using SamApiModels.Votacao;
 using SamDataBase.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SamServices.Services
 {

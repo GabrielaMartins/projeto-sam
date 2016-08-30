@@ -71,7 +71,7 @@ namespace SamApiModels.Models.User
         /// <summary>
         /// Identifica o cargo atual do funcionário
         /// </summary>
-        [ValidForeignKey(typeof(SamDataBase.Model.Cargo))]
+        [ValidKey(ValidKeyAttribute.Entities.Cargo)]
         public int cargo { get; set; }
 
         /// <summary>

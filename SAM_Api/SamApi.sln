@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DefaultException", "Excepti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamServices", "SamServices\SamServices.csproj", "{E01C138E-B7A0-49E6-AE91-71B84946254D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamHelpers", "SamHelpers\SamHelpers.csproj", "{FFAAC7D0-BAE2-46DE-876C-2D078046B1AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{E01C138E-B7A0-49E6-AE91-71B84946254D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E01C138E-B7A0-49E6-AE91-71B84946254D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E01C138E-B7A0-49E6-AE91-71B84946254D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFAAC7D0-BAE2-46DE-876C-2D078046B1AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFAAC7D0-BAE2-46DE-876C-2D078046B1AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFAAC7D0-BAE2-46DE-876C-2D078046B1AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFAAC7D0-BAE2-46DE-876C-2D078046B1AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

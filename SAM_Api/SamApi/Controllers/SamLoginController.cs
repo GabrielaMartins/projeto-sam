@@ -1,15 +1,13 @@
 ﻿using System.Web.Http;
-using Opus.Helpers.ActiveDirectoryService;
 using System.Net.Http;
 using System.Net;
-using System.Linq;
-using Opus.Helpers;
 using System.Configuration;
 using DefaultException.Models;
-using SamApiModels.User;
 using SamApiModels.Login;
 using Swashbuckle.Swagger.Annotations;
-using SamServices.Services;
+using SamHelpers;
+using Opus.DataBaseEnvironment;
+using System.Linq;
 
 namespace SamApiService.Controllers
 {
@@ -46,25 +44,27 @@ namespace SamApiService.Controllers
             #endif
 
             // if yes, get User's information from database
-            var usuario = UserServices.Recupera(login.User);
-               
-            // check if our user not exists in our database
-            if (usuario == null)
+            using (var rep = DataAccess.Instance.GetUsuarioRepository())
             {
-          
-                // return a http error
-                throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", $"We could not found the user '{login.User}' in our database");
-                   
+                var usuario = rep.Find(u => u.samaccount == login.User).SingleOrDefault();
+
+                // check if our user not exists in our database
+                if (usuario == null)
+                {
+
+                    // return a http error
+                    throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", $"We could not found the user '{login.User}' in our database");
+
+                }
+
+                // generate token based on User
+                token = JwtHelper.GenerateToken(usuario);
+                var tokenResult = new SamToken() { Token = token };
+
+                // returns our token
+                return Request.CreateResponse(HttpStatusCode.OK, tokenResult);
             }
 
-                
-            // generate token based on User
-            token = JwtHelper.GenerateToken(usuario);
-            var tokenResult = new SamToken(){Token = token};
-
-            // returns our token
-            return Request.CreateResponse(HttpStatusCode.OK, tokenResult);
-            
         }
     }
 }

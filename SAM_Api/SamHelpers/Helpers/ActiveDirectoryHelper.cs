@@ -1,11 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
-using SamModels.OpusActiveDirectory;
+using System.DirectoryServices;
 
-namespace Opus.Helpers.ActiveDirectoryService
+namespace SamHelpers
 {
     public class ActiveDirectoryHelper
     {

@@ -13,7 +13,7 @@ namespace SamApiModels.User
         /// Identifica a pendência do usuário
         /// </summary>
         [Required]
-        [ValidForeignKey(typeof(SamDataBase.Model.Pendencia))]
+        [ValidKey(ValidKeyAttribute.Entities.Pendencia)]
         public int id { get; set; }
 
         /// <summary>

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Configuration;
 using System.IO;
+using System.Net.Http;
 using System.Web;
 
-namespace SamServices.Helpers
+namespace SamHelpers
 {
     public class ImageHelper
     {
-
         public static void SaveAsImage(string img, string name, string where)
         {
             try

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SamApiModels.Models.Agendamento
 {
+    /// <summary>
+    /// Representa os dados do agendamento de um evento
+    /// </summary>
     public class AgendamentoViewModel
     {
         /// <summary>
@@ -28,6 +31,9 @@ namespace SamApiModels.Models.Agendamento
         /// </summary>
         public string Data;
 
+        /// <summary>
+        /// Construtor do objeto
+        /// </summary>
         public AgendamentoViewModel()
         {
 

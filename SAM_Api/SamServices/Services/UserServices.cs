@@ -6,14 +6,13 @@ using SamApiModels.User;
 using SamApiModels.Votacao;
 using SamDataBase.Model;
 using System.Collections.Generic;
-using System;
 using System.Linq;
 using DefaultException.Models;
 using System.Net;
 using System.Configuration;
 using System.Web;
-using SamServices.Helpers;
 using SamApiModels.Models.User;
+using SamHelpers;
 
 namespace SamServices.Services
 {

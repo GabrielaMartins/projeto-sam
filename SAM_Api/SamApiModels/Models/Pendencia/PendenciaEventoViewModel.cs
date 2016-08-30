@@ -14,7 +14,7 @@ namespace SamApiModels.Pendencia
         /// Identifica o evento cujo a pendência foi gerada
         /// </summary>
         [Required]
-        [ValidForeignKey(typeof(SamDataBase.Model.Evento))]
+        [ValidKey(ValidKeyAttribute.Entities.Evento)]
         public int id { get; set; }
 
         /// <summary>
