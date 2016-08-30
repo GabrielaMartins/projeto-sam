@@ -34,6 +34,7 @@ namespace SamApiModels.Pendencia
         /// Identifica a data que o evento ocorreu
         /// </summary>
         [Required]
+        [ValidDate]
         public DateTime data { get; set; }
 
         /// <summary>

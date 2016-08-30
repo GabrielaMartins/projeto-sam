@@ -1,5 +1,6 @@
 ﻿using SamApiModels.Cargo;
 using SamApiModels.User;
+using SamModelValidationRules.Attributes.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -32,6 +33,7 @@ namespace SamApiModels.Promocao
         /// Representa a data em que o funcionário adquiriu um novo cargo
         /// </summary>
         [Required]
+        [ValidDate]
         public DateTime Data { get; set; }
 
         /// <summary>

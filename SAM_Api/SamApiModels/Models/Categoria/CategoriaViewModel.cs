@@ -19,6 +19,7 @@ namespace SamApiModels.Categoria
         /// Nome da categoria do SAM
         /// </summary>
         [Required]
+        [StringLength(50, ErrorMessage = "Size of string is greater than 50!")]
         public string nome { get; set; }
 
         /// <summary>

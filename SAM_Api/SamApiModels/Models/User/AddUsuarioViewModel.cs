@@ -81,6 +81,7 @@ namespace SamApiModels.User
         /// <summary>
         /// Quantidade de pontos que o usuário obtém
         /// </summary>
+        [Required]
         public int pontos { get; set; }
 
         /// <summary>

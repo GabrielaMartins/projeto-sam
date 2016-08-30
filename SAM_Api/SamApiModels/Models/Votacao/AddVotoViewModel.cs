@@ -18,6 +18,7 @@ namespace SamApiModels.Votacao
         /// É o id do evento que estã em votação
         /// </summary>
         [Required]
+        [ValidKey(ValidKeyAttribute.Entities.Evento)]
         public int Evento { get; set; }
 
         /// <summary>

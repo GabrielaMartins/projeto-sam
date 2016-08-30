@@ -27,7 +27,7 @@ namespace SamApiModels.Models.Agendamento
         /// </summary>
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+        [ValidDate]
         public string Data { get; set; }
 
         /// <summary>
