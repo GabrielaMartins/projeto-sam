@@ -8,6 +8,9 @@ using SamHelpers;
 namespace SamApiService.Controllers
 {
 
+    /// <summary>
+    /// Recupera informações do AD da OPUS
+    /// </summary>
     [RoutePrefix("api/sam/ad")]
     public class ActiveDirectoryController : ApiController
     {

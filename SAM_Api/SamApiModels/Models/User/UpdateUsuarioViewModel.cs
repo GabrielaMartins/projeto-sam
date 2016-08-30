@@ -20,7 +20,8 @@ namespace SamApiModels.Models.User
         /// Identifica a data que o funcionário iniciou no SAM
         /// </summary>
         [Required]
-        public DateTime dataInicio { get; set; }
+        [ValidDate]
+        public string dataInicio { get; set; }
 
         /// <summary>
         /// Representa a quantidade de pontos adquiridas pelo funcionário no SAM

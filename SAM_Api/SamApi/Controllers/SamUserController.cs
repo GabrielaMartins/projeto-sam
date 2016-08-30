@@ -77,7 +77,8 @@ namespace SamApi.Controllers
         /// <summary>
         /// Atualiza as informações de um usuário na base de dados do SAM.
         /// </summary>
-        /// <param name="id">Identifica o usuário a ser alterado.</param>
+        /// <param name="samaccount">Identifica o usuário a ser alterado.</param>
+        /// <param name="user">Dados para ser atualizados serem alterados.</param>
         [SwaggerResponse(HttpStatusCode.OK, "Caso o usuário seja alterado com sucesso na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
@@ -94,7 +95,7 @@ namespace SamApi.Controllers
         /// <summary>
         /// Remove as informações de um usuário na base de dados do SAM.
         /// </summary>
-        /// <param name="id">Identifica o usuário a ser removido.</param>
+        /// <param name="samaccount">Identifica o usuário a ser removido.</param>
         [SwaggerResponse(HttpStatusCode.OK, "Caso o usuário seja removido com sucesso na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
