@@ -9,11 +9,6 @@ namespace SamApiModels.Models.Agendamento
     public class AgendamentoViewModel
     {
         /// <summary>
-        /// Identifica a categoria associada ao item do agendamento
-        /// </summary>
-        //public int Categoria;
-
-        /// <summary>
         /// Identifica o item associado ao agendamento
         /// </summary>
         [Required]
