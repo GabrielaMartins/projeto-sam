@@ -1,5 +1,9 @@
 using System;
 using SamDataBase.Model; // namespace where we find SamEntities.cs
+using Opus.RepositoryPattern;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.Entity.Infrastructure;
+
 namespace Opus.DataBaseEnvironment
 {
 	public sealed class DataAccess

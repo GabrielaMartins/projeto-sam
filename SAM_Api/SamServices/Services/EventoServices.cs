@@ -68,7 +68,7 @@ namespace SamServices.Services
             using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-                var users = userRep.Find(u => u.perfil == "RH").ToList();
+                var users = userRep.Find(u => u.perfil == "rh").ToList();
                 foreach (var u in users)
                 {
 

@@ -1,5 +1,5 @@
 ﻿using DefaultException.Models;
-using Opus.Helpers;
+using SamHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +10,16 @@ using System.Web.Http.Controllers;
 
 namespace SamApi.Attributes.Authorization
 {
+    /// <summary>
+    /// Autoriza ou nega requisições baseado no token
+    /// </summary>
     public class SamTokenAuthorizer : AuthorizeAttribute
     {
-
+        /// <summary>
+        /// Diz se a requisição pode ou não ser autorizada
+        /// </summary>
+        /// <param name="actionContext">è o contexto da requisição</param>
+        /// <returns></returns>
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
             // if un debug mode, we skip token validator

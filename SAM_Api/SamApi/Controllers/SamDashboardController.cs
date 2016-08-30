@@ -25,7 +25,7 @@ namespace SamApi.Controllers
             var perfil = Request.Headers.GetValues("perfil").FirstOrDefault();
             var usuario = UserServices.Recupera(samaccount);
 
-            if (perfil == "RH")
+            if (perfil == "rh")
             {
                 // coisas do rh aqui
                 var ranking = Ranking();

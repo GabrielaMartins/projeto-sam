@@ -1,15 +1,14 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
 using System.Net;
-using System.Linq;
-using SamApiModels.User;
-using SamApiModels.Perfil;
 using SamApi.Attributes.Authorization;
 using SamServices.Services;
 
 namespace SamApi.Controllers
 {
-
+    /// <summary>
+    /// Oferece ações referentes ao perfil de um usuário
+    /// </summary>
     [RoutePrefix("api/sam/perfil")]
     public class SamPerfilController : ApiController
     {
@@ -24,7 +23,7 @@ namespace SamApi.Controllers
             var eventos = UserServices.RecuperaEventos(usuario);
             var promocoesAdquiridas = UserServices.RecuperaPromocoesAdquiridas(usuario);
 
-            var perfilViewModel = new PerfilViewModel()
+            var perfilViewModel = new
             {
                 Usuario = usuario,
                 Atividades = eventos,

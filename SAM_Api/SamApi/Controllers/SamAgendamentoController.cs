@@ -10,6 +10,9 @@ using System.Web.Http;
 
 namespace SamApi.Controllers
 {
+    /// <summary>
+    /// Permite ações referente ao agendamento de um evento do SAM
+    /// </summary>
     [RoutePrefix("api/sam/scheduling")]
     public class SamAgendamentoController : ApiController
     {

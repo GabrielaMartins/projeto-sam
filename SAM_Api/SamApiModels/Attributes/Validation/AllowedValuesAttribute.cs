@@ -44,7 +44,7 @@ namespace SamModelValidationRules.Attributes.Validation
                 // The string before '|' is the title.
                 // The string after '|' is the detail.
                 return new ValidationResult("Invalid value supplied.|" +
-                                            $"Invalid value supplied to '{validationContext.ObjectType}.{validationContext.MemberName}'. " +
+                                            $"'{value}' is invalid value to '{validationContext.ObjectType}.{validationContext.MemberName}'. " +
                                             $"Valid values: '({validValues})'");
             }
 
