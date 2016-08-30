@@ -6,8 +6,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SamApiModels.User
 {
-
-    public partial class UsuarioViewModel
+    /// <summary>
+    /// Representa os dados de um usuário do SAM
+    /// </summary>
+    public class UsuarioViewModel
     {
         
         /// <summary>
@@ -98,6 +100,9 @@ namespace SamApiModels.User
         [Required]
         public virtual List<CargoViewModel> ProximoCargo { get; set; }
 
+        /// <summary>
+        /// Construtor do objeto
+        /// </summary>
         public UsuarioViewModel()
         {
           

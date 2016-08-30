@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SamApiModels.Votacao
 {
+    /// <summary>
+    /// Representa a adição de um novo voto no SAM
+    /// </summary>
     public class AddVotoViewModel
     {
         /// <summary>

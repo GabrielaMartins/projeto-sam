@@ -1,5 +1,4 @@
-﻿using DefaultException.Models;
-using Opus.DataBaseEnvironment;
+﻿using Opus.DataBaseEnvironment;
 using System.Linq;
 using SamDataBase.Model;
 using System;
@@ -13,8 +12,8 @@ namespace SamModelValidationRules.Attributes.Validation
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class ValidForeignKeyAttribute : ValidationAttribute
     {
-        private Type entityType;
 
+        private Type type;
 
         /// <summary>
         /// set the current repository
@@ -22,7 +21,7 @@ namespace SamModelValidationRules.Attributes.Validation
         /// <param name="repository"><!-- IRepository<T> where T is a class of our database model -->
         public ValidForeignKeyAttribute(Type entityType) 
         {
-            this.entityType = entityType;
+            type = entityType;
         }
 
         /// <summary>
@@ -35,17 +34,76 @@ namespace SamModelValidationRules.Attributes.Validation
         {
             int v = (int)value;
             object entity = null;
-            if (entityType == typeof(Cargo))
+            if (type == typeof(Cargo))
             {
                 using (var rep = DataAccess.Instance.GetCargoRepository())
                 {
                     entity = rep.Find(c => c.id == v).SingleOrDefault();
                 }
-            }else if (entityType == typeof(Cargo))
-            {
-
             }
-          
+            else if (type == typeof(Categoria))
+            {
+                using (var rep = DataAccess.Instance.GetCategoriaRepository())
+                {
+                    entity = rep.Find(c => c.id == v).SingleOrDefault();
+                }
+            }
+            else if (type == typeof(Evento))
+            {
+                using (var rep = DataAccess.Instance.GetEventoRepository())
+                {
+                    entity = rep.Find(c => c.id == v).SingleOrDefault();
+                }
+            }
+            else if (type == typeof(Item))
+            {
+                using (var rep = DataAccess.Instance.GetItemRepository())
+                {
+                    entity = rep.Find(c => c.id == v).SingleOrDefault();
+                }
+            }
+            else if (type == typeof(Pendencia))
+            {
+                using (var rep = DataAccess.Instance.GetPendenciaRepository())
+                {
+                    entity = rep.Find(c => c.id == v).SingleOrDefault();
+                }
+            }
+            else if (type == typeof(Promocao))
+            {
+                using (var rep = DataAccess.Instance.GetPromocaoRepository())
+                {
+                    entity = rep.Find(c => c.id == v).SingleOrDefault();
+                }
+            }
+            else if (type == typeof(Usuario))
+            {
+                using (var rep = DataAccess.Instance.GetUsuarioRepository())
+                {
+                    entity = rep.Find(c => c.id == v).SingleOrDefault();
+                }
+            }
+            //else if (type == typeof(ItensTagged))
+            //{
+            //    using (var rep = DataAccess.Instance.GetItensTaggedRepository())
+            //    {
+            //        entity = rep.Find(c => c.id == v).SingleOrDefault();
+            //    }
+            //}
+            //else if (type == typeof(Tag))
+            //{
+            //    using (var rep = DataAccess.Instance.GetTagRepository())
+            //    {
+            //        entity = rep.Find(c => c.id == v).SingleOrDefault();
+            //    }
+            //}
+            //else if (type == typeof(ResultadoVotacao))
+            //{
+            //    using (var rep = DataAccess.Instance.GetResultadoVotacaoRepository())
+            //    {
+            //        entity = rep.Find(c => c.id == v).SingleOrDefault();
+            //    }
+            //}
 
             // if an error
             if (entity == null)
@@ -60,5 +118,6 @@ namespace SamModelValidationRules.Attributes.Validation
 
             return null;
         }
+
     }
 }

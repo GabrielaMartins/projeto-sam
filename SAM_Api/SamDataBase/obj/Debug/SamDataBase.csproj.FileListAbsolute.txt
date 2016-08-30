@@ -17,3 +17,4 @@ C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\projeto-sam\SAM_Api\SamDataBa
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\projeto-sam\SAM_Api\SamDataBase\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\projeto-sam\SAM_Api\SamDataBase\obj\Debug\SamDataBase.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\projeto-sam\SAM_Api\SamDataBase\obj\Debug\SamDataBase.pdb
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\projeto-sam\SAM_Api\SamDataBase\obj\Debug\SamDataBase.csprojResolveAssemblyReference.cache

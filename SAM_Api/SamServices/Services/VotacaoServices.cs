@@ -15,7 +15,7 @@ namespace SamServices.Services
 {
     public static class VotacaoServices
     {
-        public static VotacaoViewModel RecuperaVotacao(int evt)
+        public static List<VotoViewModel> RecuperaVotacao(int evt)
         {
             using (var repVotacao = DataAccess.Instance.GetResultadoVotacoRepository())
             using (var repEvento = DataAccess.Instance.GetEventoRepository())
@@ -30,13 +30,7 @@ namespace SamServices.Services
 
                 var votos = Mapper.Map<List<ResultadoVotacao>, List<VotoViewModel>>(resultados);
 
-                var votacaoViewModel = new VotacaoViewModel()
-                {
-                    Evento = Mapper.Map<Evento, EventoViewModel>(evento),
-                    Votos = votos
-                };
-
-                return votacaoViewModel;
+                return votos;
             }
         }
 

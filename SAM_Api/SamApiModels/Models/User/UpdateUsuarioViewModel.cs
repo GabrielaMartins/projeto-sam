@@ -4,21 +4,32 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SamApiModels.Models.User
 {
+    /// <summary>
+    /// Representa o modelo de dados para atualizar um usuário do SAM
+    /// </summary>
     public class UpdateUsuarioViewModel
     {
-
+        /// <summary>
+        /// Nome completo do usuário do SAM
+        /// </summary>
         [Required]
         [StringLength(50, ErrorMessage = "string size is greater than 50 characters")]
         public string nome { get; set; }
 
+        /// <summary>
+        /// Identifica a data que o funcionário iniciou no SAM
+        /// </summary>
         [Required]
         public DateTime dataInicio { get; set; }
 
+        /// <summary>
+        /// Representa a quantidade de pontos adquiridas pelo funcionário no SAM
+        /// </summary>
         [Required]
         public int pontos { get; set; }
 
         /// <summary>
-        /// Descrição do usuário como hobs por exemplo
+        /// Descrição do usuário como, hobs, gostos e etc.
         /// </summary>
         [Required]
         [StringLength(200, ErrorMessage = "string size is greater than 200 characters")]
@@ -63,6 +74,9 @@ namespace SamApiModels.Models.User
         [ValidForeignKey(typeof(SamDataBase.Model.Cargo))]
         public int cargo { get; set; }
 
+        /// <summary>
+        /// Construtor do objeto
+        /// </summary>
         public UpdateUsuarioViewModel()
         {
 

@@ -29,6 +29,7 @@ namespace SamApiModels.User
         /// Identifica o cargo atual do usuário
         /// </summary>
         [Required]
+        [ValidForeignKey(typeof(SamDataBase.Model.Cargo))]
         public int cargo { get; set; }
 
         /// <summary>
