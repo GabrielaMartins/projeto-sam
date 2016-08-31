@@ -15,7 +15,7 @@ namespace SamServices.Services
         {
             var promocoesViewModel = new List<ProximaPromocaoViewModel>();
             var cargos = CargoServices.RecuperaTodos();
-            var usuarios = UserServices.RecuperaTodos();
+            var usuarios = UsuarioServices.RecuperaTodos();
 
             var db = new SamEntities();
             promocoesViewModel =

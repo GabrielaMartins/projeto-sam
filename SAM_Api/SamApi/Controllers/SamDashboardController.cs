@@ -9,6 +9,8 @@ using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using DefaultException.Models;
 using SamApiModels.Dashboard;
+using System;
+using SamApiModels.Models.Dashboard;
 
 namespace SamApi.Controllers
 {
@@ -21,65 +23,76 @@ namespace SamApi.Controllers
         /// <summary>
         /// Recupera as informações do dashboard do funcionário
         /// </summary>
-        /// <param name="samaccount">Identifica o usuário do dashboard</param>
+        ///<!-- <param name="samaccount">Identifica o usuário do dashboard</param> -->
         [HttpGet]
-        [Route("{samaccount}")]
-        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter os dados do dashboard do usuário do SAM", typeof(Dashboard))]
+        [Route("")]
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter os dados do dashboard para o funcionário no SAM", typeof(DashboardFuncionario))]
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter os dados do dashboard para o usuário RH no SAM", typeof(DashboardRH))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
-        [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
-        public HttpResponseMessage Get(string samaccount)
+        [SamResourceAuthorizer(Roles = "rh,funcionario")]
+        public HttpResponseMessage Get()
         {
 
-            // get perfil from decoded token stored on request header
+            // get perfil and samaccount from decoded token stored on request header
             var perfil = Request.Headers.GetValues("perfil").FirstOrDefault();
-            var usuario = UserServices.Recupera(samaccount);
+            var samaccountFromToken = Request.Headers.GetValues("samaccount").FirstOrDefault();
+            var usuario = UsuarioServices.Recupera(samaccountFromToken);
 
-            if (perfil == "rh")
+            if (perfil.ToLower() == "rh")
             {
-                // coisas do rh aqui
-                var ranking = Ranking();
-                var certicacoesMaisProcuradas = CertificacoesProcuradas();
-
-                return Request.CreateResponse(HttpStatusCode.OK, "not implemented");
+                var dashboard = RecuperaDashboardDoRH(usuario);
+                return Request.CreateResponse(HttpStatusCode.OK, dashboard);
             }
             else
             {
-                var pendencias = UserServices.RecuperaPendencias(usuario);
-                var resultadoVotacoes = UserServices.RecuperaVotos(usuario, 10);
-                var ultimosEventos = UserServices.RecuperaEventos(usuario, 10);
-                var certicacoesMaisProcuradas = CertificacoesProcuradas();
-
-                var dashFuncionario = new Dashboard
-                {
-                    Usuario = usuario,
-                    ResultadoVotacoes = resultadoVotacoes,
-                    Atualizacoes = ultimosEventos,
-                    Alertas = pendencias,
-                    CertificacoesMaisProcuradas = certicacoesMaisProcuradas
-                };
-
-                return Request.CreateResponse(HttpStatusCode.OK, dashFuncionario);
+                var dashboard = RecuperaDashboardDoFuncionario(usuario);
+                return Request.CreateResponse(HttpStatusCode.OK, dashboard);
             }
 
         }
 
-
-        private List<UsuarioViewModel> Ranking()
+        private DashboardRH RecuperaDashboardDoRH(UsuarioViewModel usuario)
         {
+            var ranking = UsuarioServices.RecuperaTodos().OrderByDescending(x => x.pontos).Take(10).ToList();
 
-            List<UsuarioViewModel> ranking = UserServices.RecuperaTodos().OrderByDescending(x => x.pontos).Take(10).ToList();
+            var certicacoesMaisProcuradas = CertificacoesProcuradas();
 
-            var rankingViewModel = new List<UsuarioViewModel>();
-            foreach (var usuario in ranking)
+            // ultimas atividades
+            var atividades = EventoServices.RecuperaEventos(null, 10);
+
+            // pendencias destinadas ao usuario usuario RH
+            var pendencias = UsuarioServices.RecuperaPendencias(usuario);
+
+            // proximas promocoes
+            var proximasPromocoes = PromocaoServices.RecuperaProximasPromocoes();
+
+            return new DashboardRH()
             {
-                var usuarioViewModel = usuario;
-                rankingViewModel.Add(usuarioViewModel);
-            }
-
-            return rankingViewModel;
-
+                Atividades = atividades,
+                CertificacoesMaisProcuradas = certicacoesMaisProcuradas,
+                ProximasPromocoes = proximasPromocoes,
+                Ranking = ranking
+            };
         }
+
+        private DashboardFuncionario RecuperaDashboardDoFuncionario(UsuarioViewModel usuario)
+        {
+            var pendencias = UsuarioServices.RecuperaPendencias(usuario);
+            var resultadoVotacoes = UsuarioServices.RecuperaVotos(usuario, 10);
+            var ultimosEventos = UsuarioServices.RecuperaEventos(usuario, 10);
+            var certicacoesMaisProcuradas = CertificacoesProcuradas();
+
+            return new DashboardFuncionario
+            {
+                Usuario = usuario,
+                ResultadoVotacoes = resultadoVotacoes,
+                Atualizacoes = ultimosEventos,
+                Alertas = pendencias,
+                CertificacoesMaisProcuradas = certicacoesMaisProcuradas
+            };
+        }
+
 
         // TODO: REFATORAR ESSE MÉTODO
         private List<dynamic> CertificacoesProcuradas()

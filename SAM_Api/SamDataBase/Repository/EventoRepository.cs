@@ -16,17 +16,21 @@ namespace Opus.DataBaseEnvironment
 		}
 
         //Preencher aqui
-        public List<Evento> RecuperaEventos(int? quantidade = null)
+        public List<Evento> RecuperaEventos(string tipo = null, int ? quantidade = null)
         {
             if (quantidade.HasValue)
             {
-                var eventos = GetAll().OrderBy(e => e.data).Take(quantidade.Value).ToList();
-                return eventos;
+                if(tipo == null)
+                    return GetAll().OrderBy(e => e.data).Take(quantidade.Value).ToList();
+
+                return Find(e => e.tipo == tipo).OrderBy(e => e.data).Take(quantidade.Value).ToList();
             }
             else
             {
-               var eventos = GetAll().ToList();
-                return eventos;
+                if(tipo != null)
+                    return GetAll().ToList();
+
+                return Find(e => e.tipo == tipo).ToList();
             }
 
         }

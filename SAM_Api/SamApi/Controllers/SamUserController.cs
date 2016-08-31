@@ -31,7 +31,7 @@ namespace SamApi.Controllers
         public HttpResponseMessage Get()
         {
 
-            var users = UserServices.RecuperaTodos();
+            var users = UsuarioServices.RecuperaTodos();
             return Request.CreateResponse(HttpStatusCode.OK, users);
         }
 
@@ -48,7 +48,7 @@ namespace SamApi.Controllers
         [Route("{samaccount}")]
         public HttpResponseMessage GetBySamaccount(string samaccount)
         {
-            var usuario = UserServices.Recupera(samaccount);
+            var usuario = UsuarioServices.Recupera(samaccount);
             return Request.CreateResponse(HttpStatusCode.OK, usuario);
         }
 
@@ -66,7 +66,7 @@ namespace SamApi.Controllers
         [Route("save")]
         public HttpResponseMessage Post([FromBody]AddUsuarioViewModel user)
         {
-            UserServices.CriaUsuario(user);
+            UsuarioServices.CriaUsuario(user);
             return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.OK, "User Added", "User Added"));
         }
 
@@ -84,7 +84,7 @@ namespace SamApi.Controllers
         [Route("update/{samaccount}")]
         public HttpResponseMessage Put(string samaccount, [FromBody]UpdateUsuarioViewModel user)
         {
-            UserServices.AtualizaUsuario(samaccount, user);
+            UsuarioServices.AtualizaUsuario(samaccount, user);
             return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Updated", "User updated"));
         }
 
@@ -101,7 +101,7 @@ namespace SamApi.Controllers
         [Route("delete/{samaccount}")]
         public HttpResponseMessage Delete(string samaccount)
         {
-            UserServices.DeletaUsuario(samaccount);
+            UsuarioServices.DeletaUsuario(samaccount);
             return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Deleted", "User deleted"));
         }
     }

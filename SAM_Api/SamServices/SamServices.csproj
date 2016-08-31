@@ -53,9 +53,9 @@
     <Compile Include="Services\CategoriaServices.cs" />
     <Compile Include="Services\EventoServices.cs" />
     <Compile Include="Services\ItemServices.cs" />
-    <Compile Include="Services\PendencyServices.cs" />
+    <Compile Include="Services\PendenciaServices.cs" />
     <Compile Include="Services\PromocaoServices.cs" />
-    <Compile Include="Services\UserServices.cs" />
+    <Compile Include="Services\UsuarioServices.cs" />
     <Compile Include="Services\VotacaoServices.cs" />
   </ItemGroup>
   <ItemGroup>

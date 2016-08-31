@@ -16,7 +16,7 @@ using SamHelpers;
 
 namespace SamServices.Services
 {
-    public static class UserServices
+    public static class UsuarioServices
     {
 
         public static List<EventoViewModel> RecuperaEventos(UsuarioViewModel usuario, int? quantidade = null, string tipo = null)
@@ -68,6 +68,19 @@ namespace SamServices.Services
                 var promocoesAdquiridasViewModel = Mapper.Map<List<Promocao>, List<PromocaoAdquiridaViewModel>>(promocoesAdquiridas);
 
                 return promocoesAdquiridasViewModel;
+            }
+        }
+
+        public static List<PendenciaUsuarioViewModel> RecuperaPendencias(string samaccount)
+        {
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
+            {
+                var id = userRep.Find(u => u.samaccount == samaccount).Select(u => u.id).SingleOrDefault();
+                var pendencias = userRep.RecuperaPendencias(id);
+
+                var pendeciasViewModel = Mapper.Map<List<Pendencia>, List<PendenciaUsuarioViewModel>>(pendencias);
+
+                return pendeciasViewModel;
             }
         }
 

@@ -12,7 +12,7 @@ namespace SamApiModels.Dashboard
     /// <summary>
     /// Representa os dados do dashboard do usuário
     /// </summary>
-    public class Dashboard
+    public class DashboardFuncionario
     {
         /// <summary>
         /// Representa o usuário do dashboard
@@ -42,7 +42,7 @@ namespace SamApiModels.Dashboard
         /// <summary>
         /// Construtor do objeto
         /// </summary>
-        public Dashboard()
+        public DashboardFuncionario()
         {
 
         }

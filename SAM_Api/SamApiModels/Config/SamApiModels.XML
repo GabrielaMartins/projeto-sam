@@ -144,6 +144,36 @@
             Construtor do objeto
             </summary>
         </member>
+        <member name="T:SamApiModels.Models.Dashboard.DashboardRH">
+            <summary>
+            Representa as informações do dashboard do RH
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Dashboard.DashboardRH.Ranking">
+            <summary>
+            COMENTAR
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Dashboard.DashboardRH.CertificacoesMaisProcuradas">
+            <summary>
+            COMENTAR
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Dashboard.DashboardRH.Atividades">
+            <summary>
+            COMENTAR
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Dashboard.DashboardRH.ProximasPromocoes">
+            <summary>
+            COMENTAR
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Models.Dashboard.DashboardRH.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
         <member name="T:SamApiModels.Models.User.UpdateUsuarioViewModel">
             <summary>
             Representa o modelo de dados para atualizar um usuário do SAM
@@ -224,37 +254,37 @@
             Construtor do objeto
             </summary>
         </member>
-        <member name="T:SamApiModels.Dashboard.Dashboard">
+        <member name="T:SamApiModels.Dashboard.DashboardFuncionario">
             <summary>
             Representa os dados do dashboard do usuário
             </summary>
         </member>
-        <member name="P:SamApiModels.Dashboard.Dashboard.Usuario">
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.Usuario">
             <summary>
             Representa o usuário do dashboard
             </summary>
         </member>
-        <member name="P:SamApiModels.Dashboard.Dashboard.ResultadoVotacoes">
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.ResultadoVotacoes">
             <summary>
             Representa as votações que esse usuário fez
             </summary>
         </member>
-        <member name="P:SamApiModels.Dashboard.Dashboard.Atualizacoes">
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.Atualizacoes">
             <summary>
             Representa as atualizações referentes a esse usuário
             </summary>
         </member>
-        <member name="P:SamApiModels.Dashboard.Dashboard.Alertas">
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.Alertas">
             <summary>
             Representa os alertas referentes a esse usuário
             </summary>
         </member>
-        <member name="P:SamApiModels.Dashboard.Dashboard.CertificacoesMaisProcuradas">
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.CertificacoesMaisProcuradas">
             <summary>
             Representa os dados do gráfico para o dashboard
             </summary>
         </member>
-        <member name="M:SamApiModels.Dashboard.Dashboard.#ctor">
+        <member name="M:SamApiModels.Dashboard.DashboardFuncionario.#ctor">
             <summary>
             Construtor do objeto
             </summary>
