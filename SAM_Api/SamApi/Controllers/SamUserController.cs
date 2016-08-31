@@ -8,6 +8,7 @@ using DefaultException.Models;
 using Swashbuckle.Swagger.Annotations;
 using SamApiModels.Models.User;
 using SamServices.Services;
+using SamModelValidationRules.Attributes.Validation;
 
 namespace SamApi.Controllers
 {
@@ -48,11 +49,6 @@ namespace SamApi.Controllers
         public HttpResponseMessage GetBySamaccount(string samaccount)
         {
             var usuario = UserServices.Recupera(samaccount);
-            if (usuario == null)
-            {
-                throw new ExpectedException(HttpStatusCode.NotFound, "User not found", "We can't find this user");
-            }
-
             return Request.CreateResponse(HttpStatusCode.OK, usuario);
         }
 

@@ -18,6 +18,7 @@ namespace SamApi.Controllers
         /// <summary>
         /// Recupera uma pendência específica do sam
         /// </summary>
+        /// <param name="pendency">Identifica a pendência a ser recuperada</param>
         [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter a pendência do SAM", typeof(PendenciaEventoViewModel))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
@@ -49,6 +50,7 @@ namespace SamApi.Controllers
         /// <summary>
         /// Remove uma pendência específica do sam
         /// </summary>
+        /// /// <param name="pendency">Identifica a pendência a ser removida</param>
         [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível remover a pendência do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]

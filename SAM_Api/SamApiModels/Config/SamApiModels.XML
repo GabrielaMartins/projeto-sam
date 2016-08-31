@@ -204,6 +204,26 @@
             Construtor do objeto
             </summary>
         </member>
+        <member name="T:SamApiModels.Models.Votacao.VotacaoViewModel">
+            <summary>
+            Representa os dados de uma votação no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Votacao.VotacaoViewModel.Evento">
+            <summary>
+            Representa o evento que foi votado
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Votacao.VotacaoViewModel.Votos">
+            <summary>
+            Representa os votos dos usuários nesse evento
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Models.Votacao.VotacaoViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
         <member name="T:SamApiModels.Dashboard.Dashboard">
             <summary>
             Representa os dados do dashboard do usuário

@@ -59,7 +59,6 @@ namespace SamApiModels.Models.User
         /// </summary>
         [Required]
         [ValidPicture]
-        [StringLength(300, ErrorMessage = "string size is greater than 300 characters")]
         public string foto { get; set; }
 
         /// <summary>
