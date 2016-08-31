@@ -10,10 +10,9 @@ namespace SamModelValidationRules.Attributes.Validation
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class ValidDateAttribute : ValidationAttribute
     {
-        private object values;
-
+ 
         /// <summary>
-        /// set the current valid values
+        /// Construtor do objeto
         /// </summary>
         public ValidDateAttribute()
         {

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using DefaultException.Models;
 using Opus.DataBaseEnvironment;
+using SamApiModels.Evento;
+using SamApiModels.Models.Votacao;
 using SamApiModels.Votacao;
 using SamDataBase.Model;
 using System.Collections.Generic;
@@ -12,12 +14,16 @@ namespace SamServices.Services
 {
     public static class VotacaoServices
     {
-        public static List<VotoViewModel> RecuperaVotacao(int evt)
+        public static VotacaoViewModel RecuperaVotacao(int evt)
         {
             using (var repVotacao = DataAccess.Instance.GetResultadoVotacoRepository())
             using (var repEvento = DataAccess.Instance.GetEventoRepository())
             {
                 var evento = repEvento.Find(x => x.id == evt).SingleOrDefault();
+                if(evento == null)
+                {
+                    throw new ExpectedException(HttpStatusCode.NotFound, "Event Not Found", $"We can't find the event #{evt}");
+                }
                 if (evento.tipo != "votacao")
                 {
                     throw new ExpectedException(HttpStatusCode.Unauthorized, "Not a voting event", "you can not get events that are not voting events");
@@ -27,7 +33,11 @@ namespace SamServices.Services
 
                 var votos = Mapper.Map<List<ResultadoVotacao>, List<VotoViewModel>>(resultados);
 
-                return votos;
+                return new VotacaoViewModel()
+                {
+                    Evento = Mapper.Map<Evento, EventoViewModel>(evento),
+                    Votos = votos
+                };
             }
         }
 

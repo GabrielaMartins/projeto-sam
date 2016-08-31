@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -7,16 +6,27 @@ using System.Collections.Generic;
 using SamApi.Attributes.Authorization;
 using SamApiModels.User;
 using SamServices.Services;
+using Swashbuckle.Swagger.Annotations;
+using DefaultException.Models;
+using SamApiModels.Dashboard;
 
 namespace SamApi.Controllers
 {
+    /// <summary>
+    /// Permite obter os dados do dashboard de um usuário do SAM
+    /// </summary>
     [RoutePrefix("api/sam/Dashboard")]
     public class SamDashboardController : ApiController
     {
-
-        // GET: api/sam/Dashboard
+        /// <summary>
+        /// Recupera as informações do dashboard do funcionário
+        /// </summary>
+        /// <param name="samaccount">Identifica o usuário do dashboard</param>
         [HttpGet]
         [Route("{samaccount}")]
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter os dados do dashboard do usuário do SAM", typeof(Dashboard))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         public HttpResponseMessage Get(string samaccount)
         {
@@ -40,7 +50,7 @@ namespace SamApi.Controllers
                 var ultimosEventos = UserServices.RecuperaEventos(usuario, 10);
                 var certicacoesMaisProcuradas = CertificacoesProcuradas();
 
-                var dashFuncionario = new
+                var dashFuncionario = new Dashboard
                 {
                     Usuario = usuario,
                     ResultadoVotacoes = resultadoVotacoes,

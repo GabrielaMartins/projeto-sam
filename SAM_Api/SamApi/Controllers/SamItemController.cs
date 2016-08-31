@@ -6,17 +6,26 @@ using DefaultException.Models;
 using SamApi.Attributes.Authorization;
 using SamApiModels.Item;
 using SamServices.Services;
+using Swashbuckle.Swagger.Annotations;
+using System.Collections.Generic;
 
 namespace SamApi.Controllers
 {
     /// <summary>
-    /// 
+    /// Permite efetuar ações sobre os itens do SAM
     /// </summary>
     [RoutePrefix("api/sam/item")]
     public class SamItemController : ApiController
     {
-        // GET: api/sam/item/all
+        /// <summary>
+        /// Recupera a lista de itens do SAM
+        /// </summary>
+        [HttpGet]
         [Route("all")]
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter a lista de itens do SAM", typeof(List<ItemViewModel>))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(Roles = "rh,funcionario")]
         public HttpResponseMessage Get()
         {
 
@@ -25,16 +34,32 @@ namespace SamApi.Controllers
 
         }
 
-        // GET: api/sam/item/{id}
+        /// <summary>
+        /// Recupera um item específico do SAM
+        /// </summary>
+        /// <param name="id">Identifica o item do SAM</param>
+        [HttpGet]
         [Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter o item do SAM", typeof(ItemViewModel))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(Roles = "rh,funcionario")]
         public HttpResponseMessage Get(int id)
         {
             var itemViewModel = ItemServices.Recupera(id);
             return Request.CreateResponse(HttpStatusCode.OK, itemViewModel);
         }
 
-        // POST: api/sam/item/save
+        /// <summary>
+        /// Cria um novo item no sam
+        /// </summary>
+        /// <param name="item">Dados do novo item</param>
+        /// <returns></returns>
+        [HttpPost]
         [Route("save")]
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível criar um novo item no SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "rh")]
         public HttpResponseMessage Post(ItemViewModel item)
         {
@@ -44,8 +69,16 @@ namespace SamApi.Controllers
             
         }
 
-        // PUT: api/sam/item/update/{id}
+        /// <summary>
+        /// Permite alterar os dados de um item do sam
+        /// </summary>
+        /// <param name="id">Identifica o item do SAM</param>
+        /// <param name="item">Contém as informações para a atualização</param>
+        [HttpPut]
         [Route("update/{id}")]
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível alterar um item do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "rh")]
         public HttpResponseMessage Put(int id, ItemViewModel item)
         {
@@ -57,14 +90,20 @@ namespace SamApi.Controllers
 
         }
 
-        // DELETE: api/sam/item/delete/{id}
+        /// <summary>
+        /// Permite remover um item do SAM
+        /// </summary>
+        /// <param name="id">Identifica o item a ser removido</param>
+        [HttpDelete]
         [Route("delete/{id}")]
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível remover um item do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "rh")]
         public HttpResponseMessage Delete(int id)
         {
             ItemServices.DeleteItem(id);
-            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Item Deleted", $"Item #{id} Deleted"));
-            
+            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Item Deleted", $"Item #{id} Deleted")); 
         }
     }
 }

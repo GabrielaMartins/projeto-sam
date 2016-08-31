@@ -1,6 +1,7 @@
 ﻿using DefaultException.Models;
 using SamApi.Attributes.Authorization;
 using SamApiModels.Votacao;
+using SamModelValidationRules.Attributes.Validation;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;

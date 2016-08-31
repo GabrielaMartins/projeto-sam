@@ -52,7 +52,7 @@ namespace SamServices.Services
         {
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-        
+
                 var users = Mapper.Map<List<Usuario>, List<UsuarioViewModel>>(userRep.GetAll().ToList());
 
                 return users;
@@ -61,7 +61,7 @@ namespace SamServices.Services
 
         public static List<PromocaoAdquiridaViewModel> RecuperaPromocoesAdquiridas(UsuarioViewModel usuario)
         {
-            using(var userRep = DataAccess.Instance.GetUsuarioRepository())
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
                 var promocoesAdquiridas = userRep.RecuperaPromocoesAdquiridas(usuario.id);
 
@@ -73,7 +73,7 @@ namespace SamServices.Services
 
         public static List<PendenciaUsuarioViewModel> RecuperaPendencias(UsuarioViewModel usuario)
         {
-            using(var userRep = DataAccess.Instance.GetUsuarioRepository())
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
                 var pendencias = userRep.RecuperaPendencias(usuario.id);
 
@@ -85,7 +85,7 @@ namespace SamServices.Services
 
         public static List<VotoViewModel> RecuperaVotos(UsuarioViewModel usuario, int? quantity = null)
         {
-            using(var userRep = DataAccess.Instance.GetUsuarioRepository())
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
                 var votacoes = userRep.RecuperaVotos(usuario.id, quantity);
 
@@ -94,13 +94,13 @@ namespace SamServices.Services
                 return votacoesViewModel;
             }
         }
-        
+
         public static List<ProximaPromocaoViewModel> RecuperaProximasPromocoes(UsuarioViewModel usuario)
         {
-            
+
             if (usuario == null)
                 return null;
-            
+
             var cargos = CargoServices.RecuperaTodos();
             var usuarios = RecuperaTodos();
 

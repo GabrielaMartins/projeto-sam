@@ -49,11 +49,13 @@
     <Compile Include="Attributes\Validation\ValidKey.cs" />
     <Compile Include="Attributes\Validation\ValidPictureAttribute.cs" />
     <Compile Include="Models\Agendamento\AgendamentoViewModel.cs" />
+    <Compile Include="Models\Dashboard\Dashboard.cs" />
     <Compile Include="Models\Login\SamToken.cs" />
     <Compile Include="Models\Cargo\CargoViewModel.cs" />
     <Compile Include="Models\Categoria\CategoriaViewModel.cs" />
     <Compile Include="Models\Item\ItemViewModel.cs" />
     <Compile Include="Models\Pendencia\PendenciaEventoViewModel.cs" />
+    <Compile Include="Models\Perfil\PerfilFuncionario.cs" />
     <Compile Include="Models\Promocao\PromocaoAdquirida.cs" />
     <Compile Include="Models\Promocao\PromocaoViewModel.cs" />
     <Compile Include="Models\Evento\UltimoEventoViewModel.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="Models\User\UpdateUsuarioViewModel.cs" />
     <Compile Include="Models\User\UsuarioViewModel.cs" />
     <Compile Include="Models\Votacao\AddVotoViewModel.cs" />
+    <Compile Include="Models\Votacao\VotacaoViewModel.cs" />
     <Compile Include="Models\Votacao\VotoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
