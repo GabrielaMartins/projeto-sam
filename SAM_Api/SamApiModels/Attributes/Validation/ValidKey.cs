@@ -11,7 +11,7 @@ namespace SamModelValidationRules.Attributes.Validation
     /// <summary>
     /// Allow values as FK
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
     public class ValidKeyAttribute : ValidationAttribute
     {
         /// <summary>

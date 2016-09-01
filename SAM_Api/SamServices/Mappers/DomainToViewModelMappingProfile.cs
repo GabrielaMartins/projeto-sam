@@ -30,8 +30,8 @@ namespace SamServices.Mappers
             Mapper.CreateMap<ResultadoVotacao, VotoViewModel>()
             .ForMember(x => x.Dificuldade, opt => opt.MapFrom(src => src.dificuldade))
             .ForMember(x => x.Modificador, opt => opt.MapFrom(src => src.modificador))
-            .ForMember(x => x.Usuario, opt => opt.MapFrom(src => src.Usuario))
-            .ForMember(x => x.Evento, opt => opt.MapFrom(src => src.Evento));
+            .ForMember(x => x.Usuario, opt => opt.MapFrom(src => src.Usuario));
+            //.ForMember(x => x.Evento, opt => opt.MapFrom(src => src.Evento));
 
             Mapper.CreateMap<Cargo, CargoViewModel>();
 

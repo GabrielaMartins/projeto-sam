@@ -7,6 +7,9 @@ using SamServices.Mappers;
 
 namespace SamApi
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Global : HttpApplication
     {
         void Application_Start(object sender, EventArgs e)

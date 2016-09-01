@@ -20,7 +20,8 @@ namespace SamApiModels.Models.User
         /// Identifica a data que o funcionário iniciou no SAM
         /// </summary>
         [Required]
-        public DateTime dataInicio { get; set; }
+        [ValidDate]
+        public string dataInicio { get; set; }
 
         /// <summary>
         /// Representa a quantidade de pontos adquiridas pelo funcionário no SAM
@@ -58,7 +59,6 @@ namespace SamApiModels.Models.User
         /// </summary>
         [Required]
         [ValidPicture]
-        [StringLength(300, ErrorMessage = "string size is greater than 300 characters")]
         public string foto { get; set; }
 
         /// <summary>

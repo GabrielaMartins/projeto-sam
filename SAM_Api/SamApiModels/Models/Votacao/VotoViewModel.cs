@@ -20,7 +20,7 @@ namespace SamApiModels.Votacao
         /// Identifica o evento que foi votado
         /// </summary>
         [Required]
-        public EventoViewModel Evento {get; set;}
+        public EventoViewModel Evento { get; set; }
 
         /// <summary>
         /// É o valor que o usuário deu para o item desse evento

@@ -23,9 +23,14 @@ namespace SamApi.Attributes.Authorization
             Basic,
 
             /// <summary>
+            /// checa se o usuário do request é o mesmo do token ou de perfil rh
+            /// </summary>
+            TokenEquality,
+
+            /// <summary>
             /// checa se o usuário do request é o mesmo do token
             /// </summary>
-            TokenEquality
+            StrictTokenEquality
         }
 
         /// <summary>
@@ -64,6 +69,10 @@ namespace SamApi.Attributes.Authorization
                 case AuthType.TokenEquality:
                     isAuthorized = AuthorizeTokenEquality(actionContext);
                     break;
+
+                case AuthType.StrictTokenEquality:
+                    isAuthorized = AuthorizeStrictTokenEquality(actionContext);
+                    break;
             }
 
             return isAuthorized;
@@ -78,6 +87,40 @@ namespace SamApi.Attributes.Authorization
         {
             throw new ExpectedException(HttpStatusCode.Unauthorized, "Unauthorized", ErrorMessage);
 
+        }
+
+        private bool AuthorizeStrictTokenEquality(HttpActionContext context)
+        {
+            try
+            {
+                var r = false;
+                var userId = 0;
+                var id = Convert.ToInt32(context.Request.Headers.GetValues("id").SingleOrDefault());
+                var perfil = context.Request.Headers.GetValues("perfil").SingleOrDefault();
+                var samaccount = context.Request.Headers.GetValues("samaccount").SingleOrDefault();
+                var size = context.Request.RequestUri.Segments.Length;
+                var param = context.Request.RequestUri.Segments[size - 1];
+
+                if (int.TryParse(param, out userId))
+                {
+                    r = (userId == id);
+                }
+                else
+                {
+                    r = (param == samaccount);
+                }
+
+                if (r == false)
+                {
+                    ErrorMessage = "You can't view, delete or update informations about other users";
+                }
+
+                return r;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Could not find some keys in request header. Make sure you decoded token in every request", ex);
+            }
         }
 
         private bool AuthorizeTokenEquality(HttpActionContext context)

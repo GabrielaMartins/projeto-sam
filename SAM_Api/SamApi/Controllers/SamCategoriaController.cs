@@ -11,6 +11,9 @@ using SamServices.Services;
 
 namespace SamApi.Controllers
 {
+    /// <summary>
+    /// Permite efetuar ações sobre as categorias do SAM
+    /// </summary>
     [RoutePrefix("api/sam/category")]
     public class SamCategoriaController : ApiController
     {

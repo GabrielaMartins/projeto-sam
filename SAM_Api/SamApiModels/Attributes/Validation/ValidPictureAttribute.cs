@@ -29,7 +29,7 @@ namespace SamModelValidationRules.Attributes.Validation
             // find this pattern
             //data:image/jpeg;base64,
             var str = value as string;
-            if (!System.Text.RegularExpressions.Regex.IsMatch(str, @"data:image\/(.*),"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(str, @"data:image[\/](.*);base64,"))
             {
                 ErrorMessage = "Invalid value supplied.|" +
                                 $"'{value}' is invalid value to '{validationContext.ObjectType}.{validationContext.MemberName}'. " +

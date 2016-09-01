@@ -10,6 +10,9 @@ using System.Web.Http;
 
 namespace SamApi.Controllers
 {
+    /// <summary>
+    /// Permite efetuar ações sobre os cargos do SAM
+    /// </summary>
     [RoutePrefix("api/sam/role")]
     public class SamCargoController : ApiController
     {

@@ -12,11 +12,11 @@ namespace SamServices.Services
 {
     public static class EventoServices
     {
-        public static List<EventoViewModel> RecuperaEventos(int? quantidade = null)
+        public static List<EventoViewModel> RecuperaEventos(string tipo = null, int? quantidade = null)
         {
             using (var eventRep = DataAccess.Instance.GetEventoRepository())
             {
-                var events = eventRep.RecuperaEventos(quantidade);
+                var events = eventRep.RecuperaEventos(tipo, quantidade);
 
                 var eventsViewModel = Mapper.Map<List<Evento>, List<EventoViewModel>>(events);
 
@@ -29,7 +29,7 @@ namespace SamServices.Services
             using (var itemRep = DataAccess.Instance.GetItemRepository())
             {
                 var lastEventsViewModel = new List<UltimoEventoViewModel>();
-                var events = RecuperaEventos(quantidade);
+                var events = RecuperaEventos(null, quantidade);
                 foreach(var evt in events)
                 {
                     var usersInThisEvent = itemRep.RecuperaUsuariosQueFizeram(evt.id);

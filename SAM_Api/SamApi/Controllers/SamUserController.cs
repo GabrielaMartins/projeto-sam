@@ -8,6 +8,7 @@ using DefaultException.Models;
 using Swashbuckle.Swagger.Annotations;
 using SamApiModels.Models.User;
 using SamServices.Services;
+using SamModelValidationRules.Attributes.Validation;
 
 namespace SamApi.Controllers
 {
@@ -30,7 +31,7 @@ namespace SamApi.Controllers
         public HttpResponseMessage Get()
         {
 
-            var users = UserServices.RecuperaTodos();
+            var users = UsuarioServices.RecuperaTodos();
             return Request.CreateResponse(HttpStatusCode.OK, users);
         }
 
@@ -47,12 +48,7 @@ namespace SamApi.Controllers
         [Route("{samaccount}")]
         public HttpResponseMessage GetBySamaccount(string samaccount)
         {
-            var usuario = UserServices.Recupera(samaccount);
-            if (usuario == null)
-            {
-                throw new ExpectedException(HttpStatusCode.NotFound, "User not found", "We can't find this user");
-            }
-
+            var usuario = UsuarioServices.Recupera(samaccount);
             return Request.CreateResponse(HttpStatusCode.OK, usuario);
         }
 
@@ -70,14 +66,15 @@ namespace SamApi.Controllers
         [Route("save")]
         public HttpResponseMessage Post([FromBody]AddUsuarioViewModel user)
         {
-            UserServices.CriaUsuario(user);
+            UsuarioServices.CriaUsuario(user);
             return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.OK, "User Added", "User Added"));
         }
 
         /// <summary>
         /// Atualiza as informações de um usuário na base de dados do SAM.
         /// </summary>
-        /// <param name="id">Identifica o usuário a ser alterado.</param>
+        /// <param name="samaccount">Identifica o usuário a ser alterado.</param>
+        /// <param name="user">Dados para ser atualizados serem alterados.</param>
         [SwaggerResponse(HttpStatusCode.OK, "Caso o usuário seja alterado com sucesso na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
@@ -87,14 +84,14 @@ namespace SamApi.Controllers
         [Route("update/{samaccount}")]
         public HttpResponseMessage Put(string samaccount, [FromBody]UpdateUsuarioViewModel user)
         {
-            UserServices.AtualizaUsuario(samaccount, user);
+            UsuarioServices.AtualizaUsuario(samaccount, user);
             return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Updated", "User updated"));
         }
 
         /// <summary>
         /// Remove as informações de um usuário na base de dados do SAM.
         /// </summary>
-        /// <param name="id">Identifica o usuário a ser removido.</param>
+        /// <param name="samaccount">Identifica o usuário a ser removido.</param>
         [SwaggerResponse(HttpStatusCode.OK, "Caso o usuário seja removido com sucesso na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
@@ -104,7 +101,7 @@ namespace SamApi.Controllers
         [Route("delete/{samaccount}")]
         public HttpResponseMessage Delete(string samaccount)
         {
-            UserServices.DeletaUsuario(samaccount);
+            UsuarioServices.DeletaUsuario(samaccount);
             return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Deleted", "User deleted"));
         }
     }
