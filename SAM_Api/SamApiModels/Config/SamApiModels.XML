@@ -169,6 +169,11 @@
             COMENTAR
             </summary>
         </member>
+        <member name="P:SamApiModels.Models.Dashboard.DashboardRH.Pendencias">
+            <summary>
+            COMENTAR
+            </summary>
+        </member>
         <member name="M:SamApiModels.Models.Dashboard.DashboardRH.#ctor">
             <summary>
             Construtor do objeto

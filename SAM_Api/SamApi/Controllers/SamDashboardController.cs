@@ -72,7 +72,8 @@ namespace SamApi.Controllers
                 Atividades = atividades,
                 CertificacoesMaisProcuradas = certicacoesMaisProcuradas,
                 ProximasPromocoes = proximasPromocoes,
-                Ranking = ranking
+                Ranking = ranking,
+                Pendencias = pendencias
             };
         }
 
@@ -110,7 +111,7 @@ namespace SamApi.Controllers
                     ).Select(y => y.id).First();
 
             var certificados = EventoServices.RecuperaEventos().Where(
-                 evento => evento.Item.Categoria.id.Equals(indiceCategoria));
+                 evento => evento.Item.Categoria.id == indiceCategoria);
 
 
             //Obtém categorias e cria as colunas

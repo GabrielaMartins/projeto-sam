@@ -1,4 +1,5 @@
 ﻿using SamApiModels.Evento;
+using SamApiModels.Pendencia;
 using SamApiModels.Promocao;
 using SamApiModels.User;
 using System.Collections.Generic;
@@ -29,6 +30,11 @@ namespace SamApiModels.Models.Dashboard
         /// COMENTAR
         /// </summary>
         public List<ProximaPromocaoViewModel> ProximasPromocoes { get; set; }
+
+        /// <summary>
+        /// COMENTAR
+        /// </summary>
+        public List<PendenciaUsuarioViewModel> Pendencias { get; set; }
 
         /// <summary>
         /// Construtor do objeto

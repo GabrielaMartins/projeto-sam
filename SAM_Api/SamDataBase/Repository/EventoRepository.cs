@@ -20,17 +20,17 @@ namespace Opus.DataBaseEnvironment
         {
             if (quantidade.HasValue)
             {
-                if(tipo == null)
-                    return GetAll().OrderBy(e => e.data).Take(quantidade.Value).ToList();
+                if(tipo != null)
+                    return Find(e => e.tipo == tipo).OrderBy(e => e.data).Take(quantidade.Value).ToList();
 
-                return Find(e => e.tipo == tipo).OrderBy(e => e.data).Take(quantidade.Value).ToList();
+                return GetAll().OrderBy(e => e.data).Take(quantidade.Value).ToList();
             }
             else
             {
                 if(tipo != null)
-                    return GetAll().ToList();
+                    return Find(e => e.tipo == tipo).ToList();
 
-                return Find(e => e.tipo == tipo).ToList();
+                return GetAll().ToList();
             }
 
         }
