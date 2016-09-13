@@ -29,7 +29,7 @@ namespace SamServices.Services
             {
                 var lastEventsViewModel = new List<UltimoEventoViewModel>();
                 var events = RecuperaEventos(null, quantidade);
-                foreach(var evt in events)
+                foreach (var evt in events)
                 {
                     var usersInThisEvent = itemRep.RecuperaUsuariosQueFizeram(evt.id);
                     var usersViewModel = Mapper.Map<List<Usuario>, List<UsuarioViewModel>>(usersInThisEvent);
@@ -57,68 +57,66 @@ namespace SamServices.Services
                 rep.Add(evento);
                 rep.SubmitChanges();
 
-                // create a pendency to new event
-                GenerateStaffPendencyFor(evento);
+                // create a pendency to rh based on this event
+                GenerateHrPendencyFor(evento);
             }
         }
 
-        // deletar o evento e pendencia para esse usuario do rh
-        // criar um evento de atividade para o usuario que solicitou o agendamento
         public static void AprovaAgendamento(int id)
         {
             using (var eventRep = DataAccess.Instance.GetEventoRepository())
             using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             {
-                
+
                 // recupera o evento
                 var evento = eventRep.Find(e => e.id == id).SingleOrDefault();
 
                 // cria um novo evento
-                var novoEvento = new Evento();
-
-                novoEvento = Mapper.Map(evento, novoEvento);
-                novoEvento.estado = false;
-                novoEvento.tipo = "atividade";
-
+                var novoEvento = new Evento()
+                {
+                    estado = false,
+                    data = evento.data,
+                    item = evento.item,
+                    usuario = evento.usuario,
+                    tipo = "atividade"
+                };
+               
                 eventRep.Add(novoEvento);
                 eventRep.SubmitChanges();
 
-                // deleta a pendencia associada ao evento #id
+                // gera pendencia para o RH aprovar (atribuir pontos para o novo evento)
+                GenerateHrPendencyFor(novoEvento);
+
+                // deleta a pendencia associada ao evento de agendamento
                 var pendency = pendencyRep.Find(p => p.evento == id).SingleOrDefault();
                 pendencyRep.Delete(pendency.id);
+                pendencyRep.SubmitChanges();
 
-                // gera pendencia de aprovação para o funcionario que solicitou o evento
-
+                // gera pendencia (notificação) para o funcionario que solicitou o agendamento
+                GenerateStaffPendencyFor(evento, evento.Usuario);
             }
         }
 
         private static void GenerateStaffPendencyFor(Evento evt, Usuario user)
         {
             using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
-                var users = userRep.Find(u => u.perfil == "rh").ToList();
-                foreach (var u in users)
+                var pendencia = new Pendencia()
                 {
+                    usuario = user.id,
+                    evento = evt.id,
+                    estado = false,
+                    Evento = null,
+                    Usuario = null
+                };
 
-                    var pendencia = new Pendencia()
-                    {
-                        usuario = u.id,
-                        evento = evt.id,
-                        estado = false,
-                        Evento = null,
-                        Usuario = null
-                    };
-
-                    pendencyRep.Add(pendencia);
-                    pendencyRep.SubmitChanges();
-                }
-
+                pendencyRep.Add(pendencia);
+                pendencyRep.SubmitChanges();
             }
         }
 
         // generate pendencies to RH users
-        private static void GenerateRhPendencyFor(Evento evt)
+        private static void GenerateHrPendencyFor(Evento evt)
         {
             using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
