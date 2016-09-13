@@ -29,8 +29,24 @@ namespace SamApi.Controllers
         public HttpResponseMessage Create(AgendamentoViewModel agendamento)
         {
             EventoServices.CriaAgendamento(agendamento);
-            return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.Created, "Scheduling done", ""));
+            return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.Created, "Scheduling Done", "A new scheduling was created"));
             
+        }
+
+        /// <summary>
+        /// Aprova o agendamento de um evento no SAM
+        /// </summary>
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível aceitar a solicitação do evento do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(Roles = "rh")]
+        [HttpGet]
+        [Route("approve/{id}")]
+        public HttpResponseMessage Approve(int id)
+        {
+           EventoServices.AprovaAgendamento(id);
+            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Scheduling Approved", $"You accepted the event #{id}"));
+
         }
     }
 }

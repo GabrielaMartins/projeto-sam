@@ -22,7 +22,7 @@ namespace SamApi.Filters
         /// </param>
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            if (actionContext.ModelState.IsValid == false)
+            if (!actionContext.ModelState.IsValid)
             {
 
                 var errorList = actionContext.ModelState.Values.SelectMany(m => m.Errors)

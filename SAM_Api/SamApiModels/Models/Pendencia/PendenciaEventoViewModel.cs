@@ -1,4 +1,5 @@
 ﻿using SamApiModels.Item;
+using SamApiModels.User;
 using SamModelValidationRules.Attributes.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -42,6 +43,15 @@ namespace SamApiModels.Pendencia
         /// </summary>
         [Required]
         public ItemViewModel Item { get; set; }
+
+
+        /// <summary>
+        /// ESTA DANDO ERRO NO MAPPING
+        /// Identifica o evento cujo a pendência foi gerada
+        /// </summary>
+        //[Required]
+        //public UsuarioViewModel Usuario { get; set; }
+
 
         /// <summary>
         /// Construtor do objeto

@@ -63,7 +63,7 @@ namespace Opus.DataBaseEnvironment
 
             var pendencias = DataAccess.Instance
                 .GetPendenciaRepository()
-                .Find(p => p.usuario == usuario && p.estado == true)
+                .Find(p => p.usuario == usuario && p.estado == false)
                 .ToList();
 
             return pendencias;
