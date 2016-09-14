@@ -64,7 +64,8 @@ namespace SamServices.Services
                 var evento = Mapper.Map<AddEventoVotacaoViewModel, Evento>(evt);
                 var x = eventRep.AddAndCommit(evento);
                 
-                // gera pendencia para todos votarem
+                // gera pendencia para os funcionarios comuns votarem
+                // e no caso do rh, a pendencia significa fechar a votacao
                 using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
                 {
                     var usuarios = UsuarioServices.RecuperaTodos();
@@ -83,7 +84,6 @@ namespace SamServices.Services
                         pendencyRep.SubmitChanges();
                     }
                 }
-
             }
         }
     }

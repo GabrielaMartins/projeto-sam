@@ -48,7 +48,6 @@ namespace SamApi.Controllers
             var user = Convert.ToInt32(Request.Headers.GetValues("id").SingleOrDefault());
             EventoServices.AprovaAgendamento(id, user);
             return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Scheduling Approved", $"You accepted the event #{id}"));
-
         }
     }
 }

@@ -66,6 +66,12 @@ namespace SamServices.Services
 
         public static void AprovaAgendamento(int evt, int user)
         {
+            /* DUVIDA:
+                Todo evento aprovado é também votado?
+                Se sim, então criar o evento de votacao após a aprovação
+
+            */
+
             using (var eventRep = DataAccess.Instance.GetEventoRepository())
             using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             {
