@@ -6,7 +6,7 @@ O SAM (Sistema de Acompanhamento de Méritos) visa por meio de uma plataforma We
  1. Instale o Node.js : [Installing Node.js and updating npm](https://docs.npmjs.com/getting-started/installing-node)
  2. Navegue até onde deseja clonar o projeto e rode<br>git clone https://github.com/GabrielaMartins/projeto-sam.git
  3. No diretório criado, execute o arquivo **install_modules.cmd**
- 7. Em **package.json** troque a linha dentro de "scripts" : `test": "echo \"Error: no test specified\"&& exit 1"` por `"production": "webpack -p", "start" : "webpack-dev-server"`
+ 7. Em **package.json** troque a linha<br>`"test": "echo \"Error: no test specified\"&& exit 1"`<br>dentro de "scripts" por<br>`"production": "webpack -p", "start" : "webpack-dev-server"`
  8. Para iniciar o projeto, execute o arquivo **start.cmd**
 
 Acesse o site em http://localhost:8080/
