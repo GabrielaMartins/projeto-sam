@@ -36,14 +36,14 @@ namespace SamApiModels.Item
         /// É o valor da dificuldade do item
         /// </summary>
         [Required]
-        [AllowedValues(new[] { 1, 3, 8 })]
+        [AllowedValues(new object[] { 1, 3, 8 })]
         public int dificuldade { get; set; }
 
         /// <summary>
         /// É o peso dado ao item
         /// </summary>
         [Required]
-        [AllowedValues(new[] { 1, 3, 8 })]
+        [AllowedValues(new object[] { 1, 3, 8 })]
         public int modificador { get; set; }
 
         /// <summary>

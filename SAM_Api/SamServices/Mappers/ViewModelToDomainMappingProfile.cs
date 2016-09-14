@@ -4,6 +4,7 @@ using SamApiModels.Categoria;
 using SamApiModels.Evento;
 using SamApiModels.Item;
 using SamApiModels.Models.Agendamento;
+using SamApiModels.Models.Evento;
 using SamApiModels.Models.User;
 using SamApiModels.User;
 using SamApiModels.Votacao;
@@ -46,6 +47,7 @@ namespace SamServices.Mappers
             .ForMember(e => e.Usuario, opt => opt.Ignore())
 
             // mapeia as chaves estrangeiras
+            .ForMember(e => e.tipo, opt => opt.UseValue("agendamento"))
             .ForMember(e => e.data, opt => opt.MapFrom(src => src.Data))
             .ForMember(e => e.item, opt => opt.MapFrom(src => src.Item))
             .ForMember(e => e.usuario, opt => opt.MapFrom(src =>
@@ -123,6 +125,23 @@ namespace SamServices.Mappers
            // mapeia as chaves estrangeiras
            .ForMember(e => e.usuario, opt => opt.MapFrom(src => src.Usuario.id))
            .ForMember(e => e.item, opt => opt.MapFrom(src => src.Item.id));
+
+            // **************** AddEventoVotacaoViewModel -> Evento **************** //
+            Mapper.CreateMap<AddEventoVotacaoViewModel, Evento>()
+
+            // ignora as propriedades de navegacoes quando vai inserir no banco
+            .ForMember(e => e.Item, opt => opt.Ignore())
+            .ForMember(e => e.Pendencias, opt => opt.Ignore())
+            .ForMember(e => e.ResultadoVotacoes, opt => opt.Ignore())
+            .ForMember(e => e.Usuario, opt => opt.Ignore())
+
+            // mapeia campos com nomes diferentes
+            .ForMember(e => e.usuario, opt => opt.MapFrom(src => DataAccess
+                                                                .Instance.GetUsuarioRepository()
+                                                                .Find(u => u.samaccount == src.Usuario)
+                                                                .Select(x => x.id)
+                                                                .SingleOrDefault()
+                                                        ));
         }
     }
 }

@@ -52,27 +52,29 @@ namespace SamServices.Services
             using (var rep = DataAccess.Instance.GetEventoRepository())
             {
                 var evento = Mapper.Map<AgendamentoViewModel, Evento>(agendamento);
-                evento.tipo = "agendamento";
-
+               
                 rep.Add(evento);
                 rep.SubmitChanges();
 
                 // create a pendency to rh based on this event
                 GenerateHrPendencyFor(evento);
+
+                // create a pendency to employee based on this event
+                GenerateEmployeePendencyFor(evento);
             }
         }
 
-        public static void AprovaAgendamento(int id)
+        public static void AprovaAgendamento(int evt, int user)
         {
             using (var eventRep = DataAccess.Instance.GetEventoRepository())
             using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             {
 
                 // recupera o evento
-                var evento = eventRep.Find(e => e.id == id).SingleOrDefault();
+                var evento = eventRep.Find(e => e.id == evt).SingleOrDefault();
 
-                // cria um novo evento
-                var novoEvento = new Evento()
+                // cria o evento resultante da aprovação do agendamento
+                var atividade = new Evento()
                 {
                     estado = false,
                     data = evento.data,
@@ -81,29 +83,42 @@ namespace SamServices.Services
                     tipo = "atividade"
                 };
                
-                eventRep.Add(novoEvento);
+                eventRep.Add(atividade);
                 eventRep.SubmitChanges();
 
-                // gera pendencia para o RH aprovar (atribuir pontos para o novo evento)
-                GenerateHrPendencyFor(novoEvento);
-
-                // deleta a pendencia associada ao evento de agendamento
-                var pendency = pendencyRep.Find(p => p.evento == id).SingleOrDefault();
-                pendencyRep.Delete(pendency.id);
+                // atualiza o valor do status da pendencia do usuario aguardando o resultado do agendamento
+                var pendency = pendencyRep.Find(p => p.evento == evento.id && p.usuario == evento.usuario).SingleOrDefault();
+                pendency.estado = true;
+                pendencyRep.Update(pendency);
                 pendencyRep.SubmitChanges();
 
-                // gera pendencia (notificação) para o funcionario que solicitou o agendamento
-                GenerateStaffPendencyFor(evento, evento.Usuario);
+                // gera pendencia para o RH dizendo que o usuario tem atribuição de pontos pendente
+                GenerateHrPendencyFor(atividade);
+
+                // remove a(s) pendencia(s) associada(s) ao evento de agendamento e ao usuario que está aprovando o agendamento
+                var pendencies = pendencyRep.Find(p => p.evento == evt && p.usuario == user).ToList();
+                foreach(var p in pendencies)
+                {
+                    pendencyRep.Delete(p.id);
+                    pendencyRep.SubmitChanges();
+                }
+
+                // encerra o evento de agendamento
+                evento.estado = true;
+                eventRep.Update(evento);
+                eventRep.SubmitChanges();
+
+                // duvida: gerar pendencia para o usuario da atividade, informando que ele tem pontos para adquirir?
             }
         }
 
-        private static void GenerateStaffPendencyFor(Evento evt, Usuario user)
+        private static void GenerateEmployeePendencyFor(Evento evt)
         {
             using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             {
                 var pendencia = new Pendencia()
                 {
-                    usuario = user.id,
+                    usuario = evt.usuario,
                     evento = evt.id,
                     estado = false,
                     Evento = null,

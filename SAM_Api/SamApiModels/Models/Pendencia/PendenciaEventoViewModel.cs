@@ -28,7 +28,7 @@ namespace SamApiModels.Pendencia
         /// Identifica o tipo de evento
         /// </summary>
         [Required]
-        [AllowedValues(new[] {"votacao","atribuicao","promocao","agendamento"})]
+        [AllowedValues(new object[] {"votacao","atribuicao","promocao","agendamento"})]
         public string tipo { get; set; }
 
         /// <summary>
@@ -45,10 +45,8 @@ namespace SamApiModels.Pendencia
         public ItemViewModel Item { get; set; }
 
 
-        /// <summary>
-        /// ESTA DANDO ERRO NO MAPPING
-        /// Identifica o evento cujo a pendência foi gerada
-        /// </summary>
+ 
+        // ESTA DANDO ERRO NO MAPPING
         //[Required]
         //public UsuarioViewModel Usuario { get; set; }
 

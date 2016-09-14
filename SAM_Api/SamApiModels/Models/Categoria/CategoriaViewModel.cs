@@ -26,7 +26,7 @@ namespace SamApiModels.Categoria
         /// Cada categoria de item, possui um peso
         /// </summary>
         [Required]
-        [AllowedValues(new[] {3, 5, 6, 20})]
+        [AllowedValues(new object[] {3, 5, 6, 20})]
         public int peso { get; set; }
 
         /// <summary>

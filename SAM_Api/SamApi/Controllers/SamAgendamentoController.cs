@@ -3,6 +3,7 @@ using SamApi.Attributes.Authorization;
 using SamApiModels.Models.Agendamento;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -44,7 +45,8 @@ namespace SamApi.Controllers
         [Route("approve/{id}")]
         public HttpResponseMessage Approve(int id)
         {
-           EventoServices.AprovaAgendamento(id);
+            var user = Convert.ToInt32(Request.Headers.GetValues("id").SingleOrDefault());
+            EventoServices.AprovaAgendamento(id, user);
             return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Scheduling Approved", $"You accepted the event #{id}"));
 
         }

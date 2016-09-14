@@ -10,19 +10,14 @@ namespace SamModelValidationRules.Attributes.Validation
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class AllowedValuesAttribute : ValidationAttribute
     {
-        private object values;
+        private object[] values;
 
         /// <summary>
         /// set the current valid values
         /// </summary>
         /// <param name="values">array of valid values for a field</param>
-        public AllowedValuesAttribute(object values)
+        public AllowedValuesAttribute(object[] values)
         {
-            if(!(values is Array))
-            {
-                throw new Exception("You must pass an array as values");
-            }
-
             this.values = values;
         }
 
@@ -34,12 +29,11 @@ namespace SamModelValidationRules.Attributes.Validation
         /// <returns></returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var array = values as object[];
-            
+                   
             // if an error
-            if (!Array.Exists(array, x => x.Equals(value)))
+            if (!Array.Exists(values, x => x.Equals(value)))
             {
-                string validValues = string.Join(",", array);
+                string validValues = string.Join(",", values);
                
                 // The string before '|' is the title.
                 // The string after '|' is the detail.

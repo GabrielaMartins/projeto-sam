@@ -65,7 +65,7 @@ namespace SamApiModels.Models.User
         /// Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (funcionario, rh)
         /// </summary>
         [Required]
-        [AllowedValues(new[] { "rh", "funcionario" })]
+        [AllowedValues(new object[] { "rh", "funcionario" })]
         public string perfil { get; set; }
 
         /// <summary>

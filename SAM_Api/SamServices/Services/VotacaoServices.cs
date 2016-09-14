@@ -8,7 +8,8 @@ using SamDataBase.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-
+using SamApiModels.Models.Evento;
+using System;
 
 namespace SamServices.Services
 {
@@ -20,10 +21,6 @@ namespace SamServices.Services
             using (var repEvento = DataAccess.Instance.GetEventoRepository())
             {
                 var evento = repEvento.Find(x => x.id == evt).SingleOrDefault();
-                if(evento == null)
-                {
-                    throw new ExpectedException(HttpStatusCode.NotFound, "Event Not Found", $"We can't find the event #{evt}");
-                }
                 if (evento.tipo != "votacao")
                 {
                     throw new ExpectedException(HttpStatusCode.Unauthorized, "Not a voting event", "you can not get events that are not voting events");
@@ -48,11 +45,7 @@ namespace SamServices.Services
             {
                 // some validations
                 var evt = eventRep.Find(e => e.id == vote.Evento).SingleOrDefault();
-                if (evt == null)
-                {
-                    throw new ExpectedException(HttpStatusCode.NotFound, "Event not found", $"The event #{vote.Evento} could not be find");
-                }
-                else if (evt.tipo != "votacao")
+                if (evt.tipo != "votacao")
                 {
                     throw new ExpectedException(HttpStatusCode.BadRequest, "Is not a voting event", $"The event #{vote.Evento} could not be voted because it's not a voting event");
                 }
@@ -61,6 +54,36 @@ namespace SamServices.Services
 
                 rep.Add(resultadoVotacao);
                 rep.SubmitChanges();
+            }
+        }
+
+        public static void CriaVotacao(AddEventoVotacaoViewModel evt)
+        {
+            using (var eventRep = DataAccess.Instance.GetEventoRepository())
+            {
+                var evento = Mapper.Map<AddEventoVotacaoViewModel, Evento>(evt);
+                var x = eventRep.AddAndCommit(evento);
+                
+                // gera pendencia para todos votarem
+                using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
+                {
+                    var usuarios = UsuarioServices.RecuperaTodos();
+                    foreach (var u in usuarios)
+                    {
+                        var pendencia = new Pendencia()
+                        {
+                            usuario = u.id,
+                            evento = x.id,
+                            estado = false,
+                            Evento = null,
+                            Usuario = null
+                        };
+
+                        pendencyRep.Add(pendencia);
+                        pendencyRep.SubmitChanges();
+                    }
+                }
+
             }
         }
     }
