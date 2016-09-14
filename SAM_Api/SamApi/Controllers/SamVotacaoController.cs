@@ -1,5 +1,6 @@
 ﻿using DefaultException.Models;
 using SamApi.Attributes.Authorization;
+using SamApiModels.Models.Evento;
 using SamApiModels.Votacao;
 using SamModelValidationRules.Attributes.Validation;
 using SamServices.Services;
@@ -39,6 +40,25 @@ namespace SamApi.Controllers
 
 
         /// <summary>
+        /// Cria um novo evento de votacao
+        /// </summary>
+        /// <param name="evt">
+        /// É o evento que será votado
+        /// </param>
+        [SwaggerResponse(HttpStatusCode.Created, "Caso seja possível criar evento do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(Roles = "rh")]
+        [Route("new")]
+        [HttpPost]
+        public HttpResponseMessage Create(AddEventoVotacaoViewModel evt)
+        {
+            VotacaoServices.CriaVotacao(evt);
+            return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.Created, "Created"));
+
+        }
+
+        /// <summary>
         /// Registra o valor da votação de um usuário em um item do SAM
         /// </summary>
         /// <param name="vote">
@@ -53,7 +73,7 @@ namespace SamApi.Controllers
         public HttpResponseMessage Vote(AddVotoViewModel vote)
         {
             VotacaoServices.CriaVoto(vote);
-             return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.Created, "You have voted", "Thanks for your vote"));
+            return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.Created, "You have voted", "Thanks for your vote"));
             
         }
     }

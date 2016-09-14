@@ -8,7 +8,7 @@ using System;
 
 namespace SamServices.Services
 {
-    public static class PendencyServices
+    public static class PendenciaServices
     {
         public static PendenciaEventoViewModel Recupera(int id)
         {

@@ -26,7 +26,7 @@ namespace SamApi.Controllers
         [Route("{pendency}")]
         public HttpResponseMessage Get(int pendency)
         {
-            var pendencia = PendencyServices.Recupera(pendency);
+            var pendencia = PendenciaServices.Recupera(pendency);
             return Request.CreateResponse(HttpStatusCode.OK, pendencia);
             
         }
@@ -42,7 +42,7 @@ namespace SamApi.Controllers
         public HttpResponseMessage GetAll()
         {
          
-            var pendencias = PendencyServices.RecuperaTodas();
+            var pendencias = PendenciaServices.RecuperaTodas();
             return Request.CreateResponse(HttpStatusCode.OK, pendencias);
             
         }
@@ -58,7 +58,7 @@ namespace SamApi.Controllers
         [Route("delete/{pendency}")]
         public HttpResponseMessage Delete(int pendency)
         {
-            PendencyServices.Delete(pendency);
+            PendenciaServices.Delete(pendency);
             return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Pendency removed"));
             
         }

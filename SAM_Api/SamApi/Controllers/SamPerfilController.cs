@@ -29,9 +29,9 @@ namespace SamApi.Controllers
         public HttpResponseMessage Get(string samaccount)
         {
 
-            var usuario = UserServices.Recupera(samaccount);
-            var eventos = UserServices.RecuperaEventos(usuario);
-            var promocoesAdquiridas = UserServices.RecuperaPromocoesAdquiridas(usuario);
+            var usuario = UsuarioServices.Recupera(samaccount);
+            var eventos = UsuarioServices.RecuperaEventos(usuario);
+            var promocoesAdquiridas = UsuarioServices.RecuperaPromocoesAdquiridas(usuario);
 
             var perfilViewModel = new PerfilFuncionario()
             {

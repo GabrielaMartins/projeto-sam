@@ -28,7 +28,7 @@ namespace SamApiModels.Evento
         /// Representa o tipo do evento
         /// </summary>
         [Required]
-        [AllowedValues(new[] {"votacao", "atribuicao", "promocao", "agendamento" })]
+        [AllowedValues(new object[] {"votacao", "atribuicao", "promocao", "agendamento" })]
         public string tipo { get; set; }
 
         /// <summary>

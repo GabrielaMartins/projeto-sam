@@ -13,7 +13,9 @@ namespace Opus.RepositoryPattern
 
         T Find(params object[] keys);
 
-        T Add(T entity);
+        T AddAndCommit(T entity);
+        
+        void Add(T entity);
 
         void Update(T entity);
 

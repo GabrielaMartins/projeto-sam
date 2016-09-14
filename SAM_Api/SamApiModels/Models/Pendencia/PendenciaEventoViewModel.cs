@@ -1,4 +1,5 @@
 ﻿using SamApiModels.Item;
+using SamApiModels.User;
 using SamModelValidationRules.Attributes.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -27,7 +28,7 @@ namespace SamApiModels.Pendencia
         /// Identifica o tipo de evento
         /// </summary>
         [Required]
-        [AllowedValues(new[] {"votacao","atribuicao","promocao","agendamento"})]
+        [AllowedValues(new object[] {"votacao","atribuicao","promocao","agendamento"})]
         public string tipo { get; set; }
 
         /// <summary>
@@ -42,6 +43,13 @@ namespace SamApiModels.Pendencia
         /// </summary>
         [Required]
         public ItemViewModel Item { get; set; }
+
+
+ 
+        // ESTA DANDO ERRO NO MAPPING
+        //[Required]
+        //public UsuarioViewModel Usuario { get; set; }
+
 
         /// <summary>
         /// Construtor do objeto
