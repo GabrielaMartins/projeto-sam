@@ -56,6 +56,7 @@ namespace SamApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Closed", $"You closed the event #{votacao.Evento}"));
 
         }
+
         /// <summary>
         /// Registra o valor da votação de um usuário em um item do SAM
         /// </summary>
