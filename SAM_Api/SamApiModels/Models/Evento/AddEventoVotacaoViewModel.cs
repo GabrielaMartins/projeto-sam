@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SamApiModels.Models.Evento
+namespace SamApiModels.Evento
 {
     /// <summary>
     /// Representa a inserção de um novo evento de votação

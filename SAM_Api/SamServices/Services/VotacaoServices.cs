@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DefaultException.Models;
 using Opus.DataBaseEnvironment;
+using MessageSystem.Erro;
 using SamApiModels.Evento;
 using SamApiModels.Models.Votacao;
 using SamApiModels.Votacao;
@@ -8,8 +8,6 @@ using SamDataBase.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using SamApiModels.Models.Evento;
-using System;
 
 namespace SamServices.Services
 {
@@ -23,7 +21,7 @@ namespace SamServices.Services
                 var evento = repEvento.Find(x => x.id == evt).SingleOrDefault();
                 if (evento.tipo != "votacao")
                 {
-                    throw new ExpectedException(HttpStatusCode.Unauthorized, "Not a voting event", "you can not get events that are not voting events");
+                    throw new ErroEsperado(HttpStatusCode.Unauthorized, "Not a voting event", "you can not get events that are not voting events");
                 }
 
                 var resultados = repVotacao.RecuperaVotacaoParaOEvento(evt);
@@ -47,7 +45,7 @@ namespace SamServices.Services
                 var evt = eventRep.Find(e => e.id == vote.Evento).SingleOrDefault();
                 if (evt.tipo != "votacao")
                 {
-                    throw new ExpectedException(HttpStatusCode.BadRequest, "Is not a voting event", $"The event #{vote.Evento} could not be voted because it's not a voting event");
+                    throw new ErroEsperado(HttpStatusCode.BadRequest, "It's not a voting event", $"The event #{vote.Evento} could not be voted because it's not a voting event");
                 }
 
                 var resultadoVotacao = Mapper.Map<AddVotoViewModel, ResultadoVotacao>(vote);

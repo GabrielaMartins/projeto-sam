@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MessageSystem.Erro;
+using System;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Controllers;
-using DefaultException.Models;
 
 namespace SamApi.Attributes.Authorization
 {
@@ -85,7 +85,7 @@ namespace SamApi.Attributes.Authorization
         /// <param name="actionContext">é o contexto da autorização</param>
         protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
         {
-            throw new ExpectedException(HttpStatusCode.Unauthorized, "Unauthorized", ErrorMessage);
+            throw new ErroEsperado(HttpStatusCode.Unauthorized, "Unauthorized", ErrorMessage);
 
         }
 

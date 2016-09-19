@@ -53,6 +53,7 @@ namespace Opus.DataBaseEnvironment
             var promocoesRealizadas =
             (from p in db.Promocoes
              where p.usuario == usuario
+             orderby p.data descending
              select p).ToList();
 
             return promocoesRealizadas;

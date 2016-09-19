@@ -7,12 +7,12 @@ using SamApiModels.Votacao;
 using SamDataBase.Model;
 using System.Collections.Generic;
 using System.Linq;
-using DefaultException.Models;
 using System.Net;
 using System.Configuration;
 using System.Web;
 using SamApiModels.Models.User;
 using SamHelpers;
+using MessageSystem.Erro;
 
 namespace SamServices.Services
 {
@@ -143,7 +143,7 @@ namespace SamServices.Services
                 var userFound = userRep.Find(u => u.samaccount == user.samaccount).SingleOrDefault() != null;
                 if (userFound)
                 {
-                    throw new ExpectedException(HttpStatusCode.Forbidden, "Duplicated User", $"user '{user.samaccount}' already exists");
+                    throw new ErroEsperado(HttpStatusCode.Forbidden, "Duplicated User", $"user '{user.samaccount}' already exists");
                 }
 
                 // save image to disk (we need do it before all other task)
@@ -174,7 +174,7 @@ namespace SamServices.Services
                 var userToBeUpdated = userRep.Find(u => u.samaccount == samaccount).SingleOrDefault();
                 if (userToBeUpdated == null)
                 {
-                    throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", $"The server could not find the user '{samaccount}'");
+                    throw new ErroEsperado(HttpStatusCode.NotFound, "User Not Found", $"The server could not find the user '{samaccount}'");
                 }
 
                 if (user.foto == "")

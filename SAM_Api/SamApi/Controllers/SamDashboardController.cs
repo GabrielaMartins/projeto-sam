@@ -7,10 +7,9 @@ using SamApi.Attributes.Authorization;
 using SamApiModels.User;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
-using DefaultException.Models;
 using SamApiModels.Dashboard;
-using System;
 using SamApiModels.Models.Dashboard;
+using MessageSystem.Mensagem;
 
 namespace SamApi.Controllers
 {
@@ -107,7 +106,7 @@ namespace SamApi.Controllers
 
             //Consulta para encontrar itens que são certificados em eventos
             int indiceCategoria = CategoriaServices.RecuperaTodas().Where(
-                        categoria => categoria.nome == "Certificação"
+                        categoria => categoria.nome == "curso"
                     ).Select(y => y.id).First();
 
             var certificados = EventoServices.RecuperaEventos().Where(

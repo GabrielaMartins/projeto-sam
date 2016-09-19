@@ -123,7 +123,6 @@
           </CardEventos>
         );
       });
-
         return(<DashboardRH
           eventos = {eventos}
           promocoes = {promocoes}

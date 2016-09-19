@@ -94,8 +94,9 @@ var DashboardContainerFuncionario = React.createClass({
     };
 
     //obtém dados
-    axios.get(Config.serverUrl+"/api/sam/dashboard/" + samaccount, config).then(
+    axios.get(Config.serverUrl+"/api/sam/dashboard/", config).then(
       function(response){
+        debugger;
         fezFetch = true;
         this.setState({
           dados: response.data,

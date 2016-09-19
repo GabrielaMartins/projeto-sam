@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SamApiModels.Evento;
 using SamApiModels.Promocao;
 using SamApiModels.User;
+using SamApiModels.Models.Perfil;
 
 namespace SamApiModels.Perfil
 {

@@ -4,11 +4,11 @@ using System.Net.Http;
 using System.Net;
 using SamApi.Attributes.Authorization;
 using SamApiModels.User;
-using DefaultException.Models;
 using Swashbuckle.Swagger.Annotations;
 using SamApiModels.Models.User;
 using SamServices.Services;
 using SamModelValidationRules.Attributes.Validation;
+using MessageSystem.Mensagem;
 
 namespace SamApi.Controllers
 {
@@ -82,7 +82,7 @@ namespace SamApi.Controllers
         [SamResourceAuthorizer(AuthorizationType = SamResourceAuthorizer.AuthType.TokenEquality)]
         [HttpPut]
         [Route("update/{samaccount}")]
-        public HttpResponseMessage Put(string samaccount, [FromBody]UpdateUsuarioViewModel user)
+        public HttpResponseMessage Put([ValidKey(ValidKeyAttribute.Entities.Usuario)]string samaccount, UpdateUsuarioViewModel user)
         {
             UsuarioServices.AtualizaUsuario(samaccount, user);
             return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "User Updated", "User updated"));

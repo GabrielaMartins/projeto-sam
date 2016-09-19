@@ -4,7 +4,6 @@ using SamApiModels.Categoria;
 using SamApiModels.Evento;
 using SamApiModels.Item;
 using SamApiModels.Models.Agendamento;
-using SamApiModels.Models.Evento;
 using SamApiModels.Models.User;
 using SamApiModels.User;
 using SamApiModels.Votacao;

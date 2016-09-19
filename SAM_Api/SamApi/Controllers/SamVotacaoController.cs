@@ -1,8 +1,7 @@
-﻿using DefaultException.Models;
-using SamApi.Attributes.Authorization;
-using SamApiModels.Models.Evento;
+﻿using SamApi.Attributes.Authorization;
+using SamApiModels.Evento;
+using MessageSystem.Mensagem;
 using SamApiModels.Votacao;
-using SamModelValidationRules.Attributes.Validation;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;

@@ -179,49 +179,29 @@
             Construtor do objeto
             </summary>
         </member>
-        <member name="T:SamApiModels.Models.Evento.AddEventoVotacaoViewModel">
+        <member name="T:SamApiModels.Models.Perfil.PerfilUsuarioViewModel">
             <summary>
-            Representa a inserção de um novo evento de votação
+            Representa o usuario no perfil
             </summary>
         </member>
-        <member name="P:SamApiModels.Models.Evento.AddEventoVotacaoViewModel.Item">
+        <member name="P:SamApiModels.Models.Perfil.PerfilUsuarioViewModel.Usuario">
             <summary>
-            Representa o item da votação
+            Representa o usuário do perfil
             </summary>
         </member>
-        <member name="P:SamApiModels.Models.Evento.AddEventoVotacaoViewModel.Usuario">
+        <member name="P:SamApiModels.Models.Perfil.PerfilUsuarioViewModel.DataUltimaPromocao">
             <summary>
-            Representa o usuário do evento sendo votado
+            Representa a data da última promoção do usuário
             </summary>
         </member>
-        <member name="P:SamApiModels.Models.Evento.AddEventoVotacaoViewModel.Data">
+        <member name="M:SamApiModels.Models.Perfil.PerfilUsuarioViewModel.#ctor">
             <summary>
-            Representa a data que ocorrerá o evento
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.Evento.AddEventoVotacaoViewModel.tipo">
-            <summary>
-            Representa o tipo do evento
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.Evento.AddEventoVotacaoViewModel.estado">
-            <summary>
-            Representa o estado do evento
-            </summary>
-        </member>
-        <member name="M:SamApiModels.Models.Evento.AddEventoVotacaoViewModel.#ctor">
-            <summary>
-            
+            construtor do objeto
             </summary>
         </member>
         <member name="T:SamApiModels.Models.User.UpdateUsuarioViewModel">
             <summary>
             Representa o modelo de dados para atualizar um usuário do SAM
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.nome">
-            <summary>
-            Nome completo do usuário do SAM
             </summary>
         </member>
         <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.dataInicio">
@@ -325,6 +305,141 @@
             </summary>
         </member>
         <member name="M:SamApiModels.Dashboard.DashboardFuncionario.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Evento.AddEventoVotacaoViewModel">
+            <summary>
+            Representa a inserção de um novo evento de votação
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AddEventoVotacaoViewModel.Item">
+            <summary>
+            Representa o item da votação
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AddEventoVotacaoViewModel.Usuario">
+            <summary>
+            Representa o usuário do evento sendo votado
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AddEventoVotacaoViewModel.Data">
+            <summary>
+            Representa a data que ocorrerá o evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AddEventoVotacaoViewModel.tipo">
+            <summary>
+            Representa o tipo do evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AddEventoVotacaoViewModel.estado">
+            <summary>
+            Representa o estado do evento
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Evento.AddEventoVotacaoViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Evento.UltimoEventoViewModel">
+            <summary>
+            Representa um evento do SAM associado aos usuários que o fizeram
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.UltimoEventoViewModel.Evento">
+            <summary>
+            Representa o evento do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.UltimoEventoViewModel.UsuariosQueFizeram">
+            <summary>
+            Representa todos os usuário que já fizeram esse evento
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Evento.EventoViewModel">
+            <summary>
+            Representa um evento do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.id">
+            <summary>
+            Identifica o evento do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.estado">
+            <summary>
+            Representa se o evento foi ou não encerrado
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.tipo">
+            <summary>
+            Representa o tipo do evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.data">
+            <summary>
+            Representa a data em que o evento ocorreu
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.Item">
+            <summary>
+            Representa o item associado ao evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.Usuario">
+            <summary>
+            Representa o usuário associado ao evento
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Evento.EventoViewModel.#ctor">
+            <summary>
+            Construtor do Objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Evento.EventoItemViewModel">
+            <summary>
+            Representa um item associado a um evento do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.id">
+            <summary>
+            Identifica o item associado ao evento do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.nome">
+            <summary>
+            Nome do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.descricao">
+            <summary>
+            Descrição sobre o que é o item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.dificuldade">
+            <summary>
+            É o valor da dificuldade do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.modificador">
+            <summary>
+            É o peso dado ao item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.Categoria">
+            <summary>
+            Representa a categoria do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.Usuarios">
+            <summary>
+            Representa todos os usuário que fizeram esse item
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Evento.EventoItemViewModel.#ctor">
             <summary>
             Construtor do objeto
             </summary>
@@ -572,106 +687,6 @@
             </summary>
         </member>
         <member name="M:SamApiModels.Promocao.ProximaPromocaoViewModel.#ctor">
-            <summary>
-            Construtor do objeto
-            </summary>
-        </member>
-        <member name="T:SamApiModels.Evento.UltimoEventoViewModel">
-            <summary>
-            Representa um evento do SAM associado aos usuários que o fizeram
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.UltimoEventoViewModel.Evento">
-            <summary>
-            Representa o evento do SAM
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.UltimoEventoViewModel.UsuariosQueFizeram">
-            <summary>
-            Representa todos os usuário que já fizeram esse evento
-            </summary>
-        </member>
-        <member name="T:SamApiModels.Evento.EventoViewModel">
-            <summary>
-            Representa um evento do SAM
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoViewModel.id">
-            <summary>
-            Identifica o evento do SAM
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoViewModel.estado">
-            <summary>
-            Representa se o evento foi ou não encerrado
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoViewModel.tipo">
-            <summary>
-            Representa o tipo do evento
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoViewModel.data">
-            <summary>
-            Representa a data em que o evento ocorreu
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoViewModel.Item">
-            <summary>
-            Representa o item associado ao evento
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoViewModel.Usuario">
-            <summary>
-            Representa o usuário associado ao evento
-            </summary>
-        </member>
-        <member name="M:SamApiModels.Evento.EventoViewModel.#ctor">
-            <summary>
-            Construtor do Objeto
-            </summary>
-        </member>
-        <member name="T:SamApiModels.Evento.EventoItemViewModel">
-            <summary>
-            Representa um item associado a um evento do SAM
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoItemViewModel.id">
-            <summary>
-            Identifica o item associado ao evento do SAM
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoItemViewModel.nome">
-            <summary>
-            Nome do item
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoItemViewModel.descricao">
-            <summary>
-            Descrição sobre o que é o item
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoItemViewModel.dificuldade">
-            <summary>
-            É o valor da dificuldade do item
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoItemViewModel.modificador">
-            <summary>
-            É o peso dado ao item
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoItemViewModel.Categoria">
-            <summary>
-            Representa a categoria do item
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Evento.EventoItemViewModel.Usuarios">
-            <summary>
-            Representa todos os usuário que fizeram esse item
-            </summary>
-        </member>
-        <member name="M:SamApiModels.Evento.EventoItemViewModel.#ctor">
             <summary>
             Construtor do objeto
             </summary>

@@ -1,4 +1,4 @@
-﻿using DefaultException.Models;
+﻿using MessageSystem.Erro;
 using SamDataBase.Model;
 using System;
 using System.Collections.Generic;
@@ -81,10 +81,10 @@ namespace SamHelpers
             {
                 if (ex.Message.Contains("Invalid signature"))
                 {
-                    throw new ExpectedException(HttpStatusCode.Unauthorized, "Invalid Token", "The provided token has invalid signature");
+                    throw new ErroEsperado(HttpStatusCode.Unauthorized, "Invalid Token", "The provided token has invalid signature");
                 }
 
-                throw new ExpectedException(HttpStatusCode.Unauthorized, "Invalid Token", ex);
+                throw new ErroEsperado(HttpStatusCode.Unauthorized, "Invalid Token", ex);
 
             }
             catch (Exception ex)

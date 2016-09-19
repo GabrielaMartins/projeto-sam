@@ -1,4 +1,4 @@
-﻿using DefaultException.Models;
+﻿using MessageSystem.Erro;
 using SamHelpers;
 using System;
 using System.Collections.Generic;
@@ -61,7 +61,7 @@ namespace SamApi.Attributes.Authorization
             }
             catch
             {
-                throw new ExpectedException(HttpStatusCode.Unauthorized, "Token Invalid", "The provided token has a valid signature, but has an invalid content");
+                throw new ErroEsperado(HttpStatusCode.Unauthorized, "Token Invalid", "The provided token has a valid signature, but has an invalid content");
             }
         }
 
@@ -73,7 +73,7 @@ namespace SamApi.Attributes.Authorization
                 var token =  request.Headers.GetValues("token").SingleOrDefault();
                 if (token == null || token == "null")
                 {
-                    throw new ExpectedException(HttpStatusCode.BadRequest, "Token empty", "You must provide a valid token");
+                    throw new ErroEsperado(HttpStatusCode.BadRequest, "Token empty", "You must provide a valid token");
                 }
                 else
                 {
@@ -82,7 +82,7 @@ namespace SamApi.Attributes.Authorization
             }
             catch (Exception ex)
             {
-                throw new ExpectedException(HttpStatusCode.BadRequest, ex.Message, "Key 'token' not found.");
+                throw new ErroEsperado(HttpStatusCode.BadRequest, ex.Message, "Key 'token' not found.");
             }
         }
     }
