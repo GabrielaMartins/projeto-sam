@@ -61,6 +61,7 @@ namespace SamServices.Mappers
 
             Mapper.CreateMap<Usuario, UsuarioViewModel>()
             .ForMember( u => u.Cargo, opt => opt.MapFrom(src => src.Cargo))
+            .ForMember(u => u.DataUltimaPromocao, opt => opt.MapFrom(src => DataAccess.Instance.GetPromocaoRepository().RecuperaDataUltimaPromocao(src.id)))
             .ForMember(u => u.ProximoCargo, opt => opt.MapFrom(src => DataAccess.Instance.GetCargoRepository().RecuperaProximoCargo(src.cargo)));
 
 

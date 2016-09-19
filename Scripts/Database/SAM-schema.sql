@@ -44,9 +44,10 @@ CREATE TABLE Itens
 	id INT IDENTITY(1,1) PRIMARY KEY,
 	nome VARCHAR(50) NOT NULL,
 	descricao VARCHAR(200),
+	votado BIT NOT NULL DEFAULT 0,
 	dificuldade INT NOT NULL CHECK(dificuldade IN (1,3,8)),
 	modificador INT NOT NULL CHECK(modificador IN (1,2,3,8)),
-	categoria INT FOREIGN KEY REFERENCES Categorias(id) ON DELETE NO ACTION NOT NULL,
+	categoria INT FOREIGN KEY REFERENCES Categorias(id) ON DELETE NO ACTION NOT NULL
 );
 
 CREATE TABLE ItensTagged

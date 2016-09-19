@@ -6,7 +6,7 @@ namespace SamModelValidationRules.Attributes.Validation
     /// <summary>
     /// Allow values in array
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
     public class AllowedValuesAttribute : ValidationAttribute
     {
         private object[] values;

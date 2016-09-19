@@ -63,10 +63,10 @@ namespace SamServices.Services
                 rep.SubmitChanges();
 
                 // create a pendency to rh based on this event
-                GenerateHrPendencyFor(evento);
+                PendenciaServices.GenerateHrPendencyFor(evento);
 
                 // create a pendency to employee based on this event
-                GenerateEmployeePendencyFor(evento);
+                PendenciaServices.GenerateEmployeePendencyFor(evento);
             }
         }
 
@@ -94,19 +94,12 @@ namespace SamServices.Services
                 eventRep.SubmitChanges();
 
                 // remove a(s) pendencia(s) associada(s) a esse evento de agendamento vinculadas ao RH
-                var pendencies = pendencyRep.Find(p => p.evento == evt && p.Usuario.perfil == "rh").ToList();
-                foreach (var p in pendencies)
-                {
-                    pendencyRep.Delete(p.id);
-                    pendencyRep.SubmitChanges();
-                }
+                PendenciaServices.RemoveHrPendencyFor(eventoAgendamento);
 
                 // atualiza o valor do estado da pendencia do usuario aguardando o resultado do agendamento
                 var pendency = pendencyRep.Find(p => p.evento == eventoAgendamento.id && p.usuario == eventoAgendamento.usuario).SingleOrDefault();
-                pendency.estado = true;
-                pendencyRep.Update(pendency);
-                pendencyRep.SubmitChanges();
-
+                PendenciaServices.CloseEmployeePendencyFor(eventoAgendamento, eventoAgendamento.usuario.Value);
+               
                 // cria o evento resultante da aprovação do agendamento
                 eventRep.AddAndCommit(new Evento()
                 {
@@ -135,10 +128,10 @@ namespace SamServices.Services
                     eventRep.AddAndCommit(eventoVotacao);
 
                     // gera pendencias para o evento de votacao para todos os funcionarios, significando que é preciso votar
-                    GenerateEmployersPendencyFor(eventoVotacao);
+                    PendenciaServices.GenerateEmployeesPendencyFor(eventoVotacao);
 
                     // gera pendencias para o evento de votacao para o RH, significando que o RH precisa encerrar a votacao
-                    GenerateHrPendencyFor(eventoVotacao);
+                    PendenciaServices.GenerateHrPendencyFor(eventoVotacao);
                 }
                 else
                 {
@@ -154,77 +147,11 @@ namespace SamServices.Services
                     eventRep.AddAndCommit(eventoAtribuicao);
 
                     // gera pendencia para o evento de atribuicao para o funcionario, significando que está aguardando o resultado
-                    GenerateEmployeePendencyFor(eventoAtribuicao);
+                    PendenciaServices.GenerateEmployeePendencyFor(eventoAtribuicao);
 
                     // gera pendencia para o evento de atribuicao para o RH, significando que o RH precisa atribuir pontos ao funcionario participante
-                    GenerateHrPendencyFor(eventoAtribuicao);
+                    PendenciaServices.GenerateHrPendencyFor(eventoAtribuicao);
                 }                
-            }
-        }
-
-        private static void GenerateEmployersPendencyFor(Evento evt)
-        {
-            using(var userRep = DataAccess.Instance.GetUsuarioRepository())
-            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
-            {
-                var usuarios = userRep.Find(u => u.perfil != "rh").ToList();
-                foreach (var u in usuarios)
-                {
-                    var pendencia = new Pendencia()
-                    {
-                        usuario = u.id,
-                        evento = evt.id,
-                        estado = false,
-                        Evento = null,
-                        Usuario = null
-                    };
-
-                    pendencyRep.Add(pendencia);
-                    pendencyRep.SubmitChanges();
-                }
-            }
-        }
-
-        private static void GenerateEmployeePendencyFor(Evento evt)
-        {
-            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
-            {
-                var pendencia = new Pendencia()
-                {
-                    usuario = evt.usuario,
-                    evento = evt.id,
-                    estado = false,
-                    Evento = null,
-                    Usuario = null
-                };
-
-                pendencyRep.Add(pendencia);
-                pendencyRep.SubmitChanges();
-            }
-        }
-
-        private static void GenerateHrPendencyFor(Evento evt)
-        {
-            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
-            {
-                var users = userRep.Find(u => u.perfil == "rh").ToList();
-                foreach (var u in users)
-                {
-
-                    var pendencia = new Pendencia()
-                    {
-                        usuario = u.id,
-                        evento = evt.id,
-                        estado = false,
-                        Evento = null,
-                        Usuario = null
-                    };
-
-                    pendencyRep.Add(pendencia);
-                    pendencyRep.SubmitChanges();
-                }
-
             }
         }
     }

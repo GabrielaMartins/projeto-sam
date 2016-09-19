@@ -65,10 +65,12 @@
     <Compile Include="Models\Evento\EventoItemViewModel.cs" />
     <Compile Include="Models\Login\LoginViewModel.cs" />
     <Compile Include="Models\User\AddUsuarioViewModel.cs" />
+    <Compile Include="Models\User\AtribuicaoPontosUsuarioViewModel.cs" />
     <Compile Include="Models\User\PendenciaUsuarioViewModel.cs" />
     <Compile Include="Models\User\UpdateUsuarioViewModel.cs" />
     <Compile Include="Models\User\UsuarioViewModel.cs" />
     <Compile Include="Models\Votacao\AddVotoViewModel.cs" />
+    <Compile Include="Models\Votacao\CloseVotacaoViewModel.cs" />
     <Compile Include="Models\Votacao\VotacaoViewModel.cs" />
     <Compile Include="Models\Votacao\VotoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

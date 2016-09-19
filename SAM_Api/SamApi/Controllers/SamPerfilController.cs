@@ -6,7 +6,6 @@ using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using SamApiModels.Perfil;
 using MessageSystem.Mensagem;
-using SamApiModels.Models.Perfil;
 
 namespace SamApi.Controllers
 {

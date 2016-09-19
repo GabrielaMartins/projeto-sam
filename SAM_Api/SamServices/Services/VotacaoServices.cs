@@ -8,6 +8,7 @@ using SamDataBase.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System;
 
 namespace SamServices.Services
 {
@@ -82,6 +83,58 @@ namespace SamServices.Services
                         pendencyRep.SubmitChanges();
                     }
                 }
+            }
+        }
+
+        public static void EncerraVotacao(CloseVotacaoViewModel votacao)
+        {
+            using (var itemRep = DataAccess.Instance.GetItemRepository())
+            using (var eventRep = DataAccess.Instance.GetEventoRepository())
+            {
+                var eventoVotacao = eventRep.Find(e => e.id == votacao.Evento).SingleOrDefault();
+                if(eventoVotacao.tipo != "votacao")
+                {
+                    throw new ErroEsperado(HttpStatusCode.BadRequest, "It's not a voting event", $"The event #{votacao.Evento} could not be closed because it's not a voting event");
+                }
+
+                // encerra o evento
+                eventoVotacao.estado = true;
+                eventRep.Update(eventoVotacao);
+                eventRep.SubmitChanges();
+
+                // atribui pontos ao item caso ainda não tenha sido pontuado
+                var item = itemRep.Find(i => i.id == eventoVotacao.item).SingleOrDefault();
+                if (!item.votado)
+                {
+                    item.dificuldade = votacao.Dificuldade;
+                    item.modificador = votacao.Modificador;
+                    item.votado = true;
+                    itemRep.Update(item);
+                    itemRep.SubmitChanges();
+                }
+
+                // remove as pendencias para o evento de votacao associadas ao rh
+                PendenciaServices.RemoveHrPendencyFor(eventoVotacao);
+
+                // remove as pendencias dos usuarios que votaram
+                PendenciaServices.RemoveEmployeesPendencyFor(eventoVotacao);
+
+                // gerar evento de atribuição de pontos para o usuario
+                var eventoAtribuicao = new Evento()
+                {
+                    estado = false,
+                    data = eventoVotacao.data,
+                    item = eventoVotacao.item,
+                    usuario = eventoVotacao.usuario,
+                    tipo = "atribuicao"
+                };
+                eventRep.AddAndCommit(eventoAtribuicao);
+
+                // gera a pendência para o evento associada ao usuario
+                PendenciaServices.GenerateEmployeePendencyFor(eventoAtribuicao);
+
+                // gera as pendências para o evento associadas ao rh
+                PendenciaServices.GenerateHrPendencyFor(eventoAtribuicao);
             }
         }
     }
