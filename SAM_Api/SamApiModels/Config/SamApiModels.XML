@@ -806,6 +806,26 @@
             construtor do objeto
             </summary>
         </member>
+        <member name="T:SamApiModels.User.PromocaoUsuarioViewModel">
+            <summary>
+            Representa os dados para promover um usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.PromocaoUsuarioViewModel.Usuario">
+            <summary>
+            Identifica o usuário que receberá a promoção
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.PromocaoUsuarioViewModel.Cargo">
+            <summary>
+            Representa o cargo para o qual o usuário será promovido
+            </summary>
+        </member>
+        <member name="M:SamApiModels.User.PromocaoUsuarioViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:SamApiModels.User.UsuarioViewModel">
             <summary>
             Representa os dados de um usuário do SAM
