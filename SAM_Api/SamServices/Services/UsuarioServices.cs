@@ -60,8 +60,8 @@ namespace SamServices.Services
                 // efetiva a mudança no banco
                 pRep.AddAndCommit(p);
 
-                // recupera o ultimo evento que o usuario fez, e entao captura o id do item
-                var item = evtRep.Find(evt => evt.usuario == usuario.id)
+                // recupera o ultimo evento (atividade) que o usuario fez, e entao captura o id do item
+                var item = evtRep.Find(evt => evt.usuario == usuario.id && evt.tipo == "atividade")
                                  .OrderByDescending(evt => evt.data)
                                  .Select(evt => evt.Item.id)
                                  .FirstOrDefault();

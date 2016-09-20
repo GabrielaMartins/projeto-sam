@@ -54,7 +54,6 @@ namespace SamApi.Controllers
         {
             VotacaoServices.EncerraVotacao(votacao);
             return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Closed", $"You closed the event #{votacao.Evento}"));
-
         }
 
         /// <summary>
