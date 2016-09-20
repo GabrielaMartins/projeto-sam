@@ -35,7 +35,6 @@ namespace SamServices.Services
              .ToList();
 
             return promocoesViewModel;
-
         }
     }
 }

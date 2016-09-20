@@ -469,6 +469,82 @@
             Construtor do objeto
             </summary>
         </member>
+        <member name="T:SamApiModels.Item.AddItemViewModel">
+            <summary>
+            Representa um item do SAM
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:SamApiModels.Item.AddItemViewModel.Nome" -->
+        <member name="P:SamApiModels.Item.AddItemViewModel.Descricao">
+            <summary>
+            Representa a descrição do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.AddItemViewModel.Dificuldade">
+            <summary>
+            É o valor da dificuldade do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.AddItemViewModel.Modificador">
+            <summary>
+            É o peso dado ao item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.AddItemViewModel.Categoria">
+            <summary>
+            Itentifica a categoria do item
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Item.AddItemViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Item.ItemViewModel">
+            <summary>
+            Representa um item do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.id">
+            <summary>
+            Identifica um item do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.nome">
+            <summary>
+            Representa o nome do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.descricao">
+            <summary>
+            Representa a descrição do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.dificuldade">
+            <summary>
+            É o valor da dificuldade do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.modificador">
+            <summary>
+            É o peso dado ao item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.Categoria">
+            <summary>
+            Representa a categoria do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.Usuarios">
+            <summary>
+            Representa todos os usuário que fizeram esse item
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Item.ItemViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
         <member name="T:SamApiModels.Login.SamToken">
             <summary>
             Representa o token de acesso ao SAM
@@ -557,51 +633,6 @@
             </summary>
         </member>
         <member name="M:SamApiModels.Categoria.CategoriaViewModel.#ctor">
-            <summary>
-            Construtor do objeto
-            </summary>
-        </member>
-        <member name="T:SamApiModels.Item.ItemViewModel">
-            <summary>
-            Representa um item do SAM
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Item.ItemViewModel.id">
-            <summary>
-            Identifica um item do SAM
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Item.ItemViewModel.nome">
-            <summary>
-            Representa o nome do item
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Item.ItemViewModel.descricao">
-            <summary>
-            Representa a descrição do item
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Item.ItemViewModel.dificuldade">
-            <summary>
-            É o valor da dificuldade do item
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Item.ItemViewModel.modificador">
-            <summary>
-            É o peso dado ao item
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Item.ItemViewModel.Categoria">
-            <summary>
-            Representa a categoria do item
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Item.ItemViewModel.Usuarios">
-            <summary>
-            Representa todos os usuário que fizeram esse item
-            </summary>
-        </member>
-        <member name="M:SamApiModels.Item.ItemViewModel.#ctor">
             <summary>
             Construtor do objeto
             </summary>

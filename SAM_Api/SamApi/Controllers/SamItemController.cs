@@ -61,7 +61,7 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "rh")]
-        public HttpResponseMessage Post(ItemViewModel item)
+        public HttpResponseMessage Post(AddItemViewModel item)
         {
             ItemServices.CriaItem(item);
 

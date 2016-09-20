@@ -69,12 +69,12 @@ namespace SamServices.Services
             }
         }
 
-        public static void CriaItem(ItemViewModel item)
+        public static void CriaItem(AddItemViewModel item)
         {
             using (var itemRep = DataAccess.Instance.GetItemRepository())
             {
                 // map new values to our reference
-                var newItem = Mapper.Map<ItemViewModel, Item>(item);
+                var newItem = Mapper.Map<AddItemViewModel, Item>(item);
 
                 // add to entity context
                 itemRep.Add(newItem);

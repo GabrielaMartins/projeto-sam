@@ -99,14 +99,29 @@ namespace SamServices.Mappers
 
             // **************** ItemViewModel -> Item **************** //
             Mapper.CreateMap<ItemViewModel, Item>()
-
-           // ignora as propriedades de navegacoes quando vai inserir no banco
+            
+            // ignora as propriedades de navegacoes quando vai inserir no banco
            .ForMember(i => i.Categoria, opt => opt.Ignore())
            .ForMember(i => i.Eventos, opt => opt.Ignore())
            .ForMember(i => i.TaggedItens, opt => opt.Ignore())
 
            // mapeia as chaves estrangeiras
            .ForMember(i => i.categoria, opt => opt.MapFrom(src => src.Categoria.id));
+
+            // **************** AddItemViewModel -> Item **************** //
+            Mapper.CreateMap<AddItemViewModel, Item>()
+
+            .ForMember(i => i.Eventos, opt => opt.Ignore())
+            .ForMember(i => i.Categoria, opt => opt.Ignore())
+            .ForMember(i => i.TaggedItens, opt => opt.Ignore())
+
+           // mapeia as chaves estrangeiras
+           .ForMember(i => i.descricao, opt => opt.MapFrom(src => src.Descricao))
+           .ForMember(i => i.dificuldade, opt => opt.MapFrom(src => src.Dificuldade))
+           .ForMember(i => i.modificador, opt => opt.MapFrom(src => src.Modificador))
+           .ForMember(i => i.nome, opt => opt.MapFrom(src => src.Nome))
+           .ForMember(i => i.votado, opt => opt.UseValue(false))
+           .ForMember(i => i.categoria, opt => opt.MapFrom(src => src.Categoria));
 
             // **************** CategoriaViewModel -> Categoria **************** //
             Mapper.CreateMap<CategoriaViewModel, Categoria>()

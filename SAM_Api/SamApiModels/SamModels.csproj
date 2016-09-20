@@ -52,6 +52,7 @@
     <Compile Include="Models\Dashboard\DashboardFuncionario.cs" />
     <Compile Include="Models\Dashboard\DashboardRH.cs" />
     <Compile Include="Models\Evento\AddEventoVotacaoViewModel.cs" />
+    <Compile Include="Models\Item\AddItemViewModel.cs" />
     <Compile Include="Models\Login\SamToken.cs" />
     <Compile Include="Models\Cargo\CargoViewModel.cs" />
     <Compile Include="Models\Categoria\CategoriaViewModel.cs" />
