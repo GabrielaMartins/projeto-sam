@@ -7,11 +7,29 @@ var SelecaoVotoContainer = React.createClass({
   getInitialState: function() {
     return {
       dificuldade:"",
-      profundidade:"",
+      modificador:"",
       pontuacaoGerada: 0,
       mensagemErro: "",
       mostraResultado: false
     };
+  },
+
+  checaPontuacao: function(){
+    if(this.state.dificuldade != ""){
+
+      //é possível votar o modificador
+      if(this.props.tipoVoto.votaModificador === true){
+
+        if( this.state.modificador != ""){
+          //pontuação de workshops e palestras é a dificuldade * modificador * 6 (o peso da categoria) <-- obter categoria
+          this.setState({pontuacaoGerada: parseInt(this.state.dificuldade) * parseInt(this.state.modificador) * 6})
+        }
+      }else{
+        //quando não é possível votar o modificador, apenas calcula os pontos de acordo com a dificuldade e o peso da categoria
+        this.setState({pontuacaoGerada: parseInt(this.state.dificuldade) * 1 * 6})
+      }
+
+    }
   },
 
   handleChangeDificuldade: function(event){
@@ -20,76 +38,93 @@ var SelecaoVotoContainer = React.createClass({
       mensagemErro:""
     });
 
-    if(this.state.dificuldade != "" && this.state.profundidade != ""){
-      //pontuação de workshops e palestras é a dificuldade * profundidade * 6 (o peso da categoria)
-      this.setState({pontuacaoGerada: parseInt(this.state.dificuldade) * parseInt(this.state.profundidade) * 6})
-    }
+    this.checaPontuacao();
+
   },
 
-  handleChangeProfundidade: function(event){
+  handleChangeModificador: function(event){
     this.setState({
-      profundidade:event.target.value,
+      modificador:event.target.value,
       mensagemErro:""
     });
 
-    if(this.state.dificuldade != "" && this.state.profundidade != ""){
-      //pontuação de workshops e palestras é a dificuldade * profundidade * 6 (o peso da categoria)
-      this.setState({pontuacaoGerada: parseInt(this.state.dificuldade) * parseInt(this.state.profundidade) * 6})
-    }
+    this.checaPontuacao();
+
   },
 
   handleSubmitPontos: function(){
-    if(this.state.dificuldade != "" && this.state.profundidade != ""){
-      //insere a pontuação no banco
 
-      //configurações para passar o token
-      var token = localStorage.getItem("token");
-      var samaccount = localStorage.getItem("samaccount");
+    var votaModificador = this.props.tipoVoto.votaModificador;
+    var tipoModificador = this.props.tipoVoto.tipoModificador;
 
-      var config = {
-        headers: {'token': token}
-      };
+    if(this.state.dificuldade != ""){
+      if(votaModificador === false || (votaModificador === true && this.state.modificador != "")){
 
-      voto = {
-        Usuario:samaccount,
-        Evento:this.props.evento,
-        Modificador:this.state.profundidade,
-        Dificuldade:this.state.dificuldade
-      }
+        var voto;
+        var url;
+        
+        //configurações para passar o token
+        var token = localStorage.getItem("token");
+        var samaccount = localStorage.getItem("samaccount");
+        var perfil = localStorage.getItem("perfil");
 
-      axios.post("http://10.10.15.113:65122/api/sam/vote", voto, config).then(
-        function(response){
-          this.props.mostraResultado(true);
-          //deleta dos alertas
-          axios.delete(Config.serverUrl+"/api/sam/pendency/delete/" + id, config).then(
-            function(response){
+        var config = {
+          headers: {'token': token}
+        };
 
-            },
-            function(jqXHR){
+        if(perfil.toUpperCase()==="RH"){
 
-            }
-          );
-        }.bind(this),
-        function(jqXHR){
+          voto = {
+            Evento:this.props.evento,
+            Modificador:this.state.modificador,
+            Dificuldade:this.state.dificuldade
+          }
 
+          url = Config.serverUrl+"/api/sam/vote/close"
+        }else{
+          voto = {
+            Usuario:samaccount,
+            Evento:this.props.evento,
+            Modificador:this.state.modificador,
+            Dificuldade:this.state.dificuldade
+          }
+
+          url = Config.serverUrl+"/api/sam/vote";
         }
-      );
 
+
+        axios.post(url, voto, config).then(
+          function(response){
+            debugger;
+            this.props.mostraResultado(true);
+            //deleta dos alertas
+            axios.delete(Config.serverUrl+"/api/sam/pendency/delete/" + id, config).then(
+              function(response){
+
+              },
+              function(jqXHR){
+
+              }
+            );
+          }.bind(this),
+          function(jqXHR){
+
+          }
+        );
+
+      }else{
+        if(votaModificador === true && this.state.modificador === ""){
+          this.setState({
+            mensagemErro: "Insira " + tipoModificador
+          });
+        }
+      }
 
     }else{
-      if(this.state.dificuldade == "" && this.state.profundidade != ""){
-        this.setState({
-          mensagemErro: "Insira uma dificuldade"
-        });
-      }else if(this.state.dificuldade != "" && this.state.profundidade == ""){
-        this.setState({
-          mensagemErro: "Insira uma profundidade"
-        });
-      }else{
-        this.setState({
-          mensagemErro: "Insira uma dificuldade e uma profundidade"
-        });
-      }
+      this.setState({
+        mensagemErro: "Insira uma dificuldade"
+      });
+
     }
   },
 
@@ -99,20 +134,50 @@ var SelecaoVotoContainer = React.createClass({
     });
 
     $("#Select1").on('change', this.handleChangeDificuldade);
-    $("#Select2").on('change', this.handleChangeProfundidade);
+    $("#Select2").on('change', this.handleChangeModificador);
+  },
+
+  votoModificador: function(){
+    var tipoVoto;
+
+    if(this.props.tipoVoto.votaModificador === true){
+      if(this.props.tipoVoto.tipoModificador === "profundidade"){
+        tipoVoto = <div className="input-field col l6 s12 m6">
+          <select id="Select2" value={this.state.modificador} onChange={this.handleChangeModificador}>
+            <option value="" disabled>Escolha uma opção</option>
+            <option value="2">Raso</option>
+            <option value="3">Profundo</option>
+          </select>
+          <label>Profundidade</label>
+        </div>
+      }else{
+        tipoVoto = <div className="input-field col l6 s12 m6">
+          <select id="Select2" value={this.state.modificador} onChange={this.handleChangeModificador}>
+            <option value="" disabled>Escolha uma opção</option>
+            <option value="3">Alinhado</option>
+            <option value="1">Não Alinhado</option>
+          </select>
+          <label>Alinhamento</label>
+        </div>
+      }
+    }else{
+      tipoVoto = null;
+    }
+
+    return tipoVoto;
   },
 
   render : function(){
+
       return(<SelecaoVoto
         pontuacaoGerada = {this.state.pontuacaoGerada}
         changeDificuldade = {this.handleChangeDificuldade}
-        changeProfundidade = {this.handleChangeProfundidade}
         dificuldade = {this.state.dificuldade}
-        profundidade = {this.state.profundidade}
         titulo = {this.props.titulo}
         botao = {this.props.botao}
         submit = {this.handleSubmitPontos}
         mensagemErro = {this.state.mensagemErro}
+        votoModificador = {this.votoModificador()}
         />)
   }
 });

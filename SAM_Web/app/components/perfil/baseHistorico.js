@@ -5,7 +5,7 @@ var ReactRouter = require('react-router');
 var BaseHistorico = React.createClass({
   render: function(){
     return(
-      <div className="card-panel">
+      <div className="card-panel card-historico-color">
         <h4 className="card-title extraGrande colorText-default center-align"><b>{this.props.titulo}</b></h4>
         <div className="card wrapper">
           <i className="material-icons colorText-default right" >search</i>

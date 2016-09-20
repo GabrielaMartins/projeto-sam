@@ -5,9 +5,12 @@ var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 });
 
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+
 module.exports = {
   entry: [
-    './app/index.js'
+    './app/index.js',
   ],
   output: {
     path: __dirname + '/dist',
@@ -25,8 +28,17 @@ module.exports = {
         query: {
           presets: ['es2015','react']
         }
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('css!sass')
       }
     ]
   },
-  plugins: [HTMLWebpackPluginConfig]
+  plugins: [
+    HTMLWebpackPluginConfig,
+    new ExtractTextPlugin('estilo.css', {
+      allChunks: true
+    })
+  ]
 };

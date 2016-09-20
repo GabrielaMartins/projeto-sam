@@ -1,7 +1,9 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var Chart = require('react-google-charts').Chart;
+
 var Ranking = require('./ranking');
+var Pendencias = require('../../containers/dashboard/pendenciaContainer');
 
 var Link = ReactRouter.Link;
 
@@ -18,7 +20,7 @@ var Dashboard = function(props){
                </div>
             </div>
             <div className="card-panel scrollreveal" style={{paddingBottom:29}}>
-               <h5 className="card-title center-align colorText-default"><b>Próximas Promoções</b></h5>
+               <h5 className="card-title center-align colorText-default"><b>Próximas Avaliações</b></h5>
                  <div className="card-content scrollbar promocoes" style={{paddingTop:10}}>
                    {props.promocoes}
                  </div>
@@ -26,10 +28,10 @@ var Dashboard = function(props){
           </div>
           <div className="col l8 m6 s12">
             <div className="row">
-              <div className="card-panel scrollreveal">
-                <h5 className="card-title center-align colorText-default transparent-white"><b>Pendências</b></h5>
+              <div className="card-panel">
+                <h5 className="card-title center-align colorText-default transparent-white scrollreveal"><b>Alertas</b></h5>
                   <div className="card-content scrollbar pendencia" style={{paddingTop:10}}>
-                      {/*}<Pendencias pendencias = {props.pendencias.cardConteudo} />*/}
+                    <Pendencias pendencias = {props.pendencias} tipoPendencia = "pendencia" handleDeleteAlerta = {props.deletePendencia} />
                   </div>
               </div>
             </div>

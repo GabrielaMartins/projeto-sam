@@ -1,7 +1,7 @@
 'use strict'
 
 var React = require('react');
-var CadastroItem = require('../../components/cadastro_itens/cadastroItem');
+var EdicaoItem = require('../../components/edicao_itens/edicaoItem');
 var axios = require("axios");
 var Config = require('Config');
 
@@ -15,7 +15,7 @@ const CadastroItemContainer = React.createClass({
     });
 
     return(
-      <CadastroItem
+      <EdicaoItem
         handleCategoryChanges = {this.handleCategoryChanges}
         handleDificultyChanges = {this.handleDificultyChanges}
         handleModifierChanges = {this.handleModifierChanges}
@@ -54,6 +54,13 @@ const CadastroItemContainer = React.createClass({
     $("#select_categoria").on('change', self.handleCategoryChanges);
     $("#select_dificuldade").on('change', self.handleDificultyChanges);
 
+    //obter dados do item e setar os values dos inputs
+    //id é passado por parametro na rota
+    var id = this.props.location.query.id;
+
+    this.getItem(Config.serverUrl+'/api/sam/item/update/' + id);
+
+
   },
 
   componentDidUpdate: function(prevProps, prevState){
@@ -66,17 +73,26 @@ const CadastroItemContainer = React.createClass({
   },
 
   getCategory: function(url){
-    var token = localStorage.getItem("token");
 
-    var config = {
-      headers: {'token': token}
-    };
+      // recupera as categorias
+      var self = this;
+      axios.get(url).then(
+        function(response){
+          var categorias = response.data;
+          self.setState({categorias: categorias});
+        },
+        function(reason){
+        }
+      );
+  },
+
+  getItem: function(url){
+
     // recupera as categorias
     var self = this;
-    axios.get(url, config).then(
+    axios.get(url).then(
       function(response){
-        var categorias = response.data;
-        self.setState({categorias: categorias});
+        self.setState({item: response.data});
       },
       function(reason){
       }
@@ -113,18 +129,17 @@ const CadastroItemContainer = React.createClass({
   handleModifierChanges: function(event){
 
     var modificador = event.target.value;
-    var val;
     if(modificador === "Raso"){
-      val = 2;
+      this.modificador = 2;
     }else if(modificador === "Profundo"){
-      val = 3;
+      this.modificador = 3;
     }else if(modificador === "Alinhado"){
-      val = 1;
+      this.modificador = 1;
     }else if(modificador === "Não Alinhado"){
-      val = 3;
+      this.modificador = 3;
     }
 
-    this.setState({modificador: val});
+    //this.setState({modificador: val});
   },
 
   handleDescriptionChanges: function(event){
@@ -142,37 +157,22 @@ const CadastroItemContainer = React.createClass({
 
     var item = this.state.item;
     var descricao = this.state.descricao;
-    var categoria = this.state.categoria;
-    var dificuldade = this.state.dificuldade;
-    var modificador = this.state.modificador;
+    var categoria = this.categoria;
+    var dificuldade = this.dificuldade;
+    var modificador = this.modificador;
 
     var itemObject = {
-      Nome: item,
-      Categoria: categoria,
-      Dificuldade: dificuldade,
-      Modificador: modificador,
-      Descricao: descricao
-    };
-
-    console.log(itemObject);
-
-    var token = localStorage.getItem("token");
-
-    var config = {
-      headers: {'token': token}
+      item: item,
+      categoria: categoria,
+      dificuldade: dificuldade,
+      modificador: modificador,
+      descricao: descricao
     };
 
     // faz post do objeto para o servidor
-    axios.post(Config.serverUrl + "/api/sam/item/save", itemObject, config).then(
-      function(response){
 
-      },
-
-      function(){
-
-      }
-    );
-
+    // salva no banco o item
+    console.log("item: " + itemObject);
   },
 
   //limpa os dados do formulário

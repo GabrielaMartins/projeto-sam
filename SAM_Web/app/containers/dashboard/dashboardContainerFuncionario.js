@@ -94,7 +94,7 @@ var DashboardContainerFuncionario = React.createClass({
     };
 
     //obtém dados
-    axios.get(Config.serverUrl+"/api/sam/dashboard/" + samaccount, config).then(
+    axios.get(Config.serverUrl+"/api/sam/dashboard/", config).then(
       function(response){
         fezFetch = true;
         this.setState({
@@ -190,7 +190,7 @@ var DashboardContainerFuncionario = React.createClass({
   render : function(){
 
     //se a tela não possui dados para renderizar, então não renderiza (mudar posteriormente para loading)
-    if(fezFetch == false){
+    if(!fezFetch){
       return (
         <div className="full-screen-less-nav">
           <div className="row wrapper">

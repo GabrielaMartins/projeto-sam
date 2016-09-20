@@ -44,7 +44,7 @@ var Dashboard = function(props){
         </div>
         <div className="col l3 m12 s12">
           <div className="card-panel" style={{paddingBottom:29}}>
-            <h5 className="card-title center-align colorText-default scrollreveal"><b>Últimas Atualizações</b></h5>
+            <h5 className="card-title center-align colorText-default scrollreveal"><b>Últimos Eventos</b></h5>
             <div className="card-content scrollbar ultimasAtualizacoes" style={{paddingTop:10}}>
               {props.atualizacoes}
             </div>

@@ -8,7 +8,7 @@ var axios = require("axios");
 var Config = require('Config');
 
 //componente de Agendamento
-var Agendamento = require('../../components/agendamento/agendamento');
+var Atividade = require('../../components/atividade/atividade');
 
 //configurações para passar o token
 var token = localStorage.getItem("token");
@@ -16,7 +16,7 @@ var config = {
   headers: {'token': token}
 };
 
-const AgendamentoContainer = React.createClass({
+const AtividadeContainer = React.createClass({
 
   render: function(){
 
@@ -33,7 +33,7 @@ const AgendamentoContainer = React.createClass({
     }.bind(this));
 
     return(
-      <Agendamento
+      <Atividade
         handleCategoryChanges = {this.handleCategoryChanges}
         handleDescriptionChanges = {this.handleDescriptionChanges}
         handleItemChanges = {this.handleItemChanges}
@@ -308,4 +308,4 @@ const AgendamentoContainer = React.createClass({
 
 });
 
-module.exports = AgendamentoContainer;
+module.exports = AtividadeContainer;

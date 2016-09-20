@@ -5,8 +5,13 @@ var React = require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
 
+//momentjs
+var moment = require('moment');
+moment.locale('pt-br');
+
 var Avatar = React.createClass({
   render: function(){
+    console.log(this.props.usuario.DataUltimaPromocao);
     return(
       <div>
         <div className="center-block">
@@ -19,20 +24,22 @@ var Avatar = React.createClass({
             <span className="right"><b>Level: </b> {this.props.usuario.Cargo.nome}</span>
           </div>
           <div className="col l6 m6 s6">
-              <span className="left"><b>Próximo level: </b> {this.props.usuario.ProximoCargo[0].nome}</span>
-          </div>
-        </div>
-        <div className="row scrollreveal">
+            <span className="left"><b>Próximo level: </b> {this.props.usuario.ProximoCargo[0].nome}</span>
+          </div><br/><br/>
           <div className="col l6 m6 s6">
-              <span className="col l4 right"><b>{this.props.usuario.pontos}</b>/{this.props.usuario.ProximoCargo[0].pontuacao}</span><br/>
-              <div className="progress col s10 m6 l4 right">
+              <span className="right"><b>{this.props.usuario.pontos}</b>/{this.props.usuario.ProximoCargo[0].pontuacao}</span><br/>
+              <div className="progress col s10 m8 l5 right">
                 <div className="determinate" style={{width: this.props.progresso + "%"}}></div>
+              </div>
+              <div className="col s12">
+                <span className="right pequena"><b>Próxima avaliação:</b> {moment(this.props.usuario.DataUltimaPromocao).add(1, 'y').format('L')}</span>
               </div>
           </div>
           <div className="col l6 m6 s6">
             <br/>
             <span className="left"><b>Tempo de casa: </b> {this.props.tempoDeCasa}</span>
           </div>
+
         </div>
         <br/>
         <div className="row scrollreveal">
