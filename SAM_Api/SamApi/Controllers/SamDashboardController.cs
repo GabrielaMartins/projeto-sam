@@ -10,6 +10,7 @@ using Swashbuckle.Swagger.Annotations;
 using SamApiModels.Dashboard;
 using SamApiModels.Models.Dashboard;
 using MessageSystem.Mensagem;
+using System.Globalization;
 
 namespace SamApi.Controllers
 {
@@ -105,9 +106,15 @@ namespace SamApi.Controllers
             opGrafico.Add("role", "annotation");
 
             //Consulta para encontrar itens que são certificados em eventos
-            int indiceCategoria = CategoriaServices.RecuperaTodas().Where(
-                        categoria => categoria.nome == "curso"
-                    ).Select(y => y.id).First();
+            int indiceCategoria = CategoriaServices.RecuperaTodas()
+                .Where(
+                        categoria => 
+                        string.Compare(categoria.nome, "curso", CultureInfo.CurrentCulture,
+                                       CompareOptions.IgnoreNonSpace |
+                                       CompareOptions.IgnoreCase) == 0
+                )
+                .Select(y => y.id)
+                .FirstOrDefault();
 
             var certificados = EventoServices.RecuperaEventos().Where(
                  evento => evento.Item.Categoria.id == indiceCategoria);
