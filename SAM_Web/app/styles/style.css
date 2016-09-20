@@ -3,6 +3,8 @@
   background: url('../imagens/background.jpg') no-repeat fixed;
   background-size:cover;
   background-position-y:center;
+  width: auto;
+  height: auto;
 }
 
 .background-404{
@@ -10,6 +12,8 @@
   background: url('../imagens/404back.jpg') no-repeat fixed;
   background-size:cover;
   background-position-y:center;
+  width: auto;
+  height: auto;
 }
 
 .background-erro{
@@ -17,6 +21,8 @@
   background: url('../imagens/erroback.jpg') no-repeat fixed;
   background-size:cover;
   background-position-y:center;
+  width: auto;
+  height: auto;
 }
 
 .transparent-dark {
@@ -119,6 +125,10 @@
     background-color: #EEE;
   }
 
+  .card-historico-color{
+    background-color: #EEE
+  }
+
   .dropdown-content {
   background-color: #FFFFFF;
   margin: 0;
@@ -178,11 +188,11 @@ footer.page-footer {
 
 .alertas, .ultimasAtualizacoes{
   overflow-y: scroll;
-  height: 580px;
+  height: 590px;
 }
 
-#cardUsuario, #cardVotacao {
-  height: 300px;
+#cardVotacao {
+  height: 310px;
 }
 
 .votacao{
@@ -304,25 +314,12 @@ textarea:focus:not([readonly])+label {
   color: #550000 !important;
 }
 
-/*button-color*/
-.btn{
-  background-color: #550000 !important;
+.btn-pressed{
+  background-color: #1D0808 !important;
 }
 
 #campoBusca{
-  transition: all 0.4s ease;
-}
-
-@media screen and (min-width: 992px){
-  #campoBusca.stick {
-    top: 54px;
-  }
-}
-
-@media screen and (max-width: 990px){
-    #campoBusca.stick {
-      top: 45px;
-    }
+  transition: all 0.5s ease-in;
 }
 
 #campoBusca.stick {
@@ -334,11 +331,13 @@ textarea:focus:not([readonly])+label {
     margin-right: 0 !important;
 }
 
+
 #base-historico{
   overflow-y: scroll;
   overflow-x: hidden;
   height: 400px;
 }
+
 
 .full-screen-perfil{
   min-height: calc(100vh - 114px);

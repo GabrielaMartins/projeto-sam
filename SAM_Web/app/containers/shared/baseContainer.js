@@ -4,7 +4,7 @@ var axios = require("axios");
 var Config = require('Config');
 
 var BaseContainer = React.createClass({
-  
+
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
@@ -34,7 +34,6 @@ var BaseContainer = React.createClass({
   },
 
   componentDidMount: function(){
-
     //fetch informações do usuario
     var token = localStorage.getItem("token");
     var samaccount = localStorage.getItem("samaccount");
@@ -44,7 +43,7 @@ var BaseContainer = React.createClass({
     // busca no banco esse samaccount
     axios.get(Config.serverUrl + '/api/sam/user/' + samaccount).then(
       function(response){
-        if(response.data.perfil == "RH"){
+        if(response.data.perfil.toUpperCase() == "RH"){
 
           self.setState({
             perfil: response.data.perfil,
@@ -55,7 +54,7 @@ var BaseContainer = React.createClass({
                 id: 1,
                 itens: [
                   {
-                    nome: "Listar",
+                    nome: "Listar Todos",
                     url: "/Funcionario/Listagem",
                     id: 11
                   },
@@ -64,6 +63,16 @@ var BaseContainer = React.createClass({
                     url: "/Funcionario/Edicao/" + samaccount,
                     id: 12
                   },
+                  {
+                    nome: "Meu Perfil",
+                    url: "/Perfil/" + response.data.samaccount,
+                    id: 13
+                  },
+                  {
+                    nome: "Meu Histórico",
+                    url: "/Perfil/" + response.data.samaccount + "/historico/",
+                    id: 14
+                  }
                 ]
               },
               {
@@ -79,6 +88,11 @@ var BaseContainer = React.createClass({
                     nome: "Cadastrar",
                     url: "/Item/Cadastro",
                     id: 22
+                  },
+                  {
+                    nome: "Como Pontuar?",
+                    url: "/Pontuacao",
+                    id: 23
                   }
                 ]
               },
@@ -109,6 +123,16 @@ var BaseContainer = React.createClass({
                     nome: "Editar Meu Perfil",
                     url: "/Funcionario/Edicao/" + samaccount,
                     id: 12
+                  },
+                  {
+                    nome: "Ver Meu Perfil",
+                    url: "/Perfil/" + response.data.samaccount,
+                    id: 13
+                  },
+                  {
+                    nome: "Ver Meu Histórico",
+                    url: "/Perfil/" + response.data.samaccount + "/historico/",
+                    id: 14
                   }
                 ]
               },
@@ -120,6 +144,11 @@ var BaseContainer = React.createClass({
                     nome: "Listar",
                     url: "/Item/Listagem",
                     id: 21
+                  },
+                  {
+                    nome: "Como Pontuar?",
+                    url: "/Pontuacao",
+                    id: 22
                   }
                 ]
               },
@@ -128,8 +157,8 @@ var BaseContainer = React.createClass({
                 id: 3,
                 itens: [
                   {
-                    nome: "Agendamento",
-                    url: "/Item/Agendamento",
+                    nome: "Realizar Atividade",
+                    url: "/Item/Atividade",
                     id: 31
                   },
                   /*{
@@ -175,15 +204,9 @@ var BaseContainer = React.createClass({
         var distanceFromTop = $(this).scrollTop();
         if (distanceFromTop > 45) {
           $('#campoBusca').addClass('stick');
-          $('#campoBusca > .card').css('background-color', '#801515');
-          $('.pesquisar').addClass('white-text');
-          $('#campoBusca > .card > .material-icons').addClass('white-text');
           return false;
         } else {
           $('#campoBusca').removeClass('stick');
-          $('#campoBusca > .card').css('background-color', '#FFF');
-          $('#search').removeClass('white-text');
-          $('#campoBusca > .card > .material-icons').removeClass('white-text');
           return false;
         }
       });

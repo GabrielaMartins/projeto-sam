@@ -10,7 +10,7 @@ var Chart = require('react-google-charts').Chart;
 var PontuacaoGrafico = React.createClass({
   render: function(){
     return(
-      <div className="card-panel">
+      <div className="card-panel card-historico-color">
         <h5 className="card-title center-align colorText-default scrollreveal"><b>Pontuações Alcançadas por Período</b></h5>
         <div className="grafico card-content center scrollreveal" style={{paddingTop:10}}>
           {this.props.columnChart.data.length > 1 ?

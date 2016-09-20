@@ -7,7 +7,7 @@ var Link = ReactRouter.Link;
 //componente para Radio buttom
 var Radio = require('../../ui_elements/radio');
 
-var Agendamento = function(props){
+var Atividade = function(props){
   return(
     <form>
       <div style={{paddingTop: 30 }}>
@@ -15,7 +15,7 @@ var Agendamento = function(props){
           <div className="col l8 m10 s12 center-block">
             <div className="card z-depth-6">
               <div className="card-content">
-                <h3 className="colorText-default card-title center-align"><b>Agendamento</b></h3>
+                <h3 className="colorText-default card-title center-align"><b>Realizar Atividade</b></h3>
                 <div className="row">
                   <div className="input-field col l6 m6 s12">
                     <select
@@ -111,7 +111,7 @@ var Agendamento = function(props){
 
 }
 
-Agendamento.propTypes = {
+Atividade.propTypes = {
   categorias: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   itens: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   item: React.PropTypes.string.isRequired,
@@ -126,4 +126,4 @@ Agendamento.propTypes = {
   handleClear: React.PropTypes.func.isRequired
 }
 
-module.exports = Agendamento;
+module.exports = Atividade;

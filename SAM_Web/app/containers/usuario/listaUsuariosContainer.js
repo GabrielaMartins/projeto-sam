@@ -1,105 +1,109 @@
+"use strict"
+
 var React = require('react');
 var ListaUsuarios = require('../../components/shared/lista');
 var UsuarioCard = require('../../components/usuario/usuarioCard');
 var Config = require('Config');
+var Loading = require('react-loading');
+var axios = require("axios");
+
+var fezFetch = false;
 
 var ListaUsuariosContainer = React.createClass({
   getInitialState: function() {
     return {
-      usuarios: null,
-      consulta: ""
+      usuarios: [],
+      consulta: "",
+      filtro: ""
     };
   },
   componentDidMount: function(){
-    window.sr = ScrollReveal();
-    sr.reveal('.scrollreveal');
+    var token = localStorage.getItem("token");
+    var config = {
+      headers: {'token': token}
+    };
+    axios.get(Config.serverUrl+"/api/sam/user/all", config).then(
+      function(response){
+        fezFetch = true;
+        this.setState({
+          usuarios: response.data
+        });
+        //sr.reveal('.scrollreveal');
+      }.bind(this),
+      function(jqXHR){
+
+      }
+    );
   },
-  componentWillMount: function(){
-    //fazer fetch aqui
+  handlePesquisa: function(event){
     this.setState({
-      usuarios:[
-        {
-          nome:"Tancredo",
-          imagem:"./app/imagens/fulano.jpg",
-          cargo: "Sênior I",
-          prox_cargo: "Sênior II",
-          pontos:"160",
-          pontos_cargo:"180",
-          tempo_casa:"5 anos"
-        },
-        {
-          nome:"Gabriela",
-          imagem:"./app/imagens/fulano.jpg",
-          cargo: "Estagiário",
-          prox_cargo: "Júnior I",
-          pontos:"50",
-          pontos_cargo:"100",
-          tempo_casa:"1 ano"
-        },
-        {
-          nome:"Jesley",
-          imagem:"./app/imagens/fulano.jpg",
-          cargo: "Estagiário",
-          prox_cargo: "Júnior I",
-          pontos:"60",
-          pontos_cargo:"100",
-          tempo_casa:"1 ano"
-        },
-        {
-          nome:"Teles",
-          imagem:"./app/imagens/fulano.jpg",
-          cargo: "Sênior I",
-          prox_cargo: "Sênior II",
-          pontos:"130",
-          pontos_cargo:"180",
-          tempo_casa:"4 anos"
-        },
-        {
-          nome:"Daniel",
-          imagem:"./app/imagens/fulano.jpg",
-          cargo: "Júnior I",
-          prox_cargo: "Júnior II",
-          pontos:"160",
-          pontos_cargo:"180",
-          tempo_casa:"2 anos"
-        },
-        {
-          nome:"Thiago",
-          imagem:"./app/imagens/fulano.jpg",
-          cargo: "Sênior I",
-          prox_cargo: "Sênior II",
-          pontos:"130",
-          pontos_cargo:"180",
-          tempo_casa:"4 anos"
-        }
-      ]
-  });
-},
-handlePesquisa: function(event){
+      consulta: event.target.value
+    });
+  },
 
-  this.setState({
-    consulta: event.target.value
-  });
+  handleFiltro: function(event){
+    debugger;
+    this.setState({
+      filtro: event.target.value
+    });
+  },
 
-},
+  handleDesativarUsuario: function(id, nome){
+    swal({
+      title: "Atenção!",
+      text: "Você tem certeza que deseja desativar o usuário " + nome + " ?",
+      type: "warning",
+      confirmButtonText: "Sim",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#550000"
+    },function(){
+
+    });
+  },
 
   render : function(){
-     var placeholder = "Procure por Funcionários ou Cargos";
-     var lista = [];
 
-    this.state.usuarios.forEach(function(usuario){
-      if(usuario.nome.toLowerCase().indexOf(self.state.consulta.toLowerCase())!=-1 ||
-        item.Cargo.nome.toLowerCase().indexOf(self.state.consulta.toLowerCase())!=-1){
-          lista.push(<div className="col l4 m6 s12"><UsuarioCard conteudo = {usuario}/></div>);
+    if(!fezFetch){
+      return (
+        <div className="full-screen-less-nav">
+          <div className="row wrapper">
+            <Loading type='bubbles' color='#550000' height={150} width={150}/>
+          </div>
+        </div>
+      );
+    }
+     var placeholder = "Procure por Funcionários";
+     var lista = [];
+     var self = this;
+
+    this.state.usuarios.forEach(function(usuario, index){
+      if(usuario.nome.toLowerCase().indexOf(self.state.consulta.toLowerCase())!=-1 &&
+        usuario.Cargo.nome.toLowerCase().indexOf(self.state.filtro.toLowerCase())!=-1){
+          lista.push(<div className="col l4 m6 s12" key={index}><UsuarioCard conteudo = {usuario} desativarUsuario = {this.handleDesativarUsuario}/></div>);
         }
+    }.bind(this));
+
+    var cargos = ["Certificação","Curso", "Palestra", "Workshop"];
+    var placeholderOption = "Filtre os Cargos";
+
+    var options = cargos.map(function(cargo, index){
+      return <option key = {index} value={cargo}>{cargo}</option>
     });
 
-    <ListaUsuarios
-      placeholder = {placeholder}
-      consulta = {this.state.consulta}
-      handlePesquisa = {this.handlePesquisa}>
-      {lista}
-    </ListaUsuarios>
+
+    return(
+      <ListaUsuarios
+        placeholder = {placeholder}
+        consulta = {this.state.consulta}
+        filtro = {this.state.filtro}
+        handlePesquisa = {this.handlePesquisa}
+        handleFiltro = {this.handleFiltro}
+        optionFiltro = {options}
+        placeholderOption = {placeholderOption}>
+        {lista}
+      </ListaUsuarios>
+    );
   }
 });
 

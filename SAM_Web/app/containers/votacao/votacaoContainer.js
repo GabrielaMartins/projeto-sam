@@ -58,6 +58,7 @@ var VotacaoContainer = React.createClass({
   componentWillUnmount: function(){
     fezFetch = false;
   },
+  
   render : function(){
       if(!fezFetch){
         return null;

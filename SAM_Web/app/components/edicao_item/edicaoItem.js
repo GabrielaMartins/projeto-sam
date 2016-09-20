@@ -7,7 +7,7 @@ var Link = ReactRouter.Link;
 //Radio Button
 var Radio = require('../../ui_elements/radio');
 
-var CadastroItem = function(props){
+var EdicaoItem = function(props){
   return(
     <form>
       <div style={{paddingTop: 30 }}>
@@ -15,7 +15,7 @@ var CadastroItem = function(props){
             <div className="col l8 m10 s12 center-block">
               <div className="card z-depth-6">
                 <div className="card-content">
-                  <h3 className="colorText-default card-title center-align"><b>Cadastrar Novo Item</b></h3>
+                  <h3 className="colorText-default card-title center-align"><b>Editar Item</b></h3>
                   <div className="row">
                     <div className="input-field col l12 m12 s12">
                       <input
@@ -136,7 +136,7 @@ var CadastroItem = function(props){
 
 }
 
-CadastroItem.propTypes = {
+EdicaoItem.propTypes = {
    categorias: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
    rotulosRadio: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
    item: React.PropTypes.string.isRequired,

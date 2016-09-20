@@ -21,29 +21,28 @@ var Usuario = React.createClass({
 
     return(
       <div className="card-panel" id="cardUsuario">
-        <div className="container">
           <img className="responsive-img circle center-block scrollreveal" src={this.props.conteudo.foto} style={{height:100}}/>
           <h5 className="center-align colorText-default scrollreveal"><b>{this.props.conteudo.nome}</b></h5>
           <div className="row scrollreveal">
             <div className="col l6 m6 s6">
-              <span className="black-text"><b>Level: </b> {this.props.conteudo.Cargo.nome}</span>
+              <span className="black-text right"><b>Level: </b> {this.props.conteudo.Cargo.nome}</span>
             </div>
             <div className="col l6 m6 s6">
-                <span className="right black-text"><b>Próximo level: </b> {this.props.conteudo.ProximoCargo[0].nome}</span>
+                <span className="black-text left"><b>Próximo level: </b> {this.props.conteudo.ProximoCargo[0].nome}</span>
             </div>
           </div>
           <div className="row scrollreveal">
             <div className="col l6 m6 s6 black-text">
-                <span><b>{this.props.conteudo.pontos}</b>/{this.props.conteudo.ProximoCargo[0].pontuacao}</span>
+                <span className="right"><b>{this.props.conteudo.pontos}</b>/{this.props.conteudo.ProximoCargo[0].pontuacao}</span>
                 <div className="progress">
                   <div className="determinate" style={{width: progresso + "%"}}></div>
                 </div>
+                <span className="right pequena"><b>Próxima avaliação:</b> {moment(this.props.conteudo.DataUltimaPromocao).add(1, 'y').format('L')}</span>
             </div>
             <div className="col l6 m6 s6">
-              <span className="right black-text"><b>Tempo de casa: </b> {tempoDeCasa}</span>
+              <span className="left black-text"><b>Tempo de casa: </b> {tempoDeCasa}</span>
             </div>
           </div>
-        </div>
         </div>
     );
   }

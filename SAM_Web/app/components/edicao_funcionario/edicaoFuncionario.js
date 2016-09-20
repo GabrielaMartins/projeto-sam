@@ -4,7 +4,6 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 
-
 var EdicaoFuncionario = function(props){
   return(
     <div style={{paddingTop: 30 }}>

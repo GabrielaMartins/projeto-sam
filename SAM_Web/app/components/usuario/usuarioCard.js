@@ -2,6 +2,8 @@ var React = require('react');
 var ReactRouter = require('react-router');
 var Usuario = require('../usuario/usuario');
 
+var Link = ReactRouter.Link;
+
 var Card = React.createClass({
   render: function(){
     return(
@@ -10,16 +12,16 @@ var Card = React.createClass({
           <img className="activator" src={this.props.conteudo.foto} style={{height:300}}/>
         </div>
         <div className="card-content center">
-          <span className="card-title activator colorText-default"><b>{this.props.conteudo.nome}</b><i className="material-icons right">more_vert</i></span>
+          <span className="card-title activator colorText-default truncate"><b>{this.props.conteudo.nome}</b><i className="material-icons right">more_vert</i></span>
         </div>
         <div className="card-action">
           <div className="row">
-            <div className="col l4 m12 s12"><a className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light yellow darken-3 btn">Perfil</a><br/><br/></div>
-            <div className="col l4 m12 s12"><a className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light green darken-3 btn">Editar</a><br/><br/></div>
-            <div className="col l4 m12 s12"><a className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light red darken-3 btn">Desativar</a><br/><br/></div>
+            <div className="col l4 m12 s12"><Link to={{ pathname: '/Perfil/' + this.props.conteudo.samaccount}} className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light yellow darken-3 btn">Perfil</Link><br/><br/></div>
+            <div className="col l4 m12 s12"><Link to={{ pathname: '/Funcionario/Edicao/' + this.props.conteudo.samaccount}} className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light green darken-3 btn">Editar</Link><br/><br/></div>
+            <div className="col l4 m12 s12"><button className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light red darken-3 btn" onClick={this.props.desativarUsuario.bind(null, this.props.conteudo.id, this.props.conteudo.nome)}>Desativar</button><br/><br/></div>
           </div>
         </div>
-        <div className="card-reveal">
+        <div className="card-reveal scrollbar">
           <div className="row">
             <span className="card-title colorText-default"><i className="material-icons right">close</i></span>
           </div>

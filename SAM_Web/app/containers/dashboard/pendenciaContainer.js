@@ -7,7 +7,8 @@ var Link = ReactRouter.Link;
 
 //componentes
 var CardPendencia = require('../../components/dashboard/cardsPendencia');
-var Modal = require('../../components/dashboard/modal_pendencias/modal_promocao');
+var ModalPromocao = require('../../components/dashboard/modal_pendencias/modal_promocao');
+var ModalAgendamento = require('../../components/dashboard/modal_pendencias/modal_respostaAgendamento');
 
 var Pendencias = React.createClass({
   //se for do tipo votação, cria link para a página de votação
@@ -33,7 +34,14 @@ var Pendencias = React.createClass({
   tipoModal: function(conteudo){
     if(conteudo.Evento.tipo == "promocao"){
       return (
-        <Modal index = {conteudo.id} handleDeleteAlerta = {this.props.handleDeleteAlerta}/>
+        <ModalPromocao index = {conteudo.id} handleDeleteAlerta = {this.props.handleDeleteAlerta}/>
+      );
+    }else if(conteudo.Evento.tipo == "agendamento"){
+      return(
+        <ModalAgendamento index = {conteudo.id}
+          usuario = {conteudo.Usuario}
+          atividade = {conteudo.Evento}
+          handleDeleteAlerta = {this.props.handleDeleteAlerta}/>
       );
     }else{
       return null;
@@ -48,6 +56,10 @@ var Pendencias = React.createClass({
       return "fa fa-lg fa-trophy";
     }else if(tipo == "atividade"){
       return "fa fa-lg fa-calendar";
+    }else if(tipo == "agendamento"){
+      return "fa fa-lg fa-calendar-check-o"
+    }else if(tipo == "atribuicao"){
+      return "fa fa-lg fa fa-pencil"
     }
   },
 
@@ -55,7 +67,7 @@ var Pendencias = React.createClass({
     var self = this;
 
     var pendencias = this.props.pendencias.map(function(conteudo, index){
-      
+
       return(
         <div key={index} className = {self.classes(self.props.tipoPendencia)}>
           {
