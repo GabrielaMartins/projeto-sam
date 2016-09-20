@@ -8,6 +8,7 @@ using SamApiModels.Models.Agendamento;
 using System.Linq;
 using System.Net;
 using MessageSystem.Erro;
+using System.Globalization;
 
 namespace SamServices.Services
 {
@@ -109,12 +110,29 @@ namespace SamServices.Services
                     usuario = eventoAgendamento.usuario,
                     tipo = "atividade"
                 });
-
+              
                 // Gera um evento de votacao se o item da atividade tem a categoria marcada como:
-                if (eventoAgendamento.Item.Categoria.nome == "apresentacao" ||
-                   eventoAgendamento.Item.Categoria.nome == "blog tecnico" ||
-                   eventoAgendamento.Item.Categoria.nome == "comunidade de software" ||
-                   eventoAgendamento.Item.Categoria.nome == "repositorio de codigo")
+                if (
+                    (string.Compare(eventoAgendamento.Item.Categoria.nome, "apresentacao",
+                    CultureInfo.CurrentCulture,
+                    CompareOptions.IgnoreNonSpace |
+                    CompareOptions.IgnoreCase) == 0)
+                    ||
+                    (string.Compare(eventoAgendamento.Item.Categoria.nome, "blog tecnico",
+                    CultureInfo.CurrentCulture,
+                    CompareOptions.IgnoreNonSpace |
+                    CompareOptions.IgnoreCase) == 0)
+                    ||
+                    (string.Compare(eventoAgendamento.Item.Categoria.nome, "comunidade de software",
+                    CultureInfo.CurrentCulture,
+                    CompareOptions.IgnoreNonSpace |
+                    CompareOptions.IgnoreCase) == 0)
+                    ||
+                    (string.Compare(eventoAgendamento.Item.Categoria.nome, "repositorio de codigo",
+                    CultureInfo.CurrentCulture,
+                    CompareOptions.IgnoreNonSpace |
+                    CompareOptions.IgnoreCase) == 0)
+                    )
                 {
                     var eventoVotacao = new Evento()
                     {
