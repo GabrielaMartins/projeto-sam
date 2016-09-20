@@ -20,6 +20,22 @@ namespace SamApi.Controllers
     {
 
         /// <summary>
+        /// Promove um funcionário do SAM
+        /// </summary>
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível executar a promoção do usuário do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(Roles = "rh")]
+        [HttpPost]
+        [Route("promote")]
+        public HttpResponseMessage Promote(PromocaoUsuarioViewModel promocao)
+        {
+
+            UsuarioServices.PromoveUsuario(promocao);
+            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Congratulations!", $"The user {promocao.Usuario} was promoted"));
+        }
+
+        /// <summary>
         /// Retorna a lista de usuários do SAM
         /// </summary>
         [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível obter a lista de usuários do SAM", typeof(List<UsuarioViewModel>))]
