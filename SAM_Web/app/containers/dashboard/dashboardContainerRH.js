@@ -172,7 +172,6 @@
           </Link>
         );
       });
-
         return(<DashboardRH
           eventos = {eventos}
           promocoes = {promocoes}

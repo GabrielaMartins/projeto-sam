@@ -29,7 +29,10 @@ namespace SamServices.Services
              {
                  Usuario = u,
                  PontosFaltantes = (u.ProximoCargo.ElementAt(0).pontuacao - u.pontos)
-             }).ToList();
+
+             })
+             .OrderBy(p => p.PontosFaltantes)
+             .ToList();
 
             return promocoesViewModel;
 

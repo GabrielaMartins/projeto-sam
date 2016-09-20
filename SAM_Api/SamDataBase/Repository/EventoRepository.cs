@@ -20,45 +20,19 @@ namespace Opus.DataBaseEnvironment
         {
             if (quantidade.HasValue)
             {
-                if(tipo == null)
-                    return GetAll().OrderBy(e => e.data).Take(quantidade.Value).ToList();
+                if(tipo != null)
+                    return Find(e => e.tipo == tipo).OrderByDescending(e => e.data).Take(quantidade.Value).ToList();
 
-                return Find(e => e.tipo == tipo).OrderBy(e => e.data).Take(quantidade.Value).ToList();
+                return GetAll().OrderByDescending(e => e.data).Take(quantidade.Value).ToList();
             }
             else
             {
                 if(tipo != null)
-                    return GetAll().ToList();
+                    return Find(e => e.tipo == tipo).OrderByDescending(e => e.data).ToList();
 
-                return Find(e => e.tipo == tipo).ToList();
+                return GetAll().OrderByDescending(e => e.data).ToList();
             }
 
         }
-        
-        public List<Evento> RecuperaCertificacoesMaisProcuradas()
-        {
-
-            //select ev.item, count(ev.item) as qtd from Eventos ev group by ev.item order by qtd desc
-
-            //var eventos = DataAccess.Instance.EventoRepository().GetAll();
-            //var query = from evento in eventos
-            //            group evento
-            //            by evento.item into t
-            //            select t;
-
-
-            //var certificacoesViewModel = new List<EventoViewModel>();
-            //var certificacoes = query.ToList();
-            //foreach(var certificacao in certificacoes)
-            //{
-            //    var certificacaoViewModel = Mapper.Map<Evento, EventoViewModel>(certificacao);
-            //    certificacoesViewModel.Add(certificacaoViewModel);
-            //}
-
-            //return certificacoesViewModel;
-
-            throw new NotImplementedException();
-        }
-
     }
 }

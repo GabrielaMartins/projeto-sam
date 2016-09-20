@@ -35,11 +35,18 @@ namespace Opus.RepositoryPattern
             return DbSet.Find(keys);
         }
 
-        public virtual T Add(T entity)
+        public void Add(T entity)
         {
 
             DbSet.Add(entity);
-            
+        }
+
+        public virtual T AddAndCommit(T entity)
+        {
+
+            DbSet.Add(entity);
+            SubmitChanges();
+
             return entity;
         }
 

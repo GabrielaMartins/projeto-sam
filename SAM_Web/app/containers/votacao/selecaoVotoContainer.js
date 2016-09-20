@@ -62,7 +62,7 @@ var SelecaoVotoContainer = React.createClass({
 
         var voto;
         var url;
-        
+
         //configurações para passar o token
         var token = localStorage.getItem("token");
         var samaccount = localStorage.getItem("samaccount");

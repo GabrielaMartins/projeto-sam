@@ -7,12 +7,13 @@ using SamApiModels.Votacao;
 using SamDataBase.Model;
 using System.Collections.Generic;
 using System.Linq;
-using DefaultException.Models;
 using System.Net;
 using System.Configuration;
 using System.Web;
 using SamApiModels.Models.User;
 using SamHelpers;
+using MessageSystem.Erro;
+using System;
 
 namespace SamServices.Services
 {
@@ -35,6 +36,57 @@ namespace SamServices.Services
                 }
 
                 return r;
+            }
+        }
+
+        public static void PromoveUsuario(PromocaoUsuarioViewModel promocao)
+        {
+            using (var evtRep = DataAccess.Instance.GetEventoRepository())
+            using (var pRep = DataAccess.Instance.GetPromocaoRepository())
+            using (var rep = DataAccess.Instance.GetUsuarioRepository())
+            {
+                // encontra o usuário
+                var usuario = rep.Find(u => u.samaccount == promocao.Usuario).SingleOrDefault();
+
+                // cria uma nova promocao
+                var p = new Promocao()
+                {
+                    data = DateTime.Now,
+                    usuario = usuario.id,
+                    cargoAnterior = usuario.cargo,
+                    cargoAdquirido = promocao.Cargo
+                };
+
+                // efetiva a mudança no banco
+                pRep.AddAndCommit(p);
+
+                // recupera o ultimo evento (atividade) que o usuario fez, e entao captura o id do item
+                var item = evtRep.Find(evt => evt.usuario == usuario.id && evt.tipo == "atividade")
+                                 .OrderByDescending(evt => evt.data)
+                                 .Select(evt => evt.Item.id)
+                                 .FirstOrDefault();
+
+                // gera o evento atrelado a promocao
+                var eventoPromocao = new Evento()
+                {
+                    data = p.data,
+                    estado = false,
+                    tipo = "promocao",
+                    usuario = usuario.id,
+                    item = item
+                };
+
+                // efetiva a mudança no banco
+                evtRep.AddAndCommit(eventoPromocao);
+
+                // gera as pendencias
+                PendenciaServices.GenerateHrPendencyFor(eventoPromocao);
+                PendenciaServices.GenerateEmployeePendencyFor(eventoPromocao);
+
+                // atualiza as mudanças no banco (promove o usuário)
+                usuario.cargo = promocao.Cargo;
+                rep.Update(usuario);
+                rep.SubmitChanges();
             }
         }
 
@@ -96,6 +148,65 @@ namespace SamServices.Services
             }
         }
 
+        public static void AtribuiPontos(AtribuicaoPontosUsuarioViewModel atribuicao)
+        {
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
+            using (var eventRep = DataAccess.Instance.GetEventoRepository())
+            {
+                
+                // recupera o usuario que receberá os pontos
+                var usuario = userRep.Find(u => u.samaccount == atribuicao.Usuario).SingleOrDefault();
+
+                // recupera o evento pelo qual o usuário receberá os pontos
+                var eventoAtribuicao = eventRep.Find(e => e.id == atribuicao.Evento).SingleOrDefault();
+                if(eventoAtribuicao.tipo != "atribuicao")
+                {
+                    throw new ErroEsperado(HttpStatusCode.BadRequest, "It's not a grant event", $"The event #{eventoAtribuicao.id} could not be processed because it's not a grant event");
+                }
+
+                // recupera o item desse evento
+                var item = eventoAtribuicao.Item;
+
+                // calcula a pontuação que o usuário receberá
+                var pesoCategoria = item.Categoria.peso;
+                var pontos = pesoCategoria * item.dificuldade * item.modificador;
+
+                // atualiza a pontuação do usuário
+                usuario.pontos += pontos;
+                userRep.Update(usuario);
+                userRep.SubmitChanges();
+
+                // Remove as pendencias de atribuição para o evento associadas ao RH
+                PendenciaServices.RemoveHrPendencyFor(eventoAtribuicao);
+
+                // Remove as pendencias de atribuição para o evento associadas ao funcionário
+                PendenciaServices.CloseEmployeePendencyFor(eventoAtribuicao, usuario.id);
+
+                // encerra o evento de atribuicao
+                eventoAtribuicao.estado = true;
+                eventRep.Update(eventoAtribuicao);
+                eventRep.SubmitChanges();
+
+                // ************* DAQUI PARA BAIXO ESTÁ MEIO NEBULOSO  ************* 
+                // encontra o evento de atividade atrelado a atribuição de pontos
+                var atividade = eventRep.Find(e => 
+                                              e.tipo == "atividade" &&
+                                              e.item == eventoAtribuicao.item && 
+                                              e.usuario == eventoAtribuicao.usuario && 
+                                              e.data == eventoAtribuicao.data
+                                              ).SingleOrDefault();
+
+                // marca como encerrada a atividade
+                atividade.estado = true;
+                eventRep.Update(atividade);
+                eventRep.SubmitChanges();
+
+                // encerra as pendencias associadas a essa atividade
+                PendenciaServices.RemoveHrPendencyFor(atividade);
+                PendenciaServices.CloseEmployeePendencyFor(atividade, eventoAtribuicao.usuario.Value);
+            }
+        }
+
         public static List<VotoViewModel> RecuperaVotos(UsuarioViewModel usuario, int? quantity = null)
         {
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
@@ -143,7 +254,7 @@ namespace SamServices.Services
                 var userFound = userRep.Find(u => u.samaccount == user.samaccount).SingleOrDefault() != null;
                 if (userFound)
                 {
-                    throw new ExpectedException(HttpStatusCode.Forbidden, "Duplicated User", $"user '{user.samaccount}' already exists");
+                    throw new ErroEsperado(HttpStatusCode.Forbidden, "Duplicated User", $"user '{user.samaccount}' already exists");
                 }
 
                 // save image to disk (we need do it before all other task)
@@ -174,7 +285,7 @@ namespace SamServices.Services
                 var userToBeUpdated = userRep.Find(u => u.samaccount == samaccount).SingleOrDefault();
                 if (userToBeUpdated == null)
                 {
-                    throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", $"The server could not find the user '{samaccount}'");
+                    throw new ErroEsperado(HttpStatusCode.NotFound, "User Not Found", $"The server could not find the user '{samaccount}'");
                 }
 
                 if (user.foto == "")

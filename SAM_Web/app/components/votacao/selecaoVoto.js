@@ -7,7 +7,7 @@ var SelecaoVoto = function(props){
       <div className="card-panel" id="cardVotacao">
         <h5 className="card-title center-align colorText-default" ><b>{props.titulo}</b></h5>
         <div className="row">
-          <div className="input-field col l6 s12 m6">
+          <div className= {props.votoModificador == null ?  "input-field col l12 s12 m12" : "input-field col l6 s12 m6"}>
             <select id="Select1" value={props.dificuldade} onChange={props.changeDificuldade}>
               <option value="" disabled>Escolha uma opção</option>
               <option value="1">Fácil</option>

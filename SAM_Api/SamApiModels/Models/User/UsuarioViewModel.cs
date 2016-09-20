@@ -85,7 +85,7 @@ namespace SamApiModels.User
         /// Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (funcionario, rh)
         /// </summary>
         [Required]
-        [AllowedValues(new[] { "rh", "funcionario" })]
+        [AllowedValues(new object[] { "rh", "funcionario" })]
         public string perfil { get; set; }
 
         /// <summary>
@@ -95,11 +95,19 @@ namespace SamApiModels.User
         public virtual CargoViewModel Cargo { get; set; }
 
         /// <summary>
+        /// Data da ultima promocao do usuário
+        /// </summary>
+        [Required]
+        public DateTime DataUltimaPromocao { get; set; }
+
+
+        /// <summary>
         /// É uma lista dos próximos cargos na hierarquia de cargo, os quais o usuário pode escolher
         /// </summary>
         [Required]
-        public virtual List<CargoViewModel> ProximoCargo { get; set; }
+        public List<CargoViewModel> ProximoCargo { get; set; }
 
+    
         /// <summary>
         /// Construtor do objeto
         /// </summary>

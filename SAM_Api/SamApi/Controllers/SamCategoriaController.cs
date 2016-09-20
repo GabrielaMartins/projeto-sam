@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
-using System.Linq;
 using SamApiModels.Categoria;
 using Swashbuckle.Swagger.Annotations;
-using DefaultException.Models;
 using SamApi.Attributes.Authorization;
 using SamServices.Services;
+using MessageSystem.Mensagem;
 
 namespace SamApi.Controllers
 {

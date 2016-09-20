@@ -2,12 +2,13 @@
 using System.Net.Http;
 using System.Net;
 using System.Configuration;
-using DefaultException.Models;
 using SamApiModels.Login;
 using Swashbuckle.Swagger.Annotations;
 using SamHelpers;
 using Opus.DataBaseEnvironment;
 using System.Linq;
+using MessageSystem.Mensagem;
+using MessageSystem.Erro;
 
 namespace SamApiService.Controllers
 {
@@ -39,7 +40,7 @@ namespace SamApiService.Controllers
                 if (!adConsumer.IsValidUser(login.User, login.Password))
                 {
                     // if credential is invalid, return an error
-                    throw new ExpectedException(HttpStatusCode.Unauthorized, "Unauthenticated", "The server could not authenticated the user");
+                    throw new ErroEsperado(HttpStatusCode.Unauthorized, "Unauthenticated", "The server could not authenticated the user");
                 }
             #endif
 
@@ -53,7 +54,7 @@ namespace SamApiService.Controllers
                 {
 
                     // return a http error
-                    throw new ExpectedException(HttpStatusCode.NotFound, "User Not Found", $"We could not found the user '{login.User}' in our database");
+                    throw new ErroEsperado(HttpStatusCode.NotFound, "User Not Found", $"We could not found the user '{login.User}' in our database");
 
                 }
 

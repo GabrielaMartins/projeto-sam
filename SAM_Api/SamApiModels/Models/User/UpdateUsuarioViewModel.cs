@@ -9,12 +9,14 @@ namespace SamApiModels.Models.User
     /// </summary>
     public class UpdateUsuarioViewModel
     {
+        /*
         /// <summary>
         /// Nome completo do usuário do SAM
         /// </summary>
         [Required]
         [StringLength(50, ErrorMessage = "string size is greater than 50 characters")]
         public string nome { get; set; }
+        */
 
         /// <summary>
         /// Identifica a data que o funcionário iniciou no SAM
@@ -65,7 +67,7 @@ namespace SamApiModels.Models.User
         /// Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (funcionario, rh)
         /// </summary>
         [Required]
-        [AllowedValues(new[] { "rh", "funcionario" })]
+        [AllowedValues(new object[] { "rh", "funcionario" })]
         public string perfil { get; set; }
 
         /// <summary>

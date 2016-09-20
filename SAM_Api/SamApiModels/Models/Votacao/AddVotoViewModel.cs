@@ -12,6 +12,7 @@ namespace SamApiModels.Votacao
         /// É o samaccount do usuário que votou no evento em questão
         /// </summary>
         [Required]
+        [ValidKey(ValidKeyAttribute.Entities.Usuario)]
         public string Usuario { get; set; }
 
         /// <summary>
@@ -24,14 +25,14 @@ namespace SamApiModels.Votacao
         /// <summary>
         /// Valor que compõe a nota da votação (1, 3, 8)
         /// </summary>
-        [AllowedValues(new int[] {1, 3, 8 })]
+        [AllowedValues(new object[] {1, 3, 8 })]
         [Required]
         public int Dificuldade { get; set; }
 
         /// <summary>
         /// Valor que compõe a nota da votação (1, 2, 3, 8)
         /// </summary>
-        [AllowedValues(new int[] {1, 2, 3, 8 })]
+        [AllowedValues(new object[] {1, 2, 3, 8 })]
         [Required]
         public int Modificador { get; set; }
 
