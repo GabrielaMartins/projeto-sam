@@ -37,9 +37,9 @@ CREATE PROCEDURE dbo.geraPromocoes AS
 			c.id as proximo_cargo
 				FROM Cargos c, Usuarios u
 				WHERE
-				u.cargo <> c.id and
-				c.pontuacao - u.pontos > 0 and
-				c.pontuacao - u.pontos <= c.pontuacao * 0.2
+				c.id > u.cargo and
+				u.pontos >= c.pontuacao and
+				u.perfil <> 'rh'
 
 		) AS TUsuarios
 		JOIN
