@@ -59,7 +59,7 @@ namespace SamApi.Controllers
             var certicacoesMaisProcuradas = CertificacoesProcuradas();
 
             // ultimas atividades
-            var atividades = EventoServices.RecuperaEventos(null, 10);
+            var atividades = EventoServices.RecuperaEventos("atividade", 10);
 
             // pendencias destinadas ao usuario usuario RH
             var pendencias = UsuarioServices.RecuperaPendencias(usuario);
@@ -81,7 +81,7 @@ namespace SamApi.Controllers
         {
             var pendencias = UsuarioServices.RecuperaPendencias(usuario);
             var resultadoVotacoes = UsuarioServices.RecuperaVotos(usuario, 10);
-            var ultimosEventos = UsuarioServices.RecuperaEventos(usuario, 10);
+            var ultimosEventos = UsuarioServices.RecuperaEventos(usuario, 10, "atividade");
             var certicacoesMaisProcuradas = CertificacoesProcuradas();
 
             return new DashboardFuncionario
