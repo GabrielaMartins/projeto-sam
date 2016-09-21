@@ -62,12 +62,12 @@ CREATE TABLE Eventos
 	id INT IDENTITY(1,1) PRIMARY KEY,
 
 	-- assunto do evento
-	item INT UNIQUE FOREIGN KEY REFERENCES Itens(id) ON DELETE NO ACTION,
+	item INT FOREIGN KEY REFERENCES Itens(id) ON DELETE NO ACTION,
 
 	-- usuário que gerou o evento (possivelmente quem precisa ganhar pontos)
-	usuario INT UNIQUE FOREIGN KEY REFERENCES Usuarios(id) ON DELETE NO ACTION,
+	usuario INT FOREIGN KEY REFERENCES Usuarios(id) ON DELETE NO ACTION,
 
-	data DATE NOT NULL,
+	data DATETIME UNIQUE,
 	estado BIT NOT NULL DEFAULT 0,
 	tipo VARCHAR(12) UNIQUE NOT NULL CHECK(tipo IN ('votacao','atribuicao','promocao','agendamento')),
 );
