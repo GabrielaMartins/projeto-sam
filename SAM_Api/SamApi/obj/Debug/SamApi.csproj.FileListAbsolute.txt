@@ -156,3 +156,5 @@ C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamA
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\obj\Debug\SamApi.pdb
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\MessageSystem.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\MessageSystem.pdb
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\git-issuer.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\git-issuer.pdb

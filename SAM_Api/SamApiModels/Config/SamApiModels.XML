@@ -474,7 +474,11 @@
             Representa um item do SAM
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "P:SamApiModels.Item.AddItemViewModel.Nome" -->
+        <member name="P:SamApiModels.Item.AddItemViewModel.Nome">
+            <summary>
+            Representa o nome do item
+            </summary>
+        </member>
         <member name="P:SamApiModels.Item.AddItemViewModel.Descricao">
             <summary>
             Representa a descrição do item
@@ -667,6 +671,11 @@
             Identifica o item relacionado ao evento
             </summary>
         </member>
+        <member name="P:SamApiModels.Pendencia.PendenciaEventoViewModel.Usuario">
+            <summary>
+            Representa o usuário que fez o evento
+            </summary>
+        </member>
         <member name="M:SamApiModels.Pendencia.PendenciaEventoViewModel.#ctor">
             <summary>
             Construtor do objeto
@@ -817,7 +826,7 @@
             Representa a pendência associada a um usuário do SAM
             </summary>
         </member>
-        <member name="P:SamApiModels.User.PendenciaUsuarioViewModel.id">
+        <member name="P:SamApiModels.User.PendenciaUsuarioViewModel.Id">
             <summary>
             Identifica a pendência do usuário
             </summary>
@@ -830,6 +839,11 @@
         <member name="F:SamApiModels.User.PendenciaUsuarioViewModel.Evento">
             <summary>
             Representa o evento para o qual a pendência foi gerada
+            </summary>
+        </member>
+        <member name="F:SamApiModels.User.PendenciaUsuarioViewModel.Estado">
+            <summary>
+            Representa o estado da pendência
             </summary>
         </member>
         <member name="M:SamApiModels.User.PendenciaUsuarioViewModel.#ctor">

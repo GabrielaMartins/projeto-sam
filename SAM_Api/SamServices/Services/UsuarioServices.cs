@@ -141,7 +141,6 @@ namespace SamServices.Services
             using (var userRep = DataAccess.Instance.GetUsuarioRepository())
             {
                 var pendencias = userRep.RecuperaPendencias(usuario.id);
-
                 var pendeciasViewModel = Mapper.Map<List<Pendencia>, List<PendenciaUsuarioViewModel>>(pendencias);
 
                 return pendeciasViewModel;

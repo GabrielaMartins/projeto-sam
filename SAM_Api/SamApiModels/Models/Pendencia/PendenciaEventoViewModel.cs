@@ -45,10 +45,12 @@ namespace SamApiModels.Pendencia
         public ItemViewModel Item { get; set; }
 
 
- 
+        /// <summary>
+        /// Representa o usuário que fez o evento
+        /// </summary>
         // ESTA DANDO ERRO NO MAPPING
-        //[Required]
-        //public UsuarioViewModel Usuario { get; set; }
+        [Required]
+        public UsuarioViewModel Usuario { get; set; }
 
 
         /// <summary>

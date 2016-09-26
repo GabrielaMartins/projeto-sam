@@ -14,7 +14,7 @@ namespace SamApiModels.User
         /// </summary>
         [Required]
         [ValidKey(ValidKeyAttribute.Entities.Pendencia)]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Representa o usuário cujo a pendência foi destinada
@@ -27,6 +27,12 @@ namespace SamApiModels.User
         /// </summary>
         [Required]
         public PendenciaEventoViewModel Evento;
+
+        /// <summary>
+        /// Representa o estado da pendência
+        /// </summary>
+        [Required]
+        public bool Estado;
 
         /// <summary>
         /// construtor do objeto
