@@ -10,7 +10,7 @@ var Radio = require('../../ui_elements/radio');
 var CadastroItem = function(props){
   return(
     <form>
-      <div className="full-screen-less-nav">
+      <div style={{paddingTop: 30 }}>
           <div className="row wrapper">
             <div className="col l8 m10 s12 center-block">
               <div className="card z-depth-6">

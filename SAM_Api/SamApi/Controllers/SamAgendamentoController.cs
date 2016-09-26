@@ -1,6 +1,7 @@
-﻿using DefaultException.Models;
-using SamApi.Attributes.Authorization;
+﻿using SamApi.Attributes.Authorization;
+using MessageSystem.Mensagem;
 using SamApiModels.Models.Agendamento;
+using SamModelValidationRules.Attributes.Validation;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -37,17 +38,17 @@ namespace SamApi.Controllers
         /// <summary>
         /// Aprova o agendamento de um evento no SAM
         /// </summary>
+        /// <param name="evt">Identifica o evento a ser aprovado</param>
         [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível aceitar a solicitação do evento do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "rh")]
         [HttpGet]
-        [Route("approve/{id}")]
-        public HttpResponseMessage Approve(int id)
+        [Route("approve/{evt}")]
+        public HttpResponseMessage Approve([ValidKey(ValidKeyAttribute.Entities.Evento)]int evt)
         {
-            var user = Convert.ToInt32(Request.Headers.GetValues("id").SingleOrDefault());
-            EventoServices.AprovaAgendamento(id, user);
-            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Scheduling Approved", $"You accepted the event #{id}"));
+            EventoServices.AprovaAgendamento(evt);
+            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Scheduling Approved", $"You accepted the event #{evt}"));
         }
     }
 }

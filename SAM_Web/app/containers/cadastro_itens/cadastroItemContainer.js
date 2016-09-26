@@ -66,19 +66,21 @@ const CadastroItemContainer = React.createClass({
   },
 
   getCategory: function(url){
+    var token = localStorage.getItem("token");
 
-      // recupera as categorias
-      var self = this;
-      axios.get(url).then(
-        function(response){
-          debugger;
-          var categorias = response.data;
-          self.setState({categorias: categorias});
-        },
-        function(reason){
-          debugger;
-        }
-      );
+    var config = {
+      headers: {'token': token}
+    };
+    // recupera as categorias
+    var self = this;
+    axios.get(url, config).then(
+      function(response){
+        var categorias = response.data;
+        self.setState({categorias: categorias});
+      },
+      function(reason){
+      }
+    );
   },
 
   handleCategoryChanges: function(event){
@@ -111,17 +113,18 @@ const CadastroItemContainer = React.createClass({
   handleModifierChanges: function(event){
 
     var modificador = event.target.value;
+    var val;
     if(modificador === "Raso"){
-      this.modificador = 2;
+      val = 2;
     }else if(modificador === "Profundo"){
-      this.modificador = 3;
+      val = 3;
     }else if(modificador === "Alinhado"){
-      this.modificador = 1;
+      val = 1;
     }else if(modificador === "Não Alinhado"){
-      this.modificador = 3;
+      val = 3;
     }
 
-    //this.setState({modificador: val});
+    this.setState({modificador: val});
   },
 
   handleDescriptionChanges: function(event){
@@ -139,22 +142,37 @@ const CadastroItemContainer = React.createClass({
 
     var item = this.state.item;
     var descricao = this.state.descricao;
-    var categoria = this.categoria;
-    var dificuldade = this.dificuldade;
-    var modificador = this.modificador;
+    var categoria = this.state.categoria;
+    var dificuldade = this.state.dificuldade;
+    var modificador = this.state.modificador;
 
     var itemObject = {
-      item: item,
-      categoria: categoria,
-      dificuldade: dificuldade,
-      modificador: modificador,
-      descricao: descricao
+      Nome: item,
+      Categoria: categoria,
+      Dificuldade: dificuldade,
+      Modificador: modificador,
+      Descricao: descricao
+    };
+
+    console.log(itemObject);
+
+    var token = localStorage.getItem("token");
+
+    var config = {
+      headers: {'token': token}
     };
 
     // faz post do objeto para o servidor
+    axios.post(Config.serverUrl + "/api/sam/item/save", itemObject, config).then(
+      function(response){
 
-    // salva no banco o item
-    console.log("item: " + itemObject);
+      },
+
+      function(){
+
+      }
+    );
+
   },
 
   //limpa os dados do formulário

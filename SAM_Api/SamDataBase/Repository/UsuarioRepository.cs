@@ -53,6 +53,7 @@ namespace Opus.DataBaseEnvironment
             var promocoesRealizadas =
             (from p in db.Promocoes
              where p.usuario == usuario
+             orderby p.data descending
              select p).ToList();
 
             return promocoesRealizadas;
@@ -63,7 +64,7 @@ namespace Opus.DataBaseEnvironment
 
             var pendencias = DataAccess.Instance
                 .GetPendenciaRepository()
-                .Find(p => p.usuario == usuario && p.estado == false)
+                .Find(p => p.usuario == usuario)
                 .ToList();
 
             return pendencias;

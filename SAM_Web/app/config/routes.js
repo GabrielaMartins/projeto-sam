@@ -14,10 +14,11 @@ var CadastroItem = require('../containers/cadastro_itens/cadastroItemContainer')
 var ListaUsuarios = require('../containers/usuario/listaUsuariosContainer');
 var ListaItens = require('../containers/item/listaItensContainer');
 var Perfil = require('../containers/perfil/perfilContainer');
-var Agendamento = require('../containers/agendamento/AgendamentoContainer');
+var Atividade = require('../containers/atividade/atividadeContainer');
 var Erro = require('../components/shared/PaginaErro');
 var Erro404 = require('../components/shared/pagina404');
 var EdicaoFuncionario = require('../containers/edicao_funcionario/edicaoFuncionarioContainer');
+var Pontuacao = require('../components/pontuacao/pontuacao');
 
 var Routes = (
   <Router history={HashHistory}>
@@ -25,13 +26,14 @@ var Routes = (
       <Route component={Base}>
         <Route path='/Dashboard/RH/:samaccount' component={DashboardRH}/>
         <Route path='/Dashboard/Funcionario/:samaccount' component={DashboardFuncionario}/>
-        <Route path='Item/Agendamento' component={Agendamento}/>
+        <Route path='Item/Atividade' component={Atividade}/>
         <Route path="/Item/Cadastro" component={CadastroItem}/>
         <Route path='/Votacao/:id' component={Votacao}/>
         <Route path='/Funcionario/Listagem' component={ListaUsuarios}/>
         <Route path='/Funcionario/Edicao/:samaccount' component={EdicaoFuncionario}/>
         <Route path='/Item/Listagem' component={ListaItens}/>
-        <Route path='/Perfil/:samaccount' component={Perfil}/>
+        <Route path='/Perfil/:samaccount(/:historico)' component={Perfil}/>
+        <Route path='/Pontuacao' component={Pontuacao}/>
       </Route>
       <Route path='/Erro/:status' component={Erro}/>
       <Route path='*' component={Erro404}/>

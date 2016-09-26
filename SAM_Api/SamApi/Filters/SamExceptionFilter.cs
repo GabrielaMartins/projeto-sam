@@ -1,5 +1,4 @@
-﻿using DefaultException.Models;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Data.Entity.Validation;
 using System.Net;
@@ -8,6 +7,7 @@ using System.Net.Http.Formatting;
 using System.Web.Http.Filters;
 using System.Linq;
 using System.Collections.Generic;
+using MessageSystem.Erro;
 
 namespace SamApi.Filters
 {
@@ -23,9 +23,9 @@ namespace SamApi.Filters
         public override void OnException(HttpActionExecutedContext context)
         {
             // Exception known to us
-            if (context.Exception is ExpectedException)
+            if (context.Exception is ErroEsperado)
             {
-                var ex = context.Exception as ExpectedException;
+                var ex = context.Exception as ErroEsperado;
                 var errorMessage = ex.GetAsPrettyMessage();
                 context.Response = new HttpResponseMessage((HttpStatusCode)errorMessage.Code)
                 {
@@ -38,7 +38,7 @@ namespace SamApi.Filters
             {
 
                 var ex = context.Exception as DbEntityValidationException;
-                var e = new ExpectedException(HttpStatusCode.BadRequest, "Entity Validation Error", ex);
+                var e = new ErroEsperado(HttpStatusCode.BadRequest, "Entity Validation Error", ex);
                 var errorMessage = e.GetAsPrettyMessage();
                 context.Response = new HttpResponseMessage((HttpStatusCode)errorMessage.Code)
                 {

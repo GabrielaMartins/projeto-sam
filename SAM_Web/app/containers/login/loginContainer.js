@@ -57,7 +57,6 @@ var LoginContainer = React.createClass({
           } else {
             // Sorry! No Web Storage support..
           }
-          debugger;
           var config = {
             headers: {'token': token}
           };
@@ -69,7 +68,7 @@ var LoginContainer = React.createClass({
               //guarda o perfil do usuario no localStorage
               localStorage.setItem("perfil", response.data.perfil);
 
-              if(response.data.perfil == "Funcionario"){
+              if(response.data.perfil.toUpperCase() == "FUNCIONARIO"){    
                 self.context.router.push('/Dashboard/Funcionario/' + self.state.usuario);
               }else{
                 self.context.router.push('/Dashboard/RH/' + self.state.usuario);

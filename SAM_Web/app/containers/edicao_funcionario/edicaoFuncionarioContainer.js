@@ -8,6 +8,8 @@ var axios = require("axios");
 //components
 var EdicaoFuncionario = require('../../components/edicao_funcionario/edicaoFuncionario');
 import AvatarEditor from 'react-avatar-editor';
+var Radio = require('../../ui_elements/radio');
+
 
 //momentjs
 var moment = require('moment');
@@ -32,6 +34,8 @@ const EdicaoFuncionarioContainer = React.createClass({
       foto:undefined,
       lista_cargos:[],
       urlImage:"",
+      grupo:"",
+      rotulosRadio: ["Funcionário", "RH"],
     }
   },
   componentDidMount: function(){
@@ -74,10 +78,8 @@ const EdicaoFuncionarioContainer = React.createClass({
         );
       },
       function(jqXHR){
-        debugger;
       }
     );
-
   },
 
   componentDidUpdate: function(prevProps, prevState){
@@ -112,6 +114,13 @@ const EdicaoFuncionarioContainer = React.createClass({
     $('#cropImage').openModal({
       dismissible: false
     });
+  },
+
+  handleGrupoChanges: function(event){
+    this.setState({
+      grupo : event.target.value
+    });
+
   },
 
   getFile : function() {
@@ -176,32 +185,49 @@ const EdicaoFuncionarioContainer = React.createClass({
   },
 
   handleClear: function(){
-    var facebookField = $('#facebook');
-    facebookField.val('');
+    //obtem perfil do usuário
+    var perfil = localStorage.getItem("perfil");
 
-    var linkedinField = $('#linkedin');
-    linkedinField.val('');
+    //obtem samaccount do usuario
+    var samaccount = localStorage.getItem("samaccount");
 
-    var githubField = $('#github');
-    githubField.val('');
+    //obtem samaccount passado na rota
+    var usuario = this.props.params.samaccount;
 
-    var bioField = $('#bio');
-    bioField.val('');
+    if(perfil.toUpperCase() == "FUNCIONARIO"){
+      var facebookField = $('#facebook');
+      facebookField.val('');
 
-    var imagemField = $('#imagem');
-    imagemField.val('');
+      var linkedinField = $('#linkedin');
+      linkedinField.val('');
 
-    imagemField = $('#img');
-    imagemField.val(undefined);
+      var githubField = $('#github');
+      githubField.val('');
 
-    this.setState({
-      facebook : "",
-      linkedin : "",
-      github: "",
-      descricao : "",
-      foto:"",
-      urlImage: ""
-    });
+      var bioField = $('#bio');
+      bioField.val('');
+
+      var imagemField = $('#imagem');
+      imagemField.val('');
+
+      imagemField = $('#img');
+      imagemField.val(undefined);
+
+      this.setState({
+        facebook : "",
+        linkedin : "",
+        github: "",
+        descricao : "",
+        foto:"",
+        urlImage: ""
+      });
+    }else{
+     $('#nome').val('');
+     $('select').val(1);
+     $('#pontos').val('');
+     $('#inicio').val('');
+    }
+
   },
 
   onClickSave: function() {
@@ -225,7 +251,7 @@ const EdicaoFuncionarioContainer = React.createClass({
       cargos.push( <option value={cargo.id}>{cargo.nome}</option>);
     });
 
-    if(perfil == "Funcionario"){
+    if(perfil.toUpperCase() == "FUNCIONARIO"){
       return (
         <div>
           <div className="row">
@@ -251,9 +277,8 @@ const EdicaoFuncionarioContainer = React.createClass({
       return (
         <div>
           <div className="row">
-            <div className="input-field col s12">
-              <input value = {this.state.nome} id="nome" type="text"/>
-              <label htmlFor="nome" className="active">Nome: </label>
+            <div className="col s12">
+                <span><b>Nome:</b> {this.state.nome}<br/><br/></span>
             </div>
           </div>
           <div className="row">
@@ -275,17 +300,25 @@ const EdicaoFuncionarioContainer = React.createClass({
             </div>
             <div className="col s6">
               <div className="row">
-                <div className="col s12 m3 l3">
+                <div className="col s12 m2 l2">
                   <span style={{"fontSize" : "0.8rem"}}>Grupo: </span>
                 </div>
-                <div className="input-field">
-                  <div className="col s6 m4 l4">
-                    <input name="group1" type="radio" id="rh" disabled="disabled" checked ={this.state.perfil === "RH" ? true : false}/>
-                    <label htmlFor="rh">RH</label>
+                <div>
+                  <div className="col s6 m5 l5">
+                    <Radio
+                      name = "rdGroup"
+                      id = "radio1"
+                      label = {this.state.rotulosRadio[0]}
+                      value = {this.state.rotulosRadio[0]}
+                      onChange = {this.handleGrupoChanges}/>
                   </div>
-                  <div className="col s6 m4 l4">
-                    <input name="group1" type="radio" id="funcionario" disabled="disabled" checked ={this.state.perfil === "Funcionario" ? true : false}/>
-                    <label htmlFor="funcionario">Funcionário</label>
+                  <div className="col s6 m5 l5">
+                    <Radio
+                      name = "rdGroup"
+                      id = "radio2"
+                      label = {this.state.rotulosRadio[1]}
+                      value = {this.state.rotulosRadio[1]}
+                      onChange = {this.handleGrupoChanges}/>
                   </div>
                 </div>
               </div>
@@ -297,9 +330,21 @@ const EdicaoFuncionarioContainer = React.createClass({
   },
 
   segundaParteForms: function(){
+
+    //obtem perfil do usuário
     var perfil = localStorage.getItem("perfil");
+
+    //obtem samaccount do usuario
+    var samaccount = localStorage.getItem("samaccount");
+
+    //obtem samaccount passado na rota
+    var usuario = this.props.params.samaccount;
+
+    //cria visualização de imagem
     var imagemPreview = <img src= {this.state.urlImage} id="img_url"  className="center-block responsive-img"/>
-    if(perfil == "Funcionario"){
+
+    //se for funcionário ou os dados do próprio funcionário de rh, ele pode editar dados como facebook, avatar, etc
+  if(perfil.toUpperCase() == "FUNCIONARIO" || (perfil.toUpperCase() == "RH" && samaccount == usuario )){
       return(
         <div>
           <div className="row">
@@ -338,7 +383,7 @@ const EdicaoFuncionarioContainer = React.createClass({
           <div className="row">
             <form action="#" className="col l10 m10 s12">
               <div className="file-field input-field">
-                <div className="btn">
+                <div className="btn color-default">
                   <span>Avatar</span>
                   <input type="file"
                     accept="image/gif, image/jpeg, image/png"
@@ -408,13 +453,13 @@ const EdicaoFuncionarioContainer = React.createClass({
           </div>
           <div className="row">
             <div className="col s12">
-              <p><b>Bio: </b></p>
-              <p>{this.state.descricao}</p>
+              <p><b>Bio: </b> {this.state.descricao}</p>
+
             </div>
           </div>
           <div className="row">
             <div className="col s12">
-              <span><b>Avatar: </b></span>
+              <span><b>Avatar: </b></span><br/><br/>
               <div className="col s2">
                 {this.state.urlImage ? imagemPreview : null}
               </div>

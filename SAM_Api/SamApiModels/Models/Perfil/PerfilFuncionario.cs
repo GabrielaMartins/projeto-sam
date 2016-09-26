@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using SamApiModels.Evento;
 using SamApiModels.Promocao;
 using SamApiModels.User;
+
 
 namespace SamApiModels.Perfil
 {

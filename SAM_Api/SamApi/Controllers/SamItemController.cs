@@ -2,12 +2,12 @@
 using System.Net.Http;
 using System.Net;
 using System.Linq;
-using DefaultException.Models;
 using SamApi.Attributes.Authorization;
 using SamApiModels.Item;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;
+using MessageSystem.Mensagem;
 
 namespace SamApi.Controllers
 {
@@ -61,7 +61,7 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "rh")]
-        public HttpResponseMessage Post(ItemViewModel item)
+        public HttpResponseMessage Post(AddItemViewModel item)
         {
             ItemServices.CriaItem(item);
 

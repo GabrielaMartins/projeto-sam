@@ -1,14 +1,15 @@
-﻿using DefaultException.Models;
-using SamApi.Attributes.Authorization;
-using SamApiModels.Models.Evento;
+﻿using SamApi.Attributes.Authorization;
+using SamApiModels.Evento;
+using MessageSystem.Mensagem;
 using SamApiModels.Votacao;
-using SamModelValidationRules.Attributes.Validation;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using SamModelValidationRules.Attributes.Validation;
+using SamApiModels.Models.Votacao;
 
 namespace SamApi.Controllers
 {
@@ -35,27 +36,24 @@ namespace SamApi.Controllers
         {
             var votacao = VotacaoServices.RecuperaVotacao(evt);
             return Request.CreateResponse(HttpStatusCode.OK, votacao);
-            
+
         }
 
 
         /// <summary>
-        /// Cria um novo evento de votacao
+        /// Encerra uma votação do SAM e atribuí a pontuação votada ao item do evento de votação
         /// </summary>
-        /// <param name="evt">
-        /// É o evento que será votado
-        /// </param>
-        [SwaggerResponse(HttpStatusCode.Created, "Caso seja possível criar evento do SAM", typeof(DescriptionMessage))]
+        /// <param name="votacao">Representa os dados da votação a ser encerrada</param>
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível encerrar o evento do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "rh")]
-        [Route("new")]
+        [Route("close")]
         [HttpPost]
-        public HttpResponseMessage Create(AddEventoVotacaoViewModel evt)
+        public HttpResponseMessage Close(CloseVotacaoViewModel votacao)
         {
-            VotacaoServices.CriaVotacao(evt);
-            return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.Created, "Created"));
-
+            VotacaoServices.EncerraVotacao(votacao);
+            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Closed", $"You closed the event #{votacao.Evento}"));
         }
 
         /// <summary>
@@ -74,7 +72,28 @@ namespace SamApi.Controllers
         {
             VotacaoServices.CriaVoto(vote);
             return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.Created, "You have voted", "Thanks for your vote"));
-            
+
         }
+
+        /*
+        /// <summary>
+        /// Cria um novo evento de votacao
+        /// </summary>
+        /// <param name="evt">
+        /// É o evento que será votado
+        /// </param>
+        [SwaggerResponse(HttpStatusCode.Created, "Caso seja possível criar evento do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(Roles = "rh")]
+        [Route("new")]
+        [HttpPost]
+        public HttpResponseMessage Create(AddEventoVotacaoViewModel evt)
+        {
+            VotacaoServices.CriaVotacao(evt);
+            return Request.CreateResponse(HttpStatusCode.Created, new DescriptionMessage(HttpStatusCode.Created, "Created"));
+
+        }
+        */
     }
 }

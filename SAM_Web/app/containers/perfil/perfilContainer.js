@@ -20,11 +20,13 @@ const PerfilUsuarioContainer = React.createClass({
         </div>
       </div>);
     }
+
+
     var self = this;
     var atividades = this.state.atividades.map(function(atividade, index){
       if(atividade.tipo !== "agendamento"){
-        if(atividade.Item.nome.toLowerCase().indexOf(self.state.consultaAtividades.toLowerCase())!=-1 ||
-          atividade.Item.Categoria.nome.toLowerCase().indexOf(self.state.consultaAtividades.toLowerCase())!=-1){
+        if((atividade.Item.nome.toLowerCase().indexOf(self.state.consultaAtividades.toLowerCase())!=-1 ||
+          atividade.Item.Categoria.nome.toLowerCase().indexOf(self.state.consultaAtividades.toLowerCase())!=-1) && self.verificaAno(moment(atividade.data).year())){
           return(
             <div className="col l12 m12 s12" key={index}>
               <AtividadesHistorico
@@ -39,8 +41,8 @@ const PerfilUsuarioContainer = React.createClass({
     });
 
     var promocoes = this.state.promocoes.map(function(promocao, index){
-      if(promocao.CargoAnterior.nome.toLowerCase().indexOf(self.state.consultaPromocoes.toLowerCase())!=-1 ||
-        promocao.CargoAdquirido.nome.toLowerCase().indexOf(self.state.consultaPromocoes.toLowerCase())!=-1){
+      if((promocao.CargoAnterior.nome.toLowerCase().indexOf(self.state.consultaPromocoes.toLowerCase())!=-1 ||
+        promocao.CargoAdquirido.nome.toLowerCase().indexOf(self.state.consultaPromocoes.toLowerCase())!=-1) && self.verificaAno(moment(promocao.Data).year())){
           return(
             <div className="col l12 m12 s12" key={index}>
               <PromocoesHistorico promocao = {promocao} />
@@ -62,6 +64,8 @@ const PerfilUsuarioContainer = React.createClass({
         handlePesquisaAtividades = {this.handlePesquisaAtividades}
         consultaPromocoes = {this.state.consultaPromocoes}
         handlePesquisaPromocoes = {this.handlePesquisaPromocoes}
+        mostraTudo = {this.handleMostraTudo}
+        ultimoAno = {this.handleUltimoAno}
       />
     );
   },
@@ -92,10 +96,18 @@ const PerfilUsuarioContainer = React.createClass({
         			div_id: ""
       			},
             consultaAtividades: "",
-            consultaPromocoes: ""
+            consultaPromocoes: "",
+            mostraTudo : true
       };
   },
 
+  componentDidUpdate: function(){
+
+    if(this.props.params.historico){
+      var event = new MouseEvent('click');
+      this.scrollParaHistorico(event);
+    }
+  },
   componentWillMount: function(){
       var self = this;
       var usuario = this.props.params.samaccount;
@@ -191,6 +203,39 @@ const PerfilUsuarioContainer = React.createClass({
     this.setState({
       consultaPromocoes: event.target.value
     });
+  },
+
+  handleMostraTudo: function(){
+    this.setState({
+      mostraTudo : true
+    });
+
+    //muda cor dos botoes
+    $("#btn-tudo").addClass("btn-pressed").removeClass("color-default");
+    $("#btn-ano").removeClass("btn-pressed").addClass("color-default");
+  },
+
+  handleUltimoAno: function(){
+    this.setState({
+      mostraTudo : false
+    });
+
+    //muda cor dos botoes
+    $("#btn-ano").addClass("btn-pressed").removeClass("color-default");
+    $("#btn-tudo").removeClass("btn-pressed").addClass("color-default");
+
+
+  },
+
+  verificaAno : function(anoAtividade){
+
+    if(this.state.mostraTudo === false){
+      //obtém o ano da última promoção (está em ordem decrescente)
+      var ano = moment(this.state.promocoes[0].Data).year();
+      return (anoAtividade >= ano && anoAtividade <= ano + 1);
+    }else {
+      return anoAtividade > 0;
+    }
   }
 
 });

@@ -104,7 +104,7 @@
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\ItemRepository.cs" />
     <Compile Include="Repository\PendenciaRepository.cs" />
-    <Compile Include="Repository\PromocaoViewModel.cs" />
+    <Compile Include="Repository\PromocaoRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\ResultadoVotacoesRepository.cs" />
     <Compile Include="Repository\TagRepository.cs" />

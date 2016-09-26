@@ -23,19 +23,18 @@ namespace SamServices.Services
              from u in usuarios
              where
              u.Cargo.id != c.id &&
-             (c.pontuacao - u.pontos) >= 0 &&
+             (c.pontuacao - u.pontos) > 0 &&
              (c.pontuacao - u.pontos) <= (c.pontuacao * 0.2)
              select new ProximaPromocaoViewModel()
              {
                  Usuario = u,
-                 PontosFaltantes = (u.ProximoCargo.ElementAt(0).pontuacao - u.pontos)
+                 PontosFaltantes = (u.ProximoCargo[0].pontuacao - u.pontos)
 
              })
              .OrderBy(p => p.PontosFaltantes)
              .ToList();
 
             return promocoesViewModel;
-
         }
     }
 }

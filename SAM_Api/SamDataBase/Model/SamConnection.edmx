@@ -43,6 +43,7 @@
           <Property Name="dificuldade" Type="int" Nullable="false" />
           <Property Name="modificador" Type="int" Nullable="false" />
           <Property Name="categoria" Type="int" />
+          <Property Name="votado" Type="bit" />
         </EntityType>
         <EntityType Name="ItensTagged">
           <Key>
@@ -473,6 +474,7 @@
           <NavigationProperty Name="Categoria" Relationship="sam.model.FK__Itens__categoria__22AA2996" FromRole="Iten" ToRole="Categoria" />
           <NavigationProperty Name="Eventos" Relationship="sam.model.FK__Eventos__item__29572725" FromRole="Iten" ToRole="Evento" />
           <NavigationProperty Name="TaggedItens" Relationship="sam.model.FK__ItensTagge__item__25869641" FromRole="Iten" ToRole="ItensTagged" />
+          <Property Name="votado" Type="Boolean" />
         </EntityType>
         <EntityType Name="ItensTagged">
           <Key>
@@ -767,6 +769,7 @@
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="sam.model.Item">
               <MappingFragment StoreEntitySet="Itens">
+                <ScalarProperty Name="votado" ColumnName="votado" />
                 <ScalarProperty Name="categoria" ColumnName="categoria" />
                 <ScalarProperty Name="modificador" ColumnName="modificador" />
                 <ScalarProperty Name="dificuldade" ColumnName="dificuldade" />

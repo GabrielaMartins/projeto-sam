@@ -7,10 +7,10 @@ using SamApi.Attributes.Authorization;
 using SamApiModels.User;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
-using DefaultException.Models;
 using SamApiModels.Dashboard;
-using System;
 using SamApiModels.Models.Dashboard;
+using MessageSystem.Mensagem;
+using System.Globalization;
 
 namespace SamApi.Controllers
 {
@@ -59,7 +59,7 @@ namespace SamApi.Controllers
             var certicacoesMaisProcuradas = CertificacoesProcuradas();
 
             // ultimas atividades
-            var atividades = EventoServices.RecuperaEventos(null, 10);
+            var atividades = EventoServices.RecuperaEventos("atividade", 10);
 
             // pendencias destinadas ao usuario usuario RH
             var pendencias = UsuarioServices.RecuperaPendencias(usuario);
@@ -81,7 +81,7 @@ namespace SamApi.Controllers
         {
             var pendencias = UsuarioServices.RecuperaPendencias(usuario);
             var resultadoVotacoes = UsuarioServices.RecuperaVotos(usuario, 10);
-            var ultimosEventos = UsuarioServices.RecuperaEventos(usuario, 10);
+            var ultimosEventos = UsuarioServices.RecuperaEventos(usuario, 10, "atividade");
             var certicacoesMaisProcuradas = CertificacoesProcuradas();
 
             return new DashboardFuncionario
@@ -106,9 +106,15 @@ namespace SamApi.Controllers
             opGrafico.Add("role", "annotation");
 
             //Consulta para encontrar itens que são certificados em eventos
-            int indiceCategoria = CategoriaServices.RecuperaTodas().Where(
-                        categoria => categoria.nome == "Certificação"
-                    ).Select(y => y.id).First();
+            int indiceCategoria = CategoriaServices.RecuperaTodas()
+                .Where(
+                        categoria => 
+                        string.Compare(categoria.nome, "curso", CultureInfo.CurrentCulture,
+                                       CompareOptions.IgnoreNonSpace |
+                                       CompareOptions.IgnoreCase) == 0
+                )
+                .Select(y => y.id)
+                .FirstOrDefault();
 
             var certificados = EventoServices.RecuperaEventos().Where(
                  evento => evento.Item.Categoria.id == indiceCategoria);

@@ -1,17 +1,11 @@
 ﻿using AutoMapper;
-using DefaultException.Models;
 using Opus.DataBaseEnvironment;
-using SamApiModels.Categoria;
+using MessageSystem.Erro;
 using SamApiModels.Item;
-using SamApiModels.User;
 using SamDataBase.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SamServices.Services
 {
@@ -53,7 +47,7 @@ namespace SamServices.Services
                 var itemToBeUpdated = itemRep.Find(i => i.id == id).SingleOrDefault();
                 if (itemToBeUpdated == null)
                 {
-                    throw new ExpectedException(HttpStatusCode.NotFound, "Item Not Found", $"Item #{id} not found");
+                    throw new ErroEsperado(HttpStatusCode.NotFound, "Item Not Found", $"Item #{id} not found");
                 }
 
                 // map new values to our reference
@@ -75,12 +69,12 @@ namespace SamServices.Services
             }
         }
 
-        public static void CriaItem(ItemViewModel item)
+        public static void CriaItem(AddItemViewModel item)
         {
             using (var itemRep = DataAccess.Instance.GetItemRepository())
             {
                 // map new values to our reference
-                var newItem = Mapper.Map<ItemViewModel, Item>(item);
+                var newItem = Mapper.Map<AddItemViewModel, Item>(item);
 
                 // add to entity context
                 itemRep.Add(newItem);

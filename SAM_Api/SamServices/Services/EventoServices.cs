@@ -6,6 +6,9 @@ using SamDataBase.Model;
 using System.Collections.Generic;
 using SamApiModels.Models.Agendamento;
 using System.Linq;
+using System.Net;
+using MessageSystem.Erro;
+using System.Globalization;
 
 namespace SamServices.Services
 {
@@ -47,6 +50,10 @@ namespace SamServices.Services
             }
         }
 
+        /// <summary>
+        /// Implements the business logic described in https://goo.gl/UejZYN at 1.
+        /// </summary>
+        /// <param name="evt">It's the evento to be approved</param>
         public static void CriaAgendamento(AgendamentoViewModel agendamento)
         {
             using (var rep = DataAccess.Instance.GetEventoRepository())
@@ -57,108 +64,112 @@ namespace SamServices.Services
                 rep.SubmitChanges();
 
                 // create a pendency to rh based on this event
-                GenerateHrPendencyFor(evento);
+                PendenciaServices.GenerateHrPendencyFor(evento);
 
                 // create a pendency to employee based on this event
-                GenerateEmployeePendencyFor(evento);
+                PendenciaServices.GenerateEmployeePendencyFor(evento);
             }
         }
 
-        public static void AprovaAgendamento(int evt, int user)
+        /// <summary>
+        /// Implements the business logic described in https://goo.gl/UejZYN at 1.
+        /// </summary>
+        /// <param name="evt">It's the evento to be approved</param>
+        public static void AprovaAgendamento(int evt)
         {
-            /* DUVIDA:
-                Todo evento aprovado é também votado?
-                Se sim, então criar o evento de votacao após a aprovação
-
-            */
 
             using (var eventRep = DataAccess.Instance.GetEventoRepository())
             using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             {
 
                 // recupera o evento
-                var evento = eventRep.Find(e => e.id == evt).SingleOrDefault();
-
-                // cria o evento resultante da aprovação do agendamento
-                var atividade = new Evento()
+                var eventoAgendamento = eventRep.Find(e => e.id == evt).SingleOrDefault();
+                if(eventoAgendamento.tipo != "agendamento")
                 {
-                    estado = false,
-                    data = evento.data,
-                    item = evento.item,
-                    usuario = evento.usuario,
-                    tipo = "atividade"
-                };
-               
-                eventRep.Add(atividade);
-                eventRep.SubmitChanges();
-
-                // atualiza o valor do status da pendencia do usuario aguardando o resultado do agendamento
-                var pendency = pendencyRep.Find(p => p.evento == evento.id && p.usuario == evento.usuario).SingleOrDefault();
-                pendency.estado = true;
-                pendencyRep.Update(pendency);
-                pendencyRep.SubmitChanges();
-
-                // gera pendencia para o RH dizendo que o usuario tem atribuição de pontos pendente
-                GenerateHrPendencyFor(atividade);
-
-                // remove a(s) pendencia(s) associada(s) ao evento de agendamento e ao usuario que está aprovando o agendamento
-                var pendencies = pendencyRep.Find(p => p.evento == evt && p.usuario == user).ToList();
-                foreach(var p in pendencies)
-                {
-                    pendencyRep.Delete(p.id);
-                    pendencyRep.SubmitChanges();
+                    throw new ErroEsperado(HttpStatusCode.BadRequest, "It's not a scheduling event", $"The event #{evt} could not be approved because it's not a scheduling event");
                 }
 
                 // encerra o evento de agendamento
-                evento.estado = true;
-                eventRep.Update(evento);
+                eventoAgendamento.estado = true;
+                eventRep.Update(eventoAgendamento);
                 eventRep.SubmitChanges();
 
-                // duvida: gerar pendencia para o usuario da atividade, informando que ele tem pontos para adquirir?
-            }
-        }
+                // remove a(s) pendencia(s) associada(s) a esse evento de agendamento vinculadas ao RH
+                PendenciaServices.RemoveHrPendencyFor(eventoAgendamento);
 
-        private static void GenerateEmployeePendencyFor(Evento evt)
-        {
-            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
-            {
-                var pendencia = new Pendencia()
+                // atualiza o valor do estado da pendencia do usuario aguardando o resultado do agendamento
+                var pendency = pendencyRep.Find(p => p.evento == eventoAgendamento.id && p.usuario == eventoAgendamento.usuario).SingleOrDefault();
+                PendenciaServices.CloseEmployeePendencyFor(eventoAgendamento, eventoAgendamento.usuario.Value);
+               
+                // cria o evento resultante da aprovação do agendamento
+                eventRep.AddAndCommit(new Evento()
                 {
-                    usuario = evt.usuario,
-                    evento = evt.id,
                     estado = false,
-                    Evento = null,
-                    Usuario = null
-                };
-
-                pendencyRep.Add(pendencia);
-                pendencyRep.SubmitChanges();
-            }
-        }
-
-        // generate pendencies to RH users
-        private static void GenerateHrPendencyFor(Evento evt)
-        {
-            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
-            {
-                var users = userRep.Find(u => u.perfil == "rh").ToList();
-                foreach (var u in users)
+                    data = eventoAgendamento.data,
+                    item = eventoAgendamento.item,
+                    usuario = eventoAgendamento.usuario,
+                    tipo = "atividade"
+                });
+              
+                // Gera um evento de votacao se o item da atividade tem a categoria marcada como:
+                if (
+                    (string.Compare(eventoAgendamento.Item.Categoria.nome, "apresentacao",
+                    CultureInfo.CurrentCulture,
+                    CompareOptions.IgnoreNonSpace |
+                    CompareOptions.IgnoreCase) == 0)
+                    ||
+                    (string.Compare(eventoAgendamento.Item.Categoria.nome, "blog tecnico",
+                    CultureInfo.CurrentCulture,
+                    CompareOptions.IgnoreNonSpace |
+                    CompareOptions.IgnoreCase) == 0)
+                    ||
+                    (string.Compare(eventoAgendamento.Item.Categoria.nome, "comunidade de software",
+                    CultureInfo.CurrentCulture,
+                    CompareOptions.IgnoreNonSpace |
+                    CompareOptions.IgnoreCase) == 0)
+                    ||
+                    (string.Compare(eventoAgendamento.Item.Categoria.nome, "repositorio de codigo",
+                    CultureInfo.CurrentCulture,
+                    CompareOptions.IgnoreNonSpace |
+                    CompareOptions.IgnoreCase) == 0)
+                    )
                 {
-
-                    var pendencia = new Pendencia()
+                    var eventoVotacao = new Evento()
                     {
-                        usuario = u.id,
-                        evento = evt.id,
                         estado = false,
-                        Evento = null,
-                        Usuario = null
+                        data = eventoAgendamento.data,
+                        item = eventoAgendamento.item,
+                        usuario = eventoAgendamento.usuario,
+                        tipo = "votacao"
                     };
 
-                    pendencyRep.Add(pendencia);
-                    pendencyRep.SubmitChanges();
-                }
+                    eventRep.AddAndCommit(eventoVotacao);
 
+                    // gera pendencias para o evento de votacao para todos os funcionarios, significando que é preciso votar
+                    PendenciaServices.GenerateEmployeesPendencyFor(eventoVotacao);
+
+                    // gera pendencias para o evento de votacao para o RH, significando que o RH precisa encerrar a votacao
+                    PendenciaServices.GenerateHrPendencyFor(eventoVotacao);
+                }
+                else
+                {
+                    var eventoAtribuicao = new Evento()
+                    {
+                        estado = false,
+                        data = eventoAgendamento.data,
+                        item = eventoAgendamento.item,
+                        usuario = eventoAgendamento.usuario,
+                        tipo = "atribuicao"
+                    };
+
+                    eventRep.AddAndCommit(eventoAtribuicao);
+
+                    // gera pendencia para o evento de atribuicao para o funcionario, significando que está aguardando o resultado
+                    PendenciaServices.GenerateEmployeePendencyFor(eventoAtribuicao);
+
+                    // gera pendencia para o evento de atribuicao para o RH, significando que o RH precisa atribuir pontos ao funcionario participante
+                    PendenciaServices.GenerateHrPendencyFor(eventoAtribuicao);
+                }                
             }
         }
     }

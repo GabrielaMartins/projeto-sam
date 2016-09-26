@@ -5,7 +5,7 @@ using SamApi.Attributes.Authorization;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using SamApiModels.Perfil;
-using DefaultException.Models;
+using MessageSystem.Mensagem;
 
 namespace SamApi.Controllers
 {
@@ -32,7 +32,7 @@ namespace SamApi.Controllers
             var usuario = UsuarioServices.Recupera(samaccount);
             var eventos = UsuarioServices.RecuperaEventos(usuario);
             var promocoesAdquiridas = UsuarioServices.RecuperaPromocoesAdquiridas(usuario);
-
+            
             var perfilViewModel = new PerfilFuncionario()
             {
                 Usuario = usuario,

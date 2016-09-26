@@ -43,5 +43,147 @@ namespace SamServices.Services
                 rep.SubmitChanges();
             }
         }
+
+        public static void GenerateEmployeesPendencyFor(Evento evt)
+        {
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
+            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
+            {
+                var usuarios = userRep.Find(u => u.perfil != "rh").ToList();
+                foreach (var u in usuarios)
+                {
+                    var pendencia = new Pendencia()
+                    {
+                        usuario = u.id,
+                        evento = evt.id,
+                        estado = false,
+                        Evento = null,
+                        Usuario = null
+                    };
+
+                    pendencyRep.Add(pendencia);
+                    pendencyRep.SubmitChanges();
+                }
+            }
+        }
+
+        public static void GenerateEmployeePendencyFor(Evento evt)
+        {
+            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
+            {
+                var pendencia = new Pendencia()
+                {
+                    usuario = evt.usuario,
+                    evento = evt.id,
+                    estado = false,
+                    Evento = null,
+                    Usuario = null
+                };
+
+                pendencyRep.Add(pendencia);
+                pendencyRep.SubmitChanges();
+            }
+        }
+
+        public static void GenerateHrPendencyFor(Evento evt)
+        {
+            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
+            {
+                var users = userRep.Find(u => u.perfil == "rh").ToList();
+                foreach (var u in users)
+                {
+
+                    var pendencia = new Pendencia()
+                    {
+                        usuario = u.id,
+                        evento = evt.id,
+                        estado = false,
+                        Evento = null,
+                        Usuario = null
+                    };
+
+                    pendencyRep.Add(pendencia);
+                    pendencyRep.SubmitChanges();
+                }
+
+            }
+        }
+
+        public static void RemoveHrPendencyFor(Evento evt)
+        {
+            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
+            {
+                // remove a(s) pendencia(s) associada(s) a esse evento vinculadas aos RH
+                var pendencies = pendencyRep.Find(p => p.evento == evt.id && p.Usuario.perfil == "rh").ToList();
+                foreach (var p in pendencies)
+                {
+                    pendencyRep.Delete(p.id);
+                    pendencyRep.SubmitChanges();
+                }
+            }
+        }
+
+        public static void RemoveEmployeesPendencyFor(Evento evento)
+        {
+            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
+            {
+
+                // remove a(s) pendencia(s) associada(s) ao evento vinculadas aos funcionários
+                var pendencies = pendencyRep.Find(p => p.evento == evento.id && p.Usuario.perfil != "rh").ToList();
+                foreach (var p in pendencies)
+                {
+                    pendencyRep.Delete(p.id);
+                    pendencyRep.SubmitChanges();
+                }
+            }
+        }
+
+        public static void CloseEmployeesPendencyFor(Evento evento)
+        {
+            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
+            {
+
+                // remove a(s) pendencia(s) associada(s) ao evento vinculadas aos funcionários
+                var pendencies = pendencyRep.Find(p => p.evento == evento.id && p.Usuario.perfil != "rh").ToList();
+                foreach (var p in pendencies)
+                {
+                    p.estado = true;
+                    pendencyRep.Update(p);
+                    pendencyRep.SubmitChanges();
+                }
+            }
+        }
+
+        public static void RemoveEmployeePendencyFor(Evento eventoVotacao, int usuario)
+        {
+            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
+            {
+
+                // Remove a(s) pendencia(s) associada(s) ao evento vinculadas aos funcionários
+                var pendencies = pendencyRep.Find(p => p.evento == eventoVotacao.id && p.usuario == usuario).ToList();
+                foreach (var p in pendencies)
+                {
+                    pendencyRep.Delete(p);
+                    pendencyRep.SubmitChanges();
+                }
+            }
+        }
+
+        public static void CloseEmployeePendencyFor(Evento eventoVotacao, int usuario)
+        {
+            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
+            {
+
+                // Encerra a(s) pendencia(s) associada(s) ao evento vinculadas aos funcionários
+                var pendencies = pendencyRep.Find(p => p.evento == eventoVotacao.id && p.usuario == usuario).ToList();
+                foreach (var p in pendencies)
+                {
+                    p.estado = true;
+                    pendencyRep.Update(p);
+                    pendencyRep.SubmitChanges();
+                }
+            }
+        }
     }
 }

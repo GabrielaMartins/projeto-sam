@@ -1,5 +1,4 @@
-﻿using DefaultException.Models;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SamModelValidationRules.Attributes.Validation
@@ -7,7 +6,7 @@ namespace SamModelValidationRules.Attributes.Validation
     /// <summary>
     /// Allow values in array
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
     public class AllowedValuesAttribute : ValidationAttribute
     {
         private object[] values;

@@ -1,4 +1,4 @@
-﻿using DefaultException.Models;
+﻿using MessageSystem.Mensagem;
 using SamApiModels.Pendencia;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
