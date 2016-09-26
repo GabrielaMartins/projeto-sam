@@ -186,23 +186,27 @@ namespace SamServices.Services
                 eventRep.Update(eventoAtribuicao);
                 eventRep.SubmitChanges();
 
-                // ************* DAQUI PARA BAIXO ESTÁ MEIO NEBULOSO  ************* 
+                // ************* DAQUI PARA BAIXO ESTÁ MEIO NEBULOSO  *************
+
                 // encontra o evento de atividade atrelado a atribuição de pontos
-                var atividade = eventRep.Find(e => 
+                var atividades = eventRep.Find(e => 
                                               e.tipo == "atividade" &&
                                               e.item == eventoAtribuicao.item && 
                                               e.usuario == eventoAtribuicao.usuario && 
                                               e.data == eventoAtribuicao.data
-                                              ).SingleOrDefault();
+                                              ).ToList();
 
-                // marca como encerrada a atividade
-                atividade.estado = true;
-                eventRep.Update(atividade);
-                eventRep.SubmitChanges();
+                // marca como encerrada as atividades (se tudo der certo, deverá semopre vir uma atividade só)
+                foreach (var atividade in atividades)
+                {
+                    atividade.estado = true;
+                    eventRep.Update(atividade);
+                    eventRep.SubmitChanges();
 
-                // encerra as pendencias associadas a essa atividade
-                PendenciaServices.RemoveHrPendencyFor(atividade);
-                PendenciaServices.CloseEmployeePendencyFor(atividade, eventoAtribuicao.usuario.Value);
+                    // encerra as pendencias associadas a essa atividade
+                    PendenciaServices.RemoveHrPendencyFor(atividade);
+                    PendenciaServices.CloseEmployeePendencyFor(atividade, eventoAtribuicao.usuario.Value);
+                }
             }
         }
 

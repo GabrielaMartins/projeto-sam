@@ -59,7 +59,21 @@ namespace SamServices.Services
             using (var rep = DataAccess.Instance.GetEventoRepository())
             {
                 var evento = Mapper.Map<AgendamentoViewModel, Evento>(agendamento);
-               
+
+                // verifica se ja existe um evento igual no banco
+                var eventos = rep.Find(e =>
+                                              e.tipo == "atividade" &&
+                                              e.item == evento.item &&
+                                              e.usuario == evento.usuario &&
+                                              e.data == evento.data
+                                              ).ToList();
+
+                // ja existe
+                if(eventos.Count > 0)
+                {
+                    throw new ErroEsperado(HttpStatusCode.Forbidden, "Duplicated scheduling", "We have recorded a schedule with this data");
+                }
+
                 rep.Add(evento);
                 rep.SubmitChanges();
 

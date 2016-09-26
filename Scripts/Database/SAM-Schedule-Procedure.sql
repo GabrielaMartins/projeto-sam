@@ -21,7 +21,7 @@ CREATE PROCEDURE dbo.geraPromocoes AS
 	  cargo_atual INT,
 	  proximo_cargo INT,
 	  ultimo_item INT,
-	  data DATETIME
+	  data DATE
 	);
 
 	-- popula a variavel
@@ -31,18 +31,22 @@ CREATE PROCEDURE dbo.geraPromocoes AS
 			TItem.item as ultimo_item, 
 			TItem.data
 		FROM 
+
+		-- recupera usuários aptos a promoção
 		(SELECT 
 			u.id  as usuario, 
 			u.cargo as cargo_atual,
 			c.id as proximo_cargo
 				FROM Cargos c, Usuarios u
+				 
 				WHERE
-				c.id > u.cargo and
+				c.pontuacao > (SELECT pontuacao from Cargos c2 WHERE c2.id = u.cargo) and
 				u.pontos >= c.pontuacao and
 				u.perfil <> 'rh'
-
 		) AS TUsuarios
 		JOIN
+
+		-- recupera ultimo item de cada usuario apto a promoção
 		(SELECT
 				u.id AS usuario,
 				i.id AS item,
@@ -57,16 +61,27 @@ CREATE PROCEDURE dbo.geraPromocoes AS
 		) AS TItem
 		ON 
 		TUsuarios.usuario = TItem.usuario;
+		SELECT * FROM @temp
 
 		-- insere um novo evento baseado na tabela temporaria
 		INSERT INTO Eventos (item, usuario, data, estado, tipo)
 			SELECT
-				ultimo_item as item,
-				usuario as usuario,
-				data as data,
+				t.ultimo_item as item,
+				t.usuario as usuario,
+				t.data as data,
 				0 as estado,
 				'promocao' as tipo
-			FROM @temp
+			FROM
+				@temp t
+			WHERE
+				NOT EXISTS
+				(SELECT * FROM Eventos e
+				 WHERE
+					t.ultimo_item = e.item AND
+					t.data = e.data AND 
+					t.usuario = e.usuario AND
+					e.tipo = 'promocao'
+				);
 
 		-- obtem o id desse novo evento
 		DECLARE @evento INT;
@@ -90,4 +105,4 @@ CREATE PROCEDURE dbo.geraPromocoes AS
 				Usuarios u
 			WHERE
 				u.perfil = 'rh'
-GO 
+GO

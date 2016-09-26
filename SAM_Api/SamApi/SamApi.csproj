@@ -171,7 +171,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="ClassDiagram1.cd" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

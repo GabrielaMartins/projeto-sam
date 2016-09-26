@@ -39,6 +39,7 @@ namespace SamServices.Services
 
         public static void CriaVoto(AddVotoViewModel vote)
         {
+            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             using (var rep = DataAccess.Instance.GetResultadoVotacoRepository())
             using (var eventRep = DataAccess.Instance.GetEventoRepository())
             {
@@ -53,6 +54,12 @@ namespace SamServices.Services
 
                 rep.Add(resultadoVotacao);
                 rep.SubmitChanges();
+
+                // atualiza a pendencia desse usuario
+                var pendencia = pendencyRep.Find(p => p.evento == vote.Evento && p.Usuario.samaccount == vote.Usuario).SingleOrDefault();
+                pendencia.estado = true;
+                pendencyRep.Update(pendencia);
+                pendencyRep.SubmitChanges();
             }
         }
 
