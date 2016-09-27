@@ -47,6 +47,8 @@ namespace SamServices.Mappers
 
             // mapeia as chaves estrangeiras
             .ForMember(e => e.tipo, opt => opt.UseValue("agendamento"))
+            .ForMember(e => e.processado, opt => opt.UseValue(true))
+            .ForMember(e => e.estado, opt => opt.UseValue(true))
             .ForMember(e => e.data, opt => opt.MapFrom(src => src.Data))
             .ForMember(e => e.item, opt => opt.MapFrom(src => src.Item))
             .ForMember(e => e.usuario, opt => opt.MapFrom(src =>

@@ -32,6 +32,7 @@
           <Property Name="data" Type="date" Nullable="false" />
           <Property Name="estado" Type="bit" Nullable="false" />
           <Property Name="tipo" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="processado" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Itens">
           <Key>
@@ -460,6 +461,7 @@
           <NavigationProperty Name="Usuario" Relationship="sam.model.FK__Eventos__usuario__2A4B4B5E" FromRole="Evento" ToRole="Usuario" />
           <NavigationProperty Name="Pendencias" Relationship="sam.model.FK__Pendencia__event__300424B4" FromRole="Evento" ToRole="Pendencia" />
           <NavigationProperty Name="ResultadoVotacoes" Relationship="sam.model.FK__Resultado__event__33D4B598" FromRole="Evento" ToRole="ResultadoVotaco" />
+          <Property Name="processado" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -757,6 +759,7 @@
           <EntitySetMapping Name="Eventos">
             <EntityTypeMapping TypeName="sam.model.Evento">
               <MappingFragment StoreEntitySet="Eventos">
+                <ScalarProperty Name="processado" ColumnName="processado" />
                 <ScalarProperty Name="tipo" ColumnName="tipo" />
                 <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="data" ColumnName="data" />

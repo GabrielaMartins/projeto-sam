@@ -39,57 +39,6 @@ namespace SamServices.Services
             }
         }
 
-        public static void PromoveUsuario(PromocaoUsuarioViewModel promocao)
-        {
-            using (var evtRep = DataAccess.Instance.GetEventoRepository())
-            using (var pRep = DataAccess.Instance.GetPromocaoRepository())
-            using (var rep = DataAccess.Instance.GetUsuarioRepository())
-            {
-                // encontra o usuário
-                var usuario = rep.Find(u => u.samaccount == promocao.Usuario).SingleOrDefault();
-
-                // cria uma nova promocao
-                var p = new Promocao()
-                {
-                    data = DateTime.Now,
-                    usuario = usuario.id,
-                    cargoAnterior = usuario.cargo,
-                    cargoAdquirido = promocao.Cargo
-                };
-
-                // efetiva a mudança no banco
-                pRep.AddAndCommit(p);
-
-                // recupera o ultimo evento (atividade) que o usuario fez, e entao captura o id do item
-                var item = evtRep.Find(evt => evt.usuario == usuario.id && evt.tipo == "atividade")
-                                 .OrderByDescending(evt => evt.data)
-                                 .Select(evt => evt.Item.id)
-                                 .FirstOrDefault();
-
-                // gera o evento atrelado a promocao
-                var eventoPromocao = new Evento()
-                {
-                    data = p.data,
-                    estado = false,
-                    tipo = "promocao",
-                    usuario = usuario.id,
-                    item = item
-                };
-
-                // efetiva a mudança no banco
-                evtRep.AddAndCommit(eventoPromocao);
-
-                // gera as pendencias
-                PendenciaServices.GenerateHrPendencyFor(eventoPromocao);
-                PendenciaServices.GenerateEmployeePendencyFor(eventoPromocao);
-
-                // atualiza as mudanças no banco (promove o usuário)
-                usuario.cargo = promocao.Cargo;
-                rep.Update(usuario);
-                rep.SubmitChanges();
-            }
-        }
-
         public static UsuarioViewModel Recupera(string samaccount)
         {
             using (var rep = DataAccess.Instance.GetUsuarioRepository())
@@ -185,8 +134,6 @@ namespace SamServices.Services
                 eventoAtribuicao.estado = true;
                 eventRep.Update(eventoAtribuicao);
                 eventRep.SubmitChanges();
-
-                // ************* DAQUI PARA BAIXO ESTÁ MEIO NEBULOSO  *************
 
                 // encontra o evento de atividade atrelado a atribuição de pontos
                 var atividades = eventRep.Find(e => 

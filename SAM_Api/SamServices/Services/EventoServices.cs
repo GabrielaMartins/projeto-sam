@@ -58,8 +58,9 @@ namespace SamServices.Services
         {
             using (var rep = DataAccess.Instance.GetEventoRepository())
             {
+                // todo evento de agendamento quando vai para o banco já foi processado e aceito
                 var evento = Mapper.Map<AgendamentoViewModel, Evento>(agendamento);
-
+    
                 // verifica se ja existe um evento igual no banco
                 var eventos = rep.Find(e =>
                                               e.tipo == "atividade" &&
@@ -68,7 +69,7 @@ namespace SamServices.Services
                                               e.data == evento.data
                                               ).ToList();
 
-                // ja existe
+                // se ja existe, retorna um erro
                 if(eventos.Count > 0)
                 {
                     throw new ErroEsperado(HttpStatusCode.Forbidden, "Duplicated scheduling", "We have recorded a schedule with this data");
@@ -84,6 +85,53 @@ namespace SamServices.Services
                 PendenciaServices.GenerateEmployeePendencyFor(evento);
             }
         }
+
+        public static void AprovaPromocao(EventoPromocaoViewModel promocao)
+        {
+            using (var repEvento = DataAccess.Instance.GetEventoRepository())
+            using (var repUsuario = DataAccess.Instance.GetUsuarioRepository())
+            {
+                // encontra o evento
+                var evento = repEvento.Find(e => e.id == promocao.Evento).SingleOrDefault();
+
+                // encontra o usuário
+                var usuario = repUsuario.Find(u => u.samaccount == promocao.Usuario).SingleOrDefault();
+
+                if (promocao.FoiPromovido)
+                {
+                    
+                    // troca o cargo do usuário
+                    usuario.cargo = promocao.Cargo;
+
+                    // atualiza as informações
+                    repUsuario.Update(usuario);
+                    repUsuario.SubmitChanges();
+
+                    // encerra o evento de promocao
+                    evento.processado = true;
+
+                    // informa o resultado do evento (aceito)
+                    evento.estado = true;
+                }
+                else
+                {
+                    // encerra o evento de promocao
+                    evento.processado = true;
+
+                    // informa o resultado do evento (recusado)
+                    evento.estado = false;
+
+                    // gerar alguma pendencia?
+                }
+
+                // encerra a pendencia associada ao evento do funcionário
+                PendenciaServices.CloseEmployeePendencyFor(evento, usuario.id);
+
+                // remove as pendencias associadas ao evento do rh
+                PendenciaServices.RemoveHrPendencyFor(evento);
+            }
+        }
+
 
         /// <summary>
         /// Implements the business logic described in https://goo.gl/UejZYN at 1.
@@ -105,6 +153,11 @@ namespace SamServices.Services
 
                 // encerra o evento de agendamento
                 eventoAgendamento.estado = true;
+
+                // aprova o agendamento
+                eventoAgendamento.estado = true;
+
+                // atualiza informações no banco
                 eventRep.Update(eventoAgendamento);
                 eventRep.SubmitChanges();
 
@@ -118,6 +171,7 @@ namespace SamServices.Services
                 // cria o evento resultante da aprovação do agendamento
                 eventRep.AddAndCommit(new Evento()
                 {
+                    processado = false,
                     estado = false,
                     data = eventoAgendamento.data,
                     item = eventoAgendamento.item,
@@ -150,6 +204,7 @@ namespace SamServices.Services
                 {
                     var eventoVotacao = new Evento()
                     {
+                        processado = false,
                         estado = false,
                         data = eventoAgendamento.data,
                         item = eventoAgendamento.item,
@@ -169,6 +224,7 @@ namespace SamServices.Services
                 {
                     var eventoAtribuicao = new Evento()
                     {
+                        processado = false,
                         estado = false,
                         data = eventoAgendamento.data,
                         item = eventoAgendamento.item,

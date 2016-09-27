@@ -8,7 +8,6 @@ using SamDataBase.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System;
 
 namespace SamServices.Services
 {
@@ -105,7 +104,12 @@ namespace SamServices.Services
                 }
 
                 // encerra o evento
+                eventoVotacao.processado = true;
+
+                // aceita o encerramento
                 eventoVotacao.estado = true;
+
+                // atualiza as informações
                 eventRep.Update(eventoVotacao);
                 eventRep.SubmitChanges();
 
@@ -129,6 +133,7 @@ namespace SamServices.Services
                 // gerar evento de atribuição de pontos para o usuario
                 var eventoAtribuicao = new Evento()
                 {
+                    processado = false,
                     estado = false,
                     data = eventoVotacao.data,
                     item = eventoVotacao.item,

@@ -26,8 +26,8 @@ namespace SamDataBase.Model
         public string descricao { get; set; }
         public int dificuldade { get; set; }
         public int modificador { get; set; }
-        public bool votado { get; set; }
         public Nullable<int> categoria { get; set; }
+        public bool votado { get; set; }
     
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

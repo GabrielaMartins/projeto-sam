@@ -4,19 +4,18 @@ using SamApiModels.Models.Agendamento;
 using SamModelValidationRules.Attributes.Validation;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
-using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using SamApiModels.Evento;
 
 namespace SamApi.Controllers
 {
     /// <summary>
     /// Permite ações referente ao agendamento de um evento do SAM
     /// </summary>
-    [RoutePrefix("api/sam/scheduling")]
-    public class SamAgendamentoController : ApiController
+    [RoutePrefix("api/sam/activity")]
+    public class SamAtividadeController : ApiController
     {
 
         /// <summary>
@@ -27,7 +26,7 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "funcionario")]
         [HttpPost]
-        [Route("create")]
+        [Route("schedule")]
         public HttpResponseMessage Create(AgendamentoViewModel agendamento)
         {
             EventoServices.CriaAgendamento(agendamento);
@@ -44,11 +43,28 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "rh")]
         [HttpGet]
-        [Route("approve/{evt}")]
-        public HttpResponseMessage Approve([ValidKey(ValidKeyAttribute.Entities.Evento)]int evt)
+        [Route("schedule/approve/{evt}")]
+        public HttpResponseMessage ApproveScheduling([ValidKey(ValidKeyAttribute.Entities.Evento)]int evt)
         {
             EventoServices.AprovaAgendamento(evt);
             return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Scheduling Approved", $"You accepted the event #{evt}"));
+        }
+
+
+        /// <summary>
+        /// Aprova a promoção de um usuário do SAM
+        /// </summary>
+        /// <param name="promocao">Representa os dados da promoção</param>
+        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível aceitar a solicitação do evento do SAM", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
+        [SamResourceAuthorizer(Roles = "rh")]
+        [HttpGet]
+        [Route("promotion/approve/{evt}")]
+        public HttpResponseMessage ApprovePromotion(EventoPromocaoViewModel promocao)
+        {
+            EventoServices.AprovaPromocao(promocao);
+            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Scheduling Approved", $"You accepted the event #{promocao.Evento}"));
         }
     }
 }

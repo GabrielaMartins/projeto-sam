@@ -68,7 +68,7 @@
     <Compile Include="Models\User\AddUsuarioViewModel.cs" />
     <Compile Include="Models\User\AtribuicaoPontosUsuarioViewModel.cs" />
     <Compile Include="Models\User\PendenciaUsuarioViewModel.cs" />
-    <Compile Include="Models\User\PromocaoUsuarioViewModel.cs" />
+    <Compile Include="Models\Evento\EventoPromocaoViewModel.cs" />
     <Compile Include="Models\User\UpdateUsuarioViewModel.cs" />
     <Compile Include="Models\User\UsuarioViewModel.cs" />
     <Compile Include="Models\Votacao\AddVotoViewModel.cs" />

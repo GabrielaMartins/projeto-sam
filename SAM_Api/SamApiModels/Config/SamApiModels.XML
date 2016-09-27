@@ -469,6 +469,36 @@
             Construtor do objeto
             </summary>
         </member>
+        <member name="T:SamApiModels.Evento.EventoPromocaoViewModel">
+            <summary>
+            Representa os dados para promover um usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoPromocaoViewModel.FoiPromovido">
+            <summary>
+            Indica se a promoção foi ou não aceita
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoPromocaoViewModel.Evento">
+            <summary>
+            Identifica o evento de promoção o qual está sendo aprovado
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoPromocaoViewModel.Usuario">
+            <summary>
+            Identifica o usuário que receberá a promoção
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoPromocaoViewModel.Cargo">
+            <summary>
+            Representa o cargo para o qual o usuário será promovido
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Evento.EventoPromocaoViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:SamApiModels.Item.AddItemViewModel">
             <summary>
             Representa um item do SAM
@@ -849,26 +879,6 @@
         <member name="M:SamApiModels.User.PendenciaUsuarioViewModel.#ctor">
             <summary>
             construtor do objeto
-            </summary>
-        </member>
-        <member name="T:SamApiModels.User.PromocaoUsuarioViewModel">
-            <summary>
-            Representa os dados para promover um usuário
-            </summary>
-        </member>
-        <member name="P:SamApiModels.User.PromocaoUsuarioViewModel.Usuario">
-            <summary>
-            Identifica o usuário que receberá a promoção
-            </summary>
-        </member>
-        <member name="P:SamApiModels.User.PromocaoUsuarioViewModel.Cargo">
-            <summary>
-            Representa o cargo para o qual o usuário será promovido
-            </summary>
-        </member>
-        <member name="M:SamApiModels.User.PromocaoUsuarioViewModel.#ctor">
-            <summary>
-            
             </summary>
         </member>
         <member name="T:SamApiModels.User.UsuarioViewModel">

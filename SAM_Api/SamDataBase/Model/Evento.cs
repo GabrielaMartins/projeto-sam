@@ -27,6 +27,7 @@ namespace SamDataBase.Model
         public System.DateTime data { get; set; }
         public bool estado { get; set; }
         public string tipo { get; set; }
+        public bool processado { get; set; }
     
         public virtual Item Item { get; set; }
         public virtual Usuario Usuario { get; set; }
