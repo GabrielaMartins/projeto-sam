@@ -1,13 +1,32 @@
 'use strict'
 
+//libs
 var React = require('react');
-var CadastroItem = require('../../components/cadastro_itens/cadastroItem');
 var axios = require("axios");
 var Config = require('Config');
 
+//component
+var CadastroItem = require('../../components/cadastro_itens/cadastroItem');
+var Loading = require('react-loading');
+
+
 const CadastroItemContainer = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
 
   render: function(){
+
+    //verifica se já buscou as categorias, enquanto isso, Loading..
+    if(this.state.categorias.length === 0){
+      return (
+        <div className="full-screen-less-nav">
+          <div className="row wrapper">
+            <Loading type='bubbles' color='#550000' height={150} width={150}/>
+          </div>
+        </div>
+      );
+    }
 
     //opções do select para categorias
     var categorias = this.state.categorias.map(function(categoria, index){
@@ -61,6 +80,7 @@ const CadastroItemContainer = React.createClass({
     //inicializador do select do materialize
     $(document).ready(function() {
       $('select').material_select();
+      Materialize.updateTextFields();
     });
 
   },
@@ -154,9 +174,10 @@ const CadastroItemContainer = React.createClass({
       Descricao: descricao
     };
 
-    console.log(itemObject);
-
     var token = localStorage.getItem("token");
+    var samaccount = localStorage.getItem("samaccount");
+
+    var rota = "/Perfil/" + samaccount;
 
     var config = {
       headers: {'token': token}
@@ -165,11 +186,25 @@ const CadastroItemContainer = React.createClass({
     // faz post do objeto para o servidor
     axios.post(Config.serverUrl + "/api/sam/item/save", itemObject, config).then(
       function(response){
-
+        swal({
+          title: "Dados Enviados!",
+          text: "Os dados foram salvos com sucesso",
+          type: "success",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#550000"
+        },function(){
+          this.context.router.push({pathname: rota});
+        }.bind(this));
       },
 
       function(){
-
+        swal({
+          title: "Algum Erro Ocorreu!",
+          text: "Os dados foram salvos, por favor, tente novamente.",
+          type: "error",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#550000"
+        });
       }
     );
 

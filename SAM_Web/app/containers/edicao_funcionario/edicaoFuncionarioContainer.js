@@ -1,5 +1,6 @@
 'use strict'
 
+//libs
 var React = require('react');
 var ReactRouter = require('react-router');
 var Config = require('Config');
@@ -7,6 +8,7 @@ var axios = require("axios");
 
 //components
 var EdicaoFuncionario = require('../../components/edicao_funcionario/edicaoFuncionario');
+var Loading = require('react-loading');
 import AvatarEditor from 'react-avatar-editor';
 var Radio = require('../../ui_elements/radio');
 
@@ -16,9 +18,11 @@ var moment = require('moment');
 moment.locale('pt-br');
 
 const EdicaoFuncionarioContainer = React.createClass({
+
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
+
   getInitialState: function(){
     return {
       nome:"",
@@ -43,8 +47,10 @@ const EdicaoFuncionarioContainer = React.createClass({
     var self = this;
     var token = localStorage.getItem("token");
 
+    //obtem samaccount do funcionário passado por parâmetro
     var usuario = this.props.params.samaccount;
 
+    //config
     axios.defaults.headers.common['token'] = token;
 
     axios.get(Config.serverUrl + "/api/sam/user/" + usuario).then(
@@ -68,23 +74,31 @@ const EdicaoFuncionarioContainer = React.createClass({
               lista_cargos:response.data
             });
 
-          },
-          function(jqXHR){
-            /*console.log(self.context);
-            var rota = '/Erro/' + jqXHR.status;
-            self.context.router.push({pathname: rota, state: {mensagem: "Um erro inesperado ocorreu no servidor. Por favor, tente novamente mais tarde."}});
-            */
-          }
-        );
+          });
       },
+
       function(jqXHR){
-      }
+        status = jqXHR.status;
+        var rota = '/Erro/' + status;
+
+        //erro 401 - acesso não autorizado
+        if(status == "401"){
+          this.context.router.push({pathname: rota, state: {mensagem: "Você está tentando acessar uma página que não te pertence, que feio!"}});
+        }if(status == "500"){
+          this.context.router.push({pathname: rota, state: {mensagem: "O seu acesso expirou, por favor, faça o login novamente."}});
+        }else{
+          this.context.router.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+        }
+      }.bind(this)
     );
+
   },
 
   componentDidUpdate: function(prevProps, prevState){
     $(document).ready(function(){
       $('select').material_select();
+      //verificar por que não deixa alterar o radio quando inicializa checado
+      //$("input:radio").prop("checked", true);
     });
 
   },
@@ -222,10 +236,19 @@ const EdicaoFuncionarioContainer = React.createClass({
         urlImage: ""
       });
     }else{
-     $('#nome').val('');
      $('select').val(1);
      $('#pontos').val('');
      $('#inicio').val('');
+     $("input:radio").prop("checked", false);
+
+     this.setState({
+       cargo_nome : "",
+       cargo_id : 0,
+       pontos : 0,
+       data_inicio : "",
+       grupo:"",
+       checked: false
+     });
     }
 
   },
@@ -247,8 +270,8 @@ const EdicaoFuncionarioContainer = React.createClass({
     var perfil = localStorage.getItem("perfil");
 
     var cargos =[];
-    this.state.lista_cargos.forEach(function(cargo){
-      cargos.push( <option value={cargo.id}>{cargo.nome}</option>);
+    this.state.lista_cargos.forEach(function(cargo, index){
+      cargos.push( <option key = {index} value={cargo.id}>{cargo.nome}</option>);
     });
 
     if(perfil.toUpperCase() == "FUNCIONARIO"){
@@ -273,6 +296,7 @@ const EdicaoFuncionarioContainer = React.createClass({
           </div>
         </div>
       );
+
     }else{
       return (
         <div>
@@ -298,12 +322,12 @@ const EdicaoFuncionarioContainer = React.createClass({
               <input  value={moment(this.state.data_inicio).format('L')} id="inicio" type="text"/>
               <label htmlFor="inicio" className="active">Data de Início:</label>
             </div>
-            <div className="col s6">
+            <div className="col s12 l6">
               <div className="row">
                 <div className="col s12 m2 l2">
                   <span style={{"fontSize" : "0.8rem"}}>Grupo: </span>
                 </div>
-                <div>
+                <div className="row">
                   <div className="col s6 m5 l5">
                     <Radio
                       name = "rdGroup"
@@ -437,6 +461,7 @@ const EdicaoFuncionarioContainer = React.createClass({
           </div>
         </div>
       );
+
     }else{
       return(
         <div>
@@ -454,7 +479,6 @@ const EdicaoFuncionarioContainer = React.createClass({
           <div className="row">
             <div className="col s12">
               <p><b>Bio: </b> {this.state.descricao}</p>
-
             </div>
           </div>
           <div className="row">
@@ -473,6 +497,17 @@ const EdicaoFuncionarioContainer = React.createClass({
 
   render: function(){
 
+    //verifica se já buscou os cargos, enquanto isso, Loading..
+    if(this.state.lista_cargos.length === 0){
+      return (
+        <div className="full-screen-less-nav">
+          <div className="row wrapper">
+            <Loading type='bubbles' color='#550000' height={150} width={150}/>
+          </div>
+        </div>
+      );
+    }
+
     return(
       <EdicaoFuncionario
         nome = {this.state.nome}
@@ -483,8 +518,7 @@ const EdicaoFuncionarioContainer = React.createClass({
           {this.segundaParteForms()}
         </div>
       </EdicaoFuncionario>
-    )
-
+    );
 
   }
 

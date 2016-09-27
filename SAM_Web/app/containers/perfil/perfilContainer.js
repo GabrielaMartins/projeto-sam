@@ -1,11 +1,13 @@
 'use strict'
+
 var axios = require("axios");
 var React = require('react');
+var Config = require('Config');
+
 var Perfil = require('../../components/perfil/perfil');
 var AtividadesHistorico = require('../../containers/item/itemCardContainer');
 var PromocoesHistorico = require('../../components/perfil/promocoesHistorico');
 var Loading = require('react-loading');
-var Config = require('Config');
 
 var moment = require('moment');
 moment.locale('pt-br');
@@ -13,6 +15,8 @@ moment.locale('pt-br');
 const PerfilUsuarioContainer = React.createClass({
 
   render: function(){
+
+    //enquanto não carrega os dados do perfil, loading ...
     if(this.state.usuario.nome == null){
       return(<div className="full-screen-less-nav">
         <div className="row wrapper">
@@ -23,6 +27,8 @@ const PerfilUsuarioContainer = React.createClass({
 
 
     var self = this;
+
+    //card de atividade do historico
     var atividades = this.state.atividades.map(function(atividade, index){
       if(atividade.tipo !== "agendamento"){
         if((atividade.Item.nome.toLowerCase().indexOf(self.state.consultaAtividades.toLowerCase())!=-1 ||
@@ -40,6 +46,7 @@ const PerfilUsuarioContainer = React.createClass({
       }
     });
 
+    //cards de promoção do histórico
     var promocoes = this.state.promocoes.map(function(promocao, index){
       if((promocao.CargoAnterior.nome.toLowerCase().indexOf(self.state.consultaPromocoes.toLowerCase())!=-1 ||
         promocao.CargoAdquirido.nome.toLowerCase().indexOf(self.state.consultaPromocoes.toLowerCase())!=-1) && self.verificaAno(moment(promocao.Data).year())){
@@ -102,12 +109,13 @@ const PerfilUsuarioContainer = React.createClass({
   },
 
   componentDidUpdate: function(){
-
+    //o item selecionado na barra de navegação foi histórico, faz scroll até a seção de histórico
     if(this.props.params.historico){
       var event = new MouseEvent('click');
       this.scrollParaHistorico(event);
     }
   },
+
   componentWillMount: function(){
       var self = this;
       var usuario = this.props.params.samaccount;
@@ -205,6 +213,7 @@ const PerfilUsuarioContainer = React.createClass({
     });
   },
 
+  //filtro para mostrar o histórico completo
   handleMostraTudo: function(){
     this.setState({
       mostraTudo : true
@@ -215,6 +224,7 @@ const PerfilUsuarioContainer = React.createClass({
     $("#btn-ano").removeClass("btn-pressed").addClass("color-default");
   },
 
+  //filtro para mostrar histórico apenas do ultimo ano a partir da ultima avaliação
   handleUltimoAno: function(){
     this.setState({
       mostraTudo : false

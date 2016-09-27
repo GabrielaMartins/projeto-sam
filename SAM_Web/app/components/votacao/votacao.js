@@ -1,3 +1,5 @@
+'use strict'
+
 var React = require('react');
 var ReactRouter = require('react-router');
 var CardEventos = require('../dashboard/cardsEventos');
@@ -41,25 +43,31 @@ var Votacao = function(props){
     var votos = [];
     var painelEsquerdo = null;
     var painelDireito = null;
+    var atr;
 
     props.votos.forEach(function(voto, index){
-      if(voto.Dificuldade){
-        var atr = <div>
-                    <p className="media"><b>Dificuldade: </b>{voto.Dificuldade}</p>
-                  </div>
 
-        if( voto.Profundidade){
-          atr = <div >
+      if(voto.Dificuldade){
+        atr = <div>
+                <p className="media"><b>Dificuldade: </b>{voto.Dificuldade}</p>
+              </div>
+
+        if(voto.Modificador){
+          atr = <div>
                   <p className="media"><b>Dificuldade: </b>{voto.Dificuldade}</p>
-                  <p className="media"><b>Profundidade: </b>{voto.Profundidade}</p>
+                  <p className="media"><b>Profundidade: </b>{voto.Modificador}</p>
                 </div>
         }
 
-        votos.push(<CardEventos key={index} usuario = {voto.Usuario} estilo = "aberta card-panel z-depth-1 col l12 m12 s12 green lighten-3 waves-effect">
-                      <div className="left">
-                        {atr}
-                      </div>
-                  </CardEventos>);
+        votos.push(
+                  <Link key={index} to={{ pathname: '/Perfil/' + voto.Usuario.samaccount}}>
+                    <CardEventos  usuario = {voto.Usuario} estilo = "aberta card-panel z-depth-1 col l12 m12 s12 green lighten-3 waves-effect black-text">
+                        <div className="left">
+                          {atr}
+                        </div>
+                    </CardEventos>
+                  </Link>
+                  );
 
       }else{
         votos.push(<CardEventos key={index} usuario = {voto.Usuario} estilo = "finalizada card-panel z-depth-1 col l12 m12 s12 red lighten-3 waves-effect">
@@ -82,7 +90,11 @@ var Votacao = function(props){
 
       painelDireito =  <div>
                           <Usuario conteudo = {props.evento.Usuario}/>
-                          <SelecaoVoto titulo = "Definir Pontuação" botao = "Atribuir" tipoVoto = {tipoVoto} />
+                          <SelecaoVoto
+                            titulo = "Definir Pontuação"
+                            botao = "Atribuir"
+                            evento = {props.evento}
+                            tipoVoto = {tipoVoto} />
                       </div>;
     }else{
 
@@ -92,7 +104,7 @@ var Votacao = function(props){
         painelDireito = <SelecaoVoto
                               titulo = "Votação"
                               botao = "Votar"
-                              evento = {props.evento.id}
+                              evento = {props.evento}
                               mostraResultado = {props.mostraResultado}
                               tipoVoto = {tipoVoto}
                               />
@@ -105,7 +117,7 @@ var Votacao = function(props){
       <div style={{paddingTop: 30 }}>
         <div className="container">
           <div className="card-panel">
-            <h1 className="colorText-default center">{props.evento.Item.nome}</h1>
+            <h2 className="colorText-default center">{props.evento.Item.nome}</h2>
             <div className="row">
               <div className="col l6 m6 s6"><span className="right"><b>{props.evento.Item.Categoria.nome}</b></span></div>
               <div className="col l6 m6 s6"><span className="left"><b>{moment(props.evento.data).format('L')}</b></span></div>

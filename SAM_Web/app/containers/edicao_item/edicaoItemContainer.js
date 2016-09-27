@@ -1,13 +1,31 @@
 'use strict'
 
+//libs
 var React = require('react');
-var EdicaoItem = require('../../components/edicao_itens/edicaoItem');
 var axios = require("axios");
 var Config = require('Config');
 
-const CadastroItemContainer = React.createClass({
+//component
+var EdicaoItem = require('../../components/edicao_item/edicaoItem');
+var Loading = require('react-loading');
+
+const EdicaoItemContainer = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
 
   render: function(){
+
+    //verifica se já buscou os cargos, enquanto isso, Loading..
+    if(this.state.categorias.length === 0){
+      return (
+        <div className="full-screen-less-nav">
+          <div className="row wrapper">
+            <Loading type='bubbles' color='#550000' height={150} width={150}/>
+          </div>
+        </div>
+      );
+    }
 
     //opções do select para categorias
     var categorias = this.state.categorias.map(function(categoria, index){
@@ -40,8 +58,10 @@ const CadastroItemContainer = React.createClass({
         rotulosRadio: ["Raso", "Profundo"],
         dificuldade: "Selecione a dificuldade",
         categoria: "Selecione a categoria",
+        id_item: 0,
         item: "",
         descricao: "",
+        modificador: "",
         checked: false
       }
   },
@@ -56,9 +76,8 @@ const CadastroItemContainer = React.createClass({
 
     //obter dados do item e setar os values dos inputs
     //id é passado por parametro na rota
-    var id = this.props.location.query.id;
-
-    this.getItem(Config.serverUrl+'/api/sam/item/update/' + id);
+    var id = this.props.params.id;
+    this.getItem(Config.serverUrl+'/api/sam/item/' + id);
 
 
   },
@@ -68,35 +87,93 @@ const CadastroItemContainer = React.createClass({
     //inicializador do select do materialize
     $(document).ready(function() {
       $('select').material_select();
+      Materialize.updateTextFields();
+      //verificar por que não deixa alterar o radio quando inicializa checado
+      //$("input:radio").prop("checked", true);
     });
 
   },
 
   getCategory: function(url){
+    var token = localStorage.getItem("token");
+
+    var config = {
+      headers: {'token': token}
+    };
 
       // recupera as categorias
       var self = this;
-      axios.get(url).then(
+      axios.get(url, config).then(
         function(response){
           var categorias = response.data;
           self.setState({categorias: categorias});
         },
-        function(reason){
-        }
+        function(jqXHR){
+          status = jqXHR.status;
+          var rota = '/Erro/' + status;
+
+          //erro 401 - acesso não autorizado
+          if(status == "401"){
+            this.context.router.push({pathname: rota, state: {mensagem: "Você está tentando acessar uma página que não te pertence, que feio!"}});
+          }if(status == "500"){
+            this.context.router.push({pathname: rota, state: {mensagem: "O seu acesso expirou, por favor, faça o login novamente."}});
+          }else{
+            this.context.router.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+          }
+        }.bind(this)
       );
   },
 
   getItem: function(url){
+    var token = localStorage.getItem("token");
 
-    // recupera as categorias
+    var config = {
+      headers: {'token': token}
+    };
+
+    // recupera o item
     var self = this;
-    axios.get(url).then(
+
+    axios.get(url, config).then(
       function(response){
-        self.setState({item: response.data});
+        var item = response.data;
+        self.setState({
+          id_item: item.id,
+          item: item.nome,
+          categoria: item.Categoria.id + "",
+          dificuldade: item.dificuldade,
+          descricao: item.descricao,
+          modificador: item.modificador
+        });
       },
-      function(reason){
-      }
+      function(jqXHR){
+        status = jqXHR.status;
+        var rota = '/Erro/' + status;
+
+        //erro 401 - acesso não autorizado
+        if(status == "401"){
+          this.context.router.push({pathname: rota, state: {mensagem: "Você está tentando acessar uma página que não te pertence, que feio!"}});
+        }if(status == "500"){
+          this.context.router.push({pathname: rota, state: {mensagem: "O seu acesso expirou, por favor, faça o login novamente."}});
+        }else{
+          this.context.router.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+        }
+      }.bind(this)
     );
+
+    //muda os rótulos do radio de acordo com a categoria
+    if(this.state.categoria.toLowerCase() === "apresentacao" || this.state.categoria.toLowerCase() === "blog técnico"){
+      this.setState({
+        rotulosRadio: ["Raso", "Profundo"],
+        checked: true
+      });
+    }else{
+      this.setState({
+        rotulosRadio: ["Alinhado", "Não Alinhado"],
+        checked: true
+      });
+    }
+
   },
 
   handleCategoryChanges: function(event){
@@ -106,7 +183,7 @@ const CadastroItemContainer = React.createClass({
     var categoria = this.state.categorias.find(function(c){return c.id == categoriaId;});
 
     // troca o rotulo dos radio
-    if(categoria.nome.toLowerCase() === "workshop"){
+    if(categoria.nome.toLowerCase() === "apresentacao" || categoria.nome.toLowerCase() === "blog técnico"){
       this.setState({
           rotulosRadio: ["Raso", "Profundo"],
           categoria: event.target.value
@@ -129,17 +206,19 @@ const CadastroItemContainer = React.createClass({
   handleModifierChanges: function(event){
 
     var modificador = event.target.value;
+    var val;
+
     if(modificador === "Raso"){
-      this.modificador = 2;
+      val = 2;
     }else if(modificador === "Profundo"){
-      this.modificador = 3;
+      val = 3;
     }else if(modificador === "Alinhado"){
-      this.modificador = 1;
+      val = 1;
     }else if(modificador === "Não Alinhado"){
-      this.modificador = 3;
+      val = 3;
     }
 
-    //this.setState({modificador: val});
+    this.setState({modificador: val});
   },
 
   handleDescriptionChanges: function(event){
@@ -157,9 +236,9 @@ const CadastroItemContainer = React.createClass({
 
     var item = this.state.item;
     var descricao = this.state.descricao;
-    var categoria = this.categoria;
-    var dificuldade = this.dificuldade;
-    var modificador = this.modificador;
+    var categoria = this.state.categoria;
+    var dificuldade = this.state.dificuldade;
+    var modificador = this.state.modificador;
 
     var itemObject = {
       item: item,
@@ -171,8 +250,21 @@ const CadastroItemContainer = React.createClass({
 
     // faz post do objeto para o servidor
 
-    // salva no banco o item
-    console.log("item: " + itemObject);
+    var token = localStorage.getItem("token");
+
+    var config = {
+      headers: {'token': token}
+    };
+
+    axios.put(Config.serverUrl+"/api/sam/item/update/" + this.state.id_item , itemObject, config).then(
+      function(){
+        //swal
+      },
+
+      function(){
+      //swal
+      }
+    );
   },
 
   //limpa os dados do formulário
@@ -184,6 +276,7 @@ const CadastroItemContainer = React.createClass({
         rotulosRadio: ["Raso", "Profundo"],
         dificuldade: "Selecione a dificuldade",
         categoria: "Selecione a categoria",
+        modificador: "",
         item: "",
         descricao: "",
         checked: false
@@ -193,4 +286,4 @@ const CadastroItemContainer = React.createClass({
 
 });
 
-module.exports = CadastroItemContainer;
+module.exports = EdicaoItemContainer;

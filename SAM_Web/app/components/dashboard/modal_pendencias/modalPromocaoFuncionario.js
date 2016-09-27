@@ -1,3 +1,5 @@
+'use strict'
+
 //libs
 var React = require('react');
 var ReactRouter = require('react-router');
@@ -22,5 +24,10 @@ var Modal = React.createClass({
     );
   }
 });
+
+Modal.propTypes = {
+  handleDeleteAlerta: React.PropTypes.func.isRequired,
+  index: React.PropTypes.number.isRequired
+}
 
 module.exports = Modal;

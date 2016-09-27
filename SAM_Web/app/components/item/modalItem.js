@@ -8,17 +8,16 @@ var Link = ReactRouter.Link;
 var Modal = React.createClass({
   render: function(){
     var status = null;
-    var categoriasProfundidade = ["Blog", "Workshop", "Palestra"];
-    var categoriasAlinhado = ["Curso", "Certificação", "Repositório"];
+    var categoriasProfundidade = ["Blog Técnico", "Apresentação"];
 
     //determina o nome do status que aparecerá na tela
-    if(categoriasProfundidade.indexOf(this.props.item.Categoria.nome)){
+    if(categoriasProfundidade.indexOf(this.props.item.Categoria.nome) != -1){
       if(this.props.item.status == true){
         status = <p className="left-align col l6"><b>Profundidade: </b> Profundo</p>
       }else{
         status = <p className="left-align col l6"><b>Profundidade: </b> Raso</p>
       }
-    }else if(categoriasAlinhado.indexOf(this.props.item.Categoria.nome)){
+    }else{
       if(this.props.item.status == true){
         status = <p className="left-align col l6"><b>Alinhado: </b> Sim</p>
       }else{

@@ -1,4 +1,5 @@
 'use strict'
+
 //libs
 var React =  require('react');
 var ReactRouter = require('react-router');
@@ -25,7 +26,7 @@ var EdicaoItem = function(props){
                         onChange = {props.handleItemChanges}
                         value = {props.item}
                       />
-                    <label htmlFor="nome_item">Nome do Item:</label>
+                    <label htmlFor="nome_item" className="active">Nome do Item:</label>
                     </div>
                   </div>
                   <div className="row">
@@ -69,15 +70,15 @@ var EdicaoItem = function(props){
                           onChange = {props.handleDescriptionChanges}
                           value = {props.descricao}
                         />
-                      <label htmlFor="descricao_item">Descrição</label>
+                      <label htmlFor="descricao_item" className="active">Descrição</label>
                       </div>
                     </div>
                     <div className="row">
-                      <label>Status: </label>
+                      <label className="black-text">Status: </label>
                     </div>
                     <div className="row">
-                      <div className="col s2">
-                        <div className="left">
+                      <div className="col s6 l2">
+                        <div className="right">
                           <Radio
                             className="right"
                             id = "radio1"
@@ -88,7 +89,7 @@ var EdicaoItem = function(props){
                           />
                         </div>
                       </div>
-                      <div className="col s6">
+                      <div className="col s6 l2">
                         <div className="left">
                           <Radio
                             name = "rdGroup"
@@ -151,4 +152,4 @@ EdicaoItem.propTypes = {
    handleClear: React.PropTypes.func.isRequired
 }
 
-module.exports = CadastroItem;
+module.exports = EdicaoItem;

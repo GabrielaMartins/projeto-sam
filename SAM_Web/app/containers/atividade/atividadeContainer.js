@@ -7,18 +7,32 @@ var axios = require("axios");
 //acesso às configurações de url para requisição ao server
 var Config = require('Config');
 
-//componente de Agendamento
+//componente de Agendamento e loading
 var Atividade = require('../../components/atividade/atividade');
+var Loading = require('react-loading');
 
-//configurações para passar o token
-var token = localStorage.getItem("token");
-var config = {
-  headers: {'token': token}
-};
+//momentjs
+var moment = require('moment');
+moment.locale('pt-br');
+
 
 const AtividadeContainer = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
 
   render: function(){
+
+    //verifica se já buscou as categorias, enquanto isso, Loading..
+    if(this.state.categorias.length === 0){
+      return (
+        <div className="full-screen-less-nav">
+          <div className="row wrapper">
+            <Loading type='bubbles' color='#550000' height={150} width={150}/>
+          </div>
+        </div>
+      );
+    }
 
     /*categorias a serem exibidas no select*/
     var categorias = this.state.categorias.map(function(categoria, index){
@@ -33,6 +47,7 @@ const AtividadeContainer = React.createClass({
     }.bind(this));
 
     return(
+
       <Atividade
         handleCategoryChanges = {this.handleCategoryChanges}
         handleDescriptionChanges = {this.handleDescriptionChanges}
@@ -80,9 +95,6 @@ const AtividadeContainer = React.createClass({
     this.getCategory(Config.serverUrl+'/api/sam/category/all');
     this.getItem(Config.serverUrl+'/api/sam/item/all');
 
-    //faz bind do select e chama a função para setar o novo estado
-    $("#select_categoria").on('change', self.handleCategoryChanges);
-    $("#select_item").on('change', self.handleItemChanges);
 
     this.forceUpdate();
 
@@ -96,34 +108,76 @@ const AtividadeContainer = React.createClass({
       $('select').material_select();
       self.setupDatepicker();
     });
+
+    //faz bind do select e chama a função para setar o novo estado
+    $("#select_categoria").on('change', self.handleCategoryChanges);
+    $("#select_item").on('change', self.handleItemChanges);
+
   },
 
   getCategory: function(url){
       // recupera as categorias
       var self = this;
 
+      //configurações para passar o token
+      var token = localStorage.getItem("token");
+
+      var config = {
+        headers: {'token': token}
+      };
+
       axios.get(url, config).then(
         function(response){
           var categorias = response.data;
           self.setState({categorias: categorias});
         },
-        function(reason){
-          //retorna a página de erro
-        }
+
+        //erro
+        function(jqXHR){
+          status = jqXHR.status;
+          var rota = '/Erro/' + status;
+
+          //erro 401 - acesso não autorizado
+          if(status == "401"){
+            this.context.router.push({pathname: rota, state: {mensagem: "Você está tentando acessar uma página que não te pertence, que feio!"}});
+          }if(status == "500"){
+            this.context.router.push({pathname: rota, state: {mensagem: "O seu acesso expirou, por favor, faça o login novamente."}});
+          }else{
+            this.context.router.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+          }
+        }.bind(this)
       );
   },
 
   getItem: function(url){
 
       var self = this;
+
+      //configurações para passar o token
+      var token = localStorage.getItem("token");
+
+      var config = {
+        headers: {'token': token}
+      };
+
       axios.get(url, config).then(
         function(response){
           var itens = response.data;
           self.setState({itens: itens, mostraAlerta: true});
         },
-        function(reason){
-          //retorna a página de erro
-        }
+        function(jqXHR){
+          status = jqXHR.status;
+          var rota = '/Erro/' + status;
+
+          //erro 401 - acesso não autorizado
+          if(status == "401"){
+            this.context.router.push({pathname: rota, state: {mensagem: "Você está tentando acessar uma página que não te pertence, que feio!"}});
+          }if(status == "500"){
+            this.context.router.push({pathname: rota, state: {mensagem: "O seu acesso expirou, por favor, faça o login novamente."}});
+          }else{
+            this.context.router.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+          }
+        }.bind(this)
       );
   },
 
@@ -142,14 +196,12 @@ const AtividadeContainer = React.createClass({
   },
 
   handleItemChanges: function(event){
-
-    var item = event.target.value
+    var item = event.target.value;
     if( item != "0"){
       this.setState({
         erroItem: undefined
       });
     }
-
     this.setState({
       item: item
     });
@@ -175,9 +227,12 @@ const AtividadeContainer = React.createClass({
     }
     this.setState({data: data});
   },
+
   //faz validação dos campos de agendamento
   validacao: function(){
     var valido = true;
+
+    var hoje = moment().format('L');
 
     //se nenhum item foi selecionado, então retornará mensagem de erro e tora o formulário inválido
     if(this.state.item === "Selecione o item" || this.state.item === "0"){
@@ -202,6 +257,15 @@ const AtividadeContainer = React.createClass({
       valido = false;
     }
 
+    //validação de data
+    var data_atividade = moment(this.state.data, 'DD-MM-YYYY').format('L');
+    if( data_atividade < hoje){
+      this.setState({
+        erroData: "Por favor, escolha uma data maior que o dia de hoje."
+      });
+      valido = false;
+    }
+
     if(this.state.descricao === ""){
       this.setState({
         erroDescricao: "Por favor, adicione uma descrição"
@@ -212,8 +276,8 @@ const AtividadeContainer = React.createClass({
     return valido;
 
   },
-  handleSubmit: function(event){
 
+  handleSubmit: function(event){
     event.preventDefault();
 
     //se o formulário não está válido, não envia os dados para o servidor
@@ -228,6 +292,7 @@ const AtividadeContainer = React.createClass({
 
     //obter funcionário que está logado
     var funcionario = localStorage.getItem("samaccount");
+    var perfil = localStorage.getItem("perfil");
 
     var itemAgendado = {
       funcionario: funcionario,
@@ -238,9 +303,15 @@ const AtividadeContainer = React.createClass({
     };
 
     var self = this;
+    //configurações para passar o token
+    var token = localStorage.getItem("token");
+
+    var config = {
+      headers: {'token': token}
+    };
 
     // faz post do objeto para o servidor
-    axios.post(Config.serverUrl+"/api/sam/scheduling/create", itemAgendado, config).then(
+    axios.post(Config.serverUrl+"/api/sam/activity/schedule", itemAgendado, config).then(
       function(response){
         //retorna um alert confirmando o envio dos dados e limpa formulário
         swal({
@@ -251,17 +322,30 @@ const AtividadeContainer = React.createClass({
           confirmButtonColor: "#550000"
         },function(){
           self.handleClear();
+          self.context.router.push({pathname: "/Dashboard/" + perfil +"/"+ funcionario});
         });
       },
-      function(reason){
-        //retorna página de erro
+      function(jqXHR){
+        var status = jqXHR.status;
+        var titulo;
+        var mensagem;
+
+        if(status == 403){
+          titulo = "Este evento já existe!";
+          mensagem = "O evento agendado já existe na data definida."
+        }else{
+          titulo = "Um Erro Ocorreu!";
+          mensagem = "Os dados não puderam ser salvos, tente novamente mais tarde.";
+        }
+        //retorna alerta de erro
         swal({
-          title: "Um Erro Ocorreu!",
-          text: "Os dados não puderam ser salvos, tente novamente mais tarde.",
+          title: titulo,
+          text: mensagem,
           type: "error",
           confirmButtonText: "Ok",
           confirmButtonColor: "#550000"
         });
+
       }
     );
 

@@ -1,7 +1,6 @@
+'use strict'
+
 var React = require('react');
-var ReactRouter = require('react-router');
-var CardEventos = require('./cardsEventos');
-var Link = ReactRouter.Link;
 
 var Ranking = React.createClass({
   render : function(){
@@ -14,4 +13,9 @@ var Ranking = React.createClass({
     );
   }
 });
+
+Ranking.propTypes = {
+  ranking: React.PropTypes.arrayOf(React.PropTypes.element).isRequired
+}
+
 module.exports = Ranking;

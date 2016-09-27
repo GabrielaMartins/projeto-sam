@@ -1,14 +1,18 @@
 'use strict'
+
+//libs
 var React = require('react');
 var axios = require("axios");
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Link = ReactRouter.Link;
 
+//components
 var Atualizacoes = require('../../components/dashboard/atualizacoes');
 var DashboardFuncionario = require('../../components/dashboard/dashboardFuncionario');
 var Loading = require('react-loading');
 
+//config
 var Config = require('Config');
 
 //variável que indica se um componente já possui os dados para renderizar
@@ -60,20 +64,17 @@ var DashboardContainerFuncionario = React.createClass({
     //remove do banco
     axios.delete(Config.serverUrl+"/api/sam/pendency/delete/" + id, config).then(
       function(response){
-
         //atualiza o estado
         for(var i = 0; i < alertas.length; i++) {
-          if (alertas[i].id !== id) {
+          if (alertas[i].Id !== id) {
             alertasModificado.push(alertas[i]);
           }
         }
         this.setState({
           alertas: alertasModificado
         });
-      }.bind(this),
-      function(jqXHR){
 
-      }
+      }.bind(this)
     );
   },
 
@@ -96,7 +97,7 @@ var DashboardContainerFuncionario = React.createClass({
     //obtém dados
     axios.get(Config.serverUrl+"/api/sam/dashboard/", config).then(
       function(response){
-        debugger;
+
         fezFetch = true;
         this.setState({
           dados: response.data,
@@ -162,14 +163,12 @@ var DashboardContainerFuncionario = React.createClass({
       usuarios = conteudo.Item.Usuarios.map(function(usuario, index){
         return(
           <div key={index} className="col l4 m4 s6 wrapper">
-            {/*<Link to={"/Perfil/"+ usuario.samaccount}>*/}
             <div>
               <img className="responsive-img circle center-block" src={usuario.foto} style={{height:50}}/>
               <p className="center-align colorText-default"><b>{usuario.nome}</b></p>
                 <br/>
                 <br/>
             </div>
-            {/*</Link>*/}
           </div>
         );
       });

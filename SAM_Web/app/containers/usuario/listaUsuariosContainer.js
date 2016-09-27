@@ -1,20 +1,26 @@
 "use strict"
 
 var React = require('react');
+var Config = require('Config');
+var axios = require("axios");
+
 var ListaUsuarios = require('../../components/shared/lista');
 var UsuarioCard = require('../../components/usuario/usuarioCard');
-var Config = require('Config');
 var Loading = require('react-loading');
-var axios = require("axios");
 
 var fezFetch = false;
 
 var ListaUsuariosContainer = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+
   getInitialState: function() {
     return {
       usuarios: [],
       consulta: "",
-      filtro: ""
+      filtro: "",
+      cargos: []
     };
   },
   componentDidMount: function(){
@@ -22,18 +28,51 @@ var ListaUsuariosContainer = React.createClass({
     var config = {
       headers: {'token': token}
     };
+
     axios.get(Config.serverUrl+"/api/sam/user/all", config).then(
       function(response){
         fezFetch = true;
         this.setState({
           usuarios: response.data
         });
-        //sr.reveal('.scrollreveal');
       }.bind(this),
       function(jqXHR){
+        status = jqXHR.status;
+        var rota = '/Erro/' + status;
 
-      }
+        //erro 401 - acesso não autorizado
+        if(status == "401"){
+          this.context.router.push({pathname: rota, state: {mensagem: "Você está tentando acessar uma página que não te pertence, que feio!"}});
+        }if(status == "500"){
+          this.context.router.push({pathname: rota, state: {mensagem: "O seu acesso expirou, por favor, faça o login novamente."}});
+        }else{
+          this.context.router.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+        }
+      }.bind(this)
     );
+
+    //obtém os cargos
+    axios.get(Config.serverUrl + "/api/sam/role/all").then(
+      function(response){
+        this.setState({
+          cargos:response.data
+        });
+      }.bind(this),
+      function(jqXHR){
+        status = jqXHR.status;
+        var rota = '/Erro/' + status;
+
+        //erro 401 - acesso não autorizado
+        if(status == "401"){
+          this.context.router.push({pathname: rota, state: {mensagem: "Você está tentando acessar uma página que não te pertence, que feio!"}});
+        }if(status == "500"){
+          this.context.router.push({pathname: rota, state: {mensagem: "O seu acesso expirou, por favor, faça o login novamente."}});
+        }else{
+          this.context.router.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+        }
+      }.bind(this)
+    );
+
   },
   handlePesquisa: function(event){
     this.setState({
@@ -42,7 +81,6 @@ var ListaUsuariosContainer = React.createClass({
   },
 
   handleFiltro: function(event){
-    debugger;
     this.setState({
       filtro: event.target.value
     });
@@ -84,11 +122,10 @@ var ListaUsuariosContainer = React.createClass({
         }
     }.bind(this));
 
-    var cargos = ["Certificação","Curso", "Palestra", "Workshop"];
     var placeholderOption = "Filtre os Cargos";
 
-    var options = cargos.map(function(cargo, index){
-      return <option key = {index} value={cargo}>{cargo}</option>
+    var options = this.state.cargos.map(function(cargo, index){
+      return <option key = {index} value={cargo.nome}>{cargo.nome}</option>
     });
 
 
