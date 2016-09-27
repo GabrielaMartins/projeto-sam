@@ -33,7 +33,6 @@ namespace SamApiModels.Votacao
         /// Valor que compõe a nota da votação (1, 2, 3, 8)
         /// </summary>
         [AllowedValues(new object[] {1, 2, 3, 8 })]
-        [Required]
         public int Modificador { get; set; }
 
         /// <summary>
@@ -41,7 +40,7 @@ namespace SamApiModels.Votacao
         /// </summary>
         public AddVotoViewModel()
         {
-          
+            Modificador = 1;
         }
     }
 }

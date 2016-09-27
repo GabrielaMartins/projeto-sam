@@ -19,11 +19,17 @@ namespace SamApiModels.Pendencia
         public int id { get; set; }
 
         /// <summary>
-        /// Identifica se o evento foi ou não encerrado
+        /// Identifica se o evento foi ou não aceito
         /// </summary>
         [Required]
         public bool estado { get; set; }
-        
+
+        /// <summary>
+        /// Identifica se o evento foi ou não processado
+        /// </summary>
+        [Required]
+        public bool processado { get; set; }
+
         /// <summary>
         /// Identifica o tipo de evento
         /// </summary>
@@ -48,7 +54,6 @@ namespace SamApiModels.Pendencia
         /// <summary>
         /// Representa o usuário que fez o evento
         /// </summary>
-        // ESTA DANDO ERRO NO MAPPING
         [Required]
         public UsuarioViewModel Usuario { get; set; }
 

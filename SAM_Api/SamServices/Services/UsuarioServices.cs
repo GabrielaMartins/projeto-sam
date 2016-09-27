@@ -10,10 +10,8 @@ using System.Linq;
 using System.Net;
 using System.Configuration;
 using System.Web;
-using SamApiModels.Models.User;
 using SamHelpers;
 using MessageSystem.Erro;
-using System;
 
 namespace SamServices.Services
 {
@@ -93,67 +91,6 @@ namespace SamServices.Services
                 var pendeciasViewModel = Mapper.Map<List<Pendencia>, List<PendenciaUsuarioViewModel>>(pendencias);
 
                 return pendeciasViewModel;
-            }
-        }
-
-        public static void AtribuiPontos(AtribuicaoPontosUsuarioViewModel atribuicao)
-        {
-            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
-            using (var eventRep = DataAccess.Instance.GetEventoRepository())
-            {
-                
-                // recupera o usuario que receberá os pontos
-                var usuario = userRep.Find(u => u.samaccount == atribuicao.Usuario).SingleOrDefault();
-
-                // recupera o evento pelo qual o usuário receberá os pontos
-                var eventoAtribuicao = eventRep.Find(e => e.id == atribuicao.Evento).SingleOrDefault();
-                if(eventoAtribuicao.tipo != "atribuicao")
-                {
-                    throw new ErroEsperado(HttpStatusCode.BadRequest, "It's not a grant event", $"The event #{eventoAtribuicao.id} could not be processed because it's not a grant event");
-                }
-
-                // recupera o item desse evento
-                var item = eventoAtribuicao.Item;
-
-                // calcula a pontuação que o usuário receberá
-                var pesoCategoria = item.Categoria.peso;
-                var pontos = pesoCategoria * item.dificuldade * item.modificador;
-
-                // atualiza a pontuação do usuário
-                usuario.pontos += pontos;
-                userRep.Update(usuario);
-                userRep.SubmitChanges();
-
-                // Remove as pendencias de atribuição para o evento associadas ao RH
-                PendenciaServices.RemoveHrPendencyFor(eventoAtribuicao);
-
-                // Remove as pendencias de atribuição para o evento associadas ao funcionário
-                PendenciaServices.CloseEmployeePendencyFor(eventoAtribuicao, usuario.id);
-
-                // encerra o evento de atribuicao
-                eventoAtribuicao.estado = true;
-                eventRep.Update(eventoAtribuicao);
-                eventRep.SubmitChanges();
-
-                // encontra o evento de atividade atrelado a atribuição de pontos
-                var atividades = eventRep.Find(e => 
-                                              e.tipo == "atividade" &&
-                                              e.item == eventoAtribuicao.item && 
-                                              e.usuario == eventoAtribuicao.usuario && 
-                                              e.data == eventoAtribuicao.data
-                                              ).ToList();
-
-                // marca como encerrada as atividades (se tudo der certo, deverá semopre vir uma atividade só)
-                foreach (var atividade in atividades)
-                {
-                    atividade.estado = true;
-                    eventRep.Update(atividade);
-                    eventRep.SubmitChanges();
-
-                    // encerra as pendencias associadas a essa atividade
-                    PendenciaServices.RemoveHrPendencyFor(atividade);
-                    PendenciaServices.CloseEmployeePendencyFor(atividade, eventoAtribuicao.usuario.Value);
-                }
             }
         }
 

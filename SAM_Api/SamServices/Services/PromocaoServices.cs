@@ -1,4 +1,6 @@
-﻿using SamApiModels.Promocao;
+﻿using Opus.DataBaseEnvironment;
+using SamApiModels.Evento;
+using SamApiModels.Promocao;
 using SamDataBase.Model;
 using System;
 using System.Collections.Generic;
@@ -35,6 +37,52 @@ namespace SamServices.Services
              .ToList();
 
             return promocoesViewModel;
+        }
+
+        public static void AprovaPromocao(EventoPromocaoViewModel promocao)
+        {
+            using (var repEvento = DataAccess.Instance.GetEventoRepository())
+            using (var repUsuario = DataAccess.Instance.GetUsuarioRepository())
+            {
+                // encontra o evento
+                var evento = repEvento.Find(e => e.id == promocao.Evento).SingleOrDefault();
+
+                // encontra o usuário
+                var usuario = repUsuario.Find(u => u.samaccount == promocao.Usuario).SingleOrDefault();
+
+                if (promocao.FoiPromovido)
+                {
+
+                    // troca o cargo do usuário
+                    usuario.cargo = promocao.Cargo;
+
+                    // atualiza as informações
+                    repUsuario.Update(usuario);
+                    repUsuario.SubmitChanges();
+
+                    // encerra o evento de promocao
+                    evento.processado = true;
+
+                    // informa o resultado do evento (aceito)
+                    evento.estado = true;
+                }
+                else
+                {
+                    // encerra o evento de promocao
+                    evento.processado = true;
+
+                    // informa o resultado do evento (recusado)
+                    evento.estado = false;
+
+                    // gerar alguma pendencia?
+                }
+
+                // encerra a pendencia associada ao evento do funcionário
+                PendenciaServices.CloseEmployeePendencyFor(evento, usuario.id);
+
+                // remove as pendencias associadas ao evento do rh
+                PendenciaServices.RemoveHrPendencyFor(evento);
+            }
         }
     }
 }

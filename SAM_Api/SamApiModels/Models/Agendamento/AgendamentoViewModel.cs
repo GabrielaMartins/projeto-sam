@@ -1,7 +1,7 @@
 ﻿using SamModelValidationRules.Attributes.Validation;
 using System.ComponentModel.DataAnnotations;
 
-namespace SamApiModels.Models.Agendamento
+namespace SamApiModels.Agendamento
 {
     /// <summary>
     /// Representa os dados do agendamento de um evento

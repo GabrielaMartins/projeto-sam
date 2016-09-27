@@ -1,8 +1,7 @@
 ﻿using SamModelValidationRules.Attributes.Validation;
-using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SamApiModels.Models.User
+namespace SamApiModels.User
 {
     /// <summary>
     /// Representa o modelo de dados para atualizar um usuário do SAM

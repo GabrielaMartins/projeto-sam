@@ -8,6 +8,7 @@ namespace SamApiModels.Evento
     /// </summary>
     public class EventoPromocaoViewModel
     {
+
         /// <summary>
         /// Indica se a promoção foi ou não aceita
         /// </summary>

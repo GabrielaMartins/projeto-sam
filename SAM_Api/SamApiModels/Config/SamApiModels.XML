@@ -119,27 +119,82 @@
             <param name="validationContext">the validation context</param>
             <returns></returns>
         </member>
-        <member name="T:SamApiModels.Models.Agendamento.AgendamentoViewModel">
+        <member name="T:SamApiModels.Agendamento.AgendamentoViewModel">
             <summary>
             Representa os dados do agendamento de um evento
             </summary>
         </member>
-        <member name="P:SamApiModels.Models.Agendamento.AgendamentoViewModel.Item">
+        <member name="P:SamApiModels.Agendamento.AgendamentoViewModel.Item">
             <summary>
             Identifica o item associado ao agendamento
             </summary>
         </member>
-        <member name="P:SamApiModels.Models.Agendamento.AgendamentoViewModel.Funcionario">
+        <member name="P:SamApiModels.Agendamento.AgendamentoViewModel.Funcionario">
             <summary>
             Identifica o funcionário requerendo o agendamento
             </summary>
         </member>
-        <member name="P:SamApiModels.Models.Agendamento.AgendamentoViewModel.Data">
+        <member name="P:SamApiModels.Agendamento.AgendamentoViewModel.Data">
             <summary>
             Data na qual irá ocorrer o evento
             </summary>
         </member>
-        <member name="M:SamApiModels.Models.Agendamento.AgendamentoViewModel.#ctor">
+        <member name="M:SamApiModels.Agendamento.AgendamentoViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Agendamento.AprovaAgendamentoViewModel">
+            <summary>
+            Representa os dados da aprovação de um agendamento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Agendamento.AprovaAgendamentoViewModel.Evento">
+            <summary>
+            Representa o evento de agendamento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Agendamento.AprovaAgendamentoViewModel.Aprova">
+            <summary>
+            Indica se aprova ou não esse evento
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Agendamento.AprovaAgendamentoViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Dashboard.DashboardFuncionario">
+            <summary>
+            Representa os dados do dashboard do usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.Usuario">
+            <summary>
+            Representa o usuário do dashboard
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.ResultadoVotacoes">
+            <summary>
+            Representa as votações que esse usuário fez
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.Atualizacoes">
+            <summary>
+            Representa as atualizações referentes a esse usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.Alertas">
+            <summary>
+            Representa os alertas referentes a esse usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.CertificacoesMaisProcuradas">
+            <summary>
+            Representa os dados do gráfico para o dashboard
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Dashboard.DashboardFuncionario.#ctor">
             <summary>
             Construtor do objeto
             </summary>
@@ -175,81 +230,6 @@
             </summary>
         </member>
         <member name="M:SamApiModels.Models.Dashboard.DashboardRH.#ctor">
-            <summary>
-            Construtor do objeto
-            </summary>
-        </member>
-        <member name="T:SamApiModels.Models.User.AtribuicaoPontosUsuarioViewModel">
-            <summary>
-            Representa os dados para atribuição de pontos a um usuário
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.User.AtribuicaoPontosUsuarioViewModel.Usuario">
-            <summary>
-            Representa o usuário que irá receber os pontos
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.User.AtribuicaoPontosUsuarioViewModel.Evento">
-            <summary>
-            Representa o evento pelo qual o usuário recebeu os pontos
-            </summary>
-        </member>
-        <member name="M:SamApiModels.Models.User.AtribuicaoPontosUsuarioViewModel.#ctor">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:SamApiModels.Models.User.UpdateUsuarioViewModel">
-            <summary>
-            Representa o modelo de dados para atualizar um usuário do SAM
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.dataInicio">
-            <summary>
-            Identifica a data que o funcionário iniciou no SAM
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.pontos">
-            <summary>
-            Representa a quantidade de pontos adquiridas pelo funcionário no SAM
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.descricao">
-            <summary>
-            Descrição do usuário como, hobs, gostos e etc.
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.facebook">
-            <summary>
-            Facebook
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.github">
-            <summary>
-            Github
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.linkedin">
-            <summary>
-            Linkedin
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.foto">
-            <summary>
-            String codificada na base64 cujo o formato é <!-- <data:image/<imgType>;base64,><bytesEncoded> -->
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.perfil">
-            <summary>
-            Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (funcionario, rh)
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Models.User.UpdateUsuarioViewModel.cargo">
-            <summary>
-            Identifica o cargo atual do funcionário
-            </summary>
-        </member>
-        <member name="M:SamApiModels.Models.User.UpdateUsuarioViewModel.#ctor">
             <summary>
             Construtor do objeto
             </summary>
@@ -295,41 +275,6 @@
             </summary>
         </member>
         <member name="M:SamApiModels.Models.Votacao.VotacaoViewModel.#ctor">
-            <summary>
-            Construtor do objeto
-            </summary>
-        </member>
-        <member name="T:SamApiModels.Dashboard.DashboardFuncionario">
-            <summary>
-            Representa os dados do dashboard do usuário
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.Usuario">
-            <summary>
-            Representa o usuário do dashboard
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.ResultadoVotacoes">
-            <summary>
-            Representa as votações que esse usuário fez
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.Atualizacoes">
-            <summary>
-            Representa as atualizações referentes a esse usuário
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.Alertas">
-            <summary>
-            Representa os alertas referentes a esse usuário
-            </summary>
-        </member>
-        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.CertificacoesMaisProcuradas">
-            <summary>
-            Representa os dados do gráfico para o dashboard
-            </summary>
-        </member>
-        <member name="M:SamApiModels.Dashboard.DashboardFuncionario.#ctor">
             <summary>
             Construtor do objeto
             </summary>
@@ -395,6 +340,11 @@
             </summary>
         </member>
         <member name="P:SamApiModels.Evento.EventoViewModel.estado">
+            <summary>
+            Representa se o evento foi ou não aceito
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.processado">
             <summary>
             Representa se o evento foi ou não encerrado
             </summary>
@@ -467,6 +417,31 @@
         <member name="M:SamApiModels.Evento.EventoItemViewModel.#ctor">
             <summary>
             Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Evento.AtribuicaoPontosUsuarioViewModel">
+            <summary>
+            Representa os dados para atribuição de pontos a um usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AtribuicaoPontosUsuarioViewModel.ReceberPontos">
+            <summary>
+            Representa se o usuário irá receber os pontos
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AtribuicaoPontosUsuarioViewModel.Usuario">
+            <summary>
+            Representa o usuário que irá receber os pontos
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AtribuicaoPontosUsuarioViewModel.Evento">
+            <summary>
+            Representa o evento pelo qual o usuário recebeu os pontos
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Evento.AtribuicaoPontosUsuarioViewModel.#ctor">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:SamApiModels.Evento.EventoPromocaoViewModel">
@@ -683,7 +658,12 @@
         </member>
         <member name="P:SamApiModels.Pendencia.PendenciaEventoViewModel.estado">
             <summary>
-            Identifica se o evento foi ou não encerrado
+            Identifica se o evento foi ou não aceito
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Pendencia.PendenciaEventoViewModel.processado">
+            <summary>
+            Identifica se o evento foi ou não processado
             </summary>
         </member>
         <member name="P:SamApiModels.Pendencia.PendenciaEventoViewModel.tipo">
@@ -873,12 +853,67 @@
         </member>
         <member name="F:SamApiModels.User.PendenciaUsuarioViewModel.Estado">
             <summary>
-            Representa o estado da pendência
+            Representa o estado da pendência, ou seja, resolvida ou não
             </summary>
         </member>
         <member name="M:SamApiModels.User.PendenciaUsuarioViewModel.#ctor">
             <summary>
             construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.User.UpdateUsuarioViewModel">
+            <summary>
+            Representa o modelo de dados para atualizar um usuário do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.dataInicio">
+            <summary>
+            Identifica a data que o funcionário iniciou no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.pontos">
+            <summary>
+            Representa a quantidade de pontos adquiridas pelo funcionário no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.descricao">
+            <summary>
+            Descrição do usuário como, hobs, gostos e etc.
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.facebook">
+            <summary>
+            Facebook
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.github">
+            <summary>
+            Github
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.linkedin">
+            <summary>
+            Linkedin
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.foto">
+            <summary>
+            String codificada na base64 cujo o formato é <!-- <data:image/<imgType>;base64,><bytesEncoded> -->
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.perfil">
+            <summary>
+            Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (funcionario, rh)
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.cargo">
+            <summary>
+            Identifica o cargo atual do funcionário
+            </summary>
+        </member>
+        <member name="M:SamApiModels.User.UpdateUsuarioViewModel.#ctor">
+            <summary>
+            Construtor do objeto
             </summary>
         </member>
         <member name="T:SamApiModels.User.UsuarioViewModel">

@@ -50,7 +50,6 @@ namespace SamServices.Services
                 }
 
                 var resultadoVotacao = Mapper.Map<AddVotoViewModel, ResultadoVotacao>(vote);
-
                 rep.Add(resultadoVotacao);
                 rep.SubmitChanges();
 

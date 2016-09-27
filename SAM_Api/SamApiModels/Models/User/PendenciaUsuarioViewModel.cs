@@ -28,11 +28,13 @@ namespace SamApiModels.User
         [Required]
         public PendenciaEventoViewModel Evento;
 
+        
         /// <summary>
-        /// Representa o estado da pendência
+        /// Representa o estado da pendência, ou seja, resolvida ou não
         /// </summary>
         [Required]
         public bool Estado;
+        
 
         /// <summary>
         /// construtor do objeto

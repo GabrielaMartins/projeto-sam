@@ -4,7 +4,7 @@ using SamApiModels.Evento;
 using SamApiModels.User;
 using SamDataBase.Model;
 using System.Collections.Generic;
-using SamApiModels.Models.Agendamento;
+using SamApiModels.Agendamento;
 using System.Linq;
 using System.Net;
 using MessageSystem.Erro;
@@ -50,6 +50,86 @@ namespace SamServices.Services
             }
         }
 
+        public static bool ProcessaAtribuicaoDePontos(AtribuicaoPontosUsuarioViewModel atribuicao)
+        {
+            using (var userRep = DataAccess.Instance.GetUsuarioRepository())
+            using (var eventRep = DataAccess.Instance.GetEventoRepository())
+            {
+
+                // recupera o evento pelo qual o usuário receberá os pontos
+                var eventoAtribuicao = eventRep.Find(e => e.id == atribuicao.Evento).SingleOrDefault();
+                if (eventoAtribuicao.tipo != "atribuicao")
+                {
+                    throw new ErroEsperado(HttpStatusCode.BadRequest, "It's not a grant event", $"The event #{eventoAtribuicao.id} could not be processed because it's not a grant event");
+                }
+
+                // se não aceitou a atribuição de pontos
+                if (!atribuicao.ReceberPontos)
+                {
+                    eventoAtribuicao.processado = true;
+                    eventoAtribuicao.estado = false;
+
+                    eventRep.Update(eventoAtribuicao);
+                    eventRep.SubmitChanges();
+
+                    return false;
+                }
+
+                // recupera o usuario que receberá os pontos
+                var usuario = userRep.Find(u => u.samaccount == atribuicao.Usuario).SingleOrDefault();
+
+                // recupera o item desse evento
+                var item = eventoAtribuicao.Item;
+
+                // calcula a pontuação que o usuário receberá
+                var pesoCategoria = item.Categoria.peso;
+                var pontos = pesoCategoria * item.dificuldade * item.modificador;
+
+                // atualiza a pontuação do usuário
+                usuario.pontos += pontos;
+                userRep.Update(usuario);
+                userRep.SubmitChanges();
+
+                // Remove as pendencias de atribuição para o evento associadas ao RH
+                PendenciaServices.RemoveHrPendencyFor(eventoAtribuicao);
+
+                // Remove as pendencias de atribuição para o evento associadas ao funcionário
+                PendenciaServices.CloseEmployeePendencyFor(eventoAtribuicao, usuario.id);
+
+                // encerra o evento de atribuicao
+                eventoAtribuicao.processado = true;
+
+                // aceita a atribuição de pontos
+                eventoAtribuicao.estado = true;
+
+                eventRep.Update(eventoAtribuicao);
+                eventRep.SubmitChanges();
+
+                // encontra o evento de atividade atrelado a atribuição de pontos
+                var atividades = eventRep.Find(e =>
+                                              e.tipo == "atividade" &&
+                                              e.item == eventoAtribuicao.item &&
+                                              e.usuario == eventoAtribuicao.usuario &&
+                                              e.data == eventoAtribuicao.data
+                                              ).ToList();
+
+                // marca como encerrada as atividades (se tudo der certo, deverá sempre vir uma atividade só)
+                foreach (var atividade in atividades)
+                {
+                    atividade.processado = true;
+                    atividade.estado = true;
+                    eventRep.Update(atividade);
+                    eventRep.SubmitChanges();
+
+                    // encerra as pendencias associadas a essa atividade
+                    PendenciaServices.RemoveHrPendencyFor(atividade);
+                    PendenciaServices.CloseEmployeePendencyFor(atividade, eventoAtribuicao.usuario.Value);
+                }
+
+                return true;
+            }
+        }
+
         /// <summary>
         /// Implements the business logic described in https://goo.gl/UejZYN at 1.
         /// </summary>
@@ -63,7 +143,7 @@ namespace SamServices.Services
     
                 // verifica se ja existe um evento igual no banco
                 var eventos = rep.Find(e =>
-                                              e.tipo == "atividade" &&
+                                              e.tipo == "agendamento" &&
                                               e.item == evento.item &&
                                               e.usuario == evento.usuario &&
                                               e.data == evento.data
@@ -86,58 +166,12 @@ namespace SamServices.Services
             }
         }
 
-        public static void AprovaPromocao(EventoPromocaoViewModel promocao)
-        {
-            using (var repEvento = DataAccess.Instance.GetEventoRepository())
-            using (var repUsuario = DataAccess.Instance.GetUsuarioRepository())
-            {
-                // encontra o evento
-                var evento = repEvento.Find(e => e.id == promocao.Evento).SingleOrDefault();
-
-                // encontra o usuário
-                var usuario = repUsuario.Find(u => u.samaccount == promocao.Usuario).SingleOrDefault();
-
-                if (promocao.FoiPromovido)
-                {
-                    
-                    // troca o cargo do usuário
-                    usuario.cargo = promocao.Cargo;
-
-                    // atualiza as informações
-                    repUsuario.Update(usuario);
-                    repUsuario.SubmitChanges();
-
-                    // encerra o evento de promocao
-                    evento.processado = true;
-
-                    // informa o resultado do evento (aceito)
-                    evento.estado = true;
-                }
-                else
-                {
-                    // encerra o evento de promocao
-                    evento.processado = true;
-
-                    // informa o resultado do evento (recusado)
-                    evento.estado = false;
-
-                    // gerar alguma pendencia?
-                }
-
-                // encerra a pendencia associada ao evento do funcionário
-                PendenciaServices.CloseEmployeePendencyFor(evento, usuario.id);
-
-                // remove as pendencias associadas ao evento do rh
-                PendenciaServices.RemoveHrPendencyFor(evento);
-            }
-        }
-
 
         /// <summary>
         /// Implements the business logic described in https://goo.gl/UejZYN at 1.
         /// </summary>
         /// <param name="evt">It's the evento to be approved</param>
-        public static void AprovaAgendamento(int evt)
+        public static bool AprovaAgendamento(AprovaAgendamentoViewModel agendamento)
         {
 
             using (var eventRep = DataAccess.Instance.GetEventoRepository())
@@ -145,14 +179,38 @@ namespace SamServices.Services
             {
 
                 // recupera o evento
-                var eventoAgendamento = eventRep.Find(e => e.id == evt).SingleOrDefault();
+                var eventoAgendamento = eventRep.Find(e => e.id == agendamento.Evento).SingleOrDefault();
                 if(eventoAgendamento.tipo != "agendamento")
                 {
-                    throw new ErroEsperado(HttpStatusCode.BadRequest, "It's not a scheduling event", $"The event #{evt} could not be approved because it's not a scheduling event");
+                    throw new ErroEsperado(HttpStatusCode.BadRequest, "It's not a scheduling event", $"The event #{agendamento.Evento} could not be approved because it's not a scheduling event");
+                }
+
+                // se não aprovou
+                if (!agendamento.Aprova)
+                {
+                    // encerra o evento de agendamento
+                    eventoAgendamento.processado = true;
+
+                    // aprova o agendamento
+                    eventoAgendamento.estado = false;
+
+                    eventRep.Update(eventoAgendamento);
+                    eventRep.SubmitChanges();
+
+                    // remove a(s) pendencia(s) associada(s) a esse evento de agendamento vinculadas ao RH
+                    PendenciaServices.RemoveHrPendencyFor(eventoAgendamento);
+
+                    // altera a pendencia do usuario
+                    var pendencia = pendencyRep.Find(p => p.evento == eventoAgendamento.id && p.usuario == eventoAgendamento.usuario).SingleOrDefault();
+                    pendencia.estado = true;
+                    pendencyRep.Update(pendencia);
+                    pendencyRep.SubmitChanges();
+
+                    return false;
                 }
 
                 // encerra o evento de agendamento
-                eventoAgendamento.estado = true;
+                eventoAgendamento.processado = true;
 
                 // aprova o agendamento
                 eventoAgendamento.estado = true;
@@ -239,7 +297,9 @@ namespace SamServices.Services
 
                     // gera pendencia para o evento de atribuicao para o RH, significando que o RH precisa atribuir pontos ao funcionario participante
                     PendenciaServices.GenerateHrPendencyFor(eventoAtribuicao);
-                }                
+                }
+
+                return true;            
             }
         }
     }
