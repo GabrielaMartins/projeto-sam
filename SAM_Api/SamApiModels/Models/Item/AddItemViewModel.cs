@@ -12,6 +12,7 @@ namespace SamApiModels.Item
     public class AddItemViewModel
     {
 
+        /// <summary>
         /// Representa o nome do item
         /// </summary>
         [Required]

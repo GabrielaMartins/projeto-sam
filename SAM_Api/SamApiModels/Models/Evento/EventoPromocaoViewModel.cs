@@ -1,13 +1,27 @@
 ﻿using SamModelValidationRules.Attributes.Validation;
 using System.ComponentModel.DataAnnotations;
 
-namespace SamApiModels.User
+namespace SamApiModels.Evento
 {
     /// <summary>
     /// Representa os dados para promover um usuário
     /// </summary>
-    public class PromocaoUsuarioViewModel
+    public class EventoPromocaoViewModel
     {
+
+        /// <summary>
+        /// Indica se a promoção foi ou não aceita
+        /// </summary>
+        [Required]
+        public bool PodePromover { get; set; }
+
+        /// <summary>
+        /// Identifica o evento de promoção o qual está sendo aprovado
+        /// </summary>
+        [Required]
+        [ValidKey(ValidKeyAttribute.Entities.Evento)]
+        public int Evento { get; set; }
+
         /// <summary>
         /// Identifica o usuário que receberá a promoção
         /// </summary>
@@ -25,7 +39,7 @@ namespace SamApiModels.User
         /// <summary>
         /// 
         /// </summary>
-        public PromocaoUsuarioViewModel()
+        public EventoPromocaoViewModel()
         {
 
         }

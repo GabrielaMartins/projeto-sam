@@ -24,9 +24,10 @@ namespace SamServices.Mappers
            .ForMember(e => e.Usuario, opt => opt.MapFrom(src => src.Usuario));
 
             Mapper.CreateMap<Pendencia, PendenciaUsuarioViewModel>()
-            .ForMember(x => x.id, opt => opt.MapFrom(src => src.id))
+            .ForMember(x => x.Id, opt => opt.MapFrom(src => src.id))
+            .ForMember(x => x.Estado, opt => opt.MapFrom(src => src.estado))
             .ForMember(x => x.Usuario, opt => opt.MapFrom(src => Mapper.Map<Usuario, UsuarioViewModel>(src.Usuario)))
-            .ForMember(x => x.Evento, opt => opt.MapFrom(src => Mapper.Map<Evento, PendenciaEventoViewModel>(src.Evento)));
+            .ForMember(x => x.Evento, opt => opt.MapFrom(src => Mapper.Map<Evento, EventoViewModel>(src.Evento)));
 
             Mapper.CreateMap<ResultadoVotacao, VotoViewModel>()
             .ForMember(x => x.Dificuldade, opt => opt.MapFrom(src => src.dificuldade))

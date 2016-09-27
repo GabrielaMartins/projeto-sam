@@ -32,11 +32,13 @@ namespace SamApiService.Controllers
         public HttpResponseMessage Login(LoginViewModel login)
         {
 
-            ActiveDirectoryHelper adConsumer = new ActiveDirectoryHelper(ConfigurationManager.AppSettings["OpusADServer"]);
             string token = string.Empty;
-
-            // ask Active Directory if the User's credentials is valid
+            
             #if !DEBUG
+                ActiveDirectoryHelper adConsumer = new ActiveDirectoryHelper(ConfigurationManager.AppSettings["OpusADServer"]);
+
+                // ask Active Directory if the User's credentials is valid
+            
                 if (!adConsumer.IsValidUser(login.User, login.Password))
                 {
                     // if credential is invalid, return an error

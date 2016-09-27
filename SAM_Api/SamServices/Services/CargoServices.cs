@@ -30,5 +30,14 @@ namespace SamServices.Services
             }
        
         }
+
+        public static List<CargoViewModel> RecuperaTodos(string samaccount)
+        {
+            using (var rep = DataAccess.Instance.GetCargoRepository())
+            {
+                var cargos = Mapper.Map<List<Cargo>, List<CargoViewModel>>(rep.GetAll(samaccount));
+                return cargos;
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace SamServices.Mappers
             {
                 x.AddProfile<DomainToViewModelMappingProfile>();
                 x.AddProfile<ViewModelToDomainMappingProfile>();
+                x.AddProfile<ViewModelToViewModelMappingProfile>();
             });
         }
     }

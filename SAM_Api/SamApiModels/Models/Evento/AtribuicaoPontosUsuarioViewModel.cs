@@ -1,18 +1,18 @@
 ﻿using SamModelValidationRules.Attributes.Validation;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SamApiModels.Models.User
+namespace SamApiModels.Evento
 {
     /// <summary>
     /// Representa os dados para atribuição de pontos a um usuário
     /// </summary>
     public class AtribuicaoPontosUsuarioViewModel
     {
+        /// <summary>
+        /// Representa se o usuário irá receber os pontos
+        /// </summary>
+        public bool ReceberPontos { get; set; }
+
         /// <summary>
         /// Representa o usuário que irá receber os pontos
         /// </summary>
@@ -32,7 +32,7 @@ namespace SamApiModels.Models.User
         /// </summary>
         public AtribuicaoPontosUsuarioViewModel()
         {
-
+            ReceberPontos = true;
         }
     }
 }

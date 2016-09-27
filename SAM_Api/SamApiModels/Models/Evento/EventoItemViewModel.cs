@@ -12,6 +12,7 @@ namespace SamApiModels.Evento
     /// </summary>
     public class EventoItemViewModel
     {
+                 
         /// <summary>
         /// Identifica o item associado ao evento do SAM
         /// </summary>

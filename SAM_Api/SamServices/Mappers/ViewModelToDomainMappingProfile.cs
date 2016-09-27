@@ -3,8 +3,7 @@ using Opus.DataBaseEnvironment;
 using SamApiModels.Categoria;
 using SamApiModels.Evento;
 using SamApiModels.Item;
-using SamApiModels.Models.Agendamento;
-using SamApiModels.Models.User;
+using SamApiModels.Agendamento;
 using SamApiModels.User;
 using SamApiModels.Votacao;
 using SamDataBase.Model;
@@ -47,6 +46,8 @@ namespace SamServices.Mappers
 
             // mapeia as chaves estrangeiras
             .ForMember(e => e.tipo, opt => opt.UseValue("agendamento"))
+            .ForMember(e => e.processado, opt => opt.UseValue(true))
+            .ForMember(e => e.estado, opt => opt.UseValue(true))
             .ForMember(e => e.data, opt => opt.MapFrom(src => src.Data))
             .ForMember(e => e.item, opt => opt.MapFrom(src => src.Item))
             .ForMember(e => e.usuario, opt => opt.MapFrom(src =>
