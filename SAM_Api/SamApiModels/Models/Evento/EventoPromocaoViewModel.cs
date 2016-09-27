@@ -13,7 +13,7 @@ namespace SamApiModels.Evento
         /// Indica se a promoção foi ou não aceita
         /// </summary>
         [Required]
-        public bool FoiPromovido { get; set; }
+        public bool PodePromover { get; set; }
 
         /// <summary>
         /// Identifica o evento de promoção o qual está sendo aprovado

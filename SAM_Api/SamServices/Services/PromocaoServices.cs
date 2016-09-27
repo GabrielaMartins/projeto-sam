@@ -2,11 +2,9 @@
 using SamApiModels.Evento;
 using SamApiModels.Promocao;
 using SamDataBase.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SamServices.Services
 {
@@ -39,7 +37,7 @@ namespace SamServices.Services
             return promocoesViewModel;
         }
 
-        public static void AprovaPromocao(EventoPromocaoViewModel promocao)
+        public static bool AprovaPromocao(EventoPromocaoViewModel promocao)
         {
             using (var repEvento = DataAccess.Instance.GetEventoRepository())
             using (var repUsuario = DataAccess.Instance.GetUsuarioRepository())
@@ -50,9 +48,27 @@ namespace SamServices.Services
                 // encontra o usuário
                 var usuario = repUsuario.Find(u => u.samaccount == promocao.Usuario).SingleOrDefault();
 
-                if (promocao.FoiPromovido)
-                {
 
+                if (!promocao.PodePromover)
+                {
+                    // encerra o evento de promocao
+                    evento.processado = true;
+
+                    // informa o resultado do evento (recusado)
+                    evento.estado = false;
+
+                    // remove as pendencias associadas ao evento do rh
+                    PendenciaServices.RemoveHrPendencyFor(evento);
+
+                    // encerra a pendencia associada ao evento do funcionário (informa que nao foi aceito)
+                    PendenciaServices.CloseEmployeePendencyFor(evento, usuario.id);
+                                      
+                    return false;
+
+                }
+                else
+                {
+                   
                     // troca o cargo do usuário
                     usuario.cargo = promocao.Cargo;
 
@@ -65,23 +81,16 @@ namespace SamServices.Services
 
                     // informa o resultado do evento (aceito)
                     evento.estado = true;
+
+                    // encerra a pendencia associada ao evento do funcionário
+                    PendenciaServices.CloseEmployeePendencyFor(evento, usuario.id);
+
+                    // remove as pendencias associadas ao evento do rh
+                    PendenciaServices.RemoveHrPendencyFor(evento);
+
+                    return true;
                 }
-                else
-                {
-                    // encerra o evento de promocao
-                    evento.processado = true;
-
-                    // informa o resultado do evento (recusado)
-                    evento.estado = false;
-
-                    // gerar alguma pendencia?
-                }
-
-                // encerra a pendencia associada ao evento do funcionário
-                PendenciaServices.CloseEmployeePendencyFor(evento, usuario.id);
-
-                // remove as pendencias associadas ao evento do rh
-                PendenciaServices.RemoveHrPendencyFor(evento);
+                                
             }
         }
     }

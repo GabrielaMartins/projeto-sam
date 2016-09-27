@@ -1,7 +1,6 @@
 ﻿using SamApi.Attributes.Authorization;
 using MessageSystem.Mensagem;
 using SamApiModels.Agendamento;
-using SamModelValidationRules.Attributes.Validation;
 using SamServices.Services;
 using Swashbuckle.Swagger.Annotations;
 using System.Net;
@@ -56,7 +55,7 @@ namespace SamApi.Controllers
         }
 
         /// <summary>
-        /// Atribui pontos ao usuário baseado em um certo evento do SAM
+        /// Atribui pontos ao usuário baseado em um evento do SAM
         /// </summary>
         /// <param name="atribuicao">Representa os dados da atribuição de pontos</param>
         [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível atribuir os pontos ao usuário do SAM", typeof(DescriptionMessage))]
@@ -86,11 +85,14 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "rh")]
         [HttpGet]
-        [Route("promotion/approve/{evt}")]
+        [Route("promotion/approve")]
         public HttpResponseMessage ApprovePromotion(EventoPromocaoViewModel promocao)
         {
-            PromocaoServices.AprovaPromocao(promocao);
-            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Scheduling Approved", $"You accepted the event #{promocao.Evento}"));
+            var foiAprovado = PromocaoServices.AprovaPromocao(promocao);
+            if(foiAprovado)
+                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Promotion Approved", $"You accepted the event #{promocao.Evento}"));
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Promotion Denied", $"You denied the event #{promocao.Evento}"));
         }
 
         /// <summary>

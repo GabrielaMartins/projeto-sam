@@ -110,12 +110,12 @@ namespace SamServices.Services
             }
         }
 
-        public static void RemoveHrPendencyFor(Evento evt)
+        public static void RemoveHrPendencyFor(Evento evento)
         {
             using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             {
                 // remove a(s) pendencia(s) associada(s) a esse evento vinculadas aos RH
-                var pendencies = pendencyRep.Find(p => p.evento == evt.id && p.Usuario.perfil == "rh").ToList();
+                var pendencies = pendencyRep.Find(p => p.evento == evento.id && p.Usuario.perfil == "rh").ToList();
                 foreach (var p in pendencies)
                 {
                     pendencyRep.Delete(p.id);
@@ -155,13 +155,13 @@ namespace SamServices.Services
             }
         }
 
-        public static void RemoveEmployeePendencyFor(Evento eventoVotacao, int usuario)
+        public static void RemoveEmployeePendencyFor(Evento evento, int usuario)
         {
             using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             {
 
                 // Remove a(s) pendencia(s) associada(s) ao evento vinculadas aos funcionários
-                var pendencies = pendencyRep.Find(p => p.evento == eventoVotacao.id && p.usuario == usuario).ToList();
+                var pendencies = pendencyRep.Find(p => p.evento == evento.id && p.usuario == usuario).ToList();
                 foreach (var p in pendencies)
                 {
                     pendencyRep.Delete(p);
@@ -170,13 +170,13 @@ namespace SamServices.Services
             }
         }
 
-        public static void CloseEmployeePendencyFor(Evento eventoVotacao, int usuario)
+        public static void CloseEmployeePendencyFor(Evento evento, int usuario)
         {
             using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             {
 
                 // Encerra a(s) pendencia(s) associada(s) ao evento vinculadas aos funcionários
-                var pendencies = pendencyRep.Find(p => p.evento == eventoVotacao.id && p.usuario == usuario).ToList();
+                var pendencies = pendencyRep.Find(p => p.evento == evento.id && p.usuario == usuario).ToList();
                 foreach (var p in pendencies)
                 {
                     p.estado = true;

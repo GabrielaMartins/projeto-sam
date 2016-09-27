@@ -449,7 +449,7 @@
             Representa os dados para promover um usuário
             </summary>
         </member>
-        <member name="P:SamApiModels.Evento.EventoPromocaoViewModel.FoiPromovido">
+        <member name="P:SamApiModels.Evento.EventoPromocaoViewModel.PodePromover">
             <summary>
             Indica se a promoção foi ou não aceita
             </summary>

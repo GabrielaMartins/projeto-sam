@@ -18,7 +18,7 @@ namespace SamServices.Services
         {
             using (var eventRep = DataAccess.Instance.GetEventoRepository())
             {
-                var events = eventRep.RecuperaEventos(tipo, quantidade);
+                var events = eventRep.RecuperaEventos(tipo, quantidade).Where(e => e.processado == false).ToList();
 
                 var eventsViewModel = Mapper.Map<List<Evento>, List<EventoViewModel>>(events);
 
@@ -201,10 +201,12 @@ namespace SamServices.Services
                     PendenciaServices.RemoveHrPendencyFor(eventoAgendamento);
 
                     // altera a pendencia do usuario
-                    var pendencia = pendencyRep.Find(p => p.evento == eventoAgendamento.id && p.usuario == eventoAgendamento.usuario).SingleOrDefault();
-                    pendencia.estado = true;
-                    pendencyRep.Update(pendencia);
-                    pendencyRep.SubmitChanges();
+                    PendenciaServices.CloseEmployeePendencyFor(eventoAgendamento, eventoAgendamento.usuario.Value);
+
+                    //var pendencia = pendencyRep.Find(p => p.evento == eventoAgendamento.id && p.usuario == eventoAgendamento.usuario).SingleOrDefault();
+                    //pendencia.estado = true;
+                    //pendencyRep.Update(pendencia);
+                    //pendencyRep.SubmitChanges();
 
                     return false;
                 }
