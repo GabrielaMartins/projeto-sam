@@ -1,10 +1,11 @@
-﻿using Opus.DataBaseEnvironment;
+﻿using MessageSystem.Erro;
+using Opus.DataBaseEnvironment;
 using SamApiModels.Evento;
 using SamApiModels.Promocao;
 using SamDataBase.Model;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Net;
 
 namespace SamServices.Services
 {
@@ -44,6 +45,10 @@ namespace SamServices.Services
             {
                 // encontra o evento
                 var evento = repEvento.Find(e => e.id == promocao.Evento).SingleOrDefault();
+                if(evento.tipo != "promocao")
+                {
+                    throw new ErroEsperado(HttpStatusCode.BadRequest, "It's not a promotion event", $"The event #{promocao.Evento} could not be voted because it's not a promotion event");
+                }
 
                 // encontra o usuário
                 var usuario = repUsuario.Find(u => u.samaccount == promocao.Usuario).SingleOrDefault();
@@ -60,8 +65,25 @@ namespace SamServices.Services
                     // remove as pendencias associadas ao evento do rh
                     PendenciaServices.RemoveHrPendencyFor(evento);
 
-                    // encerra a pendencia associada ao evento do funcionário (informa que nao foi aceito)
-                    PendenciaServices.CloseEmployeePendencyFor(evento, usuario.id);
+                    // encerra a pendencia associada ao funcionário naquele evento (informa que nao foi aceito) e
+                    // remove as outras pendencias de promocao desse usuario
+                    using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
+                    {
+
+                        // Encerra a pendencia associada ao evento
+                        var pendencia = pendencyRep.Find(p => p.evento == evento.id).SingleOrDefault();
+                        pendencia.estado = false;
+                        pendencyRep.Update(pendencia);
+                        pendencyRep.SubmitChanges();
+
+                        // remove as pendencias de promocao remanescentes atreladas ao funcionário
+                        var pendencias = pendencyRep.Find(p => p.evento == evento.id && p.usuario == usuario.id && p.id != pendencia.id).ToList();
+                        foreach (var p in pendencias)
+                        {
+                            pendencyRep.Delete(p);
+                            pendencyRep.SubmitChanges();
+                        }
+                    }
                                       
                     return false;
 
@@ -82,11 +104,31 @@ namespace SamServices.Services
                     // informa o resultado do evento (aceito)
                     evento.estado = true;
 
-                    // encerra a pendencia associada ao evento do funcionário
-                    PendenciaServices.CloseEmployeePendencyFor(evento, usuario.id);
+                    repEvento.Update(evento);
+                    repEvento.SubmitChanges();
 
                     // remove as pendencias associadas ao evento do rh
                     PendenciaServices.RemoveHrPendencyFor(evento);
+
+                    // encerra a pendencia associada ao funcionário naquele evento (informa que nao foi aceito) e
+                    // remove as outras pendencias de promocao desse usuario
+                    using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
+                    {
+
+                        // Encerra a pendencia associada ao evento
+                        var pendencia = pendencyRep.Find(p => p.evento == evento.id).SingleOrDefault();
+                        pendencia.estado = true;
+                        pendencyRep.Update(pendencia);
+                        pendencyRep.SubmitChanges();
+
+                        // remove as pendencias de promocao remanescentes atreladas ao funcionário
+                        var pendencias = pendencyRep.Find(p => p.evento == evento.id && p.usuario == usuario.id && p.id != pendencia.id).ToList();
+                        foreach (var p in pendencias)
+                        {
+                            pendencyRep.Delete(p);
+                            pendencyRep.SubmitChanges();
+                        }
+                    }
 
                     return true;
                 }

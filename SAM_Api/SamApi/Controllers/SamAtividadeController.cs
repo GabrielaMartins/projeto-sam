@@ -84,7 +84,7 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "rh")]
-        [HttpGet]
+        [HttpPost]
         [Route("promotion/approve")]
         public HttpResponseMessage ApprovePromotion(EventoPromocaoViewModel promocao)
         {
