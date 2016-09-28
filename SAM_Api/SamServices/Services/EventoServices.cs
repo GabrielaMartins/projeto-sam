@@ -94,7 +94,7 @@ namespace SamServices.Services
                 PendenciaServices.RemoveHrPendencyFor(eventoAtribuicao);
 
                 // Remove as pendencias de atribuição para o evento associadas ao funcionário
-                PendenciaServices.CloseEmployeePendencyFor(eventoAtribuicao, usuario.id);
+                PendenciaServices.UpdateEmployeePendencyFor(eventoAtribuicao, usuario.id);
 
                 // encerra o evento de atribuicao
                 eventoAtribuicao.processado = true;
@@ -123,7 +123,7 @@ namespace SamServices.Services
 
                     // encerra as pendencias associadas a essa atividade
                     PendenciaServices.RemoveHrPendencyFor(atividade);
-                    PendenciaServices.CloseEmployeePendencyFor(atividade, eventoAtribuicao.usuario.Value);
+                    PendenciaServices.UpdateEmployeePendencyFor(atividade, eventoAtribuicao.usuario.Value);
                 }
 
                 return true;
@@ -201,7 +201,7 @@ namespace SamServices.Services
                     PendenciaServices.RemoveHrPendencyFor(eventoAgendamento);
 
                     // altera a pendencia do usuario
-                    PendenciaServices.CloseEmployeePendencyFor(eventoAgendamento, eventoAgendamento.usuario.Value);
+                    PendenciaServices.UpdateEmployeePendencyFor(eventoAgendamento, eventoAgendamento.usuario.Value);
 
                     //var pendencia = pendencyRep.Find(p => p.evento == eventoAgendamento.id && p.usuario == eventoAgendamento.usuario).SingleOrDefault();
                     //pendencia.estado = true;
@@ -226,7 +226,7 @@ namespace SamServices.Services
 
                 // atualiza o valor do estado da pendencia do usuario aguardando o resultado do agendamento
                 var pendency = pendencyRep.Find(p => p.evento == eventoAgendamento.id && p.usuario == eventoAgendamento.usuario).SingleOrDefault();
-                PendenciaServices.CloseEmployeePendencyFor(eventoAgendamento, eventoAgendamento.usuario.Value);
+                PendenciaServices.UpdateEmployeePendencyFor(eventoAgendamento, eventoAgendamento.usuario.Value);
                
                 // cria o evento resultante da aprovação do agendamento
                 eventRep.AddAndCommit(new Evento()

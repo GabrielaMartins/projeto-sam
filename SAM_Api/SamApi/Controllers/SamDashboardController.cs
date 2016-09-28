@@ -137,7 +137,7 @@ namespace SamApi.Controllers
 
             //Verifica para cada certificação quantas vezes ao longo de um ano ela foi procurada
 
-            var anos = certificados.Select(certificado => certificado.data.Year).Distinct().ToList();
+            var anos = certificados.Select(certificado => certificado.data.Value.Year).Distinct().ToList();
 
             foreach (var ano in anos)
             {
@@ -145,7 +145,7 @@ namespace SamApi.Controllers
 
                 foreach (var certificado in nomesCertificados)
                 {
-                    var quantidadesCertificacoes = certificados.Where(x => x.Item.nome == certificado && x.data.Year == ano).GroupBy(x => x.Item.nome).Count();
+                    var quantidadesCertificacoes = certificados.Where(x => x.Item.nome == certificado && x.data.Value.Year == ano).GroupBy(x => x.Item.nome).Count();
                     linha.Add(quantidadesCertificacoes);
                 }
                 linha.Add("");

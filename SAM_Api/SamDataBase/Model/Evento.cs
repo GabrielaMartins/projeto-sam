@@ -24,10 +24,10 @@ namespace SamDataBase.Model
         public int id { get; set; }
         public Nullable<int> item { get; set; }
         public Nullable<int> usuario { get; set; }
-        public System.DateTime data { get; set; }
+        public Nullable<System.DateTime> data { get; set; }
         public bool estado { get; set; }
-        public string tipo { get; set; }
         public bool processado { get; set; }
+        public string tipo { get; set; }
     
         public virtual Item Item { get; set; }
         public virtual Usuario Usuario { get; set; }

@@ -170,7 +170,7 @@ namespace SamServices.Services
             }
         }
 
-        public static void CloseEmployeePendencyFor(Evento evento, int usuario)
+        public static void UpdateEmployeePendencyFor(Evento evento, int usuario, bool value = true )
         {
             using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             {
@@ -179,7 +179,7 @@ namespace SamServices.Services
                 var pendencies = pendencyRep.Find(p => p.evento == evento.id && p.usuario == usuario).ToList();
                 foreach (var p in pendencies)
                 {
-                    p.estado = true;
+                    p.estado = value;
                     pendencyRep.Update(p);
                     pendencyRep.SubmitChanges();
                 }

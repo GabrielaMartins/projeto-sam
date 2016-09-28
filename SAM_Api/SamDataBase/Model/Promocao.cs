@@ -16,12 +16,12 @@ namespace SamDataBase.Model
     {
         public int id { get; set; }
         public Nullable<int> usuario { get; set; }
-        public Nullable<int> cargoAnterior { get; set; }
-        public Nullable<int> cargoAdquirido { get; set; }
+        public Nullable<int> cargoanterior { get; set; }
+        public Nullable<int> cargoadquirido { get; set; }
         public System.DateTime data { get; set; }
     
         public virtual Cargo CargoAnterior { get; set; }
-        public virtual Cargo Cargo { get; set; }
+        public virtual Cargo CargoAdquirido { get; set; }
         public virtual Usuario Usuario { get; set; }
     }
 }

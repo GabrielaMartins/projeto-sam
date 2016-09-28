@@ -12,6 +12,8 @@ namespace SamDataBase.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class SamEntities : DbContext
     {
@@ -28,12 +30,17 @@ namespace SamDataBase.Model
         public virtual DbSet<Cargo> Cargos { get; set; }
         public virtual DbSet<Categoria> Categorias { get; set; }
         public virtual DbSet<Evento> Eventos { get; set; }
-        public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<Item> Itens { get; set; }
         public virtual DbSet<ItensTagged> ItensTaggeds { get; set; }
         public virtual DbSet<Pendencia> Pendencias { get; set; }
-        public virtual DbSet<ResultadoVotacao> ResultadoVotacaos { get; set; }
+        public virtual DbSet<Promocao> Promocoes { get; set; }
+        public virtual DbSet<ResultadoVotacao> ResultadoVotacoes { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
-        public virtual DbSet<Promocao> Promocoes { get; set; }
+    
+        public virtual int geraPromocoes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("geraPromocoes");
+        }
     }
 }

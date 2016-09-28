@@ -92,7 +92,7 @@ namespace SamServices.Mappers
             .ForMember(u => u.Eventos, opt => opt.Ignore())
             .ForMember(u => u.Pendencias, opt => opt.Ignore())
             .ForMember(u => u.Promocoes, opt => opt.Ignore())
-            .ForMember(u => u.ResultadoVotacoes, opt => opt.Ignore())
+            //.ForMember(u => u.ResultadoVotacoes, opt => opt.Ignore())
 
             // mapeia as chaves estrangeiras
             .ForMember(u => u.cargo, opt => opt.MapFrom(src => src.Cargo.id));
@@ -104,7 +104,7 @@ namespace SamServices.Mappers
             // ignora as propriedades de navegacoes quando vai inserir no banco
            .ForMember(i => i.Categoria, opt => opt.Ignore())
            .ForMember(i => i.Eventos, opt => opt.Ignore())
-           .ForMember(i => i.TaggedItens, opt => opt.Ignore())
+           .ForMember(i => i.ItensTagged, opt => opt.Ignore())
 
            // mapeia as chaves estrangeiras
            .ForMember(i => i.categoria, opt => opt.MapFrom(src => src.Categoria.id));
@@ -114,7 +114,7 @@ namespace SamServices.Mappers
 
             .ForMember(i => i.Eventos, opt => opt.Ignore())
             .ForMember(i => i.Categoria, opt => opt.Ignore())
-            .ForMember(i => i.TaggedItens, opt => opt.Ignore())
+            .ForMember(i => i.ItensTagged, opt => opt.Ignore())
 
            // mapeia as chaves estrangeiras
            .ForMember(i => i.descricao, opt => opt.MapFrom(src => src.Descricao))
