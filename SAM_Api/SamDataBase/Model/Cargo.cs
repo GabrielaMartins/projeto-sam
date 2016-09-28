@@ -17,10 +17,10 @@ namespace SamDataBase.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cargo()
         {
-            this.Cargos = new HashSet<Cargo>();
+            this.CargoAnterior = new HashSet<Cargo>();
+            this.PromocoesCargoAnterior = new HashSet<Promocao>();
+            this.PromocoesCargoAdquirido = new HashSet<Promocao>();
             this.Usuarios = new HashSet<Usuario>();
-            this.Promocoes = new HashSet<Promocao>();
-            this.Promocoes1 = new HashSet<Promocao>();
         }
     
         public int id { get; set; }
@@ -29,13 +29,13 @@ namespace SamDataBase.Model
         public int pontuacao { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cargo> Cargos { get; set; }
-        public virtual Cargo CargoAnterior { get; set; }
+        public virtual ICollection<Cargo> CargoAnterior { get; set; }
+        public virtual Cargo Cargos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Promocao> PromocoesCargoAnterior { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Promocao> PromocoesCargoAdquirido { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuarios { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Promocao> Promocoes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Promocao> Promocoes1 { get; set; }
     }
 }

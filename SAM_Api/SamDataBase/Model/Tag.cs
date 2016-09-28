@@ -17,13 +17,13 @@ namespace SamDataBase.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tag()
         {
-            this.TaggedItens = new HashSet<ItensTagged>();
+            this.ItensTagged = new HashSet<ItensTagged>();
         }
     
         public int id { get; set; }
         public string descricao { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ItensTagged> TaggedItens { get; set; }
+        public virtual ICollection<ItensTagged> ItensTagged { get; set; }
     }
 }

@@ -42,7 +42,7 @@ namespace SamApiModels.Evento
         /// </summary>
         [Required]
         [ValidDate]
-        public DateTime data { get; set; }
+        public DateTime? data { get; set; }
 
         /// <summary>
         /// Representa o item associado ao evento

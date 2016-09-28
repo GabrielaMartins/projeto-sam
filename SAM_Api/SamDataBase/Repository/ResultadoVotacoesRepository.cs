@@ -18,11 +18,11 @@ namespace Opus.DataBaseEnvironment
             var db = DbContext as SamEntities;
             if (qtd.HasValue)
             {
-                return db.ResultadoVotacaos.OrderBy(v => v.Evento.data).Take(qtd.Value).ToList();
+                return db.ResultadoVotacoes.OrderBy(v => v.Evento.data).Take(qtd.Value).ToList();
             }
             else
             {
-                return db.ResultadoVotacaos.OrderBy(v => v.Evento.data).ToList();
+                return db.ResultadoVotacoes.OrderBy(v => v.Evento.data).ToList();
             }
         }
 
