@@ -97,6 +97,8 @@ C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamA
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\SamApi.pdb
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\EntityFramework.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\EntityFramework.SqlServer.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\git-issuer.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\MessageSystem.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\Microsoft.AI.Agent.Intercept.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\Microsoft.AI.DependencyCollector.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\Microsoft.AI.PerfCounterCollector.dll
@@ -126,6 +128,7 @@ C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamA
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\WebActivatorEx.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\JWT.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\AutoMapper.dll
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\MessageSystem.pdb
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\SamApiModels.pdb
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\SamApiModels.xml
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\SamDataBase.pdb
@@ -133,6 +136,7 @@ C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamA
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\SamServices.pdb
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\EntityFramework.xml
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\EntityFramework.SqlServer.xml
+C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\git-issuer.pdb
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\Microsoft.AI.DependencyCollector.xml
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\Microsoft.AI.Web.xml
@@ -154,5 +158,3 @@ C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamA
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\obj\Debug\SamApi.csprojResolveAssemblyReference.cache
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\obj\Debug\SamApi.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\obj\Debug\SamApi.pdb
-C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\MessageSystem.dll
-C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\MessageSystem.pdb

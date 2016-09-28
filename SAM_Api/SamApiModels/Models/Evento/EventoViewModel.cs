@@ -19,10 +19,16 @@ namespace SamApiModels.Evento
         public int id { get; set; }
 
         /// <summary>
-        /// Representa se o evento foi ou não encerrado
+        /// Representa se o evento foi ou não aceito
         /// </summary>
         [Required]
         public bool estado { get; set; }
+
+        /// <summary>
+        /// Representa se o evento foi ou não encerrado
+        /// </summary>
+        [Required]
+        public bool processado { get; set; }
 
         /// <summary>
         /// Representa o tipo do evento

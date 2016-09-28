@@ -5,7 +5,6 @@ using System.Net;
 using SamApi.Attributes.Authorization;
 using SamApiModels.User;
 using Swashbuckle.Swagger.Annotations;
-using SamApiModels.Models.User;
 using SamServices.Services;
 using SamModelValidationRules.Attributes.Validation;
 using MessageSystem.Mensagem;
@@ -18,22 +17,6 @@ namespace SamApi.Controllers
     [RoutePrefix("api/sam/user")]
     public class SamUserController : ApiController
     {
-
-        /// <summary>
-        /// Promove um funcionário do SAM
-        /// </summary>
-        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível executar a promoção do usuário do SAM", typeof(DescriptionMessage))]
-        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
-        [SamResourceAuthorizer(Roles = "rh")]
-        [HttpPost]
-        [Route("promote")]
-        public HttpResponseMessage Promote(PromocaoUsuarioViewModel promocao)
-        {
-
-            UsuarioServices.PromoveUsuario(promocao);
-            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "Congratulations!", $"The user {promocao.Usuario} was promoted"));
-        }
 
         /// <summary>
         /// Retorna a lista de usuários do SAM
@@ -68,23 +51,7 @@ namespace SamApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, usuario);
         }
 
-        /// <summary>
-        /// Atribui pontos ao usuário baseado em um certo evento do SAM
-        /// </summary>
-        /// <param name="atribuicao">Representa os dados da atribuição de pontos</param>
-        [SwaggerResponse(HttpStatusCode.OK, "Caso seja possível atribuir os pontos ao usuário do SAM", typeof(DescriptionMessage))]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário requerido não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
-        [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
-        [SamResourceAuthorizer(Roles = "rh")]
-        [HttpPost]
-        [Route("atribuicao")]
-        public HttpResponseMessage AtribuiPontos(AtribuicaoPontosUsuarioViewModel atribuicao)
-        {
-            UsuarioServices.AtribuiPontos(atribuicao);
-            return Request.CreateResponse(HttpStatusCode.OK, new DescriptionMessage(HttpStatusCode.OK, "points granted", $"You granted points to user '{atribuicao.Usuario}' for the event #{atribuicao.Evento}"));
-        }
-
+        
         /// <summary>
         /// Cria um novo usuário na base de dados do SAM.
         /// </summary>

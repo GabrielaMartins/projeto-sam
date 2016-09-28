@@ -49,6 +49,7 @@
     <Compile Include="Attributes\Validation\ValidKey.cs" />
     <Compile Include="Attributes\Validation\ValidPictureAttribute.cs" />
     <Compile Include="Models\Agendamento\AgendamentoViewModel.cs" />
+    <Compile Include="Models\Agendamento\AprovaAgendamentoViewModel.cs" />
     <Compile Include="Models\Dashboard\DashboardFuncionario.cs" />
     <Compile Include="Models\Dashboard\DashboardRH.cs" />
     <Compile Include="Models\Evento\AddEventoVotacaoViewModel.cs" />
@@ -66,9 +67,9 @@
     <Compile Include="Models\Evento\EventoItemViewModel.cs" />
     <Compile Include="Models\Login\LoginViewModel.cs" />
     <Compile Include="Models\User\AddUsuarioViewModel.cs" />
-    <Compile Include="Models\User\AtribuicaoPontosUsuarioViewModel.cs" />
+    <Compile Include="Models\Evento\AtribuicaoPontosUsuarioViewModel.cs" />
     <Compile Include="Models\User\PendenciaUsuarioViewModel.cs" />
-    <Compile Include="Models\User\PromocaoUsuarioViewModel.cs" />
+    <Compile Include="Models\Evento\EventoPromocaoViewModel.cs" />
     <Compile Include="Models\User\UpdateUsuarioViewModel.cs" />
     <Compile Include="Models\User\UsuarioViewModel.cs" />
     <Compile Include="Models\Votacao\AddVotoViewModel.cs" />

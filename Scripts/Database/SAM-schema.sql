@@ -1,6 +1,7 @@
 CREATE DATABASE SAM;
-USE SAM
+USE SAM;
 GO
+
 CREATE TABLE Cargos
 (
 	id INT IDENTITY(1,1) PRIMARY KEY,
@@ -69,6 +70,7 @@ CREATE TABLE Eventos
 
 	data DATETIME UNIQUE,
 	estado BIT NOT NULL DEFAULT 0,
+	processado BIT NOT NULL DEFAULT 0,
 	tipo VARCHAR(12) UNIQUE NOT NULL CHECK(tipo IN ('votacao','atribuicao','promocao','agendamento')),
 );
 
@@ -99,5 +101,7 @@ CREATE TABLE ResultadoVotacoes
 
 	-- valor que foi votado
 	dificuldade INT NOT NULL CHECK(dificuldade IN (1,3,8)),
+	
+	-- modificador que foi votado
 	modificador INT NOT NULL CHECK(modificador IN (1,2,3,8))
 );

@@ -8,7 +8,6 @@ using SamDataBase.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System;
 
 namespace SamServices.Services
 {
@@ -39,6 +38,7 @@ namespace SamServices.Services
 
         public static void CriaVoto(AddVotoViewModel vote)
         {
+            using (var pendencyRep = DataAccess.Instance.GetPendenciaRepository())
             using (var rep = DataAccess.Instance.GetResultadoVotacoRepository())
             using (var eventRep = DataAccess.Instance.GetEventoRepository())
             {
@@ -50,9 +50,14 @@ namespace SamServices.Services
                 }
 
                 var resultadoVotacao = Mapper.Map<AddVotoViewModel, ResultadoVotacao>(vote);
-
                 rep.Add(resultadoVotacao);
                 rep.SubmitChanges();
+
+                // atualiza a pendencia desse usuario
+                var pendencia = pendencyRep.Find(p => p.evento == vote.Evento && p.Usuario.samaccount == vote.Usuario).SingleOrDefault();
+                pendencia.estado = true;
+                pendencyRep.Update(pendencia);
+                pendencyRep.SubmitChanges();
             }
         }
 
@@ -98,7 +103,12 @@ namespace SamServices.Services
                 }
 
                 // encerra o evento
+                eventoVotacao.processado = true;
+
+                // aceita o encerramento
                 eventoVotacao.estado = true;
+
+                // atualiza as informações
                 eventRep.Update(eventoVotacao);
                 eventRep.SubmitChanges();
 
@@ -122,6 +132,7 @@ namespace SamServices.Services
                 // gerar evento de atribuição de pontos para o usuario
                 var eventoAtribuicao = new Evento()
                 {
+                    processado = false,
                     estado = false,
                     data = eventoVotacao.data,
                     item = eventoVotacao.item,
