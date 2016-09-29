@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="74b3aeb3249b48518f57daa44ebcdeb8" Name="Diagram1">
+        <EntityTypeShape EntityType="SamDataBase.Model.Cargo" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SamDataBase.Model.Categoria" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="SamDataBase.Model.Evento" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SamDataBase.Model.Item" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SamDataBase.Model.ItensTagged" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SamDataBase.Model.Pendencia" Width="1.5" PointX="7.5" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SamDataBase.Model.Promocao" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SamDataBase.Model.ResultadoVotacao" Width="1.5" PointX="7.5" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SamDataBase.Model.Tag" Width="1.5" PointX="3" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="SamDataBase.Model.Usuario" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <AssociationConnector Association="SamDataBase.Model.FK__Cargos__anterior__1273C1CD" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__Promocoes__cargo__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__Promocoes__cargo__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__Usuarios__cargo__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__Itens__categoria__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__Eventos__item__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__Eventos__usuario__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__Pendencia__event__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__Resultado__event__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__ItensTagge__item__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__ItensTagged__tag__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__Pendencia__usuar__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__Promocoes__usuar__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="SamDataBase.Model.FK__Resultado__usuar__398D8EEE" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

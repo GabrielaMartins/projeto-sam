@@ -52,51 +52,51 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Cargo.cs">
-      <DependentUpon>SamConnection.tt</DependentUpon>
+      <DependentUpon>SamEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Categoria.cs">
-      <DependentUpon>SamConnection.tt</DependentUpon>
+      <DependentUpon>SamEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Evento.cs">
-      <DependentUpon>SamConnection.tt</DependentUpon>
+      <DependentUpon>SamEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Item.cs">
-      <DependentUpon>SamConnection.tt</DependentUpon>
+      <DependentUpon>SamEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ItensTagged.cs">
-      <DependentUpon>SamConnection.tt</DependentUpon>
+      <DependentUpon>SamEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Pendencia.cs">
-      <DependentUpon>SamConnection.tt</DependentUpon>
+      <DependentUpon>SamEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Promocao.cs">
-      <DependentUpon>SamConnection.tt</DependentUpon>
+      <DependentUpon>SamEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ResultadoVotacao.cs">
-      <DependentUpon>SamConnection.tt</DependentUpon>
+      <DependentUpon>SamEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\SamConnection.Context.cs">
+    <Compile Include="Model\SamEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SamConnection.Context.tt</DependentUpon>
+      <DependentUpon>SamEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\SamConnection.cs">
+    <Compile Include="Model\SamEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SamConnection.tt</DependentUpon>
+      <DependentUpon>SamEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\SamConnection.Designer.cs">
+    <Compile Include="Model\SamEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SamConnection.edmx</DependentUpon>
+      <DependentUpon>SamEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\Tag.cs">
-      <DependentUpon>SamConnection.tt</DependentUpon>
+      <DependentUpon>SamEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Usuario.cs">
-      <DependentUpon>SamConnection.tt</DependentUpon>
+      <DependentUpon>SamEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CargoRepository.cs" />
     <Compile Include="Repository\CategoriaRepository.cs" />
     <Compile Include="Repository\DataAccess.cs" />
@@ -115,25 +115,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
-    <EntityDeploy Include="Model\SamConnection.edmx">
+    <EntityDeploy Include="Model\SamEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SamConnection.Designer.cs</LastGenOutput>
+      <LastGenOutput>SamEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Model\SamConnection.edmx.diagram">
-      <DependentUpon>SamConnection.edmx</DependentUpon>
+    <None Include="Model\SamEntities.edmx.diagram">
+      <DependentUpon>SamEntities.edmx</DependentUpon>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model\SamConnection.Context.tt">
+    <Content Include="Model\SamEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SamConnection.edmx</DependentUpon>
-      <LastGenOutput>SamConnection.Context.cs</LastGenOutput>
+      <DependentUpon>SamEntities.edmx</DependentUpon>
+      <LastGenOutput>SamEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model\SamConnection.tt">
+    <Content Include="Model\SamEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SamConnection.edmx</DependentUpon>
-      <LastGenOutput>SamConnection.cs</LastGenOutput>
+      <DependentUpon>SamEntities.edmx</DependentUpon>
+      <LastGenOutput>SamEntities.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

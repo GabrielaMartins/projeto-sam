@@ -18,21 +18,21 @@ namespace SamDataBase.Model
         public Item()
         {
             this.Eventos = new HashSet<Evento>();
-            this.TaggedItens = new HashSet<ItensTagged>();
+            this.ItensTagged = new HashSet<ItensTagged>();
         }
     
         public int id { get; set; }
         public string nome { get; set; }
         public string descricao { get; set; }
+        public bool votado { get; set; }
         public int dificuldade { get; set; }
         public int modificador { get; set; }
-        public Nullable<int> categoria { get; set; }
-        public bool votado { get; set; }
+        public int categoria { get; set; }
     
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Evento> Eventos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ItensTagged> TaggedItens { get; set; }
+        public virtual ICollection<ItensTagged> ItensTagged { get; set; }
     }
 }

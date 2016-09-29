@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using SamApiModels;
 using SamApiModels.Cargo;
 using SamApiModels.Categoria;
 using SamApiModels.Evento;
@@ -8,9 +7,9 @@ using SamApiModels.Pendencia;
 using SamApiModels.Promocao;
 using SamApiModels.User;
 using SamApiModels.Votacao;
-using SamDataBase.Model;
 using Opus.DataBaseEnvironment;
 using System.Collections.Generic;
+using SamDataBase.Model;
 
 namespace SamServices.Mappers
 {
@@ -56,7 +55,7 @@ namespace SamServices.Mappers
             .ForMember(p => p.Usuario, opt => opt.MapFrom(src => src.Usuario));
 
             Mapper.CreateMap<Promocao, PromocaoAdquiridaViewModel>()
-            .ForMember(p => p.CargoAdquirido, opt => opt.MapFrom(src => src.Cargo))
+            .ForMember(p => p.CargoAdquirido, opt => opt.MapFrom(src => src.CargoAdquirido))
             .ForMember(p => p.CargoAnterior, opt => opt.MapFrom(src => src.CargoAnterior))
             .ForMember(p => p.Usuario, opt => opt.MapFrom(src => src.Usuario));
 
