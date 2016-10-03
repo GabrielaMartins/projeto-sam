@@ -106,7 +106,7 @@ namespace SamServices.Services
                     // informa o resultado do evento (aceito)
                     evento.estado = true;
 
-                    evento.data = data;
+                    //evento.data = data; (nao alteramos mais a data)
 
                     repEvento.Update(evento);
                     repEvento.SubmitChanges();

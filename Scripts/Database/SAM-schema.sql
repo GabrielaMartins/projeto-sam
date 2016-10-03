@@ -23,7 +23,7 @@ CREATE PROCEDURE dbo.geraPromocoes AS
 	INSERT INTO @temp
 		SELECT
 			TUsuarios.*,
-			TItem.item as ultimo_item,
+			TItem.item AS ultimo_item,
 			TItem.data --(nao precisa)
 		FROM 
 
@@ -41,14 +41,14 @@ CREATE PROCEDURE dbo.geraPromocoes AS
 						Usuarios u
 					WHERE
 						u.perfil <> 'rh' AND
-						u.dataAvaliacao = Convert(date, getdate())
+						u.dataAvaliacao = CONVERT(DATE, GETDATE())
 					) as u
 				WHERE
 					-- filtra cargos com pontuação igual ou maior do que o cargo atual do usuário
-					c.pontuacao >= (SELECT pontuacao from Cargos c2 WHERE c2.id = u.cargo) AND
+					c.pontuacao >= (SELECT pontuacao FROM Cargos c2 WHERE c2.id = u.cargo) AND
 					
 					-- filtra cargos diferente do cargo atual do usuário
-					c.id <> (SELECT id from Cargos c3 WHERE c3.id = u.cargo) AND
+					c.id <> (SELECT id FROM Cargos c3 WHERE c3.id = u.cargo) AND
 
 					-- filtra usuários com pontuação maior ou igual a requerida pelo cargo
 					u.pontos >= c.pontuacao
@@ -74,12 +74,14 @@ CREATE PROCEDURE dbo.geraPromocoes AS
 		
 		) AS TItem ON TUsuarios.usuario = TItem.usuario;
 
+		SELECT * FROM @temp;
+
 		-- para cada usuario apto a ser promovido, cria um evento de promocao
 		INSERT INTO Eventos (item, usuario, data, estado, tipo)
 			SELECT
 				t.ultimo_item as item,
 				t.usuario as usuario,
-				null as data, -- diz que a data da promocao ainda nao foi atribuida
+				GETDATE() as data,
 				0 as estado,
 				'promocao' as tipo
 			FROM
@@ -95,8 +97,9 @@ CREATE PROCEDURE dbo.geraPromocoes AS
 					WHERE
 						e.tipo = 'promocao' AND
 						t.usuario = e.usuario AND
-						t.ultimo_item = e.item AND
-						(t.data = e.data OR t.data IS NULL AND e.data IS NULL)
+						e.processado = 0
+						--( (t.ultimo_item = e.item) OR (t.ultimo_item IS NULL AND e.item IS NULL) ) AND
+						--( (t.data = e.data) OR (t.data IS NULL AND e.data IS NULL) )
 												
 				);
 
