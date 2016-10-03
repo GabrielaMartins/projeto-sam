@@ -237,10 +237,13 @@ namespace SamApi
 
         private static string GetSamApiModelsXmlCommentsPath()
         {
-            var SamApiDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).FullName;
-            var SamApiModelsDir = Directory.GetParent(SamApiDir).FullName;
-            var samApiModelsDir = $"{SamApiModelsDir}\\SamApiModels\\Config\\SamApiModels.xml";
-            return samApiModelsDir;
+            //var SamApiDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).FullName;
+            //var SamApiModelsDir = Directory.GetParent(SamApiDir).FullName;
+            //var samApiModelsDir = $"{SamApiModelsDir}\\SamApiModels\\Config\\SamApiModels.xml";
+
+            return string.Format(@"{0}\bin\SamApiModels.xml", AppDomain.CurrentDomain.BaseDirectory);
+
+            //return samApiModelsDir;
         }
 
         private static string GetSamApiXmlCommentsPath()
