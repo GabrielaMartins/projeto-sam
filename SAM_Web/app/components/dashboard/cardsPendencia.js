@@ -9,7 +9,7 @@ moment.locale('pt-br');
 
 var CardPendencia = React.createClass({
   render : function(){
-
+    console.log(this.props.conteudo.Evento.Item);
     return(
         <div
           id="pendencias"
@@ -17,7 +17,12 @@ var CardPendencia = React.createClass({
           <div className="card-title center" style={{marginTop:10}}>
               <i className={this.props.icone}></i>
             <h5 className="grande">
-              <b>{this.props.conteudo.Evento.Item.nome}</b>
+              {this.props.conteudo.Evento.Item != null?
+                <b>{this.props.conteudo.Evento.Item.nome}</b>
+                :
+                null
+              }
+
             </h5>
           </div>
           <div className="card-content center">

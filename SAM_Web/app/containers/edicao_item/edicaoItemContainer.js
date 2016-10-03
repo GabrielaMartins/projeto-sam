@@ -62,34 +62,35 @@ const EdicaoItemContainer = React.createClass({
         item: "",
         descricao: "",
         modificador: "",
+        usuarios: [],
         checked: false
       }
   },
 
   componentDidMount: function(){
-    var self = this;
     this.getCategory(Config.serverUrl+'/api/sam/category/all');
-
-    //faz bind do select e chama a função para setar o novo estado
-    $("#select_categoria").on('change', self.handleCategoryChanges);
-    $("#select_dificuldade").on('change', self.handleDificultyChanges);
 
     //obter dados do item e setar os values dos inputs
     //id é passado por parametro na rota
     var id = this.props.params.id;
     this.getItem(Config.serverUrl+'/api/sam/item/' + id);
 
-
   },
 
   componentDidUpdate: function(prevProps, prevState){
+    var self = this;
 
     //inicializador do select do materialize
     $(document).ready(function() {
       $('select').material_select();
       Materialize.updateTextFields();
+
       //verificar por que não deixa alterar o radio quando inicializa checado
       //$("input:radio").prop("checked", true);
+      //faz bind do select e chama a função para setar o novo estado
+      $("#select_categoria").on('change', self.handleCategoryChanges);
+      $("#select_dificuldade").on('change', self.handleDificultyChanges);
+
     });
 
   },
@@ -143,7 +144,8 @@ const EdicaoItemContainer = React.createClass({
           categoria: item.Categoria.id + "",
           dificuldade: item.dificuldade,
           descricao: item.descricao,
-          modificador: item.modificador
+          modificador: item.modificador,
+          usuarios: item.Usuarios
         });
       },
       function(jqXHR){
@@ -233,19 +235,21 @@ const EdicaoItemContainer = React.createClass({
 
   handleSubmit: function(event){
     event.preventDefault();
-
+    var id = this.state.id_item;
     var item = this.state.item;
     var descricao = this.state.descricao;
     var categoria = this.state.categoria;
     var dificuldade = this.state.dificuldade;
     var modificador = this.state.modificador;
 
+
     var itemObject = {
-      item: item,
-      categoria: categoria,
-      dificuldade: dificuldade,
-      modificador: modificador,
-      descricao: descricao
+      Id: id,
+      Nome: item,
+      Categoria: categoria,
+      Dificuldade: dificuldade,
+      Modificador: modificador,
+      Descricao: descricao
     };
 
     // faz post do objeto para o servidor
@@ -256,13 +260,35 @@ const EdicaoItemContainer = React.createClass({
       headers: {'token': token}
     };
 
+    var samaccount = localStorage.getItem("samaccount");
+
+    var self  = this;
+    var rota = "/Dashboard/RH/" + samaccount;
+
     axios.put(Config.serverUrl+"/api/sam/item/update/" + this.state.id_item , itemObject, config).then(
+
       function(){
-        //swal
+        //sucesso
+        swal({
+          title: "Dados Enviados!",
+          text: "Os dados foram salvos com sucesso",
+          type: "success",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#550000"
+        },function(){
+          self.context.router.push({pathname: rota});
+        });
       },
 
       function(){
-      //swal
+      //erro
+      swal({
+        title: "Algum Erro Ocorreu!",
+        text: "Os dados não foram salvos, por favor, tente novamente.",
+        type: "error",
+        confirmButtonText: "Ok",
+        confirmButtonColor: "#550000"
+      });
       }
     );
   },
@@ -279,7 +305,12 @@ const EdicaoItemContainer = React.createClass({
         modificador: "",
         item: "",
         descricao: "",
-        checked: false
+        checked: false,
+        erroDescricao: "",
+        erroItem: "",
+        erroCategoria: "",
+        erroModificador: "",
+        erroDificuldade: ""
       });
 
   }

@@ -80,10 +80,10 @@ const AtividadeContainer = React.createClass({
         item: "Selecione o item",
         descricao: "",
         data:"",
-        erroItem: undefined,
-        erroCategoria: undefined,
-        erroData: undefined,
-        erroDescricao: undefined,
+        erroItem: "",
+        erroCategoria: "",
+        erroData: "",
+        erroDescricao: "",
         mostraAlerta: false
       }
   },
@@ -243,12 +243,12 @@ const AtividadeContainer = React.createClass({
       valido = false;
     }
 
-    if(this.state.categoria === "Selecione a categoria" || this.state.categoria === "0"){
+    /*if(this.state.categoria === "Selecione a categoria" || this.state.categoria === "0"){
       this.setState({
         erroCategoria: "Por favor, selecione uma categoria"
       });
       valido = false;
-    }
+    }*/
 
     if(this.state.data === ""){
       this.setState({
@@ -258,7 +258,7 @@ const AtividadeContainer = React.createClass({
     }
 
     //validação de data
-    var data_atividade = moment(this.state.data, 'DD-MM-YYYY').format('L');
+    var data_atividade = moment(this.state.data, 'DD/MM/YYYY').format('L');
     if( data_atividade < hoje){
       this.setState({
         erroData: "Por favor, escolha uma data maior que o dia de hoje."
@@ -359,10 +359,10 @@ const AtividadeContainer = React.createClass({
         categoria: "Selecione a categoria",
         descricao: "",
         data:"",
-        erroItem: undefined,
-        erroCategoria: undefined,
-        erroData: undefined,
-        erroDescricao: undefined
+        erroItem: "",
+        erroCategoria: "",
+        erroData: "",
+        erroDescricao: ""
       });
 
   },
@@ -378,13 +378,13 @@ const AtividadeContainer = React.createClass({
       today: 'hoje',
       clear: 'limpar',
       close: 'fechar',
-      format: 'dd-mm-yyyy',
-      formatSubmit: 'dd-mm-yyyy',
+      format: 'dd/mm/yyyy',
+      formatSubmit: 'dd/mm/yyyy',
       selectMonths: true,
       selectYears: 5,
       closeOnSelect: true,
       onSet: function(e) {
-        var val = this.get('select', 'dd-mm-yyyy');
+        var val = this.get('select', 'dd/mm/yyyy');
         self.handleDataChanges({target: {value: val}});
       }
     });

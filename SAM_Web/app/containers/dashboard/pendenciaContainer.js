@@ -76,6 +76,7 @@ var Pendencias = React.createClass({
         case "promocao":
           return (
             <ModalPromocaoFuncionario index = {conteudo.Id}
+              atividade = {conteudo}
               handleDeleteAlerta = {this.props.handleDeleteAlerta}/>);
         case "agendamento":
           return(

@@ -6,7 +6,7 @@ var ReactRouter = require('react-router');
 
 var EdicaoFuncionario = function(props){
   return(
-    <div style={{paddingTop: 30 }}>
+    <div>
       <div className="row wrapper">
         <div className="col l8 m10 s12 center-block">
           <div className="card-panel">

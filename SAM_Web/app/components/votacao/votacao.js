@@ -46,22 +46,61 @@ var Votacao = function(props){
     var atr;
 
     props.votos.forEach(function(voto, index){
-
+      console.log(voto);
       if(voto.Dificuldade){
+        var dificuldade;
+
+        //mapeia o valor do ponto em valor escrito (fácil, médio, difícil)
+        switch(voto.Dificuldade){
+          case 1:
+            dificuldade = "fácil";
+            break;
+          case 3:
+            dificuldade = "média";
+            break;
+          case 8:
+            dificuldade = "difícil";
+            break;
+        }
+
         atr = <div>
                 <p className="media"><b>Dificuldade: </b>{voto.Dificuldade}</p>
               </div>
 
         if(voto.Modificador){
+          var categoriasProfundidade = ["Blog Técnico", "Apresentação"];
+          var status;
+          
+          //determina o nome do modificador que aparecerá na tela
+          if(categoriasProfundidade.indexOf(props.evento.Item.Categoria.nome) != -1){
+            switch(voto.Modificador){
+              case 2:
+                status = "raso";
+                break;
+              case 3:
+                status = "profundo";
+                break;
+            }
+          }else{
+            switch(voto.Modificador){
+              case 1:
+                status = "não alinhado";
+                break;
+              case 3:
+                status = "alinhado";
+                break;
+            }
+          }
+
           atr = <div>
-                  <p className="media"><b>Dificuldade: </b>{voto.Dificuldade}</p>
-                  <p className="media"><b>Profundidade: </b>{voto.Modificador}</p>
+                  <p className="media"><b>Dificuldade: </b>{dificuldade}</p>
+                  <p className="media"><b>Profundidade: </b>{status}</p>
                 </div>
         }
 
         votos.push(
                   <Link key={index} to={{ pathname: '/Perfil/' + voto.Usuario.samaccount}}>
-                    <CardEventos  usuario = {voto.Usuario} estilo = "aberta card-panel z-depth-1 col l12 m12 s12 green lighten-3 waves-effect black-text">
+                    <CardEventos  usuario = {voto.Usuario} estilo = "card-panel z-depth-1 col l12 m12 s12 lighten-3 waves-effect black-text">
                         <div className="left">
                           {atr}
                         </div>

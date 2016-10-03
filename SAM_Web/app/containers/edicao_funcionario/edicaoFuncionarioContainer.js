@@ -27,7 +27,7 @@ const EdicaoFuncionarioContainer = React.createClass({
     return {
       nome:"",
       cargo:"",
-      cargo_id: 0,
+      cargo_id: "0",
       pontos:0,
       data_inicio:"",
       perfil:"",
@@ -73,8 +73,8 @@ const EdicaoFuncionarioContainer = React.createClass({
               urlImage: userData.foto,
               lista_cargos:response.data
             });
-
           });
+
       },
 
       function(jqXHR){
@@ -95,28 +95,42 @@ const EdicaoFuncionarioContainer = React.createClass({
   },
 
   componentDidUpdate: function(prevProps, prevState){
+    var self = this;
     $(document).ready(function(){
       $('select').material_select();
+      self.setupDatepicker();
       //verificar por que não deixa alterar o radio quando inicializa checado
       //$("input:radio").prop("checked", true);
     });
 
   },
 
+  handleDataChanges: function(event){
+    this.setState({data: event.target.value});
+  },
+
+  handleChangeCargo: function(event){
+    this.setState({cargo_id: event.target.value});
+  },
+
+  handleChangePontos: function(event){
+    this.setState({pontos: event.target.value});
+  },
+
   handleFacebookChanges: function(event){
-    this.setState({facebook: event.target.value})
+    this.setState({facebook: event.target.value});
   },
 
   handleLikedinChanges: function(event){
-    this.setState({linkedin: event.target.value})
+    this.setState({linkedin: event.target.value});
   },
 
   handleGithubChanges: function(event){
-    this.setState({github: event.target.value})
+    this.setState({github: event.target.value});
   },
 
   handleDescricaoChanges: function(event){
-    this.setState({descricao: event.target.value})
+    this.setState({descricao: event.target.value});
   },
 
   handleFotoChanges: function(event){
@@ -152,7 +166,7 @@ const EdicaoFuncionarioContainer = React.createClass({
       cargo: this.state.cargo_id,
       nome: this.state.nome,
       pontos: this.state.pontos,
-      dataInicio: this.state.data_inicio,
+      dataInicio: moment(this.state.data_inicio).format('L'),
       perfil: this.state.perfil,
       facebook: this.state.facebook,
       linkedin: this.state.linkedin,
@@ -160,6 +174,8 @@ const EdicaoFuncionarioContainer = React.createClass({
       descricao: this.state.descricao,
       foto: imagem
     }
+
+    console.log(perfilDados);
 
       var self = this;
       var token = localStorage.getItem("token");
@@ -180,7 +196,8 @@ const EdicaoFuncionarioContainer = React.createClass({
             confirmButtonText: "Ok",
             confirmButtonColor: "#550000"
           },function(){
-            this.context.router.push({pathname: rota});
+            self.context.router.push({pathname: rota});
+            window.location.reload();
           });
         },
         function(jqXHR){
@@ -266,6 +283,31 @@ const EdicaoFuncionarioContainer = React.createClass({
 
   },
 
+  setupDatepicker: function() {
+
+    var self = this;
+
+    $('.datepicker').pickadate({
+      monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+      today: 'hoje',
+      clear: 'limpar',
+      close: 'fechar',
+      format: 'dd-mm-yyyy',
+      formatSubmit: 'dd-mm-yyyy',
+      selectMonths: true,
+      selectYears: 5,
+      closeOnSelect: true,
+      onSet: function(e) {
+        var val = this.get('select', 'dd-mm-yyyy');
+        self.handleDataChanges({target: {value: val}});
+      },
+      onStart: function() {
+        this.set('select', moment(self.state.data_inicio).format('L'), {format:'dd-mm-yyyy'});
+      }
+    })
+  },
+
   primeiraParteForms: function(){
     var perfil = localStorage.getItem("perfil");
 
@@ -307,19 +349,23 @@ const EdicaoFuncionarioContainer = React.createClass({
           </div>
           <div className="row">
             <div className="input-field col s12 m6 l6">
-              <select value={this.state.cargo_id}>
+              <select value={this.state.cargo_id} onChange={this.handleChangeCargo}>
                 {cargos}
               </select>
               <label>Level (Cargo):</label>
             </div>
             <div className="input-field col s12 m6 l6">
-              <input value={this.state.pontos} id="pontos" type="text"/>
+              <input value={this.state.pontos} onChange={this.handleChangePontos} id="pontos" type="text"/>
               <label htmlFor="pontos" className="active">XP (Pontos):</label>
             </div>
           </div>
           <div className="row">
-            <div className="input-field col s12 m6 l6">
-              <input  value={moment(this.state.data_inicio).format('L')} id="inicio" type="text"/>
+            <div className="input-field col l6 m6 s12">
+              <input
+                type="date"
+                id="inicio"
+                className="datepicker"
+                />
               <label htmlFor="inicio" className="active">Data de Início:</label>
             </div>
             <div className="col s12 l6">
@@ -365,10 +411,11 @@ const EdicaoFuncionarioContainer = React.createClass({
     var usuario = this.props.params.samaccount;
 
     //cria visualização de imagem
-    var imagemPreview = <img src= {this.state.urlImage} id="img_url"  className="center-block responsive-img"/>
+    var imagemPreview = <img src= {this.state.urlImage} id="img_url"  className="center-block responsive-img" style={{"height": "100px"}}/>
 
     //se for funcionário ou os dados do próprio funcionário de rh, ele pode editar dados como facebook, avatar, etc
   if(perfil.toUpperCase() == "FUNCIONARIO" || (perfil.toUpperCase() == "RH" && samaccount == usuario )){
+
       return(
         <div>
           <div className="row">
@@ -376,22 +423,22 @@ const EdicaoFuncionarioContainer = React.createClass({
               <input id="facebook"
                 type="text"
                 onChange={this.handleFacebookChanges}
-                value={this.state.facebook}/>
-              <label htmlFor="facebook" className={this.state.facebook ? "active" : null}><b>Facebook:</b></label>
+                value={this.state.facebook == null ? "" : this.state.facebook}/>
+              <label htmlFor="facebook" className={this.state.facebook ? "active" : undefined}><b>Facebook:</b></label>
             </div>
             <div className="input-field col s12 m4 l4">
               <input id="linkedin"
                 type="text"
                 onChange={this.handleLikedinChanges}
-                value={this.state.linkedin}/>
-              <label htmlFor="linkedin" className={this.state.linkedin ? "active" : null}><b>Linkedin:</b></label>
+                value={this.state.linkedin == null ? "" : this.state.linkedin}/>
+              <label htmlFor="linkedin" className={this.state.linkedin ? "active" : undefined}><b>Linkedin:</b></label>
             </div>
             <div className="input-field col s12 m4 l4">
               <input id="github"
                 type="text"
                 onChange={this.handleGithubChanges}
-                value={this.state.github}/>
-              <label htmlFor="github" className={this.state.github ? "active" : null}><b>GitHub:</b></label>
+                value={this.state.github == null ? "" : this.state.github}/>
+              <label htmlFor="github" className={this.state.github  ? "active" : undefined}><b>GitHub:</b></label>
             </div>
           </div>
           <div className="row">
@@ -412,6 +459,7 @@ const EdicaoFuncionarioContainer = React.createClass({
                   <input type="file"
                     accept="image/gif, image/jpeg, image/png"
                     id = "img"
+                    value = {this.state.foto}
                     onChange={this.handleFotoChanges}/>
                 </div>
                 <div className="file-path-wrapper">
@@ -496,7 +544,6 @@ const EdicaoFuncionarioContainer = React.createClass({
   },
 
   render: function(){
-
     //verifica se já buscou os cargos, enquanto isso, Loading..
     if(this.state.lista_cargos.length === 0){
       return (
@@ -508,11 +555,27 @@ const EdicaoFuncionarioContainer = React.createClass({
       );
     }
 
+    //obtem perfil do usuário
+    var perfil = localStorage.getItem("perfil");
+
+    //obtem samaccount do usuario
+    var samaccount = localStorage.getItem("samaccount");
+
+    //usuario via parametro
+    var usuario = this.props.params.samaccount;
+
+    var id;
+
+    if (perfil.toUpperCase() == "RH" && samaccount == usuario){
+      id = "RH"
+    }
+
     return(
       <EdicaoFuncionario
         nome = {this.state.nome}
         handleSubmit = {this.handleSubmit}
-        handleClear = {this.handleClear}>
+        handleClear = {this.handleClear}
+        perfil = {id}>
         <div>
           {this.primeiraParteForms()}
           {this.segundaParteForms()}

@@ -95,7 +95,7 @@ var ListaItensContainer = React.createClass({
 
 
   handleDeletarItem: function(id, nome){
-
+    var self = this;
     //configurações para passar o token
     var token = localStorage.getItem("token");
 
@@ -109,6 +109,7 @@ var ListaItensContainer = React.createClass({
       title: "Atenção!",
       text: "Você tem certeza que deseja deletar o item " + nome + " ?",
       type: "warning",
+      showConfirmButton: true,
       confirmButtonText: "Sim",
       showCancelButton: true,
       cancelButtonText: "Cancelar",
@@ -118,27 +119,27 @@ var ListaItensContainer = React.createClass({
         function(){
           swal({
             title: "Item excluído com sucesso",
-            text: "O item " + nome + "foi excluído!",
+            text: "O item " + nome + " foi excluído!",
             type: "success",
             confirmButtonText: "Ok",
             confirmButtonColor: "#550000"
           }, function(){
             //retira da lista de itens pra não precisar acessar o banco
-            for(var i = 0; i < this.state.itens.length; i++) {
-              if (this.state.itens[i].id !== id) {
-                itensModificado.push(this.state.itens[i]);
+            for(var i = 0; i < self.state.itens.length; i++) {
+              if (self.state.itens[i].id !== id) {
+                itensModificado.push(self.state.itens[i]);
               }
             }
-            this.setState({
+            self.setState({
               itens: itensModificado
             });
-          }.bind(this));
-        }.bind(this),
+          });
+        },
 
         function(){
           swal({
             title: "Algum erro ocorreu!",
-            text: "O item " + nome + "não foi excluído, tente novamente.",
+            text: "O item " + nome + " não foi excluído, tente novamente.",
             type: "error",
             confirmButtonText: "Sim",
             confirmButtonColor: "#550000"

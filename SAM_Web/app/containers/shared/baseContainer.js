@@ -86,7 +86,7 @@ var BaseContainer = React.createClass({
                 id: 2,
                 itens: [
                   {
-                    nome: "Listar",
+                    nome: "Listar Todos",
                     url: "/Item/Listagem",
                     id: 21
                   },
@@ -147,7 +147,7 @@ var BaseContainer = React.createClass({
                 id: 2,
                 itens: [
                   {
-                    nome: "Listar",
+                    nome: "Listar Todos",
                     url: "/Item/Listagem",
                     id: 21
                   },
@@ -251,7 +251,7 @@ var BaseContainer = React.createClass({
     localStorage.clear();
     this.context.router.push('/');
   },
-  
+
   render : function(){
     return(
       <Base

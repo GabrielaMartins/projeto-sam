@@ -10,7 +10,7 @@ var Radio = require('../../ui_elements/radio');
 var CadastroItem = function(props){
   return(
     <form>
-      <div style={{paddingTop: 30 }}>
+      <div id="screen-size-editar-item">
           <div className="row wrapper">
             <div className="col l8 m10 s12 center-block">
               <div className="card z-depth-6">
@@ -25,7 +25,8 @@ var CadastroItem = function(props){
                         onChange = {props.handleItemChanges}
                         value = {props.item}
                       />
-                    <label htmlFor="nome_item">Nome do Item:</label>
+                      <span className="pequena red-text">{props.erroItem}</span>
+                      <label htmlFor="nome_item">Nome do Item:</label>
                     </div>
                   </div>
                   <div className="row">
@@ -41,7 +42,8 @@ var CadastroItem = function(props){
                         </option>
                         {props.categorias}
                      </select>
-                      <label>Categoria</label>
+                     <label>Categoria</label>
+                     <span className="pequena red-text">{props.erroCategoria}</span>
                     </div>
                     <div className="input-field col l6 m6 s12">
                       <select
@@ -58,6 +60,7 @@ var CadastroItem = function(props){
                           <option value = "8" key = "3">Difícil</option>
                      </select>
                       <label>Dificuldade</label>
+                      <span className="pequena red-text">{props.erroDificuldade}</span>
                     </div>
                   </div>
                   <div>
@@ -69,14 +72,15 @@ var CadastroItem = function(props){
                           onChange = {props.handleDescriptionChanges}
                           value = {props.descricao}
                         />
-                      <label htmlFor="descricao_item">Descrição</label>
+                        <label htmlFor="descricao_item">Descrição</label>
+                        <span className="pequena red-text">{props.erroDescricao}</span>
                       </div>
                     </div>
                     <div className="row">
                       <label>Status: </label>
                     </div>
                     <div className="row">
-                      <div className="col s2">
+                      <div className="col l2 s4">
                         <div className="left">
                           <Radio
                             className="right"
@@ -88,7 +92,7 @@ var CadastroItem = function(props){
                           />
                         </div>
                       </div>
-                      <div className="col s6">
+                      <div className="col l6 s4">
                         <div className="left">
                           <Radio
                             name = "rdGroup"
@@ -100,6 +104,7 @@ var CadastroItem = function(props){
                         </div>
                       </div>
                     </div>
+                    <span className="pequena red-text col s12">{props.erroModificador}</span>
                   </div>
                 </div>
                 <div className="card-action">

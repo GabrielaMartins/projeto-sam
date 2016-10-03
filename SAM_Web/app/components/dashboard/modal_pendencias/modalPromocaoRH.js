@@ -27,6 +27,7 @@ var Modal = React.createClass({
     $(document).ready(function(){
       $('select').material_select();
       $("#select_cargo").on('change', self.handleChangeCargo);
+
     });
   },
 
@@ -90,6 +91,10 @@ var Modal = React.createClass({
           });
         }
       );
+
+      //fecha o modal
+      $('#' + this.props.index).closeModal();
+
     }else{
       this.setState({
         mensagemErro: "Por favor, selecione o cargo antes de clicar em promover!"
@@ -145,21 +150,17 @@ var Modal = React.createClass({
       optionsCargos.push( <option key = {index} value={cargo.id}>{cargo.nome}</option>);
     });
 
-    console.log(this.state.cargos);
-
     return(
       <div id={this.props.index} className="modal modal-fixed-footer">
         <div className="modal-content scrollbar">
             <h2 className="colorText-default center-align"><b>Promoção</b></h2>
             <br/>
             <div className="row center-align">
-              <h5>O funcionário <b className="colorText-default">{this.props.usuario.nome}</b> realizou a atividade <b>{this.props.atividade.Evento.Item.nome}</b>, no dia <b>{moment(this.props.atividade.Evento.data).format('L')}</b>.</h5>
-              <br/>
-              <h5>A atividade gerou pontos suficientes para que o usuário pudesse ser promovido.</h5>
+              <h5>O funcionário <b className="colorText-default">{this.props.usuario.nome}</b> atingiu pontos suficientes para a promoção no dia <b>{moment(this.props.atividade.Evento.data).format('L')}</b>.</h5>
               <br/><br/>
               <h4 className="colorText-default">Deseja promover o usuário?</h4>
               <div className="row">
-                <div className="input-field col s12 l6 center">
+                <div className="input-field col s12 m8 offset-m2 l6 offset-l3">
                   <select id ="select_cargo" value={this.state.cargoSelecionado} onChange={this.handleChangeCargo}>
                     <option value="-1" disabled>Escolha uma opção</option>
                     {optionsCargos}
@@ -173,7 +174,7 @@ var Modal = React.createClass({
             <br/>
         </div>
         <div className="modal-footer">
-          <a className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.promove}>Promover</a>
+          <a className="modal-action waves-effect waves-green btn-flat" onClick={this.promove}>Promover</a>
           <a className="modal-action modal-close waves-effect waves-red btn-flat" onClick={this.naoPromove}>Não Promover</a>
         </div>
     </div>

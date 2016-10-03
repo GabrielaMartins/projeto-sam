@@ -17,7 +17,7 @@ module.exports = {
     filename: "index_bundle.js"
   },
   externals: {
-	'Config': JSON.stringify({serverUrl: "http://localhost:65120/"})
+	'Config': JSON.stringify({serverUrl: "http://10.10.15.113:65122"})
   },
   module: {
     loaders: [

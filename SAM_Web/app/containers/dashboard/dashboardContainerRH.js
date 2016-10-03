@@ -59,7 +59,7 @@ var DashboardContainerRH = React.createClass({
     //remove do banco
     axios.delete(Config.serverUrl+"/api/sam/pendency/delete/" + id, config).then(
       function(response){
-        
+
         //atualiza o estado
         for(var i = 0; i < pendencias.length; i++) {
           if (pendencias[i].Id !== id) {
@@ -154,7 +154,7 @@ var DashboardContainerRH = React.createClass({
         <Link to={{ pathname: '/Perfil/' + conteudo.Usuario.samaccount}} key={index}>
           <CardEventos key={index} usuario = {conteudo.Usuario} estilo = "card-panel black-text z-depth-1 col l12 m12 s12 waves-effect">
             <div className="right black-text">
-              <h5 className="right-align extraGrande">{conteudo.Item.nome}</h5>
+              <h5 className="right-align grande">{conteudo.Item.nome}</h5>
               <p className="right-align pequena">{moment(conteudo.data).format('L')}</p>
             </div>
           </CardEventos>

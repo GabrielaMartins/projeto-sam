@@ -11,7 +11,7 @@ var Radio = require('../../ui_elements/radio');
 var EdicaoItem = function(props){
   return(
     <form>
-      <div style={{paddingTop: 30 }}>
+      <div id="screen-size-editar-item">
           <div className="row wrapper">
             <div className="col l8 m10 s12 center-block">
               <div className="card z-depth-6">
