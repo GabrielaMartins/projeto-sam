@@ -12,27 +12,27 @@ namespace SamApiModels.Votacao
         /// É o samaccount do usuário que votou no evento em questão
         /// </summary>
         [Required]
-        [ValidKey(ValidKeyAttribute.Entities.Usuario)]
+        [ValidKey(ValidKeyAttribute.Entities.Usuario, ErrorMessage = "Invalid value supplied to 'AddVotoViewModel.Usuario'. Check if it's a valid key")]
         public string Usuario { get; set; }
 
         /// <summary>
         /// É o id do evento que estã em votação
         /// </summary>
         [Required]
-        [ValidKey(ValidKeyAttribute.Entities.Evento)]
+        [ValidKey(ValidKeyAttribute.Entities.Evento, ErrorMessage = "Invalid value supplied to 'AddVotoViewModel.Evento'. Check if it's a valid key")]
         public int Evento { get; set; }
 
         /// <summary>
         /// Valor que compõe a nota da votação (1, 3, 8)
         /// </summary>
-        [AllowedValues(new object[] {1, 3, 8 })]
+        [AllowedValues(new object[] {1, 3, 8}, ErrorMessage = "Invalid value supplied to 'AddVotoViewModel.Dificuldade'. Valid values (1, 3, 8)")]
         [Required]
         public int Dificuldade { get; set; }
 
         /// <summary>
         /// Valor que compõe a nota da votação (1, 2, 3, 8)
         /// </summary>
-        [AllowedValues(new object[] {1, 2, 3, 8 })]
+        [AllowedValues(new object[] { 1, 2, 3, 8 }, ErrorMessage = "Invalid value supplied to 'AddVotoViewModel.Modificador'. Valid values (1, 2, 3, 8)")]
         public int Modificador { get; set; }
 
         /// <summary>

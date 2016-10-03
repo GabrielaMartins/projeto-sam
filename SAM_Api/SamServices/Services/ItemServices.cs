@@ -40,7 +40,7 @@ namespace SamServices.Services
             }
         }
 
-        public static void AtualizaItem(int id, ItemViewModel item)
+        public static void AtualizaItem(int id, UpdateItemViewModel item)
         {
             using (var itemRep = DataAccess.Instance.GetItemRepository())
             {
@@ -66,6 +66,7 @@ namespace SamServices.Services
             using (var itemRep = DataAccess.Instance.GetItemRepository())
             {
                 itemRep.Delete(id);
+                itemRep.SubmitChanges();
             }
         }
 

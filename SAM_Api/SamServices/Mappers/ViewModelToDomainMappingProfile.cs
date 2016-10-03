@@ -124,6 +124,21 @@ namespace SamServices.Mappers
            .ForMember(i => i.votado, opt => opt.UseValue(false))
            .ForMember(i => i.categoria, opt => opt.MapFrom(src => src.Categoria));
 
+            // **************** UpdateItemViewModel -> Item **************** //
+            Mapper.CreateMap<UpdateItemViewModel, Item>()
+
+           // ignora as propriedades de navegacoes quando vai inserir no banco
+           .ForMember(i => i.Categoria, opt => opt.Ignore())
+           .ForMember(i => i.Eventos, opt => opt.Ignore())
+           .ForMember(i => i.ItensTagged, opt => opt.Ignore())
+
+            .ForMember(i => i.descricao, opt => opt.MapFrom(src => src.Descricao))
+            .ForMember(i => i.dificuldade, opt => opt.MapFrom(src => src.Dificuldade))
+            .ForMember(i => i.id, opt => opt.MapFrom(src => src.Id))
+
+            // mapeia as chaves estrangeiras
+            .ForMember(i => i.categoria, opt => opt.MapFrom(src => src.Categoria));
+
             // **************** CategoriaViewModel -> Categoria **************** //
             Mapper.CreateMap<CategoriaViewModel, Categoria>()
            .ForMember(c => c.Itens, opt => opt.Ignore());

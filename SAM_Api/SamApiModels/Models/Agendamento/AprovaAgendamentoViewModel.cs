@@ -12,7 +12,7 @@ namespace SamApiModels.Agendamento
         /// Representa o evento de agendamento
         /// </summary>
         [Required]
-        [ValidKey(ValidKeyAttribute.Entities.Evento)]
+        [ValidKey(ValidKeyAttribute.Entities.Evento, ErrorMessage = "Invalid value supplied to 'AprovaAgendamentoViewModel.Evento'. Check if it's a valid key")]
         public int Evento { get; set; }
 
         /// <summary>

@@ -17,35 +17,35 @@ namespace SamApiModels.Evento
         /// Identifica o item associado ao evento do SAM
         /// </summary>
         [Required]
-        [ValidKey(ValidKeyAttribute.Entities.Item)]
+        [ValidKey(ValidKeyAttribute.Entities.Item, ErrorMessage = "Invalid value supplied to 'EventoItemViewModel.Item'. Check if it's a valid key")]
         public int id { get; set; }
 
         /// <summary>
         /// Nome do item
         /// </summary>
         [Required]
-        [StringLength(50, ErrorMessage = "string size is greater than 50 characters")]
+        [StringLength(50, ErrorMessage = "Invalid value supplied to 'EventoItemViewModel.nome'. String size is greater than 50 characters")]
         public string nome { get; set; }
 
         /// <summary>
         /// Descrição sobre o que é o item
         /// </summary>
         [Required]
-        [StringLength(200, ErrorMessage = "string size is greater than 200 characters")]
+        [StringLength(200, ErrorMessage = "Invalid value supplied to 'EventoItemViewModel.descricao'. String size is greater than 200 characters")]
         public string descricao { get; set; }
 
         /// <summary>
         /// É o valor da dificuldade do item
         /// </summary>
         [Required]
-        [AllowedValues(new object[]{1, 3, 8})]
+        [AllowedValues(new object[] { 1, 3, 8 }, ErrorMessage = "Invalid value suplied to 'EventoItemViewModel.dificuldade'. Valid values: (1, 3, 8)")]
         public int dificuldade { get; set; }
 
         /// <summary>
         /// É o peso dado ao item
         /// </summary>
         [Required]
-        [AllowedValues(new object[] { 1, 3, 8 })]
+        [AllowedValues(new object[] { 1, 3, 8 }, ErrorMessage = "Invalid value suplied to 'EventoItemViewModel.modificador'. Valid values: (1, 3, 8)")]
         public int modificador { get; set; }
 
         /// <summary>

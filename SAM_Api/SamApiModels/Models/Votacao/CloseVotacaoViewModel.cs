@@ -17,21 +17,21 @@ namespace SamApiModels.Models.Votacao
         /// Representa o evento da votação
         /// </summary>
         [Required]
-        [ValidKey(ValidKeyAttribute.Entities.Evento)]
+        [ValidKey(ValidKeyAttribute.Entities.Evento, ErrorMessage = "Invalid value supplied to 'CloseVotacaoViewModel.Evento'. Check if it's a valid key")]
         public int Evento { get; set; }
 
         /// <summary>
         /// É a dificuldade atribuída ao item da votação
         /// </summary>
         [Required]
-        [AllowedValues(new object[] { 1, 3, 8 })]
+        [AllowedValues(new object[] { 1, 3, 8 }, ErrorMessage = "Invalid value supplied to 'CloseVotacaoViewModel.Dificuldade'. Valid values (1, 3, 8)")]
         public int Dificuldade { get; set; }
 
         /// <summary>
         /// É o modificador (raso, profundo, alinhado ou não alinhado) atribuído ao item da votação
         /// </summary>
         [Required]
-        [AllowedValues(new object[] { 1, 2, 3, 8 })]
+        [AllowedValues(new object[] { 1, 2, 3, 8 }, ErrorMessage = "Invalid value supplied to 'CloseVotacaoViewModel.Modificador'. Valid values (1, 2, 3, 8)")]
         public int Modificador { get; set; }
 
         /// <summary>

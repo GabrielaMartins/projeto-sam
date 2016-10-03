@@ -13,7 +13,7 @@ namespace SamApiModels.User
         /// Identifica a pendência do usuário
         /// </summary>
         [Required]
-        [ValidKey(ValidKeyAttribute.Entities.Pendencia)]
+        [ValidKey(ValidKeyAttribute.Entities.Pendencia, ErrorMessage = "Invalid value supplied to PendenciaUsuarioViewModel.Id. Check if it's a valid key")]
         public int Id { get; set; }
 
         /// <summary>

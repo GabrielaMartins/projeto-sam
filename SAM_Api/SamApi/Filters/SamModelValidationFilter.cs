@@ -26,27 +26,14 @@ namespace SamApi.Filters
             {
 
                 var errorList = actionContext.ModelState.Values.SelectMany(m => m.Errors)
-                                 .Select(e => e.ErrorMessage)
+                                 .Select(e => e.ErrorMessage).Where(e => e != "")
                                  .ToList();
 
-                var details = new List<string>();
-                var title = string.Empty;
-                foreach (var err in errorList)
-                {
-                    var values = err.Split('|');
-                    title = values[0];
-                    for(int i = 1; i < values.Length; i++)
-                    {
-                        var r = values[i];
-                        details.Add(values[i]);
-                    }
-                }
-
-                var error = new DescriptionMessage(HttpStatusCode.BadRequest, title, details);
+                var error = new DescriptionMessage(HttpStatusCode.BadRequest, "Invalid value" , errorList);
                 actionContext.Response = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
                     Content = new ObjectContent(error.GetType(), error, new JsonMediaTypeFormatter()),
-                    ReasonPhrase = title
+                    ReasonPhrase = "Invalid Value Supplied"
                 };
             }
         }

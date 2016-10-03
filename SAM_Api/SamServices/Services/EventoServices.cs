@@ -14,6 +14,19 @@ namespace SamServices.Services
 {
     public static class EventoServices
     {
+
+        public static List<EventoViewModel> RecuperaTodasAtividades(string tipo = null, int? quantidade = null)
+        {
+            using (var eventRep = DataAccess.Instance.GetEventoRepository())
+            {
+                var events = eventRep.RecuperaEventos(tipo, quantidade).ToList();
+
+                var eventsViewModel = Mapper.Map<List<Evento>, List<EventoViewModel>>(events);
+
+                return eventsViewModel;
+            }
+        }
+
         public static List<EventoViewModel> RecuperaEventos(string tipo = null, int? quantidade = null)
         {
             using (var eventRep = DataAccess.Instance.GetEventoRepository())

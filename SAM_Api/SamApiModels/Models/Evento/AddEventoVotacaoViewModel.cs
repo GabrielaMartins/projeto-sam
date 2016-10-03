@@ -18,21 +18,21 @@ namespace SamApiModels.Evento
         /// Representa o item da votação
         /// </summary>
         [Required]
-        [ValidKey(ValidKeyAttribute.Entities.Item)]
+        [ValidKey(ValidKeyAttribute.Entities.Item, ErrorMessage = "Invalid value supplied to 'AddEventoVotacaoViewModel.Item'. Check if it's a valid key")]
         public int Item { get; set; }
 
         /// <summary>
         /// Representa o usuário do evento sendo votado
         /// </summary>
         [Required]
-        [ValidKey(ValidKeyAttribute.Entities.Usuario)]
+        [ValidKey(ValidKeyAttribute.Entities.Usuario, ErrorMessage = "Invalid value supplied to 'AddEventoVotacaoViewModel.Usuario'. Check if it's a valid key")]
         public string Usuario { get; set; }
 
         /// <summary>
         /// Representa a data que ocorrerá o evento
         /// </summary>
         [Required]
-        [ValidDate]
+        [RegularExpression(@"^\d{2}/\d{2}/\d{4}$", ErrorMessage = "Invalid value supplied to 'AddEventoVotacaoViewModel.Data'. Invalid date format")]
         public string Data { get; set; }
 
         /// <summary>
@@ -55,6 +55,7 @@ namespace SamApiModels.Evento
         public AddEventoVotacaoViewModel()
         {
             tipo = "votacao";
+            estado = false;
         }
     }
 }
