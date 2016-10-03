@@ -35,7 +35,14 @@ CREATE PROCEDURE dbo.geraPromocoes AS
 			u.id  as usuario
 				FROM
 					Cargos c,
-					(SELECT id, cargo, pontos FROM Usuarios u WHERE u.perfil <> 'rh') as u
+					(SELECT
+						id, cargo, pontos
+					 FROM
+						Usuarios u
+					WHERE
+						u.perfil <> 'rh' AND
+						u.dataAvaliacao = Convert(date, getdate())
+					) as u
 				WHERE
 					-- filtra cargos com pontuação igual ou maior do que o cargo atual do usuário
 					c.pontuacao >= (SELECT pontuacao from Cargos c2 WHERE c2.id = u.cargo) AND
@@ -134,6 +141,7 @@ CREATE TABLE Usuarios
 	linkedin VARCHAR(100),
 	perfil VARCHAR(20) NOT NULL DEFAULT 'funcionario' CHECK(perfil IN ('funcionario','rh')),
 	dataInicio DATE NOT NULL,
+	dataAvaliacao DATE NOT NULL,
 	foto VARCHAR(300),
 	ativo BIT NOT NULL DEFAULT 1
 );

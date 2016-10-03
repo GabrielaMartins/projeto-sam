@@ -26,14 +26,14 @@ namespace SamApiModels.Votacao
         /// É o valor que o usuário deu para o item desse evento
         /// </summary>
         [Required]
-        [AllowedValues(new object[] { 1, 3, 8 })]
+        [AllowedValues(new object[] { 1, 3, 8 }, ErrorMessage = "Invalid value supplied to 'VotoViewModel.Dificuldade'. Valid values (1, 3, 8)")]
         public int Dificuldade { get; set; }
 
         /// <summary>
         /// É o peso que o usuário deu para o item desse evento
         /// </summary>
         [Required]
-        [AllowedValues(new object[] { 1, 2, 3, 8 })]
+        [AllowedValues(new object[] { 1, 2, 3, 8 }, ErrorMessage = "Invalid value supplied to 'VotoViewModel.Modificador'. Valid values (1, 2, 3, 8)")]
         public int Modificador { get; set; }
 
         /// <summary>

@@ -74,7 +74,7 @@ namespace SamApi.Controllers
         /// Atualiza as informações de um usuário na base de dados do SAM.
         /// </summary>
         /// <param name="samaccount">Identifica o usuário a ser alterado.</param>
-        /// <param name="user">Dados para ser atualizados serem alterados.</param>
+        /// <param name="user">Dados para ser atualizados.</param>
         [SwaggerResponse(HttpStatusCode.OK, "Caso o usuário seja alterado com sucesso na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.NotFound, "Caso o usuário não seja encontrado na base de dados do SAM", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]

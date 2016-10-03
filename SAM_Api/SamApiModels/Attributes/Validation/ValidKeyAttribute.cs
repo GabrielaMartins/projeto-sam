@@ -1,6 +1,5 @@
 ﻿using Opus.DataBaseEnvironment;
 using System.Linq;
-using SamDataBase.Model;
 using System;
 using System.ComponentModel.DataAnnotations;
 using SamHelpers;
@@ -174,9 +173,7 @@ namespace SamModelValidationRules.Attributes.Validation
              
                 // The string before '|' is the title.
                 // The string after '|' is the detail.
-                return new ValidationResult("Invalid value supplied.|" +
-                                            $"'{value}' is invalid value to '{validationContext.ObjectType}.{validationContext.MemberName}'. " +
-                                            $"Check if it's a valid key");
+                return new ValidationResult(ErrorMessage);
             }
 
             return null;

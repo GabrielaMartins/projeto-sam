@@ -175,21 +175,15 @@ namespace SamServices.Services
                     throw new ErroEsperado(HttpStatusCode.NotFound, "User Not Found", $"The server could not find the user '{samaccount}'");
                 }
 
-                if (user.foto == "")
-                {
-                    user.foto = userToBeUpdated.foto;
-                }
-                else
-                {
-                    // save image to disk
-                    var logicPath = ConfigurationManager.AppSettings["LogicImagePath"];
-                    var physicalPath = HttpContext.Current.Server.MapPath(logicPath);
+                // save image to disk
+                var logicPath = ConfigurationManager.AppSettings["LogicImagePath"];
+                var physicalPath = HttpContext.Current.Server.MapPath(logicPath);
 
-                    ImageHelper.SaveAsImage(user.foto, userToBeUpdated.samaccount, physicalPath);
+                ImageHelper.SaveAsImage(user.foto, userToBeUpdated.samaccount, physicalPath);
 
-                    // update image path
-                    user.foto = ImageHelper.GetLogicPathForImage(userToBeUpdated.samaccount);
-                }
+                // update image path
+                user.foto = ImageHelper.GetLogicPathForImage(userToBeUpdated.samaccount);
+
 
                 // map values from 'user' to 'userToBeUpdated'
                 var updatedUser = Mapper.Map(user, userToBeUpdated);

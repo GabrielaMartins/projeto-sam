@@ -32,13 +32,7 @@ namespace SamModelValidationRules.Attributes.Validation
             // if an error
             if (!Array.Exists(values, x => x.Equals(value)))
             {
-                string validValues = string.Join(",", values);
-               
-                // The string before '|' is the title.
-                // The string after '|' is the detail.
-                return new ValidationResult("Invalid value supplied.|" +
-                                            $"'{value}' is invalid value to '{validationContext.ObjectType}.{validationContext.MemberName}'. " +
-                                            $"Valid values: '({validValues})'");
+                return new ValidationResult(ErrorMessage);
             }
 
             return null;

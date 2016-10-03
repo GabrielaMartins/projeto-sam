@@ -15,7 +15,7 @@ namespace SamApiModels.Evento
         /// Identifica o evento do SAM
         /// </summary>
         [Required]
-        [ValidKey(ValidKeyAttribute.Entities.Evento)]
+        [ValidKey(ValidKeyAttribute.Entities.Evento, ErrorMessage = "Invalid value supplied to 'EventoViewModel.id'. Check if it's a valid key")]
         public int id { get; set; }
 
         /// <summary>
@@ -34,14 +34,16 @@ namespace SamApiModels.Evento
         /// Representa o tipo do evento
         /// </summary>
         [Required]
-        [AllowedValues(new object[] {"votacao", "atribuicao", "promocao", "agendamento" })]
+        [AllowedValues(new object[] { "votacao", "atribuicao", "promocao", "agendamento" },
+                       ErrorMessage = "Invalid value supplied to 'EventoViewModel.tipo'. Valid values: ('votacao', 'atribuicao', 'promocao', 'agendamento')")
+        ]
         public string tipo { get; set; }
 
         /// <summary>
         /// Representa a data em que o evento ocorreu
         /// </summary>
         [Required]
-        [ValidDate]
+        [RegularExpression(@"^\d{2}/\d{2}/\d{4}$", ErrorMessage = "Invalid value supplied to 'EventoViewModel.tipo'. Invalid date format")]
         public DateTime? data { get; set; }
 
         /// <summary>

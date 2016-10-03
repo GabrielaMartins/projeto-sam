@@ -23,24 +23,6 @@
             <param name="validationContext">the validation context</param>
             <returns></returns>
         </member>
-        <member name="T:SamModelValidationRules.Attributes.Validation.ValidDateAttribute">
-            <summary>
-            Allow values in array
-            </summary>
-        </member>
-        <member name="M:SamModelValidationRules.Attributes.Validation.ValidDateAttribute.#ctor">
-            <summary>
-            Construtor do objeto
-            </summary>
-        </member>
-        <member name="M:SamModelValidationRules.Attributes.Validation.ValidDateAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
-            <summary>
-            tell if the value is valid
-            </summary>
-            <param name="value">current value suplied to a field</param>
-            <param name="validationContext">the validation context</param>
-            <returns></returns>
-        </member>
         <member name="T:SamModelValidationRules.Attributes.Validation.ValidKeyAttribute">
             <summary>
             Allow values as FK
@@ -507,6 +489,46 @@
         <member name="M:SamApiModels.Item.AddItemViewModel.#ctor">
             <summary>
             Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Item.UpdateItemViewModel">
+            <summary>
+            Representa os dados para alterar um item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.UpdateItemViewModel.Id">
+            <summary>
+            Identifica o item a ser alterado
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.UpdateItemViewModel.Categoria">
+            <summary>
+            Identifica a categoria associada ao item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.UpdateItemViewModel.Dificuldade">
+            <summary>
+            É o valor da dificuldade do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.UpdateItemViewModel.Modificador">
+            <summary>
+            É o peso dado ao item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.UpdateItemViewModel.Nome">
+            <summary>
+            Representa o nome do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.UpdateItemViewModel.Descricao">
+            <summary>
+            Representa a descrição do item
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Item.UpdateItemViewModel.#ctor">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:SamApiModels.Item.ItemViewModel">
