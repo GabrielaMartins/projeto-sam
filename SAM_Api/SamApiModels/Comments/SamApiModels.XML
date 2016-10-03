@@ -1,0 +1,1087 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SamApiModels</name>
+    </assembly>
+    <members>
+        <member name="T:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute">
+            <summary>
+            Allow values in array
+            </summary>
+        </member>
+        <member name="M:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute.#ctor(System.Object[])">
+            <summary>
+            set the current valid values
+            </summary>
+            <param name="values">array of valid values for a field</param>
+        </member>
+        <member name="M:SamModelValidationRules.Attributes.Validation.AllowedValuesAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            tell if the value is valid
+            </summary>
+            <param name="value">current value suplied to a field</param>
+            <param name="validationContext">the validation context</param>
+            <returns></returns>
+        </member>
+        <member name="T:SamModelValidationRules.Attributes.Validation.ValidKeyAttribute">
+            <summary>
+            Allow values as FK
+            </summary>
+        </member>
+        <member name="T:SamModelValidationRules.Attributes.Validation.ValidKeyAttribute.Entities">
+            <summary>
+            Represents all entities where we can check the keys
+            </summary>
+        </member>
+        <member name="F:SamModelValidationRules.Attributes.Validation.ValidKeyAttribute.Entities.Cargo">
+            <summary>
+            Look int the table named 'Cargo'
+            </summary>
+        </member>
+        <member name="F:SamModelValidationRules.Attributes.Validation.ValidKeyAttribute.Entities.Categoria">
+            <summary>
+            Look int the table named 'Categoria'
+            </summary>
+        </member>
+        <member name="F:SamModelValidationRules.Attributes.Validation.ValidKeyAttribute.Entities.Evento">
+            <summary>
+            Look int the table named 'Evento'
+            </summary>
+        </member>
+        <member name="F:SamModelValidationRules.Attributes.Validation.ValidKeyAttribute.Entities.Item">
+            <summary>
+            Look int the table named 'Item'
+            </summary>
+        </member>
+        <member name="F:SamModelValidationRules.Attributes.Validation.ValidKeyAttribute.Entities.Pendencia">
+            <summary>
+            Look int the table named 'Pendencia'
+            </summary>
+        </member>
+        <member name="F:SamModelValidationRules.Attributes.Validation.ValidKeyAttribute.Entities.Promocao">
+            <summary>
+            Look int the table named 'Promocao'
+            </summary>
+        </member>
+        <member name="F:SamModelValidationRules.Attributes.Validation.ValidKeyAttribute.Entities.Usuario">
+            <summary>
+            Look int the table named 'Usuario'
+            </summary>
+        </member>
+        <member name="M:SamModelValidationRules.Attributes.Validation.ValidKeyAttribute.#ctor(SamModelValidationRules.Attributes.Validation.ValidKeyAttribute.Entities)">
+            <summary>
+            set a current table to check
+            </summary>
+            <param name="entity">
+            is the entity type for check foreign key
+            </param>
+        </member>
+        <member name="M:SamModelValidationRules.Attributes.Validation.ValidKeyAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            tell if the value is valid
+            </summary>
+            <param name="value">current value suplied to a field</param>
+            <param name="validationContext">the validation context</param>
+        </member>
+        <member name="T:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute">
+            <summary>
+            Allow values in array
+            </summary>
+        </member>
+        <member name="M:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:SamModelValidationRules.Attributes.Validation.ValidPictureAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            tell if the value is valid
+            </summary>
+            <param name="value">current value suplied to a field</param>
+            <param name="validationContext">the validation context</param>
+            <returns></returns>
+        </member>
+        <member name="T:SamApiModels.Agendamento.AgendamentoViewModel">
+            <summary>
+            Representa os dados do agendamento de um evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Agendamento.AgendamentoViewModel.Item">
+            <summary>
+            Identifica o item associado ao agendamento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Agendamento.AgendamentoViewModel.Funcionario">
+            <summary>
+            Identifica o funcionário requerendo o agendamento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Agendamento.AgendamentoViewModel.Data">
+            <summary>
+            Data na qual irá ocorrer o evento
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Agendamento.AgendamentoViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Agendamento.AprovaAgendamentoViewModel">
+            <summary>
+            Representa os dados da aprovação de um agendamento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Agendamento.AprovaAgendamentoViewModel.Evento">
+            <summary>
+            Representa o evento de agendamento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Agendamento.AprovaAgendamentoViewModel.Aprova">
+            <summary>
+            Indica se aprova ou não esse evento
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Agendamento.AprovaAgendamentoViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Dashboard.DashboardFuncionario">
+            <summary>
+            Representa os dados do dashboard do usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.Usuario">
+            <summary>
+            Representa o usuário do dashboard
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.ResultadoVotacoes">
+            <summary>
+            Representa as votações que esse usuário fez
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.Atualizacoes">
+            <summary>
+            Representa as atualizações referentes a esse usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.Alertas">
+            <summary>
+            Representa os alertas referentes a esse usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Dashboard.DashboardFuncionario.CertificacoesMaisProcuradas">
+            <summary>
+            Representa os dados do gráfico para o dashboard
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Dashboard.DashboardFuncionario.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Models.Dashboard.DashboardRH">
+            <summary>
+            Representa as informações do dashboard do RH
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Dashboard.DashboardRH.Ranking">
+            <summary>
+            COMENTAR
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Dashboard.DashboardRH.CertificacoesMaisProcuradas">
+            <summary>
+            COMENTAR
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Dashboard.DashboardRH.Atividades">
+            <summary>
+            COMENTAR
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Dashboard.DashboardRH.ProximasPromocoes">
+            <summary>
+            COMENTAR
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Dashboard.DashboardRH.Pendencias">
+            <summary>
+            COMENTAR
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Models.Dashboard.DashboardRH.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Models.Votacao.CloseVotacaoViewModel">
+            <summary>
+            Representa o encerramento de uma votação
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Votacao.CloseVotacaoViewModel.Evento">
+            <summary>
+            Representa o evento da votação
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Votacao.CloseVotacaoViewModel.Dificuldade">
+            <summary>
+            É a dificuldade atribuída ao item da votação
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Votacao.CloseVotacaoViewModel.Modificador">
+            <summary>
+            É o modificador (raso, profundo, alinhado ou não alinhado) atribuído ao item da votação
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Models.Votacao.CloseVotacaoViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Models.Votacao.VotacaoViewModel">
+            <summary>
+            Representa os dados de uma votação no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Votacao.VotacaoViewModel.Evento">
+            <summary>
+            Representa o evento que foi votado
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Models.Votacao.VotacaoViewModel.Votos">
+            <summary>
+            Representa os votos dos usuários nesse evento
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Models.Votacao.VotacaoViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Evento.AddEventoVotacaoViewModel">
+            <summary>
+            Representa a inserção de um novo evento de votação
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AddEventoVotacaoViewModel.Item">
+            <summary>
+            Representa o item da votação
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AddEventoVotacaoViewModel.Usuario">
+            <summary>
+            Representa o usuário do evento sendo votado
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AddEventoVotacaoViewModel.Data">
+            <summary>
+            Representa a data que ocorrerá o evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AddEventoVotacaoViewModel.tipo">
+            <summary>
+            Representa o tipo do evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AddEventoVotacaoViewModel.estado">
+            <summary>
+            Representa o estado do evento
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Evento.AddEventoVotacaoViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Evento.UltimoEventoViewModel">
+            <summary>
+            Representa um evento do SAM associado aos usuários que o fizeram
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.UltimoEventoViewModel.Evento">
+            <summary>
+            Representa o evento do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.UltimoEventoViewModel.UsuariosQueFizeram">
+            <summary>
+            Representa todos os usuário que já fizeram esse evento
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Evento.EventoViewModel">
+            <summary>
+            Representa um evento do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.id">
+            <summary>
+            Identifica o evento do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.estado">
+            <summary>
+            Representa se o evento foi ou não aceito
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.processado">
+            <summary>
+            Representa se o evento foi ou não encerrado
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.tipo">
+            <summary>
+            Representa o tipo do evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.data">
+            <summary>
+            Representa a data em que o evento ocorreu
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.Item">
+            <summary>
+            Representa o item associado ao evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoViewModel.Usuario">
+            <summary>
+            Representa o usuário associado ao evento
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Evento.EventoViewModel.#ctor">
+            <summary>
+            Construtor do Objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Evento.EventoItemViewModel">
+            <summary>
+            Representa um item associado a um evento do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.id">
+            <summary>
+            Identifica o item associado ao evento do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.nome">
+            <summary>
+            Nome do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.descricao">
+            <summary>
+            Descrição sobre o que é o item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.dificuldade">
+            <summary>
+            É o valor da dificuldade do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.modificador">
+            <summary>
+            É o peso dado ao item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.Categoria">
+            <summary>
+            Representa a categoria do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoItemViewModel.Usuarios">
+            <summary>
+            Representa todos os usuário que fizeram esse item
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Evento.EventoItemViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Evento.AtribuicaoPontosUsuarioViewModel">
+            <summary>
+            Representa os dados para atribuição de pontos a um usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AtribuicaoPontosUsuarioViewModel.ReceberPontos">
+            <summary>
+            Representa se o usuário irá receber os pontos
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AtribuicaoPontosUsuarioViewModel.Usuario">
+            <summary>
+            Representa o usuário que irá receber os pontos
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.AtribuicaoPontosUsuarioViewModel.Evento">
+            <summary>
+            Representa o evento pelo qual o usuário recebeu os pontos
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Evento.AtribuicaoPontosUsuarioViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Evento.EventoPromocaoViewModel">
+            <summary>
+            Representa os dados para promover um usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoPromocaoViewModel.PodePromover">
+            <summary>
+            Indica se a promoção foi ou não aceita
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoPromocaoViewModel.Evento">
+            <summary>
+            Identifica o evento de promoção o qual está sendo aprovado
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoPromocaoViewModel.Usuario">
+            <summary>
+            Identifica o usuário que receberá a promoção
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Evento.EventoPromocaoViewModel.Cargo">
+            <summary>
+            Representa o cargo para o qual o usuário será promovido
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Evento.EventoPromocaoViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Item.AddItemViewModel">
+            <summary>
+            Representa um item do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.AddItemViewModel.Nome">
+            <summary>
+            Representa o nome do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.AddItemViewModel.Descricao">
+            <summary>
+            Representa a descrição do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.AddItemViewModel.Dificuldade">
+            <summary>
+            É o valor da dificuldade do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.AddItemViewModel.Modificador">
+            <summary>
+            É o peso dado ao item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.AddItemViewModel.Categoria">
+            <summary>
+            Itentifica a categoria do item
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Item.AddItemViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Item.UpdateItemViewModel">
+            <summary>
+            Representa os dados para alterar um item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.UpdateItemViewModel.Id">
+            <summary>
+            Identifica o item a ser alterado
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.UpdateItemViewModel.Categoria">
+            <summary>
+            Identifica a categoria associada ao item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.UpdateItemViewModel.Dificuldade">
+            <summary>
+            É o valor da dificuldade do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.UpdateItemViewModel.Modificador">
+            <summary>
+            É o peso dado ao item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.UpdateItemViewModel.Nome">
+            <summary>
+            Representa o nome do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.UpdateItemViewModel.Descricao">
+            <summary>
+            Representa a descrição do item
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Item.UpdateItemViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Item.ItemViewModel">
+            <summary>
+            Representa um item do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.id">
+            <summary>
+            Identifica um item do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.nome">
+            <summary>
+            Representa o nome do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.descricao">
+            <summary>
+            Representa a descrição do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.dificuldade">
+            <summary>
+            É o valor da dificuldade do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.modificador">
+            <summary>
+            É o peso dado ao item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.Categoria">
+            <summary>
+            Representa a categoria do item
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Item.ItemViewModel.Usuarios">
+            <summary>
+            Representa todos os usuário que fizeram esse item
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Item.ItemViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Login.SamToken">
+            <summary>
+            Representa o token de acesso ao SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Login.SamToken.Token">
+            <summary>
+            Token de acesso
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Login.SamToken.#ctor">
+            <summary>
+            construtor
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Login.LoginViewModel">
+            <summary>
+            Representa as credenciais de um usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Login.LoginViewModel.User">
+            <summary>
+            Representa o usuario na rede da OPUS
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Login.LoginViewModel.Password">
+            <summary>
+            Representa a senha do usuário na rede da OPUS
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Login.LoginViewModel.#ctor">
+            <summary>
+            Contrutor do objeto
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Login.LoginViewModel.#ctor(System.String,System.String)">
+            <summary>
+            Construtor do objeto
+            </summary>
+            <param name="user">Representa o usuário da rede da OPUS</param>
+            <param name="password">Representa a senha do usuário na rede da Opus</param>
+        </member>
+        <member name="T:SamApiModels.Cargo.CargoViewModel">
+            <summary>
+            Representa um cargo do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Cargo.CargoViewModel.id">
+            <summary>
+            Identifica o cargo no sistema do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Cargo.CargoViewModel.nome">
+            <summary>
+            Nome do cargo
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Cargo.CargoViewModel.pontuacao">
+            <summary>
+            É o número de pontos exigidos para atingir o cargo
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Cargo.CargoViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Categoria.CategoriaViewModel">
+            <summary>
+            Representa a categoria de um item do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Categoria.CategoriaViewModel.id">
+            <summary>
+            Identifica uma categoria no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Categoria.CategoriaViewModel.nome">
+            <summary>
+            Nome da categoria do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Categoria.CategoriaViewModel.peso">
+            <summary>
+            Cada categoria de item, possui um peso
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Categoria.CategoriaViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Pendencia.PendenciaEventoViewModel">
+            <summary>
+            Representa o evento associado a uma pendência do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Pendencia.PendenciaEventoViewModel.id">
+            <summary>
+            Identifica o evento cujo a pendência foi gerada
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Pendencia.PendenciaEventoViewModel.estado">
+            <summary>
+            Identifica se o evento foi ou não aceito
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Pendencia.PendenciaEventoViewModel.processado">
+            <summary>
+            Identifica se o evento foi ou não processado
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Pendencia.PendenciaEventoViewModel.tipo">
+            <summary>
+            Identifica o tipo de evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Pendencia.PendenciaEventoViewModel.data">
+            <summary>
+            Identifica a data que o evento ocorreu
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Pendencia.PendenciaEventoViewModel.Item">
+            <summary>
+            Identifica o item relacionado ao evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Pendencia.PendenciaEventoViewModel.Usuario">
+            <summary>
+            Representa o usuário que fez o evento
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Pendencia.PendenciaEventoViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Perfil.PerfilFuncionario">
+            <summary>
+            Representa os dados do perfil de um usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Perfil.PerfilFuncionario.Atividades">
+            <summary>
+            Representa as atividades que esse funcionário fez
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Perfil.PerfilFuncionario.PromocoesAdquiridas">
+            <summary>
+            Representa as promocoes que esse funcionário adquiriu
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Perfil.PerfilFuncionario.Usuario">
+            <summary>
+            Representa o usuário do perfil
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Perfil.PerfilFuncionario.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Promocao.PromocaoAdquiridaViewModel">
+            <summary>
+            Representa uma promoção adquirida por um funcionário do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Promocao.PromocaoAdquiridaViewModel.Usuario">
+            <summary>
+            Representa o funcionário que adquiriu a promoção
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Promocao.PromocaoAdquiridaViewModel.CargoAdquirido">
+            <summary>
+            Representa o cargo adquirido
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Promocao.PromocaoAdquiridaViewModel.CargoAnterior">
+            <summary>
+            Representa o cargo anterior ao cargo adquirido
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Promocao.PromocaoAdquiridaViewModel.Data">
+            <summary>
+            Representa a data em que o funcionário adquiriu um novo cargo
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Promocao.PromocaoAdquiridaViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Promocao.ProximaPromocaoViewModel">
+            <summary>
+            Representa uma futura promocao para um usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Promocao.ProximaPromocaoViewModel.Usuario">
+            <summary>
+            Representa o funcionário que adquiriu a promoção
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Promocao.ProximaPromocaoViewModel.PontosFaltantes">
+            <summary>
+            Representa a quantidade de pontos que faltam para alcançar um novo cargo
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Promocao.ProximaPromocaoViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.User.AddUsuarioViewModel">
+            <summary>
+            Representa um novo usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.AddUsuarioViewModel.foto">
+            <summary>
+            String codificada na base64 cujo o formato é <!-- <data:image/<imgType>;base64,><bytesEncoded> -->
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.AddUsuarioViewModel.dataInicio">
+            <summary>
+            Objeto do tipo Date que representa data de início do usuário no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.AddUsuarioViewModel.cargo">
+            <summary>
+            Identifica o cargo atual do usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.AddUsuarioViewModel.samaccount">
+            <summary>
+            Identifica o usuário no SAM, o samaccout é um dado que vem do ActiveDirectory da Opus
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.AddUsuarioViewModel.nome">
+            <summary>
+            Nome completo do usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.AddUsuarioViewModel.perfil">
+            <summary>
+            Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (funcionario, rh)
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.AddUsuarioViewModel.descricao">
+            <summary>
+            Descrição do usuário como hobs por exemplo
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.AddUsuarioViewModel.facebook">
+            <summary>
+            Facebook
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.AddUsuarioViewModel.github">
+            <summary>
+            Github
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.AddUsuarioViewModel.linkedin">
+            <summary>
+            Linkedin
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.AddUsuarioViewModel.pontos">
+            <summary>
+            Quantidade de pontos que o usuário obtém
+            </summary>
+        </member>
+        <member name="M:SamApiModels.User.AddUsuarioViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.User.PendenciaUsuarioViewModel">
+            <summary>
+            Representa a pendência associada a um usuário do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.PendenciaUsuarioViewModel.Id">
+            <summary>
+            Identifica a pendência do usuário
+            </summary>
+        </member>
+        <member name="F:SamApiModels.User.PendenciaUsuarioViewModel.Usuario">
+            <summary>
+            Representa o usuário cujo a pendência foi destinada
+            </summary>
+        </member>
+        <member name="F:SamApiModels.User.PendenciaUsuarioViewModel.Evento">
+            <summary>
+            Representa o evento para o qual a pendência foi gerada
+            </summary>
+        </member>
+        <member name="F:SamApiModels.User.PendenciaUsuarioViewModel.Estado">
+            <summary>
+            Representa o estado da pendência, ou seja, resolvida ou não
+            </summary>
+        </member>
+        <member name="M:SamApiModels.User.PendenciaUsuarioViewModel.#ctor">
+            <summary>
+            construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.User.UpdateUsuarioViewModel">
+            <summary>
+            Representa o modelo de dados para atualizar um usuário do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.dataInicio">
+            <summary>
+            Identifica a data que o funcionário iniciou no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.pontos">
+            <summary>
+            Representa a quantidade de pontos adquiridas pelo funcionário no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.descricao">
+            <summary>
+            Descrição do usuário como, hobs, gostos e etc.
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.facebook">
+            <summary>
+            Facebook
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.github">
+            <summary>
+            Github
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.linkedin">
+            <summary>
+            Linkedin
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.foto">
+            <summary>
+            String codificada na base64 cujo o formato é <!-- <data:image/<imgType>;base64,><bytesEncoded> -->
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.perfil">
+            <summary>
+            Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (funcionario, rh)
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UpdateUsuarioViewModel.cargo">
+            <summary>
+            Identifica o cargo atual do funcionário
+            </summary>
+        </member>
+        <member name="M:SamApiModels.User.UpdateUsuarioViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.User.UsuarioViewModel">
+            <summary>
+            Representa os dados de um usuário do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.id">
+            <summary>
+            Identifica o usuário no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.samaccount">
+            <summary>
+            Identifica o usuário pelo samaccount (usuario da rede interna da opus)
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.nome">
+            <summary>
+            Nome completo do usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.dataInicio">
+            <summary>
+            Objeto do tipo Date que representa data de início do usuário no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.pontos">
+            <summary>
+            Quantidade de pontos que o usuário obtém
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.descricao">
+            <summary>
+            Descrição do usuário como hobs por exemplo
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.facebook">
+            <summary>
+            Facebook
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.github">
+            <summary>
+            Github
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.linkedin">
+            <summary>
+            Linkedin
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.foto">
+            <summary>
+            Endereço da imagem no servidor
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.ativo">
+            <summary>
+            Diz se o usuário está ou não ativo no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.perfil">
+            <summary>
+            Indica o perfil do usuário, impactanto nas regras de acesso. Aceita os valores (funcionario, rh)
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.Cargo">
+            <summary>
+            Representa o cargo atual do usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.DataUltimaPromocao">
+            <summary>
+            Data da ultima promocao do usuário
+            </summary>
+        </member>
+        <member name="P:SamApiModels.User.UsuarioViewModel.ProximoCargo">
+            <summary>
+            É uma lista dos próximos cargos na hierarquia de cargo, os quais o usuário pode escolher
+            </summary>
+        </member>
+        <member name="M:SamApiModels.User.UsuarioViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Votacao.AddVotoViewModel">
+            <summary>
+            Representa a adição de um novo voto no SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Votacao.AddVotoViewModel.Usuario">
+            <summary>
+            É o samaccount do usuário que votou no evento em questão
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Votacao.AddVotoViewModel.Evento">
+            <summary>
+            É o id do evento que estã em votação
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Votacao.AddVotoViewModel.Dificuldade">
+            <summary>
+            Valor que compõe a nota da votação (1, 3, 8)
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Votacao.AddVotoViewModel.Modificador">
+            <summary>
+            Valor que compõe a nota da votação (1, 2, 3, 8)
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Votacao.AddVotoViewModel.#ctor">
+            <summary>
+            construtor da classe
+            </summary>
+        </member>
+        <member name="T:SamApiModels.Votacao.VotoViewModel">
+            <summary>
+            Representa o voto de um usuário em um evento do SAM
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Votacao.VotoViewModel.Usuario">
+            <summary>
+            Identifica o usuário que votou
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Votacao.VotoViewModel.Evento">
+            <summary>
+            Identifica o evento que foi votado
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Votacao.VotoViewModel.Dificuldade">
+            <summary>
+            É o valor que o usuário deu para o item desse evento
+            </summary>
+        </member>
+        <member name="P:SamApiModels.Votacao.VotoViewModel.Modificador">
+            <summary>
+            É o peso que o usuário deu para o item desse evento
+            </summary>
+        </member>
+        <member name="M:SamApiModels.Votacao.VotoViewModel.#ctor">
+            <summary>
+            Construtor do objeto
+            </summary>
+        </member>
+    </members>
+</doc>
