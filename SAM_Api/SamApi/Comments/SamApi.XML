@@ -1,0 +1,373 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SamApi</name>
+    </assembly>
+    <members>
+        <member name="T:SamApi.SwaggerConfig">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SamApi.SwaggerConfig.Register">
+            <summary>
+            Aplica configurações ao swagger
+            </summary>
+        </member>
+        <member name="T:SamApi.Attributes.Authorization.SamResourceAuthorizer">
+            <summary>
+            Autoriza o acesso aos recurosos do sam
+            </summary>
+        </member>
+        <member name="T:SamApi.Attributes.Authorization.SamResourceAuthorizer.AuthType">
+            <summary>
+            Tipos de autorização
+            </summary>
+        </member>
+        <member name="F:SamApi.Attributes.Authorization.SamResourceAuthorizer.AuthType.Basic">
+            <summary>
+            Checa se usuário está em roles, ou em users
+            </summary>
+        </member>
+        <member name="F:SamApi.Attributes.Authorization.SamResourceAuthorizer.AuthType.TokenEquality">
+            <summary>
+            checa se o usuário do request é o mesmo do token ou de perfil rh
+            </summary>
+        </member>
+        <member name="F:SamApi.Attributes.Authorization.SamResourceAuthorizer.AuthType.StrictTokenEquality">
+            <summary>
+            checa se o usuário do request é o mesmo do token
+            </summary>
+        </member>
+        <member name="P:SamApi.Attributes.Authorization.SamResourceAuthorizer.AuthorizationType">
+            <summary>
+            informa o tipo de autorização
+            </summary>
+        </member>
+        <member name="M:SamApi.Attributes.Authorization.SamResourceAuthorizer.#ctor(SamApi.Attributes.Authorization.SamResourceAuthorizer.AuthType)">
+            <summary>
+            Contrutor do objeto
+            </summary>
+            <param name="authorizationType">Recebe o tipo de autorização requerida</param>
+        </member>
+        <member name="M:SamApi.Attributes.Authorization.SamResourceAuthorizer.IsAuthorized(System.Web.Http.Controllers.HttpActionContext)">
+            <summary>
+            Informa se o autoriza a requição ou nega 
+            </summary>
+            <param name="actionContext">è o contexto da requisição</param>
+            <returns></returns>
+        </member>
+        <member name="M:SamApi.Attributes.Authorization.SamResourceAuthorizer.HandleUnauthorizedRequest(System.Web.Http.Controllers.HttpActionContext)">
+            <summary>
+            Trata o erro quando não é autorizado
+            </summary>
+            <param name="actionContext">é o contexto da autorização</param>
+        </member>
+        <member name="T:SamApi.Attributes.Authorization.SamTokenAuthorizer">
+            <summary>
+            Autoriza ou nega requisições baseado no token
+            </summary>
+        </member>
+        <member name="M:SamApi.Attributes.Authorization.SamTokenAuthorizer.IsAuthorized(System.Web.Http.Controllers.HttpActionContext)">
+            <summary>
+            Diz se a requisição pode ou não ser autorizada
+            </summary>
+            <param name="actionContext">è o contexto da requisição</param>
+            <returns></returns>
+        </member>
+        <member name="T:SamApi.Controllers.SamAtividadeController">
+            <summary>
+            Permite ações referente ao agendamento de um evento do SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamAtividadeController.Create(SamApiModels.Agendamento.AgendamentoViewModel)">
+            <summary>
+            Cria o agendamento de um evento no SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamAtividadeController.ApproveScheduling(SamApiModels.Agendamento.AprovaAgendamentoViewModel)">
+            <summary>
+            Aprova o agendamento de um evento no SAM
+            </summary>
+            <param name="agendamento">Representa informações sobre aprovação do evento</param>
+        </member>
+        <member name="M:SamApi.Controllers.SamAtividadeController.AtribuiPontos(SamApiModels.Evento.AtribuicaoPontosUsuarioViewModel)">
+            <summary>
+            Atribui pontos ao usuário baseado em um evento do SAM
+            </summary>
+            <param name="atribuicao">Representa os dados da atribuição de pontos</param>
+        </member>
+        <member name="M:SamApi.Controllers.SamAtividadeController.ApprovePromotion(SamApiModels.Evento.EventoPromocaoViewModel)">
+            <summary>
+            Aprova a promoção de um usuário do SAM
+            </summary>
+            <param name="promocao">Representa os dados da promoção</param>
+        </member>
+        <member name="M:SamApi.Controllers.SamAtividadeController.Vote(SamApiModels.Votacao.AddVotoViewModel)">
+            <summary>
+            Registra o valor da votação de um usuário em um item do SAM
+            </summary>
+            <param name="vote">
+            Representa os valores de um voto para um certo evento do SAM
+            </param>
+        </member>
+        <member name="M:SamApi.Controllers.SamAtividadeController.Close(SamApiModels.Models.Votacao.CloseVotacaoViewModel)">
+            <summary>
+            Encerra uma votação do SAM e atribuí a pontuação votada ao item do evento de votação
+            </summary>
+            <param name="votacao">Representa os dados da votação a ser encerrada</param>
+        </member>
+        <member name="T:SamApi.Controllers.SamCargoController">
+            <summary>
+            Permite efetuar ações sobre os cargos do SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamCargoController.GetAll">
+            <summary>
+            Retorna a lista de cargos do SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamCargoController.GetAll(System.String)">
+            <summary>
+            Retorna a lista de cargos subsequentes ao cargo do usuário
+            </summary>
+            <param name="samaccount">
+            Representa o usuário o qual os cargos serão derivados
+            </param>
+        </member>
+        <member name="T:SamApi.Controllers.SamDashboardController">
+            <summary>
+            Permite obter os dados do dashboard de um usuário do SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamDashboardController.Get">
+             <summary>
+             Recupera as informações do dashboard do funcionário
+             </summary>
+            <!-- <param name="samaccount">Identifica o usuário do dashboard</param> -->
+        </member>
+        <member name="T:SamApi.Controllers.SamPendencyController">
+            <summary>
+            Controla as ações referentes ás pendências do SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamPendencyController.Get(System.Int32)">
+            <summary>
+            Recupera uma pendência específica do sam
+            </summary>
+            <param name="pendency">Identifica a pendência a ser recuperada</param>
+        </member>
+        <member name="M:SamApi.Controllers.SamPendencyController.GetAll">
+            <summary>
+            Recupera a lista de pendências do sam
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamPendencyController.Delete(System.Int32)">
+            <summary>
+            Remove uma pendência específica do sam
+            </summary>
+            /// <param name="pendency">Identifica a pendência a ser removida</param>
+        </member>
+        <member name="T:SamApi.Controllers.SamPerfilController">
+            <summary>
+            Permite obter os dados do perfil de um usuário do SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamPerfilController.Get(System.String)">
+            <summary>
+            Retorna as informações do perfil de um usuário
+            </summary>
+            <param name="samaccount">Identifica o usuário para qual o perfil será montado</param>
+        </member>
+        <member name="T:SamApi.Controllers.SamVotacaoController">
+            <summary>
+            Fornece ações para controlar as informações sobre a votação de um item do SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamVotacaoController.Get(System.Int32)">
+            <summary>
+            Retorna o valor da votação de um evento
+            </summary>
+            <param name="evt">
+            Identifica o evento que foi votado
+            </param>
+        </member>
+        <member name="T:SamApi.Controllers.SamCategoriaController">
+            <summary>
+            Permite efetuar ações sobre as categorias do SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamCategoriaController.Get">
+            <summary>
+            Retorna a lista de categorias do SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamCategoriaController.Get(System.Int32)">
+            <summary>
+            Retorna a lista de categorias do SAM
+            </summary>
+        </member>
+        <member name="T:SamApi.Controllers.HomeController">
+            <summary>
+            Mostra a pagina inicial da API
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.HomeController.Index">
+            <summary>
+            Exibe a página inicial da API
+            </summary>
+            <returns>Retorna a página inicial da API</returns>
+        </member>
+        <member name="T:SamApi.Controllers.SamItemController">
+            <summary>
+            Permite efetuar ações sobre os itens do SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamItemController.Get">
+            <summary>
+            Recupera a lista de itens do SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamItemController.Get(System.Int32)">
+            <summary>
+            Recupera um item específico do SAM
+            </summary>
+            <param name="id">Identifica o item do SAM</param>
+        </member>
+        <member name="M:SamApi.Controllers.SamItemController.Post(SamApiModels.Item.AddItemViewModel)">
+            <summary>
+            Cria um novo item no sam
+            </summary>
+            <param name="item">Dados do novo item</param>
+            <returns></returns>
+        </member>
+        <member name="M:SamApi.Controllers.SamItemController.Put(System.Int32,SamApiModels.Item.UpdateItemViewModel)">
+            <summary>
+            Permite alterar os dados de um item do sam
+            </summary>
+            <param name="id">Identifica o item do SAM</param>
+            <param name="item">Contém as informações para a atualização</param>
+        </member>
+        <member name="M:SamApi.Controllers.SamItemController.Delete(System.Int32)">
+            <summary>
+            Permite remover um item do SAM
+            </summary>
+            <param name="id">Identifica o item a ser removido</param>
+        </member>
+        <member name="T:SamApi.Controllers.SamUserController">
+            <Summary>
+             Permite efetuar ações sobre usuários do SAM
+            </Summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamUserController.Get">
+            <summary>
+            Retorna a lista de usuários do SAM
+            </summary>
+        </member>
+        <member name="M:SamApi.Controllers.SamUserController.GetBySamaccount(System.String)">
+            <summary>
+            Retorna um usuário específico do SAM
+            </summary>
+            <param name="samaccount">Identifica o usuário procurado.</param>
+        </member>
+        <member name="M:SamApi.Controllers.SamUserController.Post(SamApiModels.User.AddUsuarioViewModel)">
+            <summary>
+            Cria um novo usuário na base de dados do SAM.
+            </summary>
+            <param name="user">Usuário a ser inserido.</param>
+        </member>
+        <member name="M:SamApi.Controllers.SamUserController.Put(System.String,SamApiModels.User.UpdateUsuarioViewModel)">
+            <summary>
+            Atualiza as informações de um usuário na base de dados do SAM.
+            </summary>
+            <param name="samaccount">Identifica o usuário a ser alterado.</param>
+            <param name="user">Dados para ser atualizados.</param>
+        </member>
+        <member name="M:SamApi.Controllers.SamUserController.Delete(System.String)">
+            <summary>
+            Remove as informações de um usuário na base de dados do SAM.
+            </summary>
+            <param name="samaccount">Identifica o usuário a ser removido.</param>
+        </member>
+        <member name="T:SamApi.Filters.SamExceptionFilter">
+            <summary>
+            Filtra as exceções do sistema
+            </summary>
+        </member>
+        <member name="M:SamApi.Filters.SamExceptionFilter.OnException(System.Web.Http.Filters.HttpActionExecutedContext)">
+            <summary>
+            É disparado quando ocorre uma exceção
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:SamApi.Filters.SamModelValidationFilter">
+            <summary>
+            É executado quando a validação de um modelo falha
+            </summary>
+        </member>
+        <member name="M:SamApi.Filters.SamModelValidationFilter.OnActionExecuting(System.Web.Http.Controllers.HttpActionContext)">
+            <summary>
+            É executado quando a validação de um modelo falha, retornando 400(Bad Request) e uma mensagem de erro
+            </summary>
+            <param name="actionContext">
+            Representa o contexto em que a ação ocorreu
+            </param>
+        </member>
+        <member name="T:SamApi.RouteConfig">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SamApi.RouteConfig.RegisterRoutes(System.Web.Routing.RouteCollection)">
+            <summary>
+            
+            </summary>
+            <param name="routes"></param>
+        </member>
+        <member name="T:SamApi.WebApiConfig">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SamApi.WebApiConfig.Register(System.Web.Http.HttpConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="T:SamApi.Global">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SamApiService.Controllers.ActiveDirectoryController">
+            <summary>
+            Recupera informações do AD da OPUS
+            </summary>
+        </member>
+        <member name="M:SamApiService.Controllers.ActiveDirectoryController.GetUsers">
+            <summary>
+            Retorna a lista dos usuários do AD da Opus
+            </summary>
+        </member>
+        <member name="M:SamApiService.Controllers.ActiveDirectoryController.GetUser(System.String)">
+            <summary>
+            Retorna o usuário do AD da Opus
+            </summary>
+            <param name="samaccount"></param>
+        </member>
+        <member name="T:SamApiService.Controllers.SamLoginController">
+            <summary>
+            Oferece funcionalidades para controlar o login ao SAM
+            </summary>
+        </member>
+        <member name="M:SamApiService.Controllers.SamLoginController.Login(SamApiModels.Login.LoginViewModel)">
+            <summary>
+            Gera o token de acesso para um usuário autenticado
+            </summary>
+            <param name="login">
+            Representa as credenciais do usuário no AD da Opus
+            </param>
+        </member>
+    </members>
+</doc>

@@ -12,14 +12,14 @@ namespace SamApiModels.Agendamento
         /// Identifica o item associado ao agendamento
         /// </summary>
         [Required]
-        [ValidKey(ValidKeyAttribute.Entities.Item)]
+        [ValidKey(ValidKeyAttribute.Entities.Item, ErrorMessage = "Invalid value supplied to 'AgendamentoViewModel.Item'. Check if it's a valid key")]
         public int Item { get; set; }
 
         /// <summary>
         /// Identifica o funcionário requerendo o agendamento
         /// </summary>
         [Required]
-        [StringLength(50, ErrorMessage = "string size is greater than 50 characters")]
+        [ValidKey(ValidKeyAttribute.Entities.Usuario, ErrorMessage = "Invalid value supplied to 'AgendamentoViewModel.Funcionario'. Check if it's a valid key")]
         public string Funcionario { get; set; }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace SamApiModels.Agendamento
         /// </summary>
         [Required]
         [DataType(DataType.Date)]
-        [ValidDate]
+        [RegularExpression(@"^\d{2}/\d{2}/\d{4}$", ErrorMessage = "Invalid value supplied to 'AgendamentoViewModel.Data'. Invalid date format")]
         public string Data { get; set; }
 
         /// <summary>

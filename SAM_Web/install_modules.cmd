@@ -45,5 +45,8 @@ call npm install --save-dev react-google-charts
 @echo *** installing react-loading ***
 call npm install --save-dev react-loading
 
+@echo *** installing extract-text-webpack-plugin ***
+call npm install --save-dev extract-text-webpack-plugin
+
 @echo *** Finished ***
 @echo ON

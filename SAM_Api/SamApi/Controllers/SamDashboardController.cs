@@ -116,7 +116,7 @@ namespace SamApi.Controllers
                 .Select(y => y.id)
                 .FirstOrDefault();
 
-            var certificados = EventoServices.RecuperaEventos().Where(
+            var certificados = EventoServices.RecuperaTodasAtividades("atividade").Where(
                  evento => evento.Item.Categoria.id == indiceCategoria);
 
 

@@ -107,7 +107,7 @@ export default StyleSheet.create({
         "marginLeft": -1,
         "display": "none",
         "maxHeight": "auto",
-        "minWidth": 150,
+        "minWidth": 180,
         "overflow": "hidden",
         "opacity": 0,
         "position": "absolute",
@@ -143,6 +143,9 @@ export default StyleSheet.create({
     },
     "btn:hover": {
         "backgroundColor": "#801515"
+    },
+    "btn:focus": {
+        "backgroundColor": "#550000"
     },
     "pendencia": {
         "overflowY": "scroll",

@@ -7,10 +7,17 @@ var Link = ReactRouter.Link;
 
 //componentes
 var CardPendencia = require('../../components/dashboard/cardsPendencia');
-var ModalPromocao = require('../../components/dashboard/modal_pendencias/modal_promocao');
-var ModalAgendamento = require('../../components/dashboard/modal_pendencias/modal_respostaAgendamento');
+
+//Modals
+var ModalAgendamentoRH = require('../../components/dashboard/modal_pendencias/modalAgendamentoRH');
+var ModalAtribuicaoRH = require('../../components/dashboard/modal_pendencias/modalAtribuicaoRH');
+var ModalAtribuicaoFuncionario = require('../../components/dashboard/modal_pendencias/modalAtribuicaoFuncionario');
+var ModalAgendamentoFuncionario = require('../../components/dashboard/modal_pendencias/modalAgendamentoFuncionario');
+var ModalPromocaoFuncionario = require('../../components/dashboard/modal_pendencias/modalPromocaoFuncionario');
+var ModalPromocaoRH = require('../../components/dashboard/modal_pendencias/ModalPromocaoRH');
 
 var Pendencias = React.createClass({
+
   //se for do tipo votação, cria link para a página de votação
   tipoPendenciaVotacao: function(tipo){
 
@@ -32,54 +39,98 @@ var Pendencias = React.createClass({
 
   //retorna o modal apropriado para cada tipo de pendência
   tipoModal: function(conteudo){
-    if(conteudo.Evento.tipo == "promocao"){
-      return (
-        <ModalPromocao index = {conteudo.id} handleDeleteAlerta = {this.props.handleDeleteAlerta}/>
-      );
-    }else if(conteudo.Evento.tipo == "agendamento"){
-      return(
-        <ModalAgendamento index = {conteudo.id}
-          usuario = {conteudo.Usuario}
-          atividade = {conteudo.Evento}
-          handleDeleteAlerta = {this.props.handleDeleteAlerta}/>
-      );
+
+    var perfil = localStorage.getItem("perfil");
+    var tipo = conteudo.Evento.tipo;
+
+    if(perfil.toUpperCase() == "RH"){
+      switch(tipo){
+        case "promocao":
+        return (
+          <ModalPromocaoRH index = {conteudo.Id}
+            usuario = {conteudo.Evento.Usuario}
+            atividade = {conteudo}
+            handleDeleteAlerta = {this.props.handleDeleteAlerta}/>
+        );
+        case "agendamento":
+        return(
+          <ModalAgendamentoRH index = {conteudo.Id}
+            usuario = {conteudo.Evento.Usuario}
+            atividade = {conteudo}
+            handleDeleteAlerta = {this.props.handleDeleteAlerta}/>
+        );
+        case "atribuicao":
+        return(
+          <ModalAtribuicaoRH index = {conteudo.Id}
+            usuario = {conteudo.Evento.Usuario}
+            atividade = {conteudo}
+            handleDeleteAlerta = {this.props.handleDeleteAlerta}/>
+        );
+        default:
+        return null;
+      }
+
     }else{
-      return null;
-    }
-  },
+      switch(tipo){
+        case "promocao":
+          return (
+            <ModalPromocaoFuncionario index = {conteudo.Id}
+              atividade = {conteudo}
+              handleDeleteAlerta = {this.props.handleDeleteAlerta}/>);
+        case "agendamento":
+          return(
+            <ModalAgendamentoFuncionario index = {conteudo.Id}
+              atividade = {conteudo}
+              handleDeleteAlerta = {this.props.handleDeleteAlerta}/>
+          );
+          case "atribuicao":
+          return(
+            <ModalAtribuicaoFuncionario index = {conteudo.Id}
+              atividade = {conteudo}
+              handleDeleteAlerta = {this.props.handleDeleteAlerta}/>
+          );
+          default:
+          return null;
+        }
+      }
+    },
 
-  //seleciona o icone de cada tipo de pendencia
-  icone : function(tipo){
-    if(tipo == "votacao"){
-      return "fa fa-lg fa-gavel";
-    }else if(tipo == "promocao"){
-      return "fa fa-lg fa-trophy";
-    }else if(tipo == "atividade"){
-      return "fa fa-lg fa-calendar";
-    }else if(tipo == "agendamento"){
-      return "fa fa-lg fa-calendar-check-o"
-    }else if(tipo == "atribuicao"){
-      return "fa fa-lg fa fa-pencil"
-    }
-  },
+    //seleciona o icone de cada tipo de pendencia
+    icone : function(tipo){
+      if(tipo == "votacao"){
+        return "fa fa-lg fa-gavel";
+      }else if(tipo == "promocao"){
+        return "fa fa-lg fa-trophy";
+      }else if(tipo == "atividade"){
+        return "fa fa-lg fa-calendar";
+      }else if(tipo == "agendamento"){
+        return "fa fa-lg fa-calendar-check-o"
+      }else if(tipo == "atribuicao"){
+        return "fa fa-lg fa fa-pencil"
+      }
+    },
 
-  render: function(){
-    var self = this;
+    render: function(){
+      var self = this;
 
-    var pendencias = this.props.pendencias.map(function(conteudo, index){
+      var pendencias = this.props.pendencias.map(function(conteudo, index){
+        //se o evento de votação já foi votado, não deve aparecer nos alertas
 
-      return(
-        <div key={index} className = {self.classes(self.props.tipoPendencia)}>
-          {
-            self.tipoPendenciaVotacao(conteudo.Evento.tipo) == true ?
+        if(!(conteudo.Evento.tipo === "votacao" && conteudo.Estado === true)){
+          return(
+            <div key={index} className = {self.classes(self.props.tipoPendencia)}>
+              {
+
+
+                self.tipoPendenciaVotacao(conteudo.Evento.tipo) == true  ?
                 //se for uma pendencia do tipo votação, retorna-se link para a página de votação
                 <Link className="scrollreveal" to={{ pathname: '/Votacao/' + conteudo.Evento.id}}>
                   <CardPendencia conteudo = {conteudo} icone= {self.icone(conteudo.Evento.tipo)}/>
                 </Link>
-            :
+                :
                 //se não retorna um modal quando houver clique na pendência
                 <div>
-                  <a className="modal-trigger scrollreveal" data-target={conteudo.id}>
+                  <a className="modal-trigger scrollreveal" data-target={conteudo.Id}>
                     <CardPendencia conteudo = {conteudo} icone= {self.icone(conteudo.Evento.tipo)}/>
                   </a>
                   {
@@ -87,23 +138,24 @@ var Pendencias = React.createClass({
                     self.tipoModal(conteudo)
                   }
                 </div>
-            }
+              }
+            </div>
+          );
+        }
+      });
+
+      return (
+        <div className="row">
+          {pendencias}
         </div>
       );
-    });
+    }
 
-    return (
-      <div className="row">
-        {pendencias}
-      </div>
-    );
+  });
+
+  Pendencias.propTypes = {
+    pendencias: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    tipoPendencia: React.PropTypes.string.isRequired,
   }
 
-});
-
-Pendencias.propTypes = {
-  pendencias: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  tipoPendencia: React.PropTypes.string.isRequired,
-}
-
-module.exports = Pendencias;
+  module.exports = Pendencias;

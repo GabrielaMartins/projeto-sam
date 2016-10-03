@@ -1,11 +1,19 @@
+'use strict'
+
 var React = require('react');
-var Votacao = require('../../components/votacao/votacao');
 var Config = require('Config');
 var axios = require("axios");
+
+var Votacao = require('../../components/votacao/votacao');
+var Loading = require('react-loading');
 
 var fezFetch = false;
 
 var VotacaoContainer = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+
   getInitialState: function() {
     return {
       votos: [],
@@ -14,8 +22,6 @@ var VotacaoContainer = React.createClass({
       profundidades:undefined,
       resultado: false
     };
-  },
-  componentWillMount: function(){
   },
   handleMostraResultado: function(resposta){
     this.setState({
@@ -50,19 +56,38 @@ var VotacaoContainer = React.createClass({
 
       }.bind(this),
       function(jqXHR){
+        status = jqXHR.status;
+        var rota = '/Erro/' + status;
 
-      }
+        //erro 401 - acesso não autorizado
+        if(status == "401"){
+          this.context.router.push({pathname: rota, state: {mensagem: "Você está tentando acessar uma página que não te pertence, que feio!"}});
+        }if(status == "500"){
+          this.context.router.push({pathname: rota, state: {mensagem: "O seu acesso expirou, por favor, faça o login novamente."}});
+        }else{
+          this.context.router.push({pathname: rota, state: {mensagem: "Um erro inesperado aconteceu, por favor, tente mais tarde"}});
+        }
+      }.bind(this)
     );
 
   },
   componentWillUnmount: function(){
     fezFetch = false;
   },
-  
+
   render : function(){
+
+      //se não fez fetch, loading
       if(!fezFetch){
-        return null;
+        return (
+          <div className="full-screen-less-nav">
+            <div className="row wrapper">
+              <Loading type='bubbles' color='#550000' height={150} width={150}/>
+            </div>
+          </div>
+        );
       }
+
       var perfil = localStorage.getItem("perfil");
       return(<Votacao votos = {this.state.votos}
                       evento = {this.state.evento}

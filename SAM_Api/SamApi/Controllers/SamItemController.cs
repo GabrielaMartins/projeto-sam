@@ -80,7 +80,7 @@ namespace SamApi.Controllers
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Caso a requisição não seja autorizada", typeof(DescriptionMessage))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Caso occora um erro não previsto", typeof(DescriptionMessage))]
         [SamResourceAuthorizer(Roles = "rh")]
-        public HttpResponseMessage Put(int id, ItemViewModel item)
+        public HttpResponseMessage Put(int id, UpdateItemViewModel item)
         {
 
             ItemServices.AtualizaItem(id, item);

@@ -17,7 +17,7 @@ namespace SamApiModels.Cargo
         /// Nome do cargo
         /// </summary>
         [Required]
-        [StringLength(50, ErrorMessage = "Size of string is greater than 50!")]
+        [StringLength(50, ErrorMessage = "Invalid Value supplied to 'CargoViewModel.nome'. Size of string is greater than 50!")]
         public string nome { get; set; }
 
         /// <summary>

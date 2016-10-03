@@ -18,6 +18,7 @@ var Atividade = require('../containers/atividade/atividadeContainer');
 var Erro = require('../components/shared/PaginaErro');
 var Erro404 = require('../components/shared/pagina404');
 var EdicaoFuncionario = require('../containers/edicao_funcionario/edicaoFuncionarioContainer');
+var EdicaoItem = require('../containers/edicao_item/edicaoItemContainer');
 var Pontuacao = require('../components/pontuacao/pontuacao');
 
 var Routes = (
@@ -28,6 +29,7 @@ var Routes = (
         <Route path='/Dashboard/Funcionario/:samaccount' component={DashboardFuncionario}/>
         <Route path='Item/Atividade' component={Atividade}/>
         <Route path="/Item/Cadastro" component={CadastroItem}/>
+        <Route path="/Item/Edicao/:id" component={EdicaoItem}/>
         <Route path='/Votacao/:id' component={Votacao}/>
         <Route path='/Funcionario/Listagem' component={ListaUsuarios}/>
         <Route path='/Funcionario/Edicao/:samaccount' component={EdicaoFuncionario}/>

@@ -11,7 +11,6 @@ moment.locale('pt-br');
 
 var Avatar = React.createClass({
   render: function(){
-    console.log(this.props.usuario.DataUltimaPromocao);
     return(
       <div>
         <div className="center-block">
@@ -58,7 +57,8 @@ var Avatar = React.createClass({
 
 Avatar.propTypes = {
   usuario: React.PropTypes.object.isRequired,
-  progresso: React.PropTypes.number.isRequired
+  progresso: React.PropTypes.number.isRequired,
+  tempoDeCasa: React.PropTypes.string.isRequired,
 }
 
 module.exports = Avatar;

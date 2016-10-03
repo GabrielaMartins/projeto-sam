@@ -16,11 +16,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\SamApi\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>Config\SamApiModels.XML</DocumentationFile>
+    <DocumentationFile>Comments\SamApiModels.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -45,8 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\Validation\AllowedValuesAttribute.cs" />
-    <Compile Include="Attributes\Validation\ValidDateAttribute.cs" />
-    <Compile Include="Attributes\Validation\ValidKey.cs" />
+    <Compile Include="Attributes\Validation\ValidKeyAttribute.cs" />
     <Compile Include="Attributes\Validation\ValidPictureAttribute.cs" />
     <Compile Include="Models\Agendamento\AgendamentoViewModel.cs" />
     <Compile Include="Models\Agendamento\AprovaAgendamentoViewModel.cs" />
@@ -54,13 +53,14 @@
     <Compile Include="Models\Dashboard\DashboardRH.cs" />
     <Compile Include="Models\Evento\AddEventoVotacaoViewModel.cs" />
     <Compile Include="Models\Item\AddItemViewModel.cs" />
+    <Compile Include="Models\Item\UpdateItemViewModel.cs" />
     <Compile Include="Models\Login\SamToken.cs" />
     <Compile Include="Models\Cargo\CargoViewModel.cs" />
     <Compile Include="Models\Categoria\CategoriaViewModel.cs" />
     <Compile Include="Models\Item\ItemViewModel.cs" />
     <Compile Include="Models\Pendencia\PendenciaEventoViewModel.cs" />
     <Compile Include="Models\Perfil\PerfilFuncionario.cs" />
-    <Compile Include="Models\Promocao\PromocaoAdquirida.cs" />
+    <Compile Include="Models\Promocao\PromocaoAdquiridaViewModel.cs" />
     <Compile Include="Models\Promocao\PromocaoViewModel.cs" />
     <Compile Include="Models\Evento\UltimoEventoViewModel.cs" />
     <Compile Include="Models\Evento\EventoViewModel.cs" />

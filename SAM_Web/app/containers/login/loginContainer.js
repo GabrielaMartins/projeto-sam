@@ -1,9 +1,10 @@
 'use strict'
 var React = require('react');
-var Login = require('../../components/login/login');
 var ReactRouter = require('react-router');
 var axios = require("axios");
 var Config = require('Config');
+
+var Login = require('../../components/login/login');
 
 var LoginContainer = React.createClass({
 
@@ -17,6 +18,12 @@ var LoginContainer = React.createClass({
   },
 
   handleUpdateUsuario: function(event){
+    if(event.key == 'Enter'){
+      var event = new MouseEvent('click');
+      this.handleSubmit(event);
+      return;
+    }
+
     this.setState({
       usuario: event.target.value,
       msg: ""
@@ -24,6 +31,12 @@ var LoginContainer = React.createClass({
   },
 
   handleUpdateSenha: function(event){
+    if(event.key == 'Enter'){
+      var event = new MouseEvent('click');
+      this.handleSubmit(event);
+      return;
+    }
+
     this.setState({
       senha: event.target.value,
       msg: ""
@@ -54,9 +67,8 @@ var LoginContainer = React.createClass({
           if (typeof(Storage) !== "undefined") {
             localStorage.setItem("token", token);
             localStorage.setItem("samaccount", self.state.usuario);
-          } else {
-            // Sorry! No Web Storage support..
           }
+          
           var config = {
             headers: {'token': token}
           };
@@ -68,7 +80,7 @@ var LoginContainer = React.createClass({
               //guarda o perfil do usuario no localStorage
               localStorage.setItem("perfil", response.data.perfil);
 
-              if(response.data.perfil.toUpperCase() == "FUNCIONARIO"){    
+              if(response.data.perfil.toUpperCase() == "FUNCIONARIO"){
                 self.context.router.push('/Dashboard/Funcionario/' + self.state.usuario);
               }else{
                 self.context.router.push('/Dashboard/RH/' + self.state.usuario);

@@ -1,7 +1,12 @@
+'use strict'
+
+//libs
 var React = require('react');
-var Base = require('../../components/shared/base');
 var axios = require("axios");
 var Config = require('Config');
+
+//component
+var Base = require('../../components/shared/base');
 
 var BaseContainer = React.createClass({
 
@@ -34,13 +39,14 @@ var BaseContainer = React.createClass({
   },
 
   componentDidMount: function(){
+
     //fetch informações do usuario
     var token = localStorage.getItem("token");
     var samaccount = localStorage.getItem("samaccount");
     var self = this;
 
     axios.defaults.headers.common['token'] = token;
-    // busca no banco esse samaccount
+
     axios.get(Config.serverUrl + '/api/sam/user/' + samaccount).then(
       function(response){
         if(response.data.perfil.toUpperCase() == "RH"){
@@ -80,7 +86,7 @@ var BaseContainer = React.createClass({
                 id: 2,
                 itens: [
                   {
-                    nome: "Listar",
+                    nome: "Listar Todos",
                     url: "/Item/Listagem",
                     id: 21
                   },
@@ -141,7 +147,7 @@ var BaseContainer = React.createClass({
                 id: 2,
                 itens: [
                   {
-                    nome: "Listar",
+                    nome: "Listar Todos",
                     url: "/Item/Listagem",
                     id: 21
                   },
@@ -191,7 +197,9 @@ var BaseContainer = React.createClass({
         var rota = '/Erro/' + status;
         var mensagem = ""
         if(status == "500"){
-          mensagem = "O seu acesso expirou, por favor, faça o login novamente."
+          mensagem = "O seu acesso expirou, por favor, faça o login novamente.";
+        }else if(status == "401"){
+          mensagem = "Você está tentando acessar uma página que não te pertence, que feio!";
         }else{
           mensagem = "Um erro inesperado aconteceu, por favor, tente mais tarde";
         }
@@ -199,6 +207,7 @@ var BaseContainer = React.createClass({
       }
     );
 
+    //mantem estática a barra de pesquisa de itens e funcionário
     (function($) {
       $(window).scroll(function() {
         var distanceFromTop = $(this).scrollTop();
@@ -211,35 +220,38 @@ var BaseContainer = React.createClass({
         }
       });
 
-      (function($) {
-        $(function() {
-          $('.dropdown-button').dropdown({
-            belowOrigin: true,
-            alignment: 'left',
-            inDuration: 200,
-            outDuration: 150,
-            constrain_width: true,
-            hover: true,
-            gutter: 1
-          });
-        }); // End Document Ready
-      })(jQuery); // End of jQuery name space
+      //inicializador do dropdown dos itens da barra de navegação
+      $('.dropdown-button').dropdown({
+        belowOrigin: true,
+        alignment: 'left',
+        inDuration: 200,
+        outDuration: 150,
+        constrain_width: true,
+        hover: true,
+        gutter: 1
+      });
 
+
+      //inicializador do botão colapse (barra de navegação mobile)
       $(document).ready(function() {
         $(".button-collapse").sideNav({
           closeOnClick: true
         });
         $('.collapsible').collapsible();
       });
-
     })(jQuery);
 
+    //inicializador do scrollreveal (efeito de aparecimento dos cards)
     window.sr = ScrollReveal();
+
   },
+
+  //logout
   cleanupLocalStorage: function(){
     localStorage.clear();
     this.context.router.push('/');
   },
+
   render : function(){
     return(
       <Base

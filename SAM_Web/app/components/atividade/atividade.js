@@ -10,7 +10,7 @@ var Radio = require('../../ui_elements/radio');
 var Atividade = function(props){
   return(
     <form>
-      <div style={{paddingTop: 30 }}>
+      <div className="full-screen-less-nav">
         <div className="row wrapper">
           <div className="col l8 m10 s12 center-block">
             <div className="card z-depth-6">

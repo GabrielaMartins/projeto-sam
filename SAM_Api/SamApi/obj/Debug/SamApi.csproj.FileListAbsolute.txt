@@ -97,7 +97,6 @@ C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamA
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\SamApi.pdb
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\EntityFramework.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\EntityFramework.SqlServer.dll
-C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\git-issuer.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\MessageSystem.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\Microsoft.AI.Agent.Intercept.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\Microsoft.AI.DependencyCollector.dll
@@ -109,7 +108,6 @@ C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamA
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\Newtonsoft.Json.dll
-C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\SamApiModels.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\SamDataBase.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\SamHelpers.dll
 C:\Users\jesley.OPUS\Documents\Jesley\Projetos\Git\Opus\projeto-sam\SAM_Api\SamApi\bin\SamServices.dll

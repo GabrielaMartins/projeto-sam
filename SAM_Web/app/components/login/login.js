@@ -1,4 +1,5 @@
 'use strict'
+
 var React =  require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
@@ -17,6 +18,7 @@ var Login = function(props){
                       <input id="usuario"
                         type="text"
                         onChange = {props.updateUsuario}
+                        onKeyPress = {props.updateUsuario}
                       />
                     <label htmlFor="nome">Usuário</label>
                     </div>
@@ -25,6 +27,7 @@ var Login = function(props){
                       <input id="senha"
                         type="password"
                         onChange = {props.updateSenha}
+                        onKeyPress = {props.updateSenha}
                       />
                     <label htmlFor="senha">Senha</label>
                     </div>

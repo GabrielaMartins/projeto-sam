@@ -1,13 +1,20 @@
+'use strict'
+
 var React = require('react');
-var SelecaoVoto = require('../../components/votacao/selecaoVoto');
 var Config = require('Config');
 var axios = require("axios");
 
+var SelecaoVoto = require('../../components/votacao/selecaoVoto');
+
 var SelecaoVotoContainer = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+
   getInitialState: function() {
     return {
       dificuldade:"",
-      modificador:"",
+      modificador:"1",
       pontuacaoGerada: 0,
       mensagemErro: "",
       mostraResultado: false
@@ -15,6 +22,7 @@ var SelecaoVotoContainer = React.createClass({
   },
 
   checaPontuacao: function(){
+    var pesoCategoria = this.props.evento.Item.Categoria.peso;
     if(this.state.dificuldade != ""){
 
       //é possível votar o modificador
@@ -22,11 +30,11 @@ var SelecaoVotoContainer = React.createClass({
 
         if( this.state.modificador != ""){
           //pontuação de workshops e palestras é a dificuldade * modificador * 6 (o peso da categoria) <-- obter categoria
-          this.setState({pontuacaoGerada: parseInt(this.state.dificuldade) * parseInt(this.state.modificador) * 6})
+          this.setState({pontuacaoGerada: parseInt(this.state.dificuldade) * parseInt(this.state.modificador) * pesoCategoria})
         }
       }else{
         //quando não é possível votar o modificador, apenas calcula os pontos de acordo com a dificuldade e o peso da categoria
-        this.setState({pontuacaoGerada: parseInt(this.state.dificuldade) * 1 * 6})
+        this.setState({pontuacaoGerada: parseInt(this.state.dificuldade) * 1 * pesoCategoria})
       }
 
     }
@@ -75,40 +83,51 @@ var SelecaoVotoContainer = React.createClass({
         if(perfil.toUpperCase()==="RH"){
 
           voto = {
-            Evento:this.props.evento,
+            Evento:this.props.evento.id,
             Modificador:this.state.modificador,
             Dificuldade:this.state.dificuldade
           }
 
-          url = Config.serverUrl+"/api/sam/vote/close"
+          url = Config.serverUrl+"/api/sam/activity/vote/close"
         }else{
           voto = {
             Usuario:samaccount,
-            Evento:this.props.evento,
+            Evento:this.props.evento.id,
             Modificador:this.state.modificador,
             Dificuldade:this.state.dificuldade
           }
 
-          url = Config.serverUrl+"/api/sam/vote";
+          url = Config.serverUrl+"/api/sam/activity/vote";
         }
 
 
         axios.post(url, voto, config).then(
           function(response){
-            debugger;
-            this.props.mostraResultado(true);
-            //deleta dos alertas
-            axios.delete(Config.serverUrl+"/api/sam/pendency/delete/" + id, config).then(
-              function(response){
+            swal({
+              title: "Dados Enviados!",
+              text: "Os dados foram salvos com sucesso",
+              type: "success",
+              confirmButtonText: "Ok",
+              confirmButtonColor: "#550000"
+            },function(){
+              //deleta o alerta
+              axios.delete(Config.serverUrl+"/api/sam/pendency/delete/" + this.props.evento.id, config).then(
+                function(response){
+                  //Retorna para a Dashboard
+                  this.context.router.push({pathname: "/dashboard/" + perfil + "/" + samaccount});
+                }.bind(this)
+              );
+            }.bind(this));
 
-              },
-              function(jqXHR){
-
-              }
-            );
           }.bind(this),
           function(jqXHR){
-
+            swal({
+              title: "O voto não foi computado!",
+              text: "O voto não foi computado, por favor, tente novamente.",
+              type: "error",
+              confirmButtonText: "Ok",
+              confirmButtonColor: "#550000"
+            });
           }
         );
 

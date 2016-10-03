@@ -33,7 +33,7 @@ namespace SamApiModels.Promocao
         /// Representa a data em que o funcionário adquiriu um novo cargo
         /// </summary>
         [Required]
-        [ValidDate]
+        [RegularExpression(@"^\d{2}/\d{2}/\d{4}$", ErrorMessage = "Invalid value supplied to 'PromocaoAdquiridaViewModel.Data'. Invalid date format")]
         public DateTime Data { get; set; }
 
         /// <summary>

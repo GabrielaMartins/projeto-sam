@@ -1,9 +1,14 @@
 'use strict'
+
+//libs
 var axios = require("axios");
 var React = require('react');
-var ItemCard = require('../../components/item/itemCard');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
+
+//component
+var ItemCard = require('../../components/item/itemCard');
+
 var moment = require('moment');
 moment.locale('pt-br');
 
@@ -41,6 +46,7 @@ const ItemCardContainer = React.createClass({
 
     //calculo da pontuação de um item
     var pontuacao = this.props.item.dificuldade * this.props.item.modificador * this.props.item.Categoria.peso;
+
     //Se for itemCard da tela de perfil do usuário ..
     if(this.props.perfil == true){
       data = <p className="center-align media">{moment(this.props.item.data).format('L')}</p>
@@ -52,7 +58,7 @@ const ItemCardContainer = React.createClass({
       }else{
         acoes = <div>
                   <div className="col l4 m12 s12"><button data-target={this.props.item.id} className="modal-trigger col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light yellow darken-3 btn">Ver</button><br/><br/></div>
-                  <div className="col l4 m12 s12"><button className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light green darken-3 btn">Editar</button><br/><br/></div>
+                  <div className="col l4 m12 s12"><Link to={"/Item/Edicao/" + this.props.item.id} className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light green darken-3 btn">Editar</Link><br/><br/></div>
                   <div className="col l4 m12 s12"><button className="col l12 m8 s8 offset-m2 offset-s2 waves-effect waves-light red darken-3 btn" onClick={this.props.deletarItem.bind(null, this.props.item.id, this.props.item.nome)}>Deletar</button><br/><br/></div>
                 </div>
       }
@@ -65,6 +71,7 @@ const ItemCardContainer = React.createClass({
       usuarios = {usuarios}/>);
   },
 
+  //inicializa o modal
   componentDidMount: function(){
     $(document).ready(function() {
       $('.modal-trigger').leanModal();

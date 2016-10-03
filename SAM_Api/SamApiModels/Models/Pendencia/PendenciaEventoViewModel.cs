@@ -15,7 +15,7 @@ namespace SamApiModels.Pendencia
         /// Identifica o evento cujo a pendência foi gerada
         /// </summary>
         [Required]
-        [ValidKey(ValidKeyAttribute.Entities.Evento)]
+        [ValidKey(ValidKeyAttribute.Entities.Evento, ErrorMessage = "Invalid value supplied to PendenciaEventoViewModel. Check if it's a valid key")]
         public int id { get; set; }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace SamApiModels.Pendencia
         /// Identifica a data que o evento ocorreu
         /// </summary>
         [Required]
-        [ValidDate]
+        [RegularExpression(@"^\d{2}/\d{2}/\d{4}$", ErrorMessage = "Invalid date format")]
         public DateTime data { get; set; }
 
         /// <summary>
