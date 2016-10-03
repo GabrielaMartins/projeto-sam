@@ -46,7 +46,6 @@ var Votacao = function(props){
     var atr;
 
     props.votos.forEach(function(voto, index){
-      console.log(voto);
       if(voto.Dificuldade){
         var dificuldade;
 
@@ -70,7 +69,7 @@ var Votacao = function(props){
         if(voto.Modificador){
           var categoriasProfundidade = ["Blog Técnico", "Apresentação"];
           var status;
-          
+
           //determina o nome do modificador que aparecerá na tela
           if(categoriasProfundidade.indexOf(props.evento.Item.Categoria.nome) != -1){
             switch(voto.Modificador){

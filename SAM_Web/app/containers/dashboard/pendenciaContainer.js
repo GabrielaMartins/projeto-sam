@@ -71,7 +71,6 @@ var Pendencias = React.createClass({
       }
 
     }else{
-      console.log(tipo);
       switch(tipo){
         case "promocao":
           return (

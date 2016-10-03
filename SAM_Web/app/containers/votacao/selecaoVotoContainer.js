@@ -23,7 +23,6 @@ var SelecaoVotoContainer = React.createClass({
 
   checaPontuacao: function(){
     var pesoCategoria = this.props.evento.Item.Categoria.peso;
-    console.log(pesoCategoria);
     if(this.state.dificuldade != ""){
 
       //é possível votar o modificador
@@ -111,7 +110,6 @@ var SelecaoVotoContainer = React.createClass({
               confirmButtonText: "Ok",
               confirmButtonColor: "#550000"
             },function(){
-              debugger;
               //deleta o alerta
               axios.delete(Config.serverUrl+"/api/sam/pendency/delete/" + this.props.evento.id, config).then(
                 function(response){
@@ -123,7 +121,6 @@ var SelecaoVotoContainer = React.createClass({
 
           }.bind(this),
           function(jqXHR){
-            console.log(jqXHR);
             swal({
               title: "O voto não foi computado!",
               text: "O voto não foi computado, por favor, tente novamente.",
