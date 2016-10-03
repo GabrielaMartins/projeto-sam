@@ -1,5 +1,8 @@
+'use strict'
+
 var React = require('react');
 var ReactRouter = require('react-router');
+
 var moment = require('moment');
 moment.locale('pt-br');
 

@@ -1,8 +1,11 @@
+'use strict'
+
 var React = require('react');
 var ReactRouter = require('react-router');
+var Link = ReactRouter.Link;
+
 var Dropdown = require('./itensDropdown');
 var ItensMenu = require('./itensMenu');
-var Link = ReactRouter.Link;
 
 var Base = function(props){
 
@@ -65,5 +68,9 @@ var Base = function(props){
     </div>
   );
 }
+
+/*Base.propTypes = {
+  dropdowns: React.PropTypes.ArrayOf(React.PropTypes.object).isRequired
+}*/
 
 module.exports = Base;

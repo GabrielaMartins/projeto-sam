@@ -6,7 +6,7 @@ var ReactRouter = require('react-router');
 
 var EdicaoFuncionario = function(props){
   return(
-    <div style={{paddingTop: 30 }}>
+    <div>
       <div className="row wrapper">
         <div className="col l8 m10 s12 center-block">
           <div className="card-panel">
@@ -15,20 +15,6 @@ var EdicaoFuncionario = function(props){
             <div className="card-content">
               {props.children}
               <br/><br/>
-              {/*<div className="card-action">
-                <div className="row wrapper">
-                  <div className="col l12 m12 s12">
-                    <div className="row">
-                      <div className="col s6">
-                        <a className="waves-effect waves-light btn right" onClick={props.handleClear}>Limpar <i className="fa fa-eraser right"></i></a>
-                      </div>
-                      <div className="col s6">
-                        <a className="waves-effect waves-light btn left" onClick = {props.handleSubmit}>Salvar <i className="fa fa-floppy-o right"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>*/}
               <div className="card-action">
                 <div className="row wrapper">
                   <div className="col l12 m12 s12">
