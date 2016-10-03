@@ -9,7 +9,6 @@ moment.locale('pt-br');
 
 var CardPendencia = React.createClass({
   render : function(){
-    console.log(this.props.conteudo.Evento.Item);
     return(
         <div
           id="pendencias"

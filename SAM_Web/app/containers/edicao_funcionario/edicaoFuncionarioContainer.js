@@ -175,8 +175,6 @@ const EdicaoFuncionarioContainer = React.createClass({
       foto: imagem
     }
 
-    console.log(perfilDados);
-
       var self = this;
       var token = localStorage.getItem("token");
       var samaccount = localStorage.getItem("samaccount");
